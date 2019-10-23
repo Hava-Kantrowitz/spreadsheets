@@ -7,10 +7,6 @@ import java.util.List;
  */
 public interface Spreadsheet {
 
-  /**
-   * This method initializes the spreadsheet to an empty grid of rows and columns.
-   */
-  void initSheet();
 
   /**
    * Gets the cell at the given coordinate.
@@ -48,4 +44,10 @@ public interface Spreadsheet {
    * Evaluates all cells within the sheet.
    */
   void evaluateSheet();
+
+  /**
+   * Evaluates a specified cell.
+   * @param coord the coordinate of the cell to be evaluated
+   */
+  void evaluateCellAt(Coord coord);
 }
