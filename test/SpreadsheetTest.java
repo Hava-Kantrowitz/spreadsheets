@@ -19,7 +19,6 @@ public class SpreadsheetTest {
   @Test
   public void testInitSheet() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initSheet();
     assertEquals(1, 1);
   }
 
