@@ -129,29 +129,43 @@ public class SpreadsheetTestsV {
   }
 
   // the test for when the given cell is out of bounds (and doubling would exceed max possible int)
-  // on the column input
-
-
+  // on the row input (the doubling will go over but the number itself will still be valid
+  @Test
+  public void getOutRowOverMaxIntRow(){
+    Coord index = new Coord(3,2147483647);
+    assertEquals(new Blank(),
+            basicSpreadsheet.getCellAt(index));
+  }
 
   // the test for when the given cell is out of bounds (and doubling would exceed max possible int)
-  // on the row input
+  // on the column input
+  @Test
+  public void getOutColumnMaxIntCol(){
+    Coord index = new Coord(2147483647,5);
+    assertEquals(new Blank(),
+            basicSpreadsheet.getCellAt(index));
+  }
+
 
   // the test for when the given cell is out of bounds (and doubling would exceed max possible int)
   // on the row and column inputs
-
+  @Test
+  public void getOutColumnMaxIntColRow(){
+    Coord index = new Coord(2147483647,2147483647);
+    assertEquals(new Blank(),
+            basicSpreadsheet.getCellAt(index));
+  }
 
   // THESE ARE THE TESTS FOR GET CELL SECTION
 
-  // the test for when the given cells are all empty
+  // the test for when the given cells are all empty (in a rectangle formation)
   @Test
   public void getSectionBlank(){
-    Coord index = new Coord(5,3);
-    Coord index2 = new Coord(2,4);
-    Coord index3 = new Coord(7,2);
-    Coord index4 = new Coord(9,1);
+    Coord index1 = new Coord(1,1);
+    Coord index2 = new Coord(3, 5);
 
-    assertEquals(new Blank(),
-            basicSpreadsheet.getCellAt(index));
+    //assertEquals(new Blank(),
+    //        basicSpreadsheet.getCellSection(index1, index2));
   }
 
   // the test for when the given cells are all formulas
