@@ -5,6 +5,8 @@ package edu.cs3500.spreadsheets.model;
  */
 public class Blank implements Cell {
 
+  private Value evalVal = null;
+
   /**
    * This is an empty constructor for an instance of Blank.
    */
@@ -15,6 +17,16 @@ public class Blank implements Cell {
 
   @Override
   public Value evaluateCell() {
-    return null;
+    return evalVal;
+  }
+
+  @Override
+  public boolean equals(Object otherCell){
+    boolean isEqual = false;
+    // checking if the other cell is a blank cell too
+    if(otherCell instanceof Blank && ((Blank) otherCell).evalVal == null && this.evalVal == null){
+      isEqual = true;
+    }
+    return isEqual;
   }
 }

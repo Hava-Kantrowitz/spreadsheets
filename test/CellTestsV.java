@@ -7,5 +7,13 @@ import static org.junit.Assert.assertEquals;
  */
 public class CellTestsV {
 
+  // THESE ARE THE TESTS FOR EVALUATE CELL (WHEN IT IS A VALUE)
+
+  // this is to check that the returned value is correct (when boolean)
+
+  // this is to check that the returned value is correct (when double)
+
+  // this is to check that the returned value is correct (when
+
 
 }

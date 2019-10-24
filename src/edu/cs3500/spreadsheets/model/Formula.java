@@ -6,6 +6,7 @@ package edu.cs3500.spreadsheets.model;
 public class Formula implements Cell {
 
   private String formula;
+  private Value evalVal;
 
   /**
    * Constructs an instance of a formula cell.
@@ -13,6 +14,7 @@ public class Formula implements Cell {
    */
   public Formula(String formula) {
     this.formula = formula;
+    this.evalVal = evaluateCell();
   }
 
   @Override
@@ -42,5 +44,15 @@ public class Formula implements Cell {
 
   private String hamilton(Cell cell) {
     return "";
+  }
+
+  @Override
+  public boolean equals(Object otherCell){
+    boolean isEqual = false;
+    // checking that it is a formula and has the same string
+    if(otherCell instanceof Formula && ((Formula) otherCell).formula.equals(this.formula)){
+      isEqual = true;
+    }
+    return isEqual;
   }
 }
