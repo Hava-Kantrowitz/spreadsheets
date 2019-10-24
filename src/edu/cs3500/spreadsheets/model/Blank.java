@@ -4,8 +4,8 @@ package edu.cs3500.spreadsheets.model;
  * Models a blank cell.
  */
 public class Blank implements Cell {
-
-  private Value evalVal = null;
+  private Object val = null;
+  private Value evalVal = new Value(0);
 
   /**
    * This is an empty constructor for an instance of Blank.

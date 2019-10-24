@@ -30,10 +30,11 @@ public interface Spreadsheet {
    * Gets the cells at the given coordinates.
    * If the given cells are outside the size of the board, the board will be resized
    * until they can be accommodated.
-   * @param coords The list of x-y coordinates of the given cells.
+   * @param upper the coordinate of the upper bound.
+   * @param lower the coordinate of the lower bound.
    * @return List of the inhabitants of the cells.
    */
-  List<Cell> getCellSection(Coord...coords);
+  List<Cell> getCellSection(Coord upper, Coord lower);
 
   /**
    * Doubles the board in both x and y directions.
