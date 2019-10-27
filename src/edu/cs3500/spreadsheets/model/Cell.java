@@ -22,7 +22,7 @@ public interface Cell {
    * @return the value of the value when calculating product
    * @throws IllegalArgumentException if the value cannot be used in a product operation
    */
-  double evaluateCellProduct() throws IllegalArgumentException;
+  double evaluateCellProduct(Cell...cells) throws IllegalArgumentException;
 
   /**
    * This evaluates the cell for the number used when calculating the SQRT.
