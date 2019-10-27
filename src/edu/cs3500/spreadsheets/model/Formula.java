@@ -22,8 +22,43 @@ public class Formula implements Cell {
     return null;
   }
 
-  private int sum(Cell... cells) {
+  @Override
+  public double evaluateCellSum() {
     return 0;
+  }
+
+  @Override
+  public double evaluateCellProduct() throws IllegalArgumentException {
+    return 0;
+  }
+
+  @Override
+  public double evaluateCellSqrt() throws IllegalArgumentException {
+    return 0;
+  }
+
+  @Override
+  public double evaluateCellDifference() throws IllegalArgumentException {
+    return 0;
+  }
+
+  @Override
+  public double evaluateCellComparison() {
+    return 0;
+  }
+
+  /**
+   * Adds multiple cells together
+   * @param cells the list of cells to add
+   * @return the added value of the cells
+   */
+  private int sum(Cell... cells) {
+    int sum = 0;
+    for (Cell c : cells) {
+      sum += c.evaluateCellSum();
+    }
+
+    return sum;
   }
 
   private int product(Cell...cells) {

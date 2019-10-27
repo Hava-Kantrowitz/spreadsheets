@@ -3,7 +3,7 @@ package edu.cs3500.spreadsheets.model;
 /**
  * This class models the double value in the cell.
  */
-public class DoubleValue extends Value{
+public class DoubleValue implements Value{
   double val;
 
   /**
@@ -22,27 +22,27 @@ public class DoubleValue extends Value{
   }
 
   @Override
-  double evaluateCellSum() {
+  public double evaluateCellSum() {
     return val;
   }
 
   @Override
-  double evaluateCellProduct() {
+  public double evaluateCellProduct() {
     return val;
   }
 
   @Override
-  double evaluateCellSqrt() {
+  public double evaluateCellSqrt() {
     return val;
   }
 
   @Override
-  double evaluateCellDifference() {
+  public double evaluateCellDifference() {
     return val;
   }
 
   @Override
-  double evaluateCellComparison() {
+  public double evaluateCellComparison() {
     return val;
   }
 

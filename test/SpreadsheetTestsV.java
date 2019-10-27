@@ -9,7 +9,6 @@ import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
-import edu.cs3500.spreadsheets.model.Value;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;

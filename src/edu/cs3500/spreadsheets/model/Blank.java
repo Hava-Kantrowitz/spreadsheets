@@ -12,12 +12,36 @@ public class Blank implements Cell {
    */
   public Blank() {
     this.val = null;
-    this.evalVal = new Value(0.0);
   }
 
   @Override
   public Value evaluateCell() {
     return evalVal;
+  }
+
+  @Override
+  public double evaluateCellSum() {
+    return 0;
+  }
+
+  @Override
+  public double evaluateCellProduct() throws IllegalArgumentException {
+    return 0;
+  }
+
+  @Override
+  public double evaluateCellSqrt() throws IllegalArgumentException {
+    return 0;
+  }
+
+  @Override
+  public double evaluateCellDifference() throws IllegalArgumentException {
+    return 0;
+  }
+
+  @Override
+  public double evaluateCellComparison() {
+    return 0;
   }
 
   @Override
