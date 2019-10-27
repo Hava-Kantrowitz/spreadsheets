@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.List;
+
 public class BooleanValue implements Cell {
 
   // need to add the constructor
@@ -12,7 +14,7 @@ public class BooleanValue implements Cell {
   }
 
   @Override
-  public double evaluateCellProduct() {
+  public double evaluateCellProduct(List<Cell> cells) {
     return 1;
   }
 
