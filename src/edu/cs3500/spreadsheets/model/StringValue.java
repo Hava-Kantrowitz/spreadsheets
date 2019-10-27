@@ -29,8 +29,7 @@ public class StringValue extends Value {
 
   @Override
   double evaluateCellProduct(){
-    // if all strings then 0
-    // if not all strings then 1
+
     return 0;
   }
 
