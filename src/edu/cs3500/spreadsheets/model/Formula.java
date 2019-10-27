@@ -28,7 +28,7 @@ public class Formula implements Cell {
   }
 
   @Override
-  public double evaluateCellProduct() throws IllegalArgumentException {
+  public double evaluateCellProduct(Cell...cells) throws IllegalArgumentException {
     return 0;
   }
 
@@ -45,6 +45,11 @@ public class Formula implements Cell {
   @Override
   public double evaluateCellComparison() {
     return 0;
+  }
+
+  @Override
+  public boolean isNum() {
+    return false;
   }
 
   /**

@@ -27,7 +27,7 @@ public class DoubleValue implements Value{
   }
 
   @Override
-  public double evaluateCellProduct() {
+  public double evaluateCellProduct(Cell...cells) {
     return val;
   }
 
@@ -44,6 +44,11 @@ public class DoubleValue implements Value{
   @Override
   public double evaluateCellComparison() {
     return val;
+  }
+
+  @Override
+  public boolean isNum() {
+    return true;
   }
 
   @Override

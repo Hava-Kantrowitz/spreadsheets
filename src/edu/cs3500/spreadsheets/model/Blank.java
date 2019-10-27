@@ -25,10 +25,14 @@ public class Blank implements Cell {
   }
 
   @Override
-  public double evaluateCellProduct() throws IllegalArgumentException {
-    //if all nonnumeric, 0
-    //if at least 1 nonnumeric, 1
-    return 1;
+  public double evaluateCellProduct(Cell...cells) throws IllegalArgumentException {
+    int product = 0;
+    for (Cell c : cells) {
+      if (c.isNum()) {
+        product = 1;
+      }
+    }
+    return product;
   }
 
   @Override
@@ -44,6 +48,11 @@ public class Blank implements Cell {
   @Override
   public double evaluateCellComparison() throws IllegalArgumentException {
     throw new IllegalArgumentException("Cannot compare a blank cell");
+  }
+
+  @Override
+  public boolean isNum() {
+    return false;
   }
 
   @Override

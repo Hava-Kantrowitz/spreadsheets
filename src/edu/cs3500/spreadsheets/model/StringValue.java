@@ -28,7 +28,7 @@ public class StringValue implements Value {
   }
 
   @Override
-  public double evaluateCellProduct(){
+  public double evaluateCellProduct(Cell...cells){
     // if all strings then 0
     // if not all strings then 1
     return 0;
@@ -47,6 +47,11 @@ public class StringValue implements Value {
   @Override
   public double evaluateCellComparison() {
     throw new IllegalArgumentException("Comparison with a string cannot be computed.");
+  }
+
+  @Override
+  public boolean isNum() {
+    return false;
   }
 
   @Override
