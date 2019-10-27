@@ -1,7 +1,5 @@
 package edu.cs3500.spreadsheets.model;
 
-import java.util.List;
-
 public class BooleanValue implements Cell {
 
   // need to add the constructor
@@ -14,8 +12,14 @@ public class BooleanValue implements Cell {
   }
 
   @Override
-  public double evaluateCellProduct(List<Cell> cells) {
-    return 1;
+  public double evaluateCellProduct(Cell...cells) {
+    int product = 0;
+    for (Cell c : cells) {
+      if (c.isNum()) {
+        product = 1;
+      }
+    }
+    return product;
   }
 
   @Override
@@ -29,8 +33,13 @@ public class BooleanValue implements Cell {
   }
 
   @Override
-  public double evaluateCellComparison() {
-    return 0;
+  public double evaluateCellComparison() throws IllegalArgumentException {
+    throw new IllegalArgumentException("Cannot compare a blank cell");
+  }
+
+  @Override
+  public boolean isNum() {
+    return false;
   }
 
   @Override

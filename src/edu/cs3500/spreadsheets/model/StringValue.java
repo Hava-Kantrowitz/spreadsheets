@@ -1,7 +1,5 @@
 package edu.cs3500.spreadsheets.model;
 
-import java.util.List;
-
 /**
  * This class models the string value of a cell.
  */
@@ -30,13 +28,7 @@ public class StringValue implements Value {
   }
 
   @Override
-  public double evaluateCellProduct(List<Cell> otherCells){
-
-    // checking if there are any numbers
-    for(int i = 0; i < otherCells.size(); i++){
-
-    }
-
+  public double evaluateCellProduct(Cell...cells){
     // if all strings then 0
     // if not all strings then 1
     return 0;
@@ -58,9 +50,12 @@ public class StringValue implements Value {
   }
 
   @Override
-  public Value evaluateCell() {
-    return this;
+  public boolean isNum() {
+    return false;
   }
 
-
+  @Override
+  public Value evaluateCell() {
+    return null;
+  }
 }
