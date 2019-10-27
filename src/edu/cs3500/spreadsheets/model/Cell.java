@@ -6,7 +6,10 @@ package edu.cs3500.spreadsheets.model;
 public interface Cell {
 
   /**
-   * Evaluates the current cell.
+   * Evaluates the current cell. As it is with no methods being called.
+   * @return the contents of the given cell
    */
   Value evaluateCell();
+
+
 }

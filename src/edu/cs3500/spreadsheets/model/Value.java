@@ -3,43 +3,41 @@ package edu.cs3500.spreadsheets.model;
 /**
  * Models a cell with a string, int, or boolean value in it.
  */
-public class Value implements Cell {
-
-  private Object val;
-  private Value evalVal;
+public abstract class Value implements Cell {
 
   /**
-   * Constructs an instance of a cell with a value.
-   * @param val The value in the cell, one of string, int, or boolean
-   * @throws IllegalArgumentException if the given value is not a string, int, or boolean
+   * This evaluates the cell for the number used when calculating a sum.
+   * @return the number used to calculate the sum
    */
-  public Value (Object val) {
-    if(val == null){
-      throw new IllegalArgumentException("Not a type of value");
-    }
-    else if (val.getClass().equals(String.class) || val.getClass().equals(Integer.class)
-            || val.getClass().equals(Boolean.class)) {
-      this.val = val;
-      this.evalVal = this;
-    }
+  abstract double evaluateCellSum();
 
-    else {
-      throw new IllegalArgumentException("Not a type of value");
-    }
-  }
+  /**
+   * This evaluates the cell for the number used when calculating the product.
+   * @return the value of the value when calculating product
+   * @throws IllegalArgumentException if the value cannot be used in a product operation
+   */
+  abstract double evaluateCellProduct() throws IllegalArgumentException;
 
-  @Override
-  public Value evaluateCell() {
-    return null;
-  }
+  /**
+   * This evaluates the cell for the number used when calculating the SQRT.
+   * @return the number used when calculating square root
+   * @throws IllegalArgumentException if the value cannot be used in the square root operation
+   */
+  abstract double evaluateCellSqrt() throws IllegalArgumentException;
 
-  @Override
-  public boolean equals(Object otherCell){
-    boolean isEqual = false;
-    // checks that it is an instance of value and the values are equal
-    if(otherCell instanceof Value && ((Value) otherCell).val.equals(this.val)){
-      isEqual = true;
-    }
-    return isEqual;
-  }
+  /**
+   * This evaluates the cell for the number used when calculating the difference.
+   * @return the value used when the difference is calculated
+   * @throws IllegalArgumentException if the value cannot be used in the difference operation
+   */
+  abstract double evaluateCellDifference() throws IllegalArgumentException;
+
+  /**
+   * This evaluates the cell for the number used when calculating a comparison.
+   * @return the value used when a comparison is taken
+   */
+  abstract double evaluateCellComparison();
+
+
+
 }

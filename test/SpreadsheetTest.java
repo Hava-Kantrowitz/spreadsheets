@@ -4,8 +4,10 @@ import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Blank;
 import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.DoubleValue;
 import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
+import edu.cs3500.spreadsheets.model.StringValue;
 import edu.cs3500.spreadsheets.model.Symbol;
 import edu.cs3500.spreadsheets.model.Value;
 
@@ -32,7 +34,7 @@ public class SpreadsheetTest {
     Coord coord2 = new Coord(10, 10);
     Cell secondCell = testSheet.getCellAt(coord2);
     Cell compCell = new Blank();
-    assertTrue(compCell.equals(firstCell));
+    assertEquals(compCell,firstCell);
     assertTrue(compCell.equals(secondCell));
   }
 
@@ -45,11 +47,11 @@ public class SpreadsheetTest {
   public void testBlankCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell hamCell = new Value("Ham the jam");
+    Cell hamCell = new StringValue("Ham the jam");
     testSheet.setCellAt(coord1, hamCell);
-    testSheet.setCellAt(coord1, null);
+    testSheet.setCellAt(coord1, new Blank());   // changed this to blank instead of null
     Cell compCell = new Blank();
-    assertTrue(compCell.equals(testSheet.getCellAt(coord1).evaluateCell()));
+    assertEquals(compCell,testSheet.getCellAt(coord1));
   }
 
   //tests that a formula cell can be set
@@ -398,7 +400,7 @@ public class SpreadsheetTest {
     Coord coord3 = new Coord(1, 2);
     Cell val3 = new Formula("=(DIFFERENCE A1 A2)");
     testSheet.setCellAt(coord3, val3);
-    Value comp1 = new Value(0);
+    Value comp1 = new Value(0.0);
     assertEquals(comp1, testSheet.getCellAt(coord3).evaluateCell());
   }
 
