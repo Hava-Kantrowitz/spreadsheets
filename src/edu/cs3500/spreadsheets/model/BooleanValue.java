@@ -13,12 +13,12 @@ public class BooleanValue implements Cell {
 
   @Override
   public double evaluateCellProduct() {
-    return 0;
+    return 1;
   }
 
   @Override
-  public double evaluateCellSqrt() {
-    return 0;
+  public double evaluateCellSqrt() throws IllegalArgumentException{
+    throw new IllegalArgumentException("Cannot take the square root ");
   }
 
   @Override

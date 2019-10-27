@@ -52,7 +52,7 @@ public class Formula implements Cell {
    * @param cells the list of cells to add
    * @return the added value of the cells
    */
-  private int sum(Cell... cells) {
+  private double sum(Cell... cells) {
     int sum = 0;
     for (Cell c : cells) {
       sum += c.evaluateCellSum();
@@ -61,16 +61,21 @@ public class Formula implements Cell {
     return sum;
   }
 
-  private int product(Cell...cells) {
-    return 0;
+  private double product(Cell...cells) {
+    double product = 1;
+    for (Cell c : cells) {
+      product = product * c.evaluateCellProduct();
+    }
+
+    return product;
   }
 
   private int difference (Cell cell1, Cell cell2) {
     return 0;
   }
 
-  private int sqrt(Cell cell) {
-    return 0;
+  private double sqrt(Cell cell) {
+    return cell.evaluateCellSqrt();
   }
 
   private int comparison(Cell cell1, Cell cell2) {
