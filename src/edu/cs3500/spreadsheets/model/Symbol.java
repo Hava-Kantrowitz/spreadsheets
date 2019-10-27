@@ -1,6 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
-public class Symbol implements Value {
+public class Symbol implements Cell {
 
   private Object evalVal;
 

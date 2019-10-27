@@ -44,5 +44,11 @@ public interface Cell {
    */
   double evaluateCellComparison();
 
+  /**
+   * Determines if the cell is a number.
+   * @return true if the cell is a number, false otherwise
+   */
+  boolean isNum();
+
 
 }
