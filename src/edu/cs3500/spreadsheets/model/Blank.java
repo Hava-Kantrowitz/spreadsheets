@@ -26,12 +26,12 @@ public class Blank implements Cell {
 
   @Override
   public double evaluateCellProduct() throws IllegalArgumentException {
-    return 0;
+    return 1;
   }
 
   @Override
   public double evaluateCellSqrt() throws IllegalArgumentException {
-    return 0;
+    throw new IllegalArgumentException("Cannot take the square root of a blank cell");
   }
 
   @Override
