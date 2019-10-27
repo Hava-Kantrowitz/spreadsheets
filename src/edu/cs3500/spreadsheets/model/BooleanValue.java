@@ -1,33 +1,33 @@
 package edu.cs3500.spreadsheets.model;
 
-public class BooleanValue extends Value {
+public class BooleanValue implements Cell {
 
   // need to add the constructor
   // and change the default values
 
 
   @Override
-  double evaluateCellSum() {
+  public double evaluateCellSum() {
     return 0;
   }
 
   @Override
-  double evaluateCellProduct() {
+  public double evaluateCellProduct() {
     return 0;
   }
 
   @Override
-  double evaluateCellSqrt() {
+  public double evaluateCellSqrt() {
     return 0;
   }
 
   @Override
-  double evaluateCellDifference() {
+  public double evaluateCellDifference() {
     return 0;
   }
 
   @Override
-  double evaluateCellComparison() {
+  public double evaluateCellComparison() {
     return 0;
   }
 

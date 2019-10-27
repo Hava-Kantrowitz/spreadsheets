@@ -3,7 +3,7 @@ package edu.cs3500.spreadsheets.model;
 /**
  * This class models the string value of a cell.
  */
-public class StringValue extends Value {
+public class StringValue implements Value {
 
   String val;
 
@@ -23,29 +23,29 @@ public class StringValue extends Value {
   }
 
   @Override
-  double evaluateCellSum() {
+  public double evaluateCellSum() {
     return 0;
   }
 
   @Override
-  double evaluateCellProduct(){
+  public double evaluateCellProduct(){
     // if all strings then 0
     // if not all strings then 1
     return 0;
   }
 
   @Override
-  double evaluateCellSqrt() throws IllegalArgumentException{
+  public double evaluateCellSqrt() throws IllegalArgumentException{
     throw new IllegalArgumentException("Square root with a string cannot be computed");
   }
 
   @Override
-  double evaluateCellDifference() throws IllegalArgumentException{
+  public double evaluateCellDifference() throws IllegalArgumentException{
     throw new IllegalArgumentException("Difference with a string cannot be computed");
   }
 
   @Override
-  double evaluateCellComparison() {
+  public double evaluateCellComparison() {
     throw new IllegalArgumentException("Comparison with a string cannot be computed.");
   }
 
