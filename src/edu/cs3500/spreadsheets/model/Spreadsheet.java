@@ -36,10 +36,6 @@ public interface Spreadsheet {
    */
   List<Cell> getCellSection(Coord upper, Coord lower);
 
-  /**
-   * Doubles the board in both x and y directions.
-   */
-  void expandSheet();
 
   /**
    * Evaluates all cells within the sheet.

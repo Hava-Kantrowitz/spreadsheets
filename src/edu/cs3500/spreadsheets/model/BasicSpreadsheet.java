@@ -45,14 +45,10 @@ public class BasicSpreadsheet implements Spreadsheet {
   }
 
   @Override
-  public List<Cell> getCellSection(Coord... coords) {
+  public List<Cell> getCellSection(Coord coord, Coord cord) {
     return null;
   }
 
-  @Override
-  public void expandSheet() {
-
-  }
 
   @Override
   public void evaluateSheet() {
@@ -68,6 +64,13 @@ public class BasicSpreadsheet implements Spreadsheet {
    * This is the method to initialize the spreadsheet of the board from the file
    */
   private void initializeSpreadsheet(String fileName){
+
+  }
+
+  /**
+   * This is the method to expand the spreadsheet when the coordinates selected are out of bounds.
+   */
+  private void expandSheet() {
 
   }
 }
