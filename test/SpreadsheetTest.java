@@ -2,12 +2,14 @@ import org.junit.Test;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Blank;
+import edu.cs3500.spreadsheets.model.BooleanValue;
 import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.DoubleValue;
 import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.StringValue;
-import edu.cs3500.spreadsheets.model.Symbol;
+import edu.cs3500.spreadsheets.model.Value;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNull;
@@ -67,7 +69,7 @@ public class SpreadsheetTest {
   public void testStringCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell hamCell = new Value("Ham the jam");
+    Cell hamCell = new StringValue("Ham the jam");
     testSheet.setCellAt(coord1, hamCell);
     assertTrue(hamCell.equals(testSheet.getCellAt(coord1)));
   }
@@ -77,7 +79,7 @@ public class SpreadsheetTest {
   public void testBoolCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell boolCell = new Value(true);
+    Cell boolCell = new BooleanValue(true);
     testSheet.setCellAt(coord1, boolCell);
     assertTrue(boolCell.equals(testSheet.getCellAt(coord1)));
   }
@@ -87,7 +89,7 @@ public class SpreadsheetTest {
   public void testDoubleCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell doubleCell = new Value(7.2);
+    Cell doubleCell = new DoubleValue(7.2);
     testSheet.setCellAt(coord1, doubleCell);
     assertTrue(doubleCell.equals(testSheet.getCellAt(coord1)));
   }
@@ -97,9 +99,9 @@ public class SpreadsheetTest {
   public void testReferenceCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell val1 = new Value(8);
+    Cell val1 = new DoubleValue(8.0);
     Coord coord2 = new Coord(2, 1);
-    Cell val2 = new Value(2);
+    Cell val2 = new DoubleValue(2.0);
     Coord coord3 = new Coord(1, 2);
     Cell val3 = new Formula("=(SUM A1 A2)");
     testSheet.setCellAt(coord1, val1);
@@ -117,18 +119,18 @@ public class SpreadsheetTest {
   public void testEvalStrings() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell val1 = new Value("my name is");
+    Cell val1 = new StringValue("my name is");
     Coord coord2 = new Coord(2, 1);
-    Cell val2 = new Value("Alexander Hamilton");
+    Cell val2 = new StringValue("Alexander Hamilton");
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Value("and I'm treasury secretary");
+    Cell val3 = new StringValue("and I'm treasury secretary");
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
     testSheet.evaluateSheet();
-    Value comp1 = new Value("my name is");
-    Value comp2 = new Value("Alexander Hamilton");
-    Value comp3 = new Value("and I'm treasury secretary");
+    StringValue comp1 = new StringValue("my name is");
+    StringValue comp2 = new StringValue("Alexander Hamilton");
+    StringValue comp3 = new StringValue("and I'm treasury secretary");
     assertEquals(comp1, testSheet.getCellAt(coord1).evaluateCell());
     assertEquals(comp2, testSheet.getCellAt(coord2).evaluateCell());
     assertEquals(comp3, testSheet.getCellAt(coord3).evaluateCell());
@@ -140,17 +142,17 @@ public class SpreadsheetTest {
   public void testEvalBools() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell val1 = new Value(true);
+    Cell val1 = new BooleanValue(true);
     Coord coord2 = new Coord(2, 1);
-    Cell val2 = new Value(true);
+    Cell val2 = new BooleanValue(true);
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Value(false);
+    Cell val3 = new BooleanValue(false);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
     testSheet.evaluateSheet();
-    Value comp1 = new Value(true);
-    Value comp2 = new Value(false);
+    BooleanValue comp1 = new BooleanValue(true);
+    BooleanValue comp2 = new BooleanValue(false);
     assertEquals(comp1, testSheet.getCellAt(coord1).evaluateCell());
     assertEquals(comp1, testSheet.getCellAt(coord2).evaluateCell());
     assertEquals(comp2, testSheet.getCellAt(coord3).evaluateCell());
@@ -162,18 +164,18 @@ public class SpreadsheetTest {
   public void testEvalDouble() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell val1 = new Value(3.3);
+    Cell val1 = new DoubleValue(3.3);
     Coord coord2 = new Coord(2, 1);
-    Cell val2 = new Value(4);
+    Cell val2 = new DoubleValue(4.0);
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Value(172.8);
+    Cell val3 = new DoubleValue(172.8);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
     testSheet.evaluateSheet();
-    Value comp1 = new Value(3.3);
-    Value comp2 = new Value(4);
-    Value comp3 = new Value(172.8);
+    DoubleValue comp1 = new DoubleValue(3.3);
+    DoubleValue comp2 = new DoubleValue(4.0);
+    DoubleValue comp3 = new DoubleValue(172.8);
     assertEquals(comp1, testSheet.getCellAt(coord1).evaluateCell());
     assertEquals(comp2, testSheet.getCellAt(coord2).evaluateCell());
     assertEquals(comp3, testSheet.getCellAt(coord3).evaluateCell());
@@ -194,9 +196,9 @@ public class SpreadsheetTest {
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
     testSheet.evaluateSheet();
-    Value comp1 = new Value(9);
-    Value comp2 = new Value(6);
-    Value comp3 = new Value(4);
+    DoubleValue comp1 = new DoubleValue(9.0);
+    DoubleValue comp2 = new DoubleValue(6.0);
+    DoubleValue comp3 = new DoubleValue(4.0);
     assertEquals(comp1, testSheet.getCellAt(coord1).evaluateCell());
     assertEquals(comp2, testSheet.getCellAt(coord2).evaluateCell());
     assertEquals(comp3, testSheet.getCellAt(coord3).evaluateCell());
@@ -208,17 +210,17 @@ public class SpreadsheetTest {
   public void testEvalReferences() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell val1 = new Value(4);
+    Cell val1 = new DoubleValue(4.0);
     Coord coord2 = new Coord(2, 1);
-    Cell val2 = new Value(2);
+    Cell val2 = new DoubleValue(2.0);
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Value(1);
+    Cell val3 = new DoubleValue(1.0);
     Coord coord4 = new Coord(1, 3);
-    Cell val4 = new Symbol("A1");
+    Cell val4 = new Formula("A1");
     Coord coord5 = new Coord(2, 3);
-    Cell val5 = new Symbol("A2");
+    Cell val5 = new Formula("A2");
     Coord coord6 = new Coord(3, 3);
-    Cell val6 = new Symbol("B1");
+    Cell val6 = new Formula("B1");
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -226,9 +228,9 @@ public class SpreadsheetTest {
     testSheet.setCellAt(coord5, val5);
     testSheet.setCellAt(coord6, val6);
     testSheet.evaluateSheet();
-    Value comp1 = new Value(4);
-    Value comp2 = new Value(2);
-    Value comp3 = new Value(1);
+    DoubleValue comp1 = new DoubleValue(4.0);
+    DoubleValue comp2 = new DoubleValue(2.0);
+    DoubleValue comp3 = new DoubleValue(1.0);
     assertEquals(comp1, testSheet.getCellAt(coord4).evaluateCell());
     assertEquals(comp2, testSheet.getCellAt(coord5).evaluateCell());
     assertEquals(comp3, testSheet.getCellAt(coord6).evaluateCell());
@@ -239,13 +241,13 @@ public class SpreadsheetTest {
   public void testEvalMixed() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell val1 = new Value(4);
+    Cell val1 = new DoubleValue(4.0);
     Coord coord2 = new Coord(2, 1);
-    Cell val2 = new Value("hey");
+    Cell val2 = new StringValue("hey");
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Value(true);
+    Cell val3 = new BooleanValue(true);
     Coord coord4 = new Coord(1, 3);
-    Cell val4 = new Symbol("A1");
+    Cell val4 = new Formula("A1");
     Coord coord5 = new Coord(2, 3);
     Cell val5 = new Formula("= 2 4");
     Coord coord6 = new Coord(3, 3);
@@ -257,12 +259,12 @@ public class SpreadsheetTest {
     testSheet.setCellAt(coord5, val5);
     testSheet.setCellAt(coord6, val6);
     testSheet.evaluateSheet();
-    Value comp1 = new Value(4);
-    Value comp2 = new Value("hey");
-    Value comp3 = new Value(true);
-    Value comp4 = new Value(4);
-    Value comp5 = new Value(6);
-    Value comp6 = new Value(0);
+    Value comp1 = new DoubleValue(4.0);
+    Value comp2 = new StringValue("hey");
+    Value comp3 = (Value) new BooleanValue(true);
+    Value comp4 = new DoubleValue(4.0);
+    Value comp5 = new DoubleValue(6.0);
+    Value comp6 = new DoubleValue(0.0);
     assertEquals(comp1, testSheet.getCellAt(coord1).evaluateCell());
     assertEquals(comp2, testSheet.getCellAt(coord2).evaluateCell());
     assertEquals(comp3, testSheet.getCellAt(coord3).evaluateCell());
@@ -278,7 +280,7 @@ public class SpreadsheetTest {
   public void testEvalBlank() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Value comp1 = new Value(0);
+    Value comp1 = new DoubleValue(0.0);
     assertEquals(comp1, testSheet.getCellAt(coord1).evaluateCell());
   }
 
@@ -288,7 +290,7 @@ public class SpreadsheetTest {
   @Test
   public void testEvalFormula() {
     Cell cell1 = new Formula("=(SUM 4 3)");
-    Value comp1 = new Value(7);
+    Value comp1 = new DoubleValue(7.0);
     assertEquals(comp1, cell1.evaluateCell());
   }
 
@@ -297,11 +299,10 @@ public class SpreadsheetTest {
   public void testEvalFormulaReference() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Value val1 = new Value(11);
+    Value val1 = new DoubleValue(11.0);
     testSheet.setCellAt(coord1, val1);
-    Cell cell1 = new Symbol("A1");
-    Value comp1 = new Value(11);
-    assertEquals(comp1, cell1.evaluateCell());
+    Cell cell1 = new Formula("A1");
+    assertEquals(val1, cell1.evaluateCell());
   }
 
   //TEST DIFFERENCE
@@ -310,7 +311,7 @@ public class SpreadsheetTest {
   @Test
   public void testDifferencePos() {
     Cell cell1 = new Formula("=(DIFFERENCE 4 3)");
-    Value comp1 = new Value(1);
+    Value comp1 = new DoubleValue(1.0);
     assertEquals(comp1, cell1.evaluateCell());
   }
 
@@ -318,7 +319,7 @@ public class SpreadsheetTest {
   @Test
   public void testDifferenceNeg() {
     Cell cell1 = new Formula("=(DIFFERENCE -4 3)");
-    Value comp1 = new Value(-7);
+    Value comp1 = new DoubleValue(-7.0);
     assertEquals(comp1, cell1.evaluateCell());
   }
 
@@ -327,15 +328,15 @@ public class SpreadsheetTest {
   public void testDifferenceReference() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Value val1 = new Value(10);
+    Value val1 = new DoubleValue(10.0);
     Coord coord2 = new Coord(2, 1);
-    Value val2 = new Value(2);
+    Value val2 = new DoubleValue(2.0);
     Coord coord3 = new Coord(1, 2);
     Cell val3 = new Formula("=(DIFFERENCE A1 A2)");
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
-    Value comp1 = new Value(8);
+    Value comp1 = new DoubleValue(8.0);
     assertEquals(comp1, testSheet.getCellAt(coord3).evaluateCell());
   }
 
@@ -352,7 +353,7 @@ public class SpreadsheetTest {
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
-    Value comp1 = new Value(8);
+    Value comp1 = new DoubleValue(8.0);
     assertEquals(comp1, testSheet.getCellAt(coord3).evaluateCell());
   }
 
@@ -361,16 +362,16 @@ public class SpreadsheetTest {
   public void testDifferenceStrings() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell val1 = new Value("hamilton");
+    Cell val1 = new StringValue("hamilton");
     Coord coord2 = new Coord(2, 1);
-    Cell val2 = new Value("burr");
+    Cell val2 = new StringValue("burr");
     Coord coord3 = new Coord(1, 2);
     Cell val3 = new Formula("=(DIFFERENCE A1 A2)");
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
     testSheet.getCellAt(coord3).evaluateCell();
-    Value comp1 = new Value(0);
+    Value comp1 = new DoubleValue(0.0);
     assertEquals(comp1, testSheet.getCellAt(coord3).evaluateCell());
   }
 
@@ -379,15 +380,15 @@ public class SpreadsheetTest {
   public void testDifferenceBool() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell val1 = new Value(true);
+    Cell val1 = new BooleanValue(true);
     Coord coord2 = new Coord(2, 1);
-    Cell val2 = new Value(false);
+    Cell val2 = new BooleanValue(false);
     Coord coord3 = new Coord(1, 2);
     Cell val3 = new Formula("=(DIFFERENCE A1 A2)");
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
-    Value comp1 = new Value(0);
+    Value comp1 = new DoubleValue(0.0);
     assertEquals(comp1, testSheet.getCellAt(coord3).evaluateCell());
   }
 
@@ -398,7 +399,7 @@ public class SpreadsheetTest {
     Coord coord3 = new Coord(1, 2);
     Cell val3 = new Formula("=(DIFFERENCE A1 A2)");
     testSheet.setCellAt(coord3, val3);
-    Value comp1 = new Value(0.0);
+    Value comp1 = new DoubleValue(0.0);
     assertEquals(comp1, testSheet.getCellAt(coord3).evaluateCell());
   }
 
@@ -408,7 +409,7 @@ public class SpreadsheetTest {
   @Test
   public void testCompPos() {
     Cell cell1 = new Formula("=(< 4 3)");
-    Value comp1 = new Value(false);
+    Value comp1 = (Value) new BooleanValue(false);
     assertEquals(comp1, cell1.evaluateCell());
   }
 
@@ -416,7 +417,7 @@ public class SpreadsheetTest {
   @Test
   public void testCompNeg() {
     Cell cell1 = new Formula("=(< -4 3)");
-    Value comp1 = new Value(true);
+    Value comp1 = (Value) new BooleanValue(true);
     assertEquals(comp1, cell1.evaluateCell());
   }
 
@@ -425,15 +426,15 @@ public class SpreadsheetTest {
   public void testCompReference() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell val1 = new Value(16);
+    Cell val1 = new DoubleValue(16.0);
     Coord coord2 = new Coord(2, 1);
-    Cell val2 = new Value(2);
+    Cell val2 = new DoubleValue(2.0);
     Coord coord3 = new Coord(1, 2);
     Cell val3 = new Formula("=(< A1 A2)");
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
-    Value comp1 = new Value(false);
+    Value comp1 = (Value) new BooleanValue(false);
     assertEquals(comp1, testSheet.getCellAt(coord3).evaluateCell());
   }
 
@@ -450,7 +451,7 @@ public class SpreadsheetTest {
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
-    Value comp1 = new Value(false);
+    Value comp1 = (Value) new BooleanValue(false);
     assertEquals(comp1, testSheet.getCellAt(coord3).evaluateCell());
   }
 
@@ -459,9 +460,9 @@ public class SpreadsheetTest {
   public void testCompStrings() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell val1 = new Value("a. ham");
+    Cell val1 = new StringValue("a. ham");
     Coord coord2 = new Coord(2, 1);
-    Cell val2 = new Value("a. burr");
+    Cell val2 = new StringValue("a. burr");
     Coord coord3 = new Coord(1, 2);
     Cell val3 = new Formula("=(< A1 A2)");
     testSheet.setCellAt(coord1, val1);
@@ -475,9 +476,9 @@ public class SpreadsheetTest {
   public void testCompBools() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
-    Cell val1 = new Value(false);
+    Cell val1 = new BooleanValue(false);
     Coord coord2 = new Coord(2, 1);
-    Cell val2 = new Value(true);
+    Cell val2 = new BooleanValue(true);
     Coord coord3 = new Coord(1, 2);
     Cell val3 = new Formula("=(< A1 A2)");
     testSheet.setCellAt(coord1, val1);

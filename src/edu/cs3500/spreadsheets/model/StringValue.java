@@ -56,6 +56,6 @@ public class StringValue implements Value {
 
   @Override
   public Value evaluateCell() {
-    return null;
+    return this;
   }
 }
