@@ -1,11 +1,10 @@
 package edu.cs3500.spreadsheets.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import edu.cs3500.spreadsheets.sexp.Parser;
-import edu.cs3500.spreadsheets.sexp.SList;
+//import edu.cs3500.spreadsheets.sexp.SList;
 import edu.cs3500.spreadsheets.sexp.Sexp;
 
 /**
@@ -34,7 +33,6 @@ public class Formula implements Cell {
     Sexp input = parser.parse(formula);
 
 
-
     // checking to ensure there is a next argument
 //    if (!scan.hasNext()) {
 //      throw new IllegalArgumentException("Not a valid formula");
@@ -43,8 +41,6 @@ public class Formula implements Cell {
 //    else if (scan.next() != "=") {
 //      throw new IllegalArgumentException("Not a valid formula");
 //    }
-
-
 
 
     //else {
@@ -73,7 +69,7 @@ public class Formula implements Cell {
 //          }
 //        }
 //      }
-   // }
+    // }
     return null;
   }
 
@@ -117,7 +113,7 @@ public class Formula implements Cell {
   }
 
   /**
-   * Adds multiple cells together
+   * Adds multiple cells together.
    *
    * @param cells the list of cells to add
    * @return the added value of the cells
@@ -131,6 +127,12 @@ public class Formula implements Cell {
     return sum;
   }
 
+  /**
+   * Multiplies multiple cells together.
+   *
+   * @param cells the list of cells to multiply
+   * @return the multiplied value of the cells
+   */
   private double product(Cell... cells) {
     double product = 1;
     for (Cell c : cells) {
@@ -189,6 +191,11 @@ public class Formula implements Cell {
       isEqual = true;
     }
     return isEqual;
+  }
+
+  @Override
+  public int hashCode() {
+    return formula.hashCode();
   }
 
 }

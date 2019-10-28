@@ -8,7 +8,6 @@ import edu.cs3500.spreadsheets.model.DoubleValue;
 import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.StringValue;
-import edu.cs3500.spreadsheets.model.Value;
 
 import static org.junit.Assert.assertEquals;
 

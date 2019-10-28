@@ -1,6 +1,5 @@
 package edu.cs3500.spreadsheets.model;
 
-import java.util.List;
 
 /**
  * Models a single cell within the current spreadsheet.

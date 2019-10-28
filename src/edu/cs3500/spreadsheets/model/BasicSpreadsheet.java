@@ -3,16 +3,18 @@ package edu.cs3500.spreadsheets.model;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * Models the creation of a spreadsheet.
+ */
 public class BasicSpreadsheet implements Spreadsheet {
 
-  private static final int MAXINT = 2147483647;
+  private static final int MAXINT = 1000000;
   private ArrayList<ArrayList<Cell>> sheet;
   private int numRows;
   private int numCols;
-  String fileName;
+  private String fileName;
 
   /**
    * This is the blank constructor for a basic spreadsheet. Constructs a 10 by 10 spreadsheet of
@@ -133,7 +135,7 @@ public class BasicSpreadsheet implements Spreadsheet {
    * @param fileName the name of the given file
    */
   private void initializeSpreadsheet(String fileName) {
-
+    //to be filled in
   }
 
   /**
@@ -144,23 +146,14 @@ public class BasicSpreadsheet implements Spreadsheet {
    * @param inputCol the column that was input
    * @param inputRow the row that was input
    */
-  private void expandSheet(int inputCol, int inputRow) {
+  private void expandSheet(int inputCol, int inputRow) throws IllegalArgumentException {
 
     ArrayList<Cell> empty = new ArrayList<>();
 
-    if (inputCol >= MAXINT) {
-      while (sheet.size() <= MAXINT) {
-        sheet.add(empty);
-      }
+    if (inputCol > MAXINT || inputRow > MAXINT) {
+      throw new IllegalArgumentException("Requested cell exceeds available space");
     }
-
-    if (inputRow >= MAXINT) {
-      for (int i = 0; i <= MAXINT; i++) {
-        while (sheet.get(i).size() <= inputRow) {
-          sheet.get(i).add(new Blank());
-        }
-      }
-    } else {
+    else {
       sheet.ensureCapacity(inputRow);
 
       while (sheet.size() <= inputRow) {
@@ -181,7 +174,48 @@ public class BasicSpreadsheet implements Spreadsheet {
   // put the set cell here
   @Override
   public WorksheetReader.WorksheetBuilder createCell(int col, int row, String contents) {
-    return null;
+    int givenCol = col - 1;  // adjust for the 1 based indexing
+    int givenRow = row - 1;
+
+    // checking if it is greater than the number of columns (1 based index)
+    // expand the board to fit
+    if (givenCol >= numCols || givenRow >= numRows) {
+      expandSheet(givenCol, givenRow);
+    }
+    // get the given row then set the column of that row
+    sheet.get(givenRow).set(givenCol, new Blank());
+
+    Cell val;
+
+    if (contents == null) {
+      val = new Blank();
+    }
+
+    else if (contents.startsWith("=")) {
+      val = new Formula(contents);
+    }
+
+    else if (contents.equals("true") || contents.equals("false")) {
+      if (contents.equals("true")) {
+        val = new BooleanValue(true);
+      }
+      else {
+        val = new BooleanValue(false);
+      }
+    }
+
+    else {
+      try {
+        Double doubNum = Double.parseDouble(contents);
+        val = new DoubleValue(doubNum);
+      } catch (NumberFormatException e) {
+        val = new StringValue(contents);
+      }
+    }
+
+    Coord cellCoord = new Coord(col, row);
+    this.setCellAt(cellCoord, val);
+    return this;
   }
 
   @Override
@@ -189,7 +223,7 @@ public class BasicSpreadsheet implements Spreadsheet {
     try {
       FileReader fr = new FileReader(fileName);
     }
-    catch(FileNotFoundException e){
+    catch (FileNotFoundException e) {
       throw new IllegalArgumentException("The given file does not exist");
     }
 
