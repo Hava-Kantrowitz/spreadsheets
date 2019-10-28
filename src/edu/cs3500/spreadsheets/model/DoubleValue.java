@@ -52,15 +52,15 @@ public class DoubleValue implements Value{
   }
 
   @Override
-  public Object evaluateCell() {
-    return val;
+  public Value evaluateCell() {
+    return this;
   }
 
   @Override
   public boolean equals(Object otherCell){
     boolean isEqual = false;
 
-    if(otherCell instanceof DoubleValue && ((DoubleValue) otherCell).val == this.val){
+    if(otherCell instanceof DoubleValue && ((DoubleValue) otherCell).val == (this.val)){
       isEqual = true;
     }
 

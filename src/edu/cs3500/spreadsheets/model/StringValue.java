@@ -69,8 +69,8 @@ public class StringValue implements Value {
   }
 
   @Override
-  public Object evaluateCell() {
-    return val;
+  public Value evaluateCell() {
+    return this;
   }
 
   @Override

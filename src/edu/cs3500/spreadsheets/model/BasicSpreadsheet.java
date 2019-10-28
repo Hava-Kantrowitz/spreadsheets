@@ -51,7 +51,7 @@ public class BasicSpreadsheet implements Spreadsheet {
       expandSheet(givenCol, givenRow);
     }
 
-    return sheet.get(givenCol).get(givenRow);
+    return sheet.get(givenRow).get(givenCol);
   }
 
   @Override

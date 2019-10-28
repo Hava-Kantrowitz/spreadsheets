@@ -311,7 +311,7 @@ public class SpreadsheetTest {
   //tests difference of two positive doubles
   @Test
   public void testDifferencePos() {
-    Cell cell1 = new Formula("=(DIFFERENCE 4 3)");
+    Cell cell1 = new Formula("=(SUM 4 3)");
     Value comp1 = new DoubleValue(1.0);
     assertEquals(comp1, cell1.evaluateCell());
   }
@@ -319,7 +319,7 @@ public class SpreadsheetTest {
   //tests difference of two negative doubles
   @Test
   public void testDifferenceNeg() {
-    Cell cell1 = new Formula("=(DIFFERENCE -4 3)");
+    Cell cell1 = new Formula("=(SUM -4 3)");
     Value comp1 = new DoubleValue(-7.0);
     assertEquals(comp1, cell1.evaluateCell());
   }
@@ -333,7 +333,7 @@ public class SpreadsheetTest {
     Coord coord2 = new Coord(2, 1);
     Value val2 = new DoubleValue(2.0);
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(DIFFERENCE A1 A2)");
+    Cell val3 = new Formula("=(SUM A1 A2)");
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -350,7 +350,7 @@ public class SpreadsheetTest {
     Coord coord2 = new Coord(2, 1);
     Cell val2 = new Formula("=(SUM 1 1)");
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(DIFFERENCE A1 A2)");
+    Cell val3 = new Formula("=(SUB A1 A2)");
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -367,7 +367,7 @@ public class SpreadsheetTest {
     Coord coord2 = new Coord(2, 1);
     Cell val2 = new StringValue("burr");
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(DIFFERENCE A1 A2)");
+    Cell val3 = new Formula("=(SUB A1 A2)");
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -385,7 +385,7 @@ public class SpreadsheetTest {
     Coord coord2 = new Coord(2, 1);
     Cell val2 = new BooleanValue(false);
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(DIFFERENCE A1 A2)");
+    Cell val3 = new Formula("=(SUB A1 A2)");
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -398,7 +398,7 @@ public class SpreadsheetTest {
   public void testDifferenceBlank() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(DIFFERENCE A1 A2)");
+    Cell val3 = new Formula("=(SUB A1 A2)");
     testSheet.setCellAt(coord3, val3);
     Value comp1 = new DoubleValue(0.0);
     assertEquals(comp1, testSheet.getCellAt(coord3).evaluateCell());
