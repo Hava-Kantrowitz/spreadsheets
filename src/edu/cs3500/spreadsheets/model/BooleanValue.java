@@ -16,7 +16,7 @@ public class BooleanValue implements Value {
   }
 
   @Override
-  public double evaluateCellProduct(Cell...cells) {
+  public double evaluateCellProduct(Cell... cells) {
     int product = 0;
     for (Cell c : cells) {
       if (c.isNum()) {
@@ -27,7 +27,7 @@ public class BooleanValue implements Value {
   }
 
   @Override
-  public double evaluateCellSqrt() throws IllegalArgumentException{
+  public double evaluateCellSqrt() throws IllegalArgumentException {
     throw new IllegalArgumentException("Cannot take the square root ");
   }
 
@@ -52,10 +52,10 @@ public class BooleanValue implements Value {
   }
 
   @Override
-  public boolean equals(Object otherCell){
+  public boolean equals(Object otherCell) {
     boolean isEqual = false;
 
-    if(otherCell instanceof BooleanValue && ((BooleanValue) otherCell).bool.equals(this.bool)){
+    if (otherCell instanceof BooleanValue && ((BooleanValue) otherCell).bool.equals(this.bool)) {
       isEqual = true;
     }
 

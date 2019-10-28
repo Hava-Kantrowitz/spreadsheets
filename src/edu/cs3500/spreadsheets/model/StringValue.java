@@ -9,15 +9,15 @@ public class StringValue implements Value {
 
   /**
    * This is the constructor for a StringValue.
+   *
    * @param val the value of the String
    * @throws IllegalArgumentException if the value is null
    */
-  public StringValue(String val) throws IllegalArgumentException{
+  public StringValue(String val) throws IllegalArgumentException {
     // making sure not null
-    if(val != null){
+    if (val != null) {
       this.val = val;
-    }
-    else{
+    } else {
       throw new IllegalArgumentException("Not a string value.");
     }
   }
@@ -28,7 +28,7 @@ public class StringValue implements Value {
   }
 
   @Override
-  public double evaluateCellProduct(Cell...cells){
+  public double evaluateCellProduct(Cell... cells) {
     int numCount = 0;
     double evalNum;
 
@@ -40,9 +40,7 @@ public class StringValue implements Value {
 
     if (numCount == 1) {
       evalNum = 0;
-    }
-
-    else {
+    } else {
       evalNum = 0;
     }
 
@@ -50,12 +48,12 @@ public class StringValue implements Value {
   }
 
   @Override
-  public double evaluateCellSqrt() throws IllegalArgumentException{
+  public double evaluateCellSqrt() throws IllegalArgumentException {
     throw new IllegalArgumentException("Square root with a string cannot be computed");
   }
 
   @Override
-  public double evaluateCellDifference() throws IllegalArgumentException{
+  public double evaluateCellDifference() throws IllegalArgumentException {
     throw new IllegalArgumentException("Difference with a string cannot be computed");
   }
 

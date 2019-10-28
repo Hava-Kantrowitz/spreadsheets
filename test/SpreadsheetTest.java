@@ -34,7 +34,7 @@ public class SpreadsheetTest {
     Coord coord2 = new Coord(10, 10);
     Cell secondCell = testSheet.getCellAt(coord2);
     Cell compCell = new Blank();
-    assertEquals(compCell,firstCell);
+    assertEquals(compCell, firstCell);
     assertTrue(compCell.equals(secondCell));
   }
 
@@ -51,7 +51,7 @@ public class SpreadsheetTest {
     testSheet.setCellAt(coord1, hamCell);
     testSheet.setCellAt(coord1, new Blank());   // changed this to blank instead of null
     Cell compCell = new Blank();
-    assertEquals(compCell,testSheet.getCellAt(coord1));
+    assertEquals(compCell, testSheet.getCellAt(coord1));
   }
 
   //tests that a formula cell can be set
@@ -107,7 +107,7 @@ public class SpreadsheetTest {
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
-    assertEquals(val3,testSheet.getCellAt(coord3));
+    assertEquals(val3, testSheet.getCellAt(coord3));
   }
 
   //tests that a very large cell can be set
@@ -281,7 +281,7 @@ public class SpreadsheetTest {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
     Value comp1 = new DoubleValue(0.0);
-    testSheet.setCellAt(coord1,comp1);
+    testSheet.setCellAt(coord1, comp1);
     assertEquals(comp1, testSheet.getCellAt(coord1).evaluateCell());
   }
 
@@ -457,7 +457,7 @@ public class SpreadsheetTest {
   }
 
   //tests comparison of two string references
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testCompStrings() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
@@ -473,7 +473,7 @@ public class SpreadsheetTest {
   }
 
   //tests comparison of two boolean references
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testCompBools() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
@@ -489,7 +489,7 @@ public class SpreadsheetTest {
   }
 
   //tests comparison of blanks
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testCompBlanks() {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord3 = new Coord(1, 2);
@@ -497,8 +497,6 @@ public class SpreadsheetTest {
     testSheet.setCellAt(coord3, val3);
     testSheet.getCellAt(coord3).evaluateCell();
   }
-
-
 
 
 }

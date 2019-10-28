@@ -12,16 +12,16 @@ public class BasicSpreadsheet implements Spreadsheet {
   private int numCols;
 
   /**
-   * This is the blank constructor for a basic spreadsheet. Constructs a 10 by 10 spreadsheet
-   * of blank cells.
+   * This is the blank constructor for a basic spreadsheet. Constructs a 10 by 10 spreadsheet of
+   * blank cells.
    */
-  public BasicSpreadsheet(){
+  public BasicSpreadsheet() {
     sheet = new ArrayList<>();  // initialize the overall array list
 
     // goes through the columns and rows
-    for(int i = 0; i < 10; i++){
+    for (int i = 0; i < 10; i++) {
       sheet.add(new ArrayList<>());  // adds a new row (initialize each array list)
-      for(int j = 0; j < 10; j++){
+      for (int j = 0; j < 10; j++) {
         // adds an element to the new row
         sheet.get(i).add(new Blank());
       }
@@ -33,10 +33,12 @@ public class BasicSpreadsheet implements Spreadsheet {
   }
 
   /**
-   * This is the constructor that takes in a file and creates the model. Sets the num rows and cols.
+   * This is the constructor that takes in a file and creates the model. Sets the num rows and
+   * cols.
+   *
    * @param fileName the name of the initial file.
    */
-  public BasicSpreadsheet(String fileName){
+  public BasicSpreadsheet(String fileName) {
     initializeSpreadsheet(fileName);
   }
 
@@ -48,7 +50,7 @@ public class BasicSpreadsheet implements Spreadsheet {
 
     // checking if it is greater than the number of columns (1 based index)
     // expand the board to fit
-    if(givenCol >= numCols || givenRow >= numRows){
+    if (givenCol >= numCols || givenRow >= numRows) {
       expandSheet(givenCol, givenRow);
     }
 
@@ -62,11 +64,11 @@ public class BasicSpreadsheet implements Spreadsheet {
 
     // checking if it is greater than the number of columns (1 based index)
     // expand the board to fit
-    if(givenCol >= numCols || givenRow >= numRows){
-      expandSheet(givenCol,givenRow);
+    if (givenCol >= numCols || givenRow >= numRows) {
+      expandSheet(givenCol, givenRow);
     }
     // get the given row then set the column of that row
-    sheet.get(givenRow).set(givenCol,cellVal);
+    sheet.get(givenRow).set(givenCol, cellVal);
 
   }
 
@@ -83,7 +85,7 @@ public class BasicSpreadsheet implements Spreadsheet {
 
     // checking if it is greater than the number of columns (1 based index)
     // expand the board to fit
-    if(givenCol1 >= numCols || givenRow1 >= numRows){
+    if (givenCol1 >= numCols || givenRow1 >= numRows) {
       expandSheet(givenCol1, givenRow1);
     }
 
@@ -123,24 +125,25 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   /**
    * This is the method to initialize the spreadsheet of the board from the file.
+   *
    * @param fileName the name of the given file
    */
-  private void initializeSpreadsheet(String fileName){
+  private void initializeSpreadsheet(String fileName) {
 
   }
 
   /**
    * This is the method to expand the spreadsheet when the coordinates selected are out of bounds.
-   * If the column is out of bounds then expand column wise, same with row.
-   * If both are out of bounds expand in both directions.
-   * When new cells are added they should be blank.
+   * If the column is out of bounds then expand column wise, same with row. If both are out of
+   * bounds expand in both directions. When new cells are added they should be blank.
+   *
    * @param inputCol the column that was input
    * @param inputRow the row that was input
    */
   private void expandSheet(int inputCol, int inputRow) {
 
     ArrayList<Cell> empty = new ArrayList<>();
-    
+
     if (inputCol >= MAXINT) {
       while (sheet.size() <= MAXINT) {
         sheet.add(empty);
@@ -153,9 +156,7 @@ public class BasicSpreadsheet implements Spreadsheet {
           sheet.get(i).add(new Blank());
         }
       }
-    }
-
-    else {
+    } else {
       sheet.ensureCapacity(inputRow);
 
       while (sheet.size() <= inputRow) {

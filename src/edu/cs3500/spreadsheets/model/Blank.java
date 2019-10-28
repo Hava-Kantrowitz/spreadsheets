@@ -24,7 +24,7 @@ public class Blank implements Cell {
   }
 
   @Override
-  public double evaluateCellProduct(Cell...cells) throws IllegalArgumentException {
+  public double evaluateCellProduct(Cell... cells) throws IllegalArgumentException {
     int product = 0;
     for (Cell c : cells) {
       if (c.isNum()) {
@@ -55,10 +55,10 @@ public class Blank implements Cell {
   }
 
   @Override
-  public boolean equals(Object otherCell){
+  public boolean equals(Object otherCell) {
     boolean isEqual = false;
     // checking if the other cell is a blank cell too
-    if(otherCell instanceof Blank && ((Blank) otherCell).val == null && this.val == null){
+    if (otherCell instanceof Blank && ((Blank) otherCell).val == null && this.val == null) {
       isEqual = true;
     }
     return isEqual;

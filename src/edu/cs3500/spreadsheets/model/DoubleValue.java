@@ -3,20 +3,20 @@ package edu.cs3500.spreadsheets.model;
 /**
  * This class models the double value in the cell.
  */
-public class DoubleValue implements Value{
+public class DoubleValue implements Value {
   double val;
 
   /**
    * The constructor for the double value.
+   *
    * @param val the input double value
    * @throws IllegalArgumentException if the input is not a double
    */
-  public DoubleValue(Double val) throws IllegalArgumentException{
+  public DoubleValue(Double val) throws IllegalArgumentException {
     // making sure not null
-    if(val != null){
+    if (val != null) {
       this.val = val;
-    }
-    else{
+    } else {
       throw new IllegalArgumentException("Not a double value.");
     }
   }
@@ -27,7 +27,7 @@ public class DoubleValue implements Value{
   }
 
   @Override
-  public double evaluateCellProduct(Cell...cells) {
+  public double evaluateCellProduct(Cell... cells) {
     return val;
   }
 
@@ -57,10 +57,10 @@ public class DoubleValue implements Value{
   }
 
   @Override
-  public boolean equals(Object otherCell){
+  public boolean equals(Object otherCell) {
     boolean isEqual = false;
 
-    if(otherCell instanceof DoubleValue && ((DoubleValue) otherCell).val == (this.val)){
+    if (otherCell instanceof DoubleValue && ((DoubleValue) otherCell).val == (this.val)) {
       isEqual = true;
     }
 
