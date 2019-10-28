@@ -14,7 +14,7 @@ public class Blank implements Cell {
   }
 
   @Override
-  public Value evaluateCell() {
+  public Object evaluateCell() {
     return val;
   }
 
@@ -58,8 +58,7 @@ public class Blank implements Cell {
   public boolean equals(Object otherCell){
     boolean isEqual = false;
     // checking if the other cell is a blank cell too
-    if(otherCell instanceof Blank && ((Blank) otherCell).val == null && this.val == null &&
-    ((Blank) otherCell).val.equals(this.val)){
+    if(otherCell instanceof Blank && ((Blank) otherCell).val == null && this.val == null ){
       isEqual = true;
     }
     return isEqual;

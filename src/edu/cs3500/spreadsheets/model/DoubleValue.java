@@ -52,7 +52,7 @@ public class DoubleValue implements Value{
   }
 
   @Override
-  public Value evaluateCell() {
-    return this;
+  public Object evaluateCell() {
+    return val;
   }
 }

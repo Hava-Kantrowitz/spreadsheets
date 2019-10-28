@@ -9,7 +9,7 @@ public interface Cell {
    * Evaluates the current cell. As it is with no methods being called.
    * @return the contents of the given cell
    */
-  Value evaluateCell();
+  Object evaluateCell();
 
   /**
    * This evaluates the cell for the number used when calculating a sum.

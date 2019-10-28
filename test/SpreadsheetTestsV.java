@@ -13,6 +13,7 @@ import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.StringValue;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
@@ -45,8 +46,8 @@ public class SpreadsheetTestsV {
     Cell addedCell = new DoubleValue(7.0);
     basicSpreadsheet.setCellAt(index,addedCell);
 
-    assertEquals(new DoubleValue(7.0),
-            basicSpreadsheet.getCellAt(index));
+    assertEquals(7.0,
+            basicSpreadsheet.getCellAt(index).evaluateCell());
   }
 
   // the test for when the given cell has a boolean value
@@ -56,8 +57,8 @@ public class SpreadsheetTestsV {
     Cell addedCell = new BooleanValue(true);
     basicSpreadsheet.setCellAt(index,addedCell);
 
-    assertEquals(new BooleanValue(true),
-            basicSpreadsheet.getCellAt(index));
+    assertEquals(true,
+            basicSpreadsheet.getCellAt(index).evaluateCell());
   }
 
 
@@ -68,8 +69,8 @@ public class SpreadsheetTestsV {
     Cell addedCell = new StringValue("I am not throwing away my shot!");
     basicSpreadsheet.setCellAt(index,addedCell);
 
-    assertEquals(new StringValue("I am not throwing away my shot!"),
-            basicSpreadsheet.getCellAt(index));
+    assertEquals("I am not throwing away my shot!",
+            basicSpreadsheet.getCellAt(index).evaluateCell());
   }
 
 
@@ -170,7 +171,7 @@ public class SpreadsheetTestsV {
     Coord index1 = new Coord(1,1);  // section of blank cells
     Coord index2 = new Coord(3, 3);
 
-    List<Cell> expected = new ArrayList<Cell>();
+    ArrayList expected = new ArrayList<Cell>();
 
     expected.add(new Blank());  // adding all blanks to the expected list
     expected.add(new Blank());
@@ -182,17 +183,9 @@ public class SpreadsheetTestsV {
     expected.add(new Blank());
     expected.add(new Blank());
 
-    List<Cell> actual = basicSpreadsheet.getCellSection(index1,index2);
+    ArrayList actual = basicSpreadsheet.getCellSection(index1,index2);
 
-    boolean isEqual = true;
-
-    for(int i = 0; i < actual.size() && isEqual; i++){
-      if(actual.get(i) != expected.get(i)){
-        isEqual = false;
-      }
-    }
-
-    assertTrue(isEqual);
+    assertEquals(expected, actual);
   }
 
   // the test for when the given cells  have some formulas

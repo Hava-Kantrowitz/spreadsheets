@@ -14,11 +14,11 @@ public class Formula implements Cell {
    */
   public Formula(String formula) {
     this.formula = formula;
-    this.evalVal = evaluateCell();
+    //this.evalVal = evaluateCell();
   }
 
   @Override
-  public Value evaluateCell() {
+  public Object evaluateCell() {
     return null;
   }
 

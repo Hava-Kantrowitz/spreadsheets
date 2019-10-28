@@ -47,7 +47,7 @@ public class BooleanValue implements Cell {
   }
 
   @Override
-  public Value evaluateCell() {
-    return (Value) this;
+  public Object evaluateCell() {
+    return bool;
   }
 }
