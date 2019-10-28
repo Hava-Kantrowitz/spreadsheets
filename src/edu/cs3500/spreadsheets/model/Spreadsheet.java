@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Models the representation of a basic spreadsheet.
  */
-public interface Spreadsheet {
+public interface Spreadsheet extends WorksheetReader.WorksheetBuilder {
 
 
   /**

@@ -31,40 +31,49 @@ public class Formula implements Cell {
     Scanner scan = new Scanner(formula);
 
 
+    Sexp input = parser.parse(formula);
+
+
+
     // checking to ensure there is a next argument
-    if (!scan.hasNext()) {
-      throw new IllegalArgumentException("Not a valid formula");
-    }
-    // checking that there is an equals
-    else if (scan.next() != "=") {
-      throw new IllegalArgumentException("Not a valid formula");
-    } else {
+//    if (!scan.hasNext()) {
+//      throw new IllegalArgumentException("Not a valid formula");
+//    }
+//    // checking that there is an equals
+//    else if (scan.next() != "=") {
+//      throw new IllegalArgumentException("Not a valid formula");
+//    }
 
 
-      while (scan.hasNext()) {
-        if (scan.next() == "(") {
-          String afterParen = scan.next();  // to hold value after
-          List listAfterParen;
-          if (afterParen.equals("SUM")) {
-            listAfterParen = getListAfterParen(scan);
-            //sum(listAfterParen.toArray(new Cell[listAfterParen.size()]));
-          } else if (afterParen.equals("PRODUCT")) {
-            listAfterParen = getListAfterParen(scan);
 
-          } else if (afterParen.equals("SQRT")) {
-            getListAfterParen(scan);
-          } else if (afterParen.equals("SUB")) {
-            getListAfterParen(scan);
-          } else if (afterParen.equals("<")) {
 
-          }
-          // if after paren and does not equal anything else above nor another paren
-          else if (!afterParen.equals("(")) {
-            throw new IllegalArgumentException("Invalid operation input.");
-          }
-        }
-      }
-    }
+    //else {
+
+
+//      while (scan.hasNext()) {
+//        if (scan.next() == "(") {
+//          String afterParen = scan.next();  // to hold value after
+//          List listAfterParen;
+//          if (afterParen.equals("SUM")) {
+//            listAfterParen = getListAfterParen(scan);
+//            //sum(listAfterParen.toArray(new Cell[listAfterParen.size()]));
+//          } else if (afterParen.equals("PRODUCT")) {
+//            listAfterParen = getListAfterParen(scan);
+//
+//          } else if (afterParen.equals("SQRT")) {
+//            getListAfterParen(scan);
+//          } else if (afterParen.equals("SUB")) {
+//            getListAfterParen(scan);
+//          } else if (afterParen.equals("<")) {
+//
+//          }
+//          // if after paren and does not equal anything else above nor another paren
+//          else if (!afterParen.equals("(")) {
+//            throw new IllegalArgumentException("Invalid operation input.");
+//          }
+//        }
+//      }
+   // }
     return null;
   }
 

@@ -1,6 +1,8 @@
 package edu.cs3500.spreadsheets.model;
 
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -10,6 +12,7 @@ public class BasicSpreadsheet implements Spreadsheet {
   private ArrayList<ArrayList<Cell>> sheet;
   private int numRows;
   private int numCols;
+  String fileName;
 
   /**
    * This is the blank constructor for a basic spreadsheet. Constructs a 10 by 10 spreadsheet of
@@ -39,7 +42,8 @@ public class BasicSpreadsheet implements Spreadsheet {
    * @param fileName the name of the initial file.
    */
   public BasicSpreadsheet(String fileName) {
-    initializeSpreadsheet(fileName);
+    this.fileName = fileName;
+    createWorksheet();
   }
 
 
@@ -172,5 +176,24 @@ public class BasicSpreadsheet implements Spreadsheet {
     }
 
 
+  }
+
+  // put the set cell here
+  @Override
+  public WorksheetReader.WorksheetBuilder createCell(int col, int row, String contents) {
+    return null;
+  }
+
+  @Override
+  public Object createWorksheet() {
+    try {
+      FileReader fr = new FileReader(fileName);
+    }
+    catch(FileNotFoundException e){
+      throw new IllegalArgumentException("The given file does not exist");
+    }
+
+
+    return this;
   }
 }

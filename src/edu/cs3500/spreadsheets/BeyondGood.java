@@ -1,5 +1,8 @@
 package edu.cs3500.spreadsheets;
 
+import edu.cs3500.spreadsheets.sexp.Parser;
+import edu.cs3500.spreadsheets.sexp.SexpVisitor;
+
 /**
  * The main class for our program.
  */
@@ -15,5 +18,17 @@ public class BeyondGood {
       - evaluate all the cells, and
       - report any errors, or print the evaluated value of the requested cell.
     */
+
+
+
+    Parser parser = new Parser();
+
+    String output = parser.parse("(PRODUCT (SUB C1 A1) (SUB C1 A1))").toString();
+
+    System.out.println(output);
+
+    String output2 = parser.parse("3").toString();
+
+    System.out.println(output2);
   }
 }
