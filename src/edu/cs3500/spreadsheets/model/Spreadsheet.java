@@ -1,5 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +35,7 @@ public interface Spreadsheet {
    * @param lower the coordinate of the lower bound.
    * @return List of the inhabitants of the cells.
    */
-  List<Cell> getCellSection(Coord upper, Coord lower);
+  ArrayList getCellSection(Coord upper, Coord lower);
 
 
   /**
