@@ -2,8 +2,12 @@ package edu.cs3500.spreadsheets.model;
 
 public class BooleanValue implements Cell {
 
+  private Boolean bool;
+
   // need to add the constructor
-  // and change the default values
+  public BooleanValue(Boolean val) {
+    this.bool = val;
+  }
 
 
   @Override
@@ -44,6 +48,6 @@ public class BooleanValue implements Cell {
 
   @Override
   public Value evaluateCell() {
-    return null;
+    return (Value) this;
   }
 }

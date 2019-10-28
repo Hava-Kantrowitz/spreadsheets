@@ -5,10 +5,13 @@ import java.util.List;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Blank;
+import edu.cs3500.spreadsheets.model.BooleanValue;
 import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.DoubleValue;
 import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
+import edu.cs3500.spreadsheets.model.StringValue;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -39,10 +42,10 @@ public class SpreadsheetTestsV {
   @Test
   public void getCellNumericValue(){
     Coord index = new Coord(1,3);
-    Cell addedCell = new Value(7);
+    Cell addedCell = new DoubleValue(7.0);
     basicSpreadsheet.setCellAt(index,addedCell);
 
-    assertEquals(new Value(7),
+    assertEquals(new DoubleValue(7.0),
             basicSpreadsheet.getCellAt(index));
   }
 
@@ -50,10 +53,10 @@ public class SpreadsheetTestsV {
   @Test
   public void getCellBooleanValue(){
     Coord index = new Coord(5,3);
-    Cell addedCell = new Value(true);
+    Cell addedCell = new BooleanValue(true);
     basicSpreadsheet.setCellAt(index,addedCell);
 
-    assertEquals(new Value(true),
+    assertEquals(new BooleanValue(true),
             basicSpreadsheet.getCellAt(index));
   }
 
@@ -62,10 +65,10 @@ public class SpreadsheetTestsV {
   @Test
   public void getCellStringValue(){
     Coord index = new Coord(5,3);
-    Cell addedCell = new Value("I am not throwing away my shot!");
+    Cell addedCell = new StringValue("I am not throwing away my shot!");
     basicSpreadsheet.setCellAt(index,addedCell);
 
-    assertEquals(new Value("I am not throwing away my shot!"),
+    assertEquals(new StringValue("I am not throwing away my shot!"),
             basicSpreadsheet.getCellAt(index));
   }
 
@@ -235,9 +238,9 @@ public class SpreadsheetTestsV {
   @Test
   public void getSectionValues(){
     // setting up the board to be all formulas in given section
-    basicSpreadsheet.setCellAt(new Coord(1,1),new Value("hi"));
-    basicSpreadsheet.setCellAt(new Coord(2,1), new Value(9));
-    basicSpreadsheet.setCellAt(new Coord(3,3), new Value(true));
+    basicSpreadsheet.setCellAt(new Coord(1,1),new StringValue("hi"));
+    basicSpreadsheet.setCellAt(new Coord(2,1), new DoubleValue(9.0));
+    basicSpreadsheet.setCellAt(new Coord(3,3), new BooleanValue(true));
 
 
     Coord index1 = new Coord(1,1);  // section of blank cells
@@ -245,15 +248,15 @@ public class SpreadsheetTestsV {
 
     List<Cell> expected = new ArrayList<>();
 
-    expected.add(new Value("hi"));  // adding all blanks to the expected list
-    expected.add(new Value(9));
+    expected.add(new StringValue("hi"));  // adding all blanks to the expected list
+    expected.add(new DoubleValue(9.0));
     expected.add(new Blank());
     expected.add(new Blank());
     expected.add(new Blank());
     expected.add(new Blank());
     expected.add(new Blank());
     expected.add(new Blank());
-    expected.add(new Value(true));
+    expected.add(new BooleanValue(true));
 
     List<Cell> actual = basicSpreadsheet.getCellSection(index1,index2);
 
@@ -275,11 +278,11 @@ public class SpreadsheetTestsV {
   @Test
   public void getSectionAllTypes(){
     // setting up the board to be all formulas in given section
-    basicSpreadsheet.setCellAt(new Coord(1,1),new Value("hi"));
-    basicSpreadsheet.setCellAt(new Coord(2,1), new Value(9));
+    basicSpreadsheet.setCellAt(new Coord(1,1), new StringValue("hi"));
+    basicSpreadsheet.setCellAt(new Coord(2,1), new DoubleValue(9.0));
     basicSpreadsheet.setCellAt(new Coord(3,1), new Formula("=B1"));
     basicSpreadsheet.setCellAt(new Coord(1,2), new Formula("=(SUM B1 C1)"));
-    basicSpreadsheet.setCellAt(new Coord(3,3), new Value(true));
+    basicSpreadsheet.setCellAt(new Coord(3,3), new BooleanValue(true));
 
 
     Coord index1 = new Coord(1,1);  // section of blank cells
@@ -287,15 +290,15 @@ public class SpreadsheetTestsV {
 
     List<Cell> expected = new ArrayList<>();
 
-    expected.add(new Value("hi"));  // adding all blanks to the expected list
-    expected.add(new Value(9));
+    expected.add(new StringValue("hi"));  // adding all blanks to the expected list
+    expected.add(new DoubleValue(9.0));
     expected.add(new Formula("=B1"));
     expected.add(new Formula("=(SUM B1 C1)"));
     expected.add(new Blank());
     expected.add(new Blank());
     expected.add(new Blank());
     expected.add(new Blank());
-    expected.add(new Value(true));
+    expected.add(new BooleanValue(true));
 
     List<Cell> actual = basicSpreadsheet.getCellSection(index1,index2);
 
@@ -352,11 +355,11 @@ public class SpreadsheetTestsV {
   @Test
   public void getSectionSomeOutOfRange(){
     // setting up the board to be all formulas in given section
-    basicSpreadsheet.setCellAt(new Coord(10,1),new Value("hi"));
-    basicSpreadsheet.setCellAt(new Coord(10,2), new Value(9));
+    basicSpreadsheet.setCellAt(new Coord(10,1), new StringValue("hi"));
+    basicSpreadsheet.setCellAt(new Coord(10,2), new DoubleValue(9.0));
     basicSpreadsheet.setCellAt(new Coord(10,3), new Formula("=J2"));
     basicSpreadsheet.setCellAt(new Coord(10,4), new Formula("=(SUM J3 J2)"));
-    basicSpreadsheet.setCellAt(new Coord(10,5), new Value(true));
+    basicSpreadsheet.setCellAt(new Coord(10,5), new BooleanValue(true));
 
 
     Coord index1 = new Coord(10,1);  // section of blank cells
@@ -364,15 +367,15 @@ public class SpreadsheetTestsV {
 
     List<Cell> expected = new ArrayList<>();
 
-    expected.add(new Value("hi"));  // adding all blanks to the expected list
+    expected.add(new StringValue("hi"));  // adding all blanks to the expected list
     expected.add(new Blank());
-    expected.add(new Value(9));
+    expected.add(new DoubleValue(9.0));
     expected.add(new Blank());
     expected.add(new Formula("=J2"));
     expected.add(new Blank());
     expected.add(new Formula("=(SUM J3 J2)"));
     expected.add(new Blank());
-    expected.add(new Value(true));
+    expected.add(new BooleanValue(true));
     expected.add(new Blank());
     List<Cell> actual = basicSpreadsheet.getCellSection(index1,index2);
 

@@ -2,7 +2,6 @@ package edu.cs3500.spreadsheets.model;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BasicSpreadsheet implements Spreadsheet {
 
@@ -44,8 +43,14 @@ public class BasicSpreadsheet implements Spreadsheet {
   public Cell getCellAt(Coord coord) {
     int givenCol = coord.col - 1;
     int givenRow = coord.row - 1;
-    // basic implementation not for testing set cell at
-    return sheet.get(givenRow).get(givenCol);
+
+    // checking if it is greater than the number of columns (1 based index)
+    // expand the board to fit
+    if(givenCol >= numCols || givenRow >= numRows){
+      expandSheet(givenCol,givenRow);
+    }
+
+    return sheet.get(givenCol).get(givenCol);
   }
 
   @Override
@@ -64,19 +69,54 @@ public class BasicSpreadsheet implements Spreadsheet {
   }
 
   @Override
-  public List<Cell> getCellSection(Coord coord, Coord cord) {
-    return null;
+  public ArrayList getCellSection(Coord coord, Coord cord) {
+    int givenCol1 = coord.col - 1;
+    int givenRow1 = coord.row - 1;
+    int givenCol2 = cord.col - 1;
+    int givenRow2 = cord.row - 1;
+
+    if (givenCol2 < givenCol1 || givenRow2 < givenRow1) {
+      throw new IllegalArgumentException("Cannot find cell range");
+    }
+
+    // checking if it is greater than the number of columns (1 based index)
+    // expand the board to fit
+    if(givenCol1 >= numCols || givenRow1 >= numRows){
+      expandSheet(givenCol1,givenRow1);
+    }
+
+    if (givenCol2 >= numCols || givenRow2 >= numRows) {
+      expandSheet(givenCol1, givenRow1);
+    }
+
+    ArrayList multRows = null;
+
+    for (int i = givenCol1; i <= givenCol2; i++) {
+      for (int j = givenRow1; j < givenCol2; j++) {
+        multRows.add(sheet.get(i).get(j));
+      }
+
+    }
+
+    return multRows;
   }
 
 
   @Override
   public void evaluateSheet() {
 
+    for (int i = 1; i <= numCols; i++) {
+      for (int j = 1; j < numRows; j++) {
+        Coord currCor = new Coord(numCols, numRows);
+        getCellAt(currCor).evaluateCell();
+      }
+    }
+
   }
 
   @Override
-  public void evaluateCellAt(Coord coord){
-
+  public void evaluateCellAt(Coord coord) throws IllegalArgumentException {
+    getCellAt(coord).evaluateCell();
   }
 
   /**
@@ -89,13 +129,19 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   /**
    * This is the method to expand the spreadsheet when the coordinates selected are out of bounds.
-   * If the column is out of bounds then double column wise, same with row.
-   * If both are out of bounds double in both directions.
+   * If the column is out of bounds then expand column wise, same with row.
+   * If both are out of bounds expand in both directions.
    * When new cells are added they should be blank.
    * @param inputCol the column that was input
    * @param inputRow the row that was input
    */
   private void expandSheet(int inputCol, int inputRow) {
+
+    sheet.ensureCapacity(inputCol);
+
+    for (int i = 0; i < inputCol; i++) {
+      sheet.get(i).ensureCapacity(inputRow);
+    }
 
   }
 }

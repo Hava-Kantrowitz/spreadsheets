@@ -1,10 +1,14 @@
 import org.junit.Test;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
+import edu.cs3500.spreadsheets.model.BooleanValue;
 import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.DoubleValue;
 import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
+import edu.cs3500.spreadsheets.model.StringValue;
+import edu.cs3500.spreadsheets.model.Value;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,13 +28,13 @@ public class CellTestsV {
   private Coord b3 = new Coord(2,3);
   private Coord c3 = new Coord(3,3);
 
-  private Cell trueVal = new Value(true);
-  private Cell falseVal = new Value(false);
-  private Cell stringVal = new Value("hello");
-  private Cell numberVal10 = new Value(10);
-  private Cell numberVal5 = new Value(5);
-  private Cell numberVal2 = new Value(2);
-  private Cell numberVal4 = new Value(4);
+  private Cell trueVal = new BooleanValue(true);
+  private Cell falseVal = new BooleanValue(false);
+  private Cell stringVal = new StringValue("hello");
+  private Cell numberVal10 = new DoubleValue(10.0);
+  private Cell numberVal5 = new DoubleValue(5.0);
+  private Cell numberVal2 = new DoubleValue(2.0);
+  private Cell numberVal4 = new DoubleValue(4.0);
 
   // THESE ARE THE TESTS FOR EVALUATE CELL (WHEN IT IS A VALUE)
 
@@ -59,7 +63,7 @@ public class CellTestsV {
     spreadsheet.setCellAt(a1,trueVal);
     spreadsheet.setCellAt(c3,numberVal10);
     spreadsheet.setCellAt(b2,new Formula("=(PRODUCT A1 C3)"));
-    assertEquals(new Value(10),spreadsheet.getCellAt(b2).evaluateCell());
+    assertEquals(new DoubleValue(10.0),spreadsheet.getCellAt(b2).evaluateCell());
   }
 
   // this is the test for product (when it has false) - false is zero here
@@ -68,7 +72,7 @@ public class CellTestsV {
     spreadsheet.setCellAt(a1,falseVal);
     spreadsheet.setCellAt(c3,numberVal10);
     spreadsheet.setCellAt(b2,new Formula("=(PRODUCT A1 C3)"));
-    assertEquals(new Value(0),spreadsheet.getCellAt(b2).evaluateCell());
+    assertEquals(new BooleanValue(false),spreadsheet.getCellAt(b2).evaluateCell());
   }
 
   // this is the test for product (when has all numbers)
@@ -79,7 +83,7 @@ public class CellTestsV {
     spreadsheet.setCellAt(c2,numberVal4);
     spreadsheet.setCellAt(b1, numberVal2);
     spreadsheet.setCellAt(b2,new Formula("=(PRODUCT A1 C3 C2 B1)"));
-    assertEquals(new Value(160),spreadsheet.getCellAt(b2).evaluateCell());
+    assertEquals(new DoubleValue(160.0),spreadsheet.getCellAt(b2).evaluateCell());
   }
 
 
@@ -92,7 +96,7 @@ public class CellTestsV {
     spreadsheet.setCellAt(c2,numberVal4);
     spreadsheet.setCellAt(b1, numberVal2);
     spreadsheet.setCellAt(b2,new Formula("=(SUM A1 C3 C2 B1)"));
-    assertEquals(new Value(11),spreadsheet.getCellAt(b2).evaluateCell());
+    assertEquals(new DoubleValue(11.0),spreadsheet.getCellAt(b2).evaluateCell());
   }
 
   // this is the test for sum (when has boolean inputs)
@@ -103,7 +107,7 @@ public class CellTestsV {
     spreadsheet.setCellAt(c2,numberVal4);
     spreadsheet.setCellAt(b1, falseVal);
     spreadsheet.setCellAt(b2,new Formula("=(SUM A1 C3 C2 B1)"));
-    assertEquals(new Value(9),spreadsheet.getCellAt(b2).evaluateCell());
+    assertEquals(new DoubleValue(9.0),spreadsheet.getCellAt(b2).evaluateCell());
   }
   // this is the test for sum (when it has many valid inputs)
   @Test
@@ -113,7 +117,7 @@ public class CellTestsV {
     spreadsheet.setCellAt(c2,numberVal4);
     spreadsheet.setCellAt(b1, numberVal2);
     spreadsheet.setCellAt(b2,new Formula("=(SUM A1 C3 C2 B1)"));
-    assertEquals(new Value(21),spreadsheet.getCellAt(b2).evaluateCell());
+    assertEquals(new DoubleValue(21.0),spreadsheet.getCellAt(b2).evaluateCell());
   }
 
 
@@ -133,7 +137,7 @@ public class CellTestsV {
     spreadsheet.setCellAt(a1,trueVal);
 
     spreadsheet.setCellAt(b1,new Formula("=(SQRT A1)"));
-    assertEquals(new Value(1),spreadsheet.getCellAt(b1).evaluateCell());
+    assertEquals(new DoubleValue(1.0),spreadsheet.getCellAt(b1).evaluateCell());
   }
 
   // this is the test for when the input is false (zero)
@@ -142,7 +146,7 @@ public class CellTestsV {
     spreadsheet.setCellAt(a1,falseVal);
 
     spreadsheet.setCellAt(b1,new Formula("=(SQRT A1)"));
-    assertEquals(new Value(0),spreadsheet.getCellAt(b1).evaluateCell());
+    assertEquals(new DoubleValue(0.0),spreadsheet.getCellAt(b1).evaluateCell());
   }
   // this is the test for when the input is valid double
   @Test
@@ -150,7 +154,7 @@ public class CellTestsV {
     spreadsheet.setCellAt(a1,numberVal4);
 
     spreadsheet.setCellAt(b1,new Formula("=(SQRT A1)"));
-    assertEquals(new Value(2),spreadsheet.getCellAt(b1).evaluateCell());
+    assertEquals(new DoubleValue(2.0),spreadsheet.getCellAt(b1).evaluateCell());
   }
 
   // this is the test for when the number is not perfect square
@@ -160,7 +164,7 @@ public class CellTestsV {
     spreadsheet.setCellAt(a1,numberVal10);
 
     spreadsheet.setCellAt(b1,new Formula("=(SQRT A1)"));
-    assertEquals(new Value(Math.sqrt(10)),spreadsheet.getCellAt(b1).evaluateCell());
+    assertEquals(new DoubleValue(Math.sqrt(10)),spreadsheet.getCellAt(b1).evaluateCell());
   }
 
   // this is the test for when the input does something within the SQRT
@@ -169,7 +173,7 @@ public class CellTestsV {
     spreadsheet.setCellAt(a1,new Formula("=(SUM 5 5)"));
 
     spreadsheet.setCellAt(b1,new Formula("=(SQRT A1)"));
-    assertEquals(new Value(Math.sqrt(10)),spreadsheet.getCellAt(b1).evaluateCell());
+    assertEquals(new DoubleValue(Math.sqrt(10)),spreadsheet.getCellAt(b1).evaluateCell());
   }
 
 
