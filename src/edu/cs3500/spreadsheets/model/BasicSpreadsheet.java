@@ -1,6 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class BasicSpreadsheet implements Spreadsheet {
@@ -47,10 +48,10 @@ public class BasicSpreadsheet implements Spreadsheet {
     // checking if it is greater than the number of columns (1 based index)
     // expand the board to fit
     if(givenCol >= numCols || givenRow >= numRows){
-      expandSheet(givenCol,givenRow);
+      expandSheet(givenCol, givenRow);
     }
 
-    return sheet.get(givenRow).get(givenCol);
+    return sheet.get(givenCol).get(givenRow);
   }
 
   @Override
@@ -64,14 +65,12 @@ public class BasicSpreadsheet implements Spreadsheet {
       expandSheet(givenCol,givenRow);
     }
     // get the given row then set the column of that row
-
-
-
     sheet.get(givenRow).set(givenCol,cellVal);
+
   }
 
   @Override
-  public ArrayList getCellSection(Coord coord, Coord cord) {
+  public ArrayList<Cell> getCellSection(Coord coord, Coord cord) {
     int givenCol1 = coord.col - 1;
     int givenRow1 = coord.row - 1;
     int givenCol2 = cord.col - 1;
@@ -91,10 +90,10 @@ public class BasicSpreadsheet implements Spreadsheet {
       expandSheet(givenCol1, givenRow1);
     }
 
-    ArrayList multRows = null;
+    ArrayList multRows = new ArrayList<>();
 
     for (int i = givenCol1; i <= givenCol2; i++) {
-      for (int j = givenRow1; j < givenCol2; j++) {
+      for (int j = givenRow1; j <= givenCol2; j++) {
         multRows.add(sheet.get(i).get(j));
       }
 
@@ -140,9 +139,17 @@ public class BasicSpreadsheet implements Spreadsheet {
   private void expandSheet(int inputCol, int inputRow) {
 
     sheet.ensureCapacity(inputCol);
+    ArrayList<Cell> empty = new ArrayList<>();
 
-    for (int i = 0; i < inputCol; i++) {
+    while (sheet.size() <= inputCol) {
+      sheet.add(empty);
+    }
+
+    for (int i = 0; i <= inputCol; i++) {
       sheet.get(i).ensureCapacity(inputRow);
+      while (sheet.get(i).size() <= inputRow) {
+        sheet.get(i).add(new Blank());
+      }
     }
 
   }
