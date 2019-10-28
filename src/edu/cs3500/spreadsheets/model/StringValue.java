@@ -5,7 +5,7 @@ package edu.cs3500.spreadsheets.model;
  */
 public class StringValue implements Value {
 
-  String val;
+  private String val;
 
   /**
    * This is the constructor for a StringValue.
@@ -29,9 +29,23 @@ public class StringValue implements Value {
 
   @Override
   public double evaluateCellProduct(Cell...cells){
+    int numCount = 0; // the number of other numbers
+    double evalNum;
+
+    for(Cell c: cells){
+      if(c.isNum()){
+        numCount++;
+      }
+    }
     // if all strings then 0
+    if(numCount == 1){
+      evalNum = 0;
+    }
     // if not all strings then 1
-    return 0;
+    else{
+      evalNum = 1;
+    }
+    return evalNum;
   }
 
   @Override
@@ -56,6 +70,6 @@ public class StringValue implements Value {
 
   @Override
   public Value evaluateCell() {
-    return null;
+    return this;
   }
 }

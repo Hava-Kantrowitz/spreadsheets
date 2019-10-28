@@ -24,7 +24,7 @@ public interface Cell {
    * @return the value of the value when calculating product
    * @throws IllegalArgumentException if the value cannot be used in a product operation
    */
-  double evaluateCellProduct(List<Cell> cells) throws IllegalArgumentException;
+  double evaluateCellProduct(Cell...cells) throws IllegalArgumentException;
 
   /**
    * This evaluates the cell for the number used when calculating the SQRT.
@@ -45,6 +45,13 @@ public interface Cell {
    * @return the value used when a comparison is taken
    */
   double evaluateCellComparison();
+
+
+  /**
+   * Determines if the cell is a number.
+   * @return true if the cell is a number, false otherwise
+   */
+  boolean isNum();
 
 
 }

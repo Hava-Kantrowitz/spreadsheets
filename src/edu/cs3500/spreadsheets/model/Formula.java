@@ -1,12 +1,20 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import edu.cs3500.spreadsheets.sexp.Parser;
+import edu.cs3500.spreadsheets.sexp.SList;
+import edu.cs3500.spreadsheets.sexp.Sexp;
+
 /**
  * Models a cell with a formula.
  */
 public class Formula implements Cell {
 
   private String formula;
-  private Value evalVal;
+
 
   /**
    * Constructs an instance of a formula cell.
@@ -14,42 +22,94 @@ public class Formula implements Cell {
    */
   public Formula(String formula) {
     this.formula = formula;
-    this.evalVal = evaluateCell();
   }
 
   @Override
   public Value evaluateCell() {
-    return null;
+    Parser parser = new Parser();
+    Scanner scan = new Scanner(formula);
+
+
+    // checking to ensure there is a next argument
+    if(!scan.hasNext()){
+      throw new IllegalArgumentException("Not a valid formula");
+    }
+    // checking that there is an equals
+    else if(scan.next() != "="){
+      throw new IllegalArgumentException("Not a valid formula");
+    }
+    else{
+
+
+
+      while(scan.hasNext()){
+        if(scan.next() == "("){
+          String afterParen = scan.next();  // to hold value after
+          List listAfterParen;
+          if(afterParen.equals("SUM")){
+            listAfterParen = getListAfterParen(scan);
+            sum(listAfterParen.toArray(new Cell[listAfterParen.size()]));
+          }
+          else if(afterParen.equals("PRODUCT")){
+            listAfterParen = getListAfterParen(scan);
+
+          }
+          else if(afterParen.equals("SQRT")){
+            getListAfterParen(scan);
+          }
+          else if(afterParen.equals("SUB")){
+            getListAfterParen(scan);
+          }
+          else if(afterParen.equals("<")){
+
+          }
+          // if after paren and does not equal anything else above nor another paren
+          else if(!afterParen.equals("(")){
+            throw new IllegalArgumentException("Invalid operation input.");
+          }
+        }
+      }
+    }
+
+  }
+
+  /**
+   * This is the helper method to get the list of inputs after the operation name.
+   * @param scan the scanner with the input
+   *
+   */
+  List<Cell> getListAfterParen(Scanner scan) {
+
   }
 
   @Override
   public double evaluateCellSum() {
-    return 0;
+    return this.evaluateCell().evaluateCellSum();
   }
 
   @Override
   public double evaluateCellProduct(Cell...cells) throws IllegalArgumentException {
-    return 0;
+    return this.evaluateCell().evaluateCellProduct();
   }
 
   @Override
   public double evaluateCellSqrt() throws IllegalArgumentException {
-    return 0;
+    return this.evaluateCell().evaluateCellSqrt();
   }
 
   @Override
   public double evaluateCellDifference() throws IllegalArgumentException {
-    return 0;
+    return this.evaluateCell().evaluateCellDifference();
   }
 
   @Override
   public double evaluateCellComparison() {
-    return 0;
+    return this.evaluateCell().evaluateCellComparison();
   }
 
   @Override
   public boolean isNum() {
-    return false;
+    return this.evaluateCell().isNum();
   }
 
   /**
@@ -57,7 +117,7 @@ public class Formula implements Cell {
    * @param cells the list of cells to add
    * @return the added value of the cells
    */
-  private double sum(Cell... cells) {
+  private double sum(Cell...cells) {
     int sum = 0;
     for (Cell c : cells) {
       sum += c.evaluateCellSum();
@@ -83,8 +143,11 @@ public class Formula implements Cell {
     return cell.evaluateCellSqrt();
   }
 
-  private int comparison(Cell cell1, Cell cell2) {
-    return 0;
+  private boolean comparison(Cell cell1, Cell cell2) {
+    if(cell1.evaluateCellComparison() < cell2.evaluateCellComparison()){
+
+    }
+    return ;
   }
 
   private String hamilton(Cell cell) {
@@ -100,4 +163,5 @@ public class Formula implements Cell {
     }
     return isEqual;
   }
+
 }
