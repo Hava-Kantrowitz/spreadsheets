@@ -50,7 +50,7 @@ public class BasicSpreadsheet implements Spreadsheet {
       expandSheet(givenCol,givenRow);
     }
 
-    return sheet.get(givenCol).get(givenCol);
+    return sheet.get(givenRow).get(givenCol);
   }
 
   @Override
@@ -64,8 +64,10 @@ public class BasicSpreadsheet implements Spreadsheet {
       expandSheet(givenCol,givenRow);
     }
     // get the given row then set the column of that row
-    sheet.get(givenRow).set(givenCol,cellVal);
 
+
+
+    sheet.get(givenRow).set(givenCol,cellVal);
   }
 
   @Override

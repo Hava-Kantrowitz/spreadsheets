@@ -107,7 +107,7 @@ public class SpreadsheetTest {
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
-    assertTrue(val3.equals(testSheet.getCellAt(coord3)));
+    assertEquals(val3,testSheet.getCellAt(coord3));
   }
 
   //tests that a very large cell can be set

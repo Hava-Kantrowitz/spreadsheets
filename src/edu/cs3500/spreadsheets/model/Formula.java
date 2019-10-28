@@ -48,7 +48,7 @@ public class Formula implements Cell {
           List listAfterParen;
           if(afterParen.equals("SUM")){
             listAfterParen = getListAfterParen(scan);
-            sum(listAfterParen.toArray(new Cell[listAfterParen.size()]));
+            //sum(listAfterParen.toArray(new Cell[listAfterParen.size()]));
           }
           else if(afterParen.equals("PRODUCT")){
             listAfterParen = getListAfterParen(scan);
@@ -70,7 +70,7 @@ public class Formula implements Cell {
         }
       }
     }
-
+    return null;
   }
 
   /**
@@ -79,7 +79,7 @@ public class Formula implements Cell {
    *
    */
   List<Cell> getListAfterParen(Scanner scan) {
-
+    return null;
   }
 
   @Override
@@ -135,19 +135,38 @@ public class Formula implements Cell {
     return product;
   }
 
-  private int difference (Cell cell1, Cell cell2) {
-    return 0;
+  /**
+   * This computes the difference between cell1 and cell2.
+   * @param cell1 the first given cell
+   * @param cell2 the second given cell
+   * @return the difference between cell1 and cell2
+   */
+  private double difference (Cell cell1, Cell cell2) {
+    return cell1.evaluateCellDifference() - cell2.evaluateCellDifference();
   }
 
+  /**
+   * This computes the square root of the given cell.
+   * @param cell the given cell
+   * @return the square root of the given cell
+   */
   private double sqrt(Cell cell) {
     return cell.evaluateCellSqrt();
   }
 
+  /**
+   * Compares cell1 to determine if it is less than cell2.
+   * @param cell1 the first given cell
+   * @param cell2 the second given cell
+   * @return true if cell1 is less than cell2
+   */
   private boolean comparison(Cell cell1, Cell cell2) {
-    if(cell1.evaluateCellComparison() < cell2.evaluateCellComparison()){
+    boolean isLessThan = false;
 
+    if(cell1.evaluateCellComparison() < cell2.evaluateCellComparison()){
+      isLessThan = true;
     }
-    return ;
+    return isLessThan;
   }
 
   private String hamilton(Cell cell) {
