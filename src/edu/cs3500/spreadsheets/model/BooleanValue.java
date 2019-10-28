@@ -1,6 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
-public class BooleanValue implements Cell {
+public class BooleanValue implements Value {
 
   private Boolean bool;
 
@@ -48,6 +48,17 @@ public class BooleanValue implements Cell {
 
   @Override
   public Value evaluateCell() {
-    return (Value) this;
+    return this;
+  }
+
+  @Override
+  public boolean equals(Object otherCell){
+    boolean isEqual = false;
+
+    if(otherCell instanceof BooleanValue && ((BooleanValue) otherCell).bool.equals(this.bool)){
+      isEqual = true;
+    }
+
+    return isEqual;
   }
 }

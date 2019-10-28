@@ -281,6 +281,7 @@ public class SpreadsheetTest {
     Spreadsheet testSheet = new BasicSpreadsheet();
     Coord coord1 = new Coord(1, 1);
     Value comp1 = new DoubleValue(0.0);
+    testSheet.setCellAt(coord1,comp1);
     assertEquals(comp1, testSheet.getCellAt(coord1).evaluateCell());
   }
 

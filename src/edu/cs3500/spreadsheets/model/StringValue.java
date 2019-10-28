@@ -72,4 +72,14 @@ public class StringValue implements Value {
   public Value evaluateCell() {
     return this;
   }
+
+  @Override
+  public boolean equals(Object otherString){
+    boolean isEqual = false;
+
+    if(otherString instanceof StringValue && ((StringValue) otherString).val.equals(this.val)){
+      isEqual = true;
+    }
+    return isEqual;
+  }
 }
