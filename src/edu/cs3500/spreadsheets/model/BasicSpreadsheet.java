@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class BasicSpreadsheet implements Spreadsheet {
 
+  private static final int MAXINT = 2147483647;
   private ArrayList<ArrayList<Cell>> sheet;
   private int numRows;
   private int numCols;
@@ -83,17 +84,17 @@ public class BasicSpreadsheet implements Spreadsheet {
     // checking if it is greater than the number of columns (1 based index)
     // expand the board to fit
     if(givenCol1 >= numCols || givenRow1 >= numRows){
-      expandSheet(givenCol1,givenRow1);
+      expandSheet(givenCol1, givenRow1);
     }
 
     if (givenCol2 >= numCols || givenRow2 >= numRows) {
-      expandSheet(givenCol1, givenRow1);
+      expandSheet(givenCol2, givenRow2);
     }
 
     ArrayList multRows = new ArrayList<>();
 
     for (int i = givenCol1; i <= givenCol2; i++) {
-      for (int j = givenRow1; j <= givenCol2; j++) {
+      for (int j = givenRow1; j <= givenRow2; j++) {
         multRows.add(sheet.get(i).get(j));
       }
 
@@ -138,19 +139,37 @@ public class BasicSpreadsheet implements Spreadsheet {
    */
   private void expandSheet(int inputCol, int inputRow) {
 
-    sheet.ensureCapacity(inputCol);
     ArrayList<Cell> empty = new ArrayList<>();
-
-    while (sheet.size() <= inputCol) {
-      sheet.add(empty);
-    }
-
-    for (int i = 0; i <= inputCol; i++) {
-      sheet.get(i).ensureCapacity(inputRow);
-      while (sheet.get(i).size() <= inputRow) {
-        sheet.get(i).add(new Blank());
+    
+    if (inputCol >= MAXINT) {
+      while (sheet.size() <= MAXINT) {
+        sheet.add(empty);
       }
     }
+
+    if (inputRow >= MAXINT) {
+      for (int i = 0; i <= MAXINT; i++) {
+        while (sheet.get(i).size() <= inputRow) {
+          sheet.get(i).add(new Blank());
+        }
+      }
+    }
+
+    else {
+      sheet.ensureCapacity(inputRow);
+
+      while (sheet.size() <= inputRow) {
+        sheet.add(empty);
+      }
+
+      for (int i = 0; i <= inputRow; i++) {
+        sheet.get(i).ensureCapacity(inputCol);
+        while (sheet.get(i).size() <= inputCol) {
+          sheet.get(i).add(new Blank());
+        }
+      }
+    }
+
 
   }
 }

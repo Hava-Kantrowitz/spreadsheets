@@ -29,22 +29,23 @@ public class StringValue implements Value {
 
   @Override
   public double evaluateCellProduct(Cell...cells){
-    int numCount = 0; // the number of other numbers
+    int numCount = 0;
     double evalNum;
 
-    for(Cell c: cells){
-      if(c.isNum()){
+    for (Cell c : cells) {
+      if (c.isNum()) {
         numCount++;
       }
     }
-    // if all strings then 0
-    if(numCount == 1){
+
+    if (numCount == 1) {
       evalNum = 0;
     }
-    // if not all strings then 1
-    else{
-      evalNum = 1;
+
+    else {
+      evalNum = 0;
     }
+
     return evalNum;
   }
 
@@ -74,10 +75,10 @@ public class StringValue implements Value {
   }
 
   @Override
-  public boolean equals(Object otherString){
+  public boolean equals(Object otherString) {
     boolean isEqual = false;
 
-    if(otherString instanceof StringValue && ((StringValue) otherString).val.equals(this.val)){
+    if (otherString instanceof StringValue && ((StringValue) otherString).val.equals(this.val)) {
       isEqual = true;
     }
     return isEqual;

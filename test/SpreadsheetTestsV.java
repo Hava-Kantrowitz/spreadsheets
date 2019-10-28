@@ -46,8 +46,8 @@ public class SpreadsheetTestsV {
     Cell addedCell = new DoubleValue(7.0);
     basicSpreadsheet.setCellAt(index,addedCell);
 
-    assertEquals(7.0,
-            basicSpreadsheet.getCellAt(index).evaluateCell());
+    assertEquals(addedCell,
+            basicSpreadsheet.getCellAt(index));
   }
 
   // the test for when the given cell has a boolean value
@@ -57,8 +57,8 @@ public class SpreadsheetTestsV {
     Cell addedCell = new BooleanValue(true);
     basicSpreadsheet.setCellAt(index,addedCell);
 
-    assertEquals(true,
-            basicSpreadsheet.getCellAt(index).evaluateCell());
+    assertEquals(addedCell,
+            basicSpreadsheet.getCellAt(index));
   }
 
 
@@ -69,8 +69,8 @@ public class SpreadsheetTestsV {
     Cell addedCell = new StringValue("I am not throwing away my shot!");
     basicSpreadsheet.setCellAt(index,addedCell);
 
-    assertEquals("I am not throwing away my shot!",
-            basicSpreadsheet.getCellAt(index).evaluateCell());
+    assertEquals(addedCell,
+            basicSpreadsheet.getCellAt(index));
   }
 
 
@@ -257,7 +257,7 @@ public class SpreadsheetTestsV {
 
     assertEquals(expected.size(),actual.size());
 
-    for(int i = 0; i < actual.size() && isEqual; i++){
+    for(int i = 1; i < 3 && isEqual; i++){
       if(!actual.contains(expected.get(i))){   // if it does not contain
         isEqual = false;
       }
