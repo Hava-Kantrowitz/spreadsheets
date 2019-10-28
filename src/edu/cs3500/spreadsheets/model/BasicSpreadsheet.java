@@ -93,8 +93,8 @@ public class BasicSpreadsheet implements Spreadsheet {
 
     ArrayList multRows = new ArrayList<>();
 
-    for (int i = givenCol1; i <= givenCol2; i++) {
-      for (int j = givenRow1; j <= givenRow2; j++) {
+    for (int i = givenRow1; i <= givenRow2; i++) {
+      for (int j = givenCol1; j <= givenCol2; j++) {
         multRows.add(sheet.get(i).get(j));
       }
 
