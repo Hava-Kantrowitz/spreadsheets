@@ -7,6 +7,12 @@ import java.util.ArrayList;
  */
 public interface Spreadsheet extends WorksheetReader.WorksheetBuilder {
 
+  /**
+   * This is the method to initialize the spreadsheet of the board from the file.
+   *
+   * @param fileName the name of the given file
+   */
+  void initializeSpreadsheet(String fileName);
 
   /**
    * Gets the cell at the given coordinate. If the given cell is outside the size of the board, the

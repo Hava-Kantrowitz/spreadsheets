@@ -26,31 +26,76 @@ public class BasicSpreadsheet implements Spreadsheet {
    * blank cells.
    */
   public BasicSpreadsheet() {
-    sheet = new ArrayList<>();  // initialize the overall array list
-
-    // goes through the columns and rows
-    for (int i = 0; i < 10; i++) {
-      sheet.add(new ArrayList<>());  // adds a new row (initialize each array list)
-      for (int j = 0; j < 10; j++) {
-        // adds an element to the new row
-        sheet.get(i).add(new Blank());
-      }
-    }
-
-    numRows = 10;
-    numCols = 10;
 
   }
 
-  /**
-   * This is the constructor that takes in a file and creates the model. Sets the num rows and
-   * cols.
-   *
-   * @param fileName the name of the initial file.
-   */
-  public BasicSpreadsheet(String fileName) {
-    this.fileName = fileName;
-    initializeSpreadsheet(fileName);
+  @Override
+  public void initializeSpreadsheet(String fileName) {
+    sheet = new ArrayList<ArrayList<Cell>>();
+    FileReader fr;
+
+    try {
+      fr = new FileReader(fileName);  // get the given file
+    }
+    catch(FileNotFoundException e){
+      throw new IllegalArgumentException("The given file does not exist");
+    }
+    // scan the file in
+    Scanner scan = new Scanner(fr);
+    Parser parser = new Parser();
+    Coord givenCoord;
+    String coordAsString;
+    String currLine;
+
+
+    while(scan.hasNextLine()){
+      currLine = scan.nextLine();
+      Scanner scanLine = new Scanner(currLine);
+
+      String firstInput = scanLine.next();
+
+      char[] cellName = firstInput.toCharArray();
+
+      String actualFirstInput = "";
+
+
+      for(int i = 0; i < cellName.length; i++){
+        if(Character.isLetter(cellName[i])){
+          actualFirstInput = actualFirstInput + cellName[i];
+          if(Character.isDigit(cellName[i+1])){
+            actualFirstInput = actualFirstInput +" ";
+          }
+        }
+        else if(Character.isDigit(cellName[i])){
+          actualFirstInput = actualFirstInput + cellName[i];
+        }
+      }
+
+      Scanner colAndRow = new Scanner(actualFirstInput);
+      String givenCol = colAndRow.next();
+      int givenRow = colAndRow.nextInt();
+
+      givenCoord = new Coord(Coord.colNameToIndex(givenCol),givenRow);
+
+      System.out.println(givenCoord.col);
+      System.out.println(givenCoord.row);
+
+      String secondInput = scanLine.next();
+      if(!secondInput.equals("=")){
+        Sexp element = Parser.parse(secondInput);
+        SexpVisitor visitor = new BasicSexpVisitor();
+        Cell addedCell = (Cell) element.accept(visitor);
+        System.out.println(addedCell.toString());
+        this.setCellAt(givenCoord, addedCell);
+      }
+      else if(secondInput.equals("=")){
+
+      }
+
+    }
+
+
+
   }
 
 
@@ -134,78 +179,7 @@ public class BasicSpreadsheet implements Spreadsheet {
     getCellAt(coord).evaluateCell();
   }
 
-  /**
-   * This is the method to initialize the spreadsheet of the board from the file.
-   *
-   * @param fileName the name of the given file
-   */
-  private void initializeSpreadsheet(String fileName) {
-    sheet = new ArrayList<ArrayList<Cell>>();
-    FileReader fr;
 
-    try {
-      fr = new FileReader(fileName);  // get the given file
-    }
-    catch(FileNotFoundException e){
-      throw new IllegalArgumentException("The given file does not exist");
-    }
-    // scan the file in
-    Scanner scan = new Scanner(fr);
-    Parser parser = new Parser();
-    Coord givenCoord;
-    String coordAsString;
-    String currLine;
-
-
-    while(scan.hasNextLine()){
-      currLine = scan.nextLine();
-      Scanner scanLine = new Scanner(currLine);
-
-      String firstInput = scanLine.next();
-
-      char[] cellName = firstInput.toCharArray();
-
-      String actualFirstInput = "";
-
-
-      for(int i = 0; i < cellName.length; i++){
-        if(Character.isLetter(cellName[i])){
-          actualFirstInput = actualFirstInput + cellName[i];
-          if(Character.isDigit(cellName[i+1])){
-            actualFirstInput = actualFirstInput +" ";
-          }
-        }
-        else if(Character.isDigit(cellName[i])){
-          actualFirstInput = actualFirstInput + cellName[i];
-        }
-      }
-
-      Scanner colAndRow = new Scanner(actualFirstInput);
-      String givenCol = colAndRow.next();
-      int givenRow = colAndRow.nextInt();
-
-      givenCoord = new Coord(Coord.colNameToIndex(givenCol),givenRow);
-
-      System.out.println(givenCoord.col);
-      System.out.println(givenCoord.row);
-
-      String secondInput = scanLine.next();
-      if(!secondInput.equals("=")){
-        Sexp element = Parser.parse(secondInput);
-        SexpVisitor visitor = new BasicSexpVisitor();
-          Cell addedCell = (Cell) element.accept(visitor);
-          System.out.println(addedCell.toString());
-          this.setCellAt(givenCoord, addedCell);
-      }
-      else if(secondInput.equals("=")){
-
-      }
-
-    }
-
-
-
-  }
 
   /**
    * This is the method to expand the spreadsheet when the coordinates selected are out of bounds.
@@ -258,6 +232,6 @@ public class BasicSpreadsheet implements Spreadsheet {
   @Override
   public Object createWorksheet() {
     Spreadsheet spreadsheet = new BasicSpreadsheet();
-    return this;
+    return spreadsheet;
   }
 }
