@@ -1,5 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.text.Normalizer;
 import java.util.List;
 import java.util.Scanner;
 
@@ -78,7 +79,7 @@ public class Function implements Formula{
   }
 
   @Override
-  public double evaluateCellProduct(Cell... cells) throws IllegalArgumentException {
+  public double evaluateCellProduct(Formula...formulas) throws IllegalArgumentException {
     return this.evaluateCell().evaluateCellProduct();
   }
 
@@ -95,6 +96,11 @@ public class Function implements Formula{
   @Override
   public double evaluateCellComparison() {
     return this.evaluateCell().evaluateCellComparison();
+  }
+
+  @Override
+  public String evaluateCellHamilton() {
+    return null;
   }
 
   @Override

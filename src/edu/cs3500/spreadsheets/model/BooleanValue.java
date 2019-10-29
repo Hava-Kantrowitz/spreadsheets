@@ -22,9 +22,9 @@ public class BooleanValue implements Value {
   }
 
   @Override
-  public double evaluateCellProduct(Cell... cells) {
+  public double evaluateCellProduct(Formula...formulas) {
     int product = 0;
-    for (Cell c : cells) {
+    for (Formula c : formulas) {
       if (c.isNum()) {
         product = 1;
       }
@@ -45,6 +45,11 @@ public class BooleanValue implements Value {
   @Override
   public double evaluateCellComparison() throws IllegalArgumentException {
     throw new IllegalArgumentException("Cannot compare a blank cell");
+  }
+
+  @Override
+  public String evaluateCellHamilton() {
+    return null;
   }
 
   @Override

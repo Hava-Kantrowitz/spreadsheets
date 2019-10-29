@@ -28,11 +28,11 @@ public class StringValue implements Value {
   }
 
   @Override
-  public double evaluateCellProduct(Cell... cells) {
+  public double evaluateCellProduct(Formula...formulas) {
     int numCount = 0;
     double evalNum;
 
-    for (Cell c : cells) {
+    for (Formula c : formulas) {
       if (c.isNum()) {
         numCount++;
       }
@@ -60,6 +60,11 @@ public class StringValue implements Value {
   @Override
   public double evaluateCellComparison() {
     throw new IllegalArgumentException("Comparison with a string cannot be computed.");
+  }
+
+  @Override
+  public String evaluateCellHamilton() {
+    return null;
   }
 
   @Override

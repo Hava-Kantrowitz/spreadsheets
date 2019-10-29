@@ -5,8 +5,8 @@ import java.util.List;
 import edu.cs3500.spreadsheets.model.BooleanValue;
 import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.DoubleValue;
+import edu.cs3500.spreadsheets.model.Reference;
 import edu.cs3500.spreadsheets.model.StringValue;
-import edu.cs3500.spreadsheets.model.SymbolValue;
 import edu.cs3500.spreadsheets.model.Value;
 
 public class BasicSexpVisitor implements SexpVisitor {
@@ -27,7 +27,7 @@ public class BasicSexpVisitor implements SexpVisitor {
   //
   @Override
   public Cell visitSymbol(String s) {
-    Cell symbol = new SymbolValue(s);
+    //Cell symbol = new Reference();
     // need to figure out if it is an operation or cell reference
     return null;
   }

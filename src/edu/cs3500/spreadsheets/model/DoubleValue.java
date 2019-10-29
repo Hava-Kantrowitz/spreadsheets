@@ -27,7 +27,7 @@ public class DoubleValue implements Value {
   }
 
   @Override
-  public double evaluateCellProduct(Cell... cells) {
+  public double evaluateCellProduct(Formula...formulas) {
     return val;
   }
 
@@ -44,6 +44,11 @@ public class DoubleValue implements Value {
   @Override
   public double evaluateCellComparison() {
     return val;
+  }
+
+  @Override
+  public String evaluateCellHamilton() {
+    return null;
   }
 
   @Override

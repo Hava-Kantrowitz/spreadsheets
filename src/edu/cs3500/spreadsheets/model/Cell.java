@@ -26,7 +26,7 @@ public interface Cell {
    * @return the value of the value when calculating product
    * @throws IllegalArgumentException if the value cannot be used in a product operation
    */
-  double evaluateCellProduct(Cell... cells) throws IllegalArgumentException;
+  double evaluateCellProduct(Formula...formulas) throws IllegalArgumentException;
 
   /**
    * This evaluates the cell for the number used when calculating the SQRT.
@@ -50,6 +50,12 @@ public interface Cell {
    * @return the value used when a comparison is taken
    */
   double evaluateCellComparison();
+
+  /**
+   * This evaluates the cell and determines the coordinating Hamilton lyric.
+   * @return the value used when a hamilton is performed
+   */
+  String evaluateCellHamilton();
 
 
   /**
