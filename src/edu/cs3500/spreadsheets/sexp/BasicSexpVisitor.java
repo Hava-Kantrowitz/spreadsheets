@@ -43,17 +43,18 @@ public class BasicSexpVisitor implements SexpVisitor {
 
   @Override
   public Cell visitSList(List l) {
-    SList inputList = (SList) l;
-    BasicSexpVisitor visit = new BasicSexpVisitor();
-    // set the name of the outer function
-    ArrayList<Formula> params = new ArrayList<Formula>();
-    Cell output = new Function(l.get(0).toString(),params);
-
-
-    // need to figure out how we are representing a formula value
-    for(int i = 1; i < l.size(); i++){
-      params.add((Formula) inputList.getSexpAt(i).accept(visit));
-    }
-    return output;
+//    SList inputList = (SList) l;
+//    BasicSexpVisitor visit = new BasicSexpVisitor();
+//    // set the name of the outer function
+//    ArrayList<Formula> params = new ArrayList<Formula>();
+//    Cell output = new Function(l.get(0).toString(),params);
+//
+//
+//    // need to figure out how we are representing a formula value
+//    for(int i = 1; i < l.size(); i++){
+//      params.add((Formula) inputList.getSexpAt(i).accept(visit));
+//    }
+ //   return output;
+    return null;
   }
 }
