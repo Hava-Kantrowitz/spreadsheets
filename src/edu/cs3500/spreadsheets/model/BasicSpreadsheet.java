@@ -140,7 +140,7 @@ public class BasicSpreadsheet implements Spreadsheet {
    * @param fileName the name of the given file
    */
   private void initializeSpreadsheet(String fileName) {
-    ArrayList<ArrayList<Cell>> newSpreadsheet;
+    sheet = new ArrayList<ArrayList<Cell>>();
     FileReader fr;
 
     try {
@@ -190,11 +190,15 @@ public class BasicSpreadsheet implements Spreadsheet {
       System.out.println(givenCoord.row);
 
       String secondInput = scanLine.next();
-      if(secondInput != "="){
+      if(!secondInput.equals("=")){
         Sexp element = Parser.parse(secondInput);
         SexpVisitor visitor = new BasicSexpVisitor();
           Cell addedCell = (Cell) element.accept(visitor);
+          System.out.println(addedCell.toString());
           this.setCellAt(givenCoord, addedCell);
+      }
+      else if(secondInput.equals("=")){
+
       }
 
     }
