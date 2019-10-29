@@ -23,25 +23,15 @@ public class SpreadsheetTest {
 
   //TEST INTIALIZE SHEET
 
-  //check that there are 10 cells, all blank
-  @Test
-  public void testInitSheet() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    Coord coord1 = new Coord(1, 1);
-    Cell firstCell = testSheet.getCellAt(coord1);
-    Coord coord2 = new Coord(10, 10);
-    Cell secondCell = testSheet.getCellAt(coord2);
-    Cell compCell = new Blank();
-    assertEquals(compCell, firstCell);
-    assertTrue(compCell.equals(secondCell));
-  }
+
 
   //tests initializing with a given file
 
   // this is the test for initializing with a file (testing basic double setting)
   @Test
   public void testInitSheetWithFile() throws FileNotFoundException {
-    Spreadsheet testSheet = new BasicSpreadsheet("/Users/victoriabowen/Desktop/" +
+    Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
             "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
             "spreadsheets/testingText.txt");
     assertEquals(new DoubleValue(3.0),testSheet.getCellAt(new Coord(1,1)));//simple double
@@ -59,6 +49,9 @@ public class SpreadsheetTest {
   @Test
   public void testBlankCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell hamCell = new StringValue("Ham the jam");
     testSheet.setCellAt(coord1, hamCell);
@@ -71,6 +64,9 @@ public class SpreadsheetTest {
   @Test
   public void testFormulaCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell formCell = new Formula("=(SUM 4 3)");
     testSheet.setCellAt(coord1, formCell);
@@ -81,6 +77,9 @@ public class SpreadsheetTest {
   @Test
   public void testStringCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell hamCell = new StringValue("Ham the jam");
     testSheet.setCellAt(coord1, hamCell);
@@ -91,6 +90,9 @@ public class SpreadsheetTest {
   @Test
   public void testBoolCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell boolCell = new BooleanValue(true);
     testSheet.setCellAt(coord1, boolCell);
@@ -101,6 +103,9 @@ public class SpreadsheetTest {
   @Test
   public void testDoubleCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell doubleCell = new DoubleValue(7.2);
     testSheet.setCellAt(coord1, doubleCell);
@@ -111,6 +116,9 @@ public class SpreadsheetTest {
   @Test
   public void testReferenceCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new DoubleValue(8.0);
     Coord coord2 = new Coord(2, 1);
@@ -131,6 +139,9 @@ public class SpreadsheetTest {
   @Test
   public void testEvalStrings() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new StringValue("my name is");
     Coord coord2 = new Coord(2, 1);
@@ -154,6 +165,9 @@ public class SpreadsheetTest {
   @Test
   public void testEvalBools() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new BooleanValue(true);
     Coord coord2 = new Coord(2, 1);
@@ -176,6 +190,9 @@ public class SpreadsheetTest {
   @Test
   public void testEvalDouble() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new DoubleValue(3.3);
     Coord coord2 = new Coord(2, 1);
@@ -199,6 +216,9 @@ public class SpreadsheetTest {
   @Test
   public void testEvalFormulas() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new Formula("=(SUM 7 2)");
     Coord coord2 = new Coord(2, 1);
@@ -222,6 +242,9 @@ public class SpreadsheetTest {
   @Test
   public void testEvalReferences() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new DoubleValue(4.0);
     Coord coord2 = new Coord(2, 1);
@@ -253,6 +276,9 @@ public class SpreadsheetTest {
   @Test
   public void testEvalMixed() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new DoubleValue(4.0);
     Coord coord2 = new Coord(2, 1);
@@ -292,6 +318,9 @@ public class SpreadsheetTest {
   @Test
   public void testEvalBlank() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Value comp1 = new DoubleValue(0.0);
     testSheet.setCellAt(coord1, comp1);
@@ -312,6 +341,9 @@ public class SpreadsheetTest {
   @Test
   public void testEvalFormulaReference() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Value val1 = new DoubleValue(11.0);
     testSheet.setCellAt(coord1, val1);
@@ -341,6 +373,9 @@ public class SpreadsheetTest {
   @Test
   public void testDifferenceReference() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Value val1 = new DoubleValue(10.0);
     Coord coord2 = new Coord(2, 1);
@@ -358,6 +393,9 @@ public class SpreadsheetTest {
   @Test
   public void testDifferenceFormula() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new Formula("=(SUM 5 5)");
     Coord coord2 = new Coord(2, 1);
@@ -375,6 +413,9 @@ public class SpreadsheetTest {
   @Test
   public void testDifferenceStrings() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new StringValue("hamilton");
     Coord coord2 = new Coord(2, 1);
@@ -393,6 +434,9 @@ public class SpreadsheetTest {
   @Test
   public void testDifferenceBool() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new BooleanValue(true);
     Coord coord2 = new Coord(2, 1);
@@ -410,6 +454,9 @@ public class SpreadsheetTest {
   @Test
   public void testDifferenceBlank() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord3 = new Coord(1, 2);
     Cell val3 = new Formula("=(SUB A1 A2)");
     testSheet.setCellAt(coord3, val3);
@@ -439,6 +486,9 @@ public class SpreadsheetTest {
   @Test
   public void testCompReference() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new DoubleValue(16.0);
     Coord coord2 = new Coord(2, 1);
@@ -456,6 +506,9 @@ public class SpreadsheetTest {
   @Test
   public void testCompFormula() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new Formula("=(SUM 5 5)");
     Coord coord2 = new Coord(2, 1);
@@ -473,6 +526,9 @@ public class SpreadsheetTest {
   @Test(expected = IllegalArgumentException.class)
   public void testCompStrings() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new StringValue("a. ham");
     Coord coord2 = new Coord(2, 1);
@@ -489,6 +545,9 @@ public class SpreadsheetTest {
   @Test(expected = IllegalArgumentException.class)
   public void testCompBools() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new BooleanValue(false);
     Coord coord2 = new Coord(2, 1);
@@ -505,6 +564,9 @@ public class SpreadsheetTest {
   @Test(expected = IllegalArgumentException.class)
   public void testCompBlanks() {
     Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingBlankTenByTen.txt");
     Coord coord3 = new Coord(1, 2);
     Cell val3 = new Formula("=(< A1 A2)");
     testSheet.setCellAt(coord3, val3);

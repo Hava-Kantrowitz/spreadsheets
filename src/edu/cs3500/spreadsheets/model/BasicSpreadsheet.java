@@ -87,10 +87,10 @@ public class BasicSpreadsheet implements Spreadsheet {
         Cell addedCell = (Cell) element.accept(visitor);
         System.out.println(addedCell.toString());
         this.setCellAt(givenCoord, addedCell);
+        numRows = sheet.size();
+        numCols = sheet.get(0).size();
       }
-      else if(secondInput.equals("=")){
 
-      }
 
     }
 
@@ -166,8 +166,8 @@ public class BasicSpreadsheet implements Spreadsheet {
   public void evaluateSheet() {
 
     for (int i = 1; i <= numCols; i++) {
-      for (int j = 1; j < numRows; j++) {
-        Coord currCor = new Coord(numCols, numRows);
+      for (int j = 1; j <= numRows; j++) {
+        Coord currCor = new Coord(i, j);
         getCellAt(currCor).evaluateCell();
       }
     }
