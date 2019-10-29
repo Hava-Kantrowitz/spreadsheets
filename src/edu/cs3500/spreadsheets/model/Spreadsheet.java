@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Models the representation of a basic spreadsheet.
  */
-public interface Spreadsheet extends WorksheetReader.WorksheetBuilder {
+public interface Spreadsheet {
 
   /**
    * This is the method to initialize the spreadsheet of the board from the file.

@@ -1,10 +1,13 @@
 package edu.cs3500.spreadsheets.sexp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.cs3500.spreadsheets.model.BooleanValue;
 import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.DoubleValue;
+import edu.cs3500.spreadsheets.model.Formula;
+import edu.cs3500.spreadsheets.model.Function;
 import edu.cs3500.spreadsheets.model.Reference;
 import edu.cs3500.spreadsheets.model.StringValue;
 import edu.cs3500.spreadsheets.model.Value;
@@ -23,13 +26,11 @@ public class BasicSexpVisitor implements SexpVisitor {
     return output;
   }
 
-  // Not sure what symbol is used for right now
-  //
   @Override
   public Cell visitSymbol(String s) {
-    //Cell symbol = new Reference();
-    // need to figure out if it is an operation or cell reference
-    return null;
+    Cell symbol = new Reference(s);
+
+    return symbol;
   }
 
   @Override
@@ -42,7 +43,17 @@ public class BasicSexpVisitor implements SexpVisitor {
 
   @Override
   public Cell visitSList(List l) {
+    SList inputList = (SList) l;
+    BasicSexpVisitor visit = new BasicSexpVisitor();
+    // set the name of the outer function
+    ArrayList<Formula> params = new ArrayList<Formula>();
+    Cell output = new Function(l.get(0).toString(),params);
+
+
     // need to figure out how we are representing a formula value
-    return null;
+    for(int i = 1; i < l.size(); i++){
+      params.add((Formula) inputList.getSexpAt(i).accept(visit));
+    }
+    return output;
   }
 }

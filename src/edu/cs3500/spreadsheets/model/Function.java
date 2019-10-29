@@ -55,7 +55,7 @@ public class Function implements Formula{
       comparison(funParams.get(0), funParams.get(1));
     }
     else if(functionName.equals("HAM")){
-      if(funParams.size() != 1){
+      if(funParams.size() != 1){ // making sure one input
         throw new IllegalArgumentException("Hamilton function must only have one input.");
       }
       hamilton(funParams.get(0));
@@ -64,14 +64,6 @@ public class Function implements Formula{
     return null;
   }
 
-  /**
-   * This is the helper method to get the list of inputs after the operation name.
-   *
-   * @param scan the scanner with the input
-   */
-  List<Cell> getListAfterParen(Scanner scan) {
-    return null;
-  }
 
   @Override
   public double evaluateCellSum() {

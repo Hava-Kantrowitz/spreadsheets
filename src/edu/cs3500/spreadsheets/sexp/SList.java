@@ -44,6 +44,15 @@ public class SList implements Sexp {
     return contents.equals(sList.contents);
   }
 
+  /**
+   * This gets an element of the list of SExpression.
+   * @param index the given index
+   * @return the Sexp at the given index
+   */
+  public Sexp getSexpAt(int index){
+    return contents.get(index);
+  }
+
   @Override
   public int hashCode() {
     return Objects.hash(contents);

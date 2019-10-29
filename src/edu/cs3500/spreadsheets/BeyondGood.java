@@ -1,6 +1,9 @@
 package edu.cs3500.spreadsheets;
 
+import java.util.List;
+
 import edu.cs3500.spreadsheets.sexp.Parser;
+import edu.cs3500.spreadsheets.sexp.SList;
 //import edu.cs3500.spreadsheets.sexp.SexpVisitor;
 
 /**
@@ -23,12 +26,29 @@ public class BeyondGood {
 
     Parser parser = new Parser();
 
-    String output = parser.parse("(PRODUCT (SUB C1 A1) (SUB C1 A1))").toString();
+    String output = parser.parse("(PRODUCT (SUB (SUM C1 A1) (SUM 4 5)) (SUB C1 A1))").toString();
 
     System.out.println(output);
 
     String output2 = parser.parse("3").toString();
 
     System.out.println(output2);
+
+    SList list = ((SList)parser.parse("(PRODUCT (SUB (SUM C1 A1) (SUM 4 5)) (SUB C1 A1))"));
+    Object element = list.getSexpAt(0);
+    System.out.println(element.toString());
+    element = list.getSexpAt(1);
+    System.out.println(element.toString());
+    System.out.println("Sexp inside the previous element");
+    element = ((SList) list.getSexpAt(1)).getSexpAt(0);
+    System.out.println(element);
+    element = ((SList) list.getSexpAt(1)).getSexpAt(1);
+    System.out.println(element);
+
+
+    System.out.println("\nThis is back to the whole original formula");
+    element = list.getSexpAt(2);
+    System.out.println(element.toString());
   }
+
 }

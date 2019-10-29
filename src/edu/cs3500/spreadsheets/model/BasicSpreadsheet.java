@@ -3,13 +3,11 @@ package edu.cs3500.spreadsheets.model;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import edu.cs3500.spreadsheets.sexp.BasicSexpVisitor;
 import edu.cs3500.spreadsheets.sexp.Parser;
-import edu.cs3500.spreadsheets.sexp.SBoolean;
 import edu.cs3500.spreadsheets.sexp.Sexp;
 import edu.cs3500.spreadsheets.sexp.SexpVisitor;
 
@@ -89,6 +87,10 @@ public class BasicSpreadsheet implements Spreadsheet {
         this.setCellAt(givenCoord, addedCell);
         numRows = sheet.size();
         numCols = sheet.get(0).size();
+      }
+
+      else if(!secondInput.equals("=")){
+
       }
 
 
@@ -223,15 +225,4 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   }
 
-  // put the set cell here
-  @Override
-  public WorksheetReader.WorksheetBuilder createCell(int col, int row, String contents) {
-    return null;
-  }
-
-  @Override
-  public Object createWorksheet() {
-    Spreadsheet spreadsheet = new BasicSpreadsheet();
-    return spreadsheet;
-  }
 }
