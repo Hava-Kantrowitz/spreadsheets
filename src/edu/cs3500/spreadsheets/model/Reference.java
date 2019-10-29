@@ -3,11 +3,11 @@ package edu.cs3500.spreadsheets.model;
 /**
  * This is the class to represent a symbol (which is an operation name or a reference to a cell).
  */
-public class SymbolValue implements Value{
+public class Reference implements Formula{
 
   String symbol;
 
-  public SymbolValue(String symbol){
+  public Reference(String symbol){
 
   }
 
