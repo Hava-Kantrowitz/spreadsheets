@@ -3,72 +3,63 @@ package edu.cs3500.spreadsheets.model;
 import java.util.List;
 import java.util.Scanner;
 
-import edu.cs3500.spreadsheets.model.Cell;
-import edu.cs3500.spreadsheets.model.Formula;
-import edu.cs3500.spreadsheets.model.Value;
-import edu.cs3500.spreadsheets.sexp.Parser;
-import edu.cs3500.spreadsheets.sexp.Sexp;
+
 
 public class Function implements Formula{
 
-  private String formula;
+  private String functionName;
+  List<Formula> funParams;
 
 
   /**
    * Constructs an instance of a formula cell.
    *
-   * @param formula the formula within the cell
+   * @param functionName the name of the function
+   * @param funParams the list of all the function parameters
    */
-  public Function(String formula) {
-    this.formula = formula;
+  public Function(String functionName, List<Formula> funParams) {
+    this.functionName = functionName;
+    this.funParams = funParams;
+
   }
 
   @Override
-  public Value evaluateCell() {
-    Parser parser = new Parser();
-    Scanner scan = new Scanner(formula);
+  public Value evaluateCell() throws IllegalArgumentException{
 
+    // making sure the function parameters are at least greater than zero
+    if(funParams.size() < 1){
+      throw new IllegalArgumentException("There must be at least one parameter for any function");
+    }
 
-    Sexp input = parser.parse(formula);
+    if(functionName.equals("SUM")){
+     sum(funParams);
+    }
+    else if(functionName.equals("PRODUCT")){
+      product(funParams);
+    }
+    else if(functionName.equals("SUB")){
+      // making sure there are two inputs
+      if(funParams.size() != 2){
+        throw new IllegalArgumentException("Subtraction cannot have more than two " +
+                "function parameters");
+      }
+      difference(funParams.get(0), funParams.get(1));
+    }
+    else if(functionName.equals("<")){
+      // making sure there are two inputs
+      if(funParams.size() != 2){
+        throw new IllegalArgumentException("Subtraction cannot have more than two " +
+                "function parameters");
+      }
+      comparison(funParams.get(0), funParams.get(1));
+    }
+    else if(functionName.equals("HAM")){
+      if(funParams.size() != 1){
+        throw new IllegalArgumentException("Hamilton function must only have one input.");
+      }
+      hamilton(funParams.get(0));
+    }
 
-
-    // checking to ensure there is a next argument
-//    if (!scan.hasNext()) {
-//      throw new IllegalArgumentException("Not a valid formula");
-//    }
-//    // checking that there is an equals
-//    else if (scan.next() != "=") {
-//      throw new IllegalArgumentException("Not a valid formula");
-//    }
-
-
-    //else {
-
-
-//      while (scan.hasNext()) {
-//        if (scan.next() == "(") {
-//          String afterParen = scan.next();  // to hold value after
-//          List listAfterParen;
-//          if (afterParen.equals("SUM")) {
-//            listAfterParen = getListAfterParen(scan);
-//            //sum(listAfterParen.toArray(new Cell[listAfterParen.size()]));
-//          } else if (afterParen.equals("PRODUCT")) {
-//            listAfterParen = getListAfterParen(scan);
-//
-//          } else if (afterParen.equals("SQRT")) {
-//            getListAfterParen(scan);
-//          } else if (afterParen.equals("SUB")) {
-//            getListAfterParen(scan);
-//          } else if (afterParen.equals("<")) {
-//
-//          }
-//          // if after paren and does not equal anything else above nor another paren
-//          else if (!afterParen.equals("(")) {
-//            throw new IllegalArgumentException("Invalid operation input.");
-//          }
-//        }
-//      }
-    // }
     return null;
   }
 
@@ -114,13 +105,13 @@ public class Function implements Formula{
   /**
    * Adds multiple cells together.
    *
-   * @param cells the list of cells to add
+   * @param formulas the list of cells to add
    * @return the added value of the cells
    */
-  private double sum(Cell... cells) {
+  private double sum(List<Formula> formulas) {
     int sum = 0;
-    for (Cell c : cells) {
-      sum += c.evaluateCellSum();
+    for (Formula f : formulas) {
+      sum += f.evaluateCellSum();
     }
 
     return sum;
@@ -129,13 +120,13 @@ public class Function implements Formula{
   /**
    * Multiplies multiple cells together.
    *
-   * @param cells the list of cells to multiply
+   * @param formulas the list of cells to multiply
    * @return the multiplied value of the cells
    */
-  private double product(Cell... cells) {
+  private double product(List<Formula> formulas) {
     double product = 1;
-    for (Cell c : cells) {
-      product = product * c.evaluateCellProduct();
+    for (Formula f : formulas) {
+      product = product * f.evaluateCellProduct();
     }
 
     return product;
@@ -178,7 +169,7 @@ public class Function implements Formula{
     return isLessThan;
   }
 
-  private String hamilton(Cell cell) {
+  private String hamilton(Formula formula) {
     return "";
   }
 
@@ -186,7 +177,9 @@ public class Function implements Formula{
   public boolean equals(Object otherCell) {
     boolean isEqual = false;
     // checking that it is a formula and has the same string
-    if (otherCell instanceof Function && ((Function) otherCell).formula.equals(this.formula)) {
+    if (otherCell instanceof Function && ((Function) otherCell).
+            functionName.equals(this.functionName) && ((Function) otherCell).funParams.equals(
+                    this.funParams)) {
       isEqual = true;
     }
     return isEqual;
@@ -194,6 +187,6 @@ public class Function implements Formula{
 
   @Override
   public int hashCode() {
-    return formula.hashCode();
+    return functionName.hashCode();
   }
 }
