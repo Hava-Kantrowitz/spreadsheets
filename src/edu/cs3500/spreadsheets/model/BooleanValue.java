@@ -1,10 +1,16 @@
 package edu.cs3500.spreadsheets.model;
 
+/**
+ * Models a boolean value.
+ */
 public class BooleanValue implements Value {
 
   private Boolean bool;
 
-  // need to add the constructor
+  /**
+   * Constructs an instance of the boolean value class.
+   * @param val the given boolean value
+   */
   public BooleanValue(Boolean val) {
     this.bool = val;
   }
@@ -60,5 +66,10 @@ public class BooleanValue implements Value {
     }
 
     return isEqual;
+  }
+
+  @Override
+  public int hashCode() {
+    return bool.hashCode();
   }
 }

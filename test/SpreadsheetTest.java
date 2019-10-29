@@ -14,16 +14,12 @@ import edu.cs3500.spreadsheets.model.StringValue;
 import edu.cs3500.spreadsheets.model.Value;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Tests various spreadsheet applications.
+ */
 public class SpreadsheetTest {
-
-  //compile test
-  @Test
-  public void compileTest() {
-    assertEquals(1, 1);
-  }
 
   //TEST INTIALIZE SHEET
 

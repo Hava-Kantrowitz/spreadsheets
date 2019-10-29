@@ -66,4 +66,9 @@ public class DoubleValue implements Value {
 
     return isEqual;
   }
+
+  @Override
+  public int hashCode() {
+    return (int) val;
+  }
 }

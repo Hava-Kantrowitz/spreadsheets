@@ -81,4 +81,9 @@ public class StringValue implements Value {
     }
     return isEqual;
   }
+
+  @Override
+  public int hashCode() {
+    return val.hashCode();
+  }
 }

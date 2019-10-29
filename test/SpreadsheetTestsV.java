@@ -13,7 +13,6 @@ import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.StringValue;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
@@ -139,7 +138,7 @@ public class SpreadsheetTestsV {
   // on the row input (the doubling will go over but the number itself will still be valid
   @Test
   public void getOutRowOverMaxIntRow() {
-    Coord index = new Coord(3, 2147483647);
+    Coord index = new Coord(3, 1000000);
     assertEquals(new Blank(),
             basicSpreadsheet.getCellAt(index));
   }
@@ -148,7 +147,7 @@ public class SpreadsheetTestsV {
   // on the column input
   @Test
   public void getOutColumnMaxIntCol() {
-    Coord index = new Coord(2147483647, 5);
+    Coord index = new Coord(1000000, 5);
     assertEquals(new Blank(),
             basicSpreadsheet.getCellAt(index));
   }
@@ -158,7 +157,16 @@ public class SpreadsheetTestsV {
   // on the row and column inputs
   @Test
   public void getOutColumnMaxIntColRow() {
-    Coord index = new Coord(2147483647, 2147483647);
+    Coord index = new Coord(1000000, 1000000);
+    assertEquals(new Blank(),
+            basicSpreadsheet.getCellAt(index));
+  }
+
+  // the test for when the given cell is out of bounds (and doubling would exceed max possible int)
+  // on the row and col inputs (the doubling will go over but the number itself will still be valid
+  @Test (expected = IllegalArgumentException.class)
+  public void getOutRowColOverMaxIntRow() {
+    Coord index = new Coord(10000000, 1000001);
     assertEquals(new Blank(),
             basicSpreadsheet.getCellAt(index));
   }

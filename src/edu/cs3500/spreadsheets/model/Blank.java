@@ -63,4 +63,9 @@ public class Blank implements Cell {
     }
     return isEqual;
   }
+
+  @Override
+  public int hashCode() {
+    return 1;
+  }
 }
