@@ -48,7 +48,7 @@ public class BasicSpreadsheet implements Spreadsheet {
    *
    * @param fileName the name of the initial file.
    */
-  public BasicSpreadsheet(String fileName) throws FileNotFoundException {
+  public BasicSpreadsheet(String fileName) {
     this.fileName = fileName;
     initializeSpreadsheet(fileName);
   }
@@ -139,16 +139,16 @@ public class BasicSpreadsheet implements Spreadsheet {
    *
    * @param fileName the name of the given file
    */
-  private void initializeSpreadsheet(String fileName) throws FileNotFoundException {
+  private void initializeSpreadsheet(String fileName) {
     ArrayList<ArrayList<Cell>> newSpreadsheet;
     FileReader fr;
 
-    //try {
+    try {
       fr = new FileReader(fileName);  // get the given file
-    //}
-//    catch(FileNotFoundException e){
-//      throw new IllegalArgumentException("The given file does not exist");
-//    }
+    }
+    catch(FileNotFoundException e){
+      throw new IllegalArgumentException("The given file does not exist");
+    }
     // scan the file in
     Scanner scan = new Scanner(fr);
     Parser parser = new Parser();
