@@ -1,6 +1,8 @@
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
+import java.text.Normalizer;
+import java.util.ArrayList;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Blank;
@@ -9,6 +11,8 @@ import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.DoubleValue;
 import edu.cs3500.spreadsheets.model.Formula;
+import edu.cs3500.spreadsheets.model.Function;
+import edu.cs3500.spreadsheets.model.Reference;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.StringValue;
 import edu.cs3500.spreadsheets.model.Value;
@@ -31,9 +35,8 @@ public class SpreadsheetTest {
   @Test
   public void testInitSheetWithFile() throws FileNotFoundException {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingText.txt");
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingText.txt");
     assertEquals(new DoubleValue(3.0),testSheet.getCellAt(new Coord(1,1)));//simple double
     assertEquals(new DoubleValue(7.0),testSheet.getCellAt(new Coord(28,1)));//two double
     assertEquals(new BooleanValue(true),testSheet.getCellAt(new Coord(1,3)));
@@ -49,9 +52,8 @@ public class SpreadsheetTest {
   @Test
   public void testBlankCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell hamCell = new StringValue("Ham the jam");
     testSheet.setCellAt(coord1, hamCell);
@@ -64,11 +66,13 @@ public class SpreadsheetTest {
   @Test
   public void testFormulaCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
-    Cell formCell = new Formula("=(SUM 4 3)");
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new DoubleValue(4.0));
+    ourFormulas.add(new DoubleValue(3.0));
+    Cell formCell = new Function("SUM", ourFormulas);
     testSheet.setCellAt(coord1, formCell);
     assertTrue(formCell.equals(testSheet.getCellAt(coord1)));
   }
@@ -77,9 +81,8 @@ public class SpreadsheetTest {
   @Test
   public void testStringCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell hamCell = new StringValue("Ham the jam");
     testSheet.setCellAt(coord1, hamCell);
@@ -90,9 +93,8 @@ public class SpreadsheetTest {
   @Test
   public void testBoolCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell boolCell = new BooleanValue(true);
     testSheet.setCellAt(coord1, boolCell);
@@ -103,9 +105,8 @@ public class SpreadsheetTest {
   @Test
   public void testDoubleCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell doubleCell = new DoubleValue(7.2);
     testSheet.setCellAt(coord1, doubleCell);
@@ -115,16 +116,18 @@ public class SpreadsheetTest {
   //tests that a reference cell can be set
   @Test
   public void testReferenceCell() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new DoubleValue(8.0);
     Coord coord2 = new Coord(2, 1);
     Cell val2 = new DoubleValue(2.0);
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(SUM A1 A2)");
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", testSheet));
+    ourFormulas.add(new Reference("A2", testSheet));
+    Cell val3 = new Function("SUM", ourFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -139,9 +142,8 @@ public class SpreadsheetTest {
   @Test
   public void testEvalStrings() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new StringValue("my name is");
     Coord coord2 = new Coord(2, 1);
@@ -165,9 +167,8 @@ public class SpreadsheetTest {
   @Test
   public void testEvalBools() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new BooleanValue(true);
     Coord coord2 = new Coord(2, 1);
@@ -190,9 +191,8 @@ public class SpreadsheetTest {
   @Test
   public void testEvalDouble() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new DoubleValue(3.3);
     Coord coord2 = new Coord(2, 1);
@@ -216,15 +216,23 @@ public class SpreadsheetTest {
   @Test
   public void testEvalFormulas() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
-    Cell val1 = new Formula("=(SUM 7 2)");
+    ArrayList<Formula> firstFormulas = new ArrayList<>();
+    firstFormulas.add(new DoubleValue(7.0));
+    firstFormulas.add(new DoubleValue(3.0));
+    Cell val1 = new Function("SUM", firstFormulas);
     Coord coord2 = new Coord(2, 1);
-    Cell val2 = new Formula("=(SUM 3 3)");
+    ArrayList<Formula> secondFormulas = new ArrayList<>();
+    secondFormulas.add(new DoubleValue(3.0));
+    secondFormulas.add(new DoubleValue(3.0));
+    Cell val2 = new Function("SUM", secondFormulas);
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(SUM 2 2)");
+    ArrayList<Formula> thirdFormulas = new ArrayList<>();
+    thirdFormulas.add(new DoubleValue(2.0));
+    thirdFormulas.add(new DoubleValue(2.0));
+    Cell val3 = new Function("SUM", thirdFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -241,10 +249,9 @@ public class SpreadsheetTest {
   //tests evaluating all cells, cells references
   @Test
   public void testEvalReferences() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new DoubleValue(4.0);
     Coord coord2 = new Coord(2, 1);
@@ -252,11 +259,11 @@ public class SpreadsheetTest {
     Coord coord3 = new Coord(1, 2);
     Cell val3 = new DoubleValue(1.0);
     Coord coord4 = new Coord(1, 3);
-    Cell val4 = new Formula("A1");
+    Cell val4 = new Reference("A1", testSheet);
     Coord coord5 = new Coord(2, 3);
-    Cell val5 = new Formula("A2");
+    Cell val5 = new Reference("A2", testSheet);
     Coord coord6 = new Coord(3, 3);
-    Cell val6 = new Formula("B1");
+    Cell val6 = new Reference("B1", testSheet);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -275,10 +282,9 @@ public class SpreadsheetTest {
   //tests evaluating all cells, cells mixed types
   @Test
   public void testEvalMixed() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new DoubleValue(4.0);
     Coord coord2 = new Coord(2, 1);
@@ -286,9 +292,12 @@ public class SpreadsheetTest {
     Coord coord3 = new Coord(1, 2);
     Cell val3 = new BooleanValue(true);
     Coord coord4 = new Coord(1, 3);
-    Cell val4 = new Formula("A1");
+    Cell val4 = new Reference("A1", testSheet);
     Coord coord5 = new Coord(2, 3);
-    Cell val5 = new Formula("= 2 4");
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new DoubleValue(2.0));
+    ourFormulas.add(new DoubleValue(4.0));
+    Cell val5 = new Function("SUM", ourFormulas);
     Coord coord6 = new Coord(3, 3);
     Cell val6 = new Blank();
     testSheet.setCellAt(coord1, val1);
@@ -318,9 +327,8 @@ public class SpreadsheetTest {
   @Test
   public void testEvalBlank() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Value comp1 = new DoubleValue(0.0);
     testSheet.setCellAt(coord1, comp1);
@@ -332,7 +340,10 @@ public class SpreadsheetTest {
   //tests evaluating a formula cell
   @Test
   public void testEvalFormula() {
-    Cell cell1 = new Formula("=(SUM 4 3)");
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new DoubleValue(4.0));
+    ourFormulas.add(new DoubleValue(3.0));
+    Cell cell1 = new Function("SUM", ourFormulas);
     Value comp1 = new DoubleValue(7.0);
     assertEquals(comp1, cell1.evaluateCell());
   }
@@ -340,14 +351,13 @@ public class SpreadsheetTest {
   //tests evaluating a formula cell that uses a reference
   @Test
   public void testEvalFormulaReference() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Value val1 = new DoubleValue(11.0);
     testSheet.setCellAt(coord1, val1);
-    Cell cell1 = new Formula("A1");
+    Cell cell1 = new Reference("A1", testSheet);
     assertEquals(val1, cell1.evaluateCell());
   }
 
@@ -356,7 +366,10 @@ public class SpreadsheetTest {
   //tests difference of two positive doubles
   @Test
   public void testDifferencePos() {
-    Cell cell1 = new Formula("=(SUM 4 3)");
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new DoubleValue(4.0));
+    ourFormulas.add(new DoubleValue(3.0));
+    Cell cell1 = new Function("SUM", ourFormulas);
     Value comp1 = new DoubleValue(1.0);
     assertEquals(comp1, cell1.evaluateCell());
   }
@@ -364,7 +377,10 @@ public class SpreadsheetTest {
   //tests difference of two negative doubles
   @Test
   public void testDifferenceNeg() {
-    Cell cell1 = new Formula("=(SUM -4 3)");
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new DoubleValue(-4.0));
+    ourFormulas.add(new DoubleValue(3.0));
+    Cell cell1 = new Function("SUM", ourFormulas);
     Value comp1 = new DoubleValue(-7.0);
     assertEquals(comp1, cell1.evaluateCell());
   }
@@ -372,16 +388,18 @@ public class SpreadsheetTest {
   //tests difference of two positive references
   @Test
   public void testDifferenceReference() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\" +
+            "cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Value val1 = new DoubleValue(10.0);
     Coord coord2 = new Coord(2, 1);
     Value val2 = new DoubleValue(2.0);
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(SUM A1 A2)");
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", testSheet));
+    ourFormulas.add(new Reference("A2", testSheet));
+    Cell val3 = new Function("SUM", ourFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -392,16 +410,24 @@ public class SpreadsheetTest {
   //tests difference of two formula references
   @Test
   public void testDifferenceFormula() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
-    Cell val1 = new Formula("=(SUM 5 5)");
+    ArrayList<Formula> firstFormulas = new ArrayList<>();
+    firstFormulas.add(new DoubleValue(5.0));
+    firstFormulas.add(new DoubleValue(5.0));
+    Cell val1 = new Function("SUM", firstFormulas);
     Coord coord2 = new Coord(2, 1);
-    Cell val2 = new Formula("=(SUM 1 1)");
+    ArrayList<Formula> secondFormulas = new ArrayList<>();
+    secondFormulas.add(new DoubleValue(1.0));
+    secondFormulas.add(new DoubleValue(1.0));
+    Cell val2 = new Function("SUM", secondFormulas);
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(SUB A1 A2)");
+    ArrayList<Formula> thirdFormulas = new ArrayList<>();
+    thirdFormulas.add(new Reference("A1", testSheet));
+    thirdFormulas.add(new Reference("A2", testSheet));
+    Cell val3 = new Function("SUB", thirdFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -410,18 +436,20 @@ public class SpreadsheetTest {
   }
 
   //tests difference of two string references
-  @Test
+  @Test(expected = IllegalArgumentException.class)
   public void testDifferenceStrings() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new StringValue("hamilton");
     Coord coord2 = new Coord(2, 1);
     Cell val2 = new StringValue("burr");
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(SUB A1 A2)");
+    ArrayList<Formula> thirdFormulas = new ArrayList<>();
+    thirdFormulas.add(new Reference("A1", testSheet));
+    thirdFormulas.add(new Reference("A2", testSheet));
+    Cell val3 = new Function("SUB", thirdFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -431,18 +459,20 @@ public class SpreadsheetTest {
   }
 
   //tests difference of two boolean references
-  @Test
+  @Test(expected = IllegalArgumentException.class)
   public void testDifferenceBool() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new BooleanValue(true);
     Coord coord2 = new Coord(2, 1);
     Cell val2 = new BooleanValue(false);
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(SUB A1 A2)");
+    ArrayList<Formula> thirdFormulas = new ArrayList<>();
+    thirdFormulas.add(new Reference("A1", testSheet));
+    thirdFormulas.add(new Reference("A2", testSheet));
+    Cell val3 = new Function("SUB", thirdFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -451,14 +481,16 @@ public class SpreadsheetTest {
   }
 
   //tests difference of two blanks
-  @Test
+  @Test (expected = IllegalArgumentException.class)
   public void testDifferenceBlank() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(SUB A1 A2)");
+    ArrayList<Formula> thirdFormulas = new ArrayList<>();
+    thirdFormulas.add(new Reference("A1", testSheet));
+    thirdFormulas.add(new Reference("A2", testSheet));
+    Cell val3 = new Function("SUB", thirdFormulas);
     testSheet.setCellAt(coord3, val3);
     Value comp1 = new DoubleValue(0.0);
     assertEquals(comp1, testSheet.getCellAt(coord3).evaluateCell());
@@ -469,7 +501,10 @@ public class SpreadsheetTest {
   //tests comparison of two positive doubles
   @Test
   public void testCompPos() {
-    Cell cell1 = new Formula("=(< 4 3)");
+    ArrayList<Formula> firstFormulas = new ArrayList<>();
+    firstFormulas.add(new DoubleValue(4.0));
+    firstFormulas.add(new DoubleValue(3.0));
+    Cell cell1 = new Function("<", firstFormulas);
     Value comp1 = (Value) new BooleanValue(false);
     assertEquals(comp1, cell1.evaluateCell());
   }
@@ -477,24 +512,29 @@ public class SpreadsheetTest {
   //tests comparison of two negative doubles
   @Test
   public void testCompNeg() {
-    Cell cell1 = new Formula("=(< -4 3)");
+    ArrayList<Formula> firstFormulas = new ArrayList<>();
+    firstFormulas.add(new DoubleValue(-4.0));
+    firstFormulas.add(new DoubleValue(3.0));
+    Cell cell1 = new Function("<", firstFormulas);
     Value comp1 = (Value) new BooleanValue(true);
     assertEquals(comp1, cell1.evaluateCell());
   }
 
   //tests comparison of two positive references
-  @Test
+  @Test (expected = IllegalArgumentException.class)
   public void testCompReference() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new DoubleValue(16.0);
     Coord coord2 = new Coord(2, 1);
     Cell val2 = new DoubleValue(2.0);
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(< A1 A2)");
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", testSheet));
+    ourFormulas.add(new Reference("A2", testSheet));
+    Cell val3 = new Function("<", ourFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -505,36 +545,46 @@ public class SpreadsheetTest {
   //tests comparison of two formula references
   @Test
   public void testCompFormula() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
-    Cell val1 = new Formula("=(SUM 5 5)");
+    ArrayList<Formula> firstFormulas = new ArrayList<>();
+    firstFormulas.add(new DoubleValue(5.0));
+    firstFormulas.add(new DoubleValue(5.0));
+    Cell val1 = new Function("SUM", firstFormulas);
     Coord coord2 = new Coord(2, 1);
-    Cell val2 = new Formula("=(SUM 1 1)");
+    ArrayList<Formula> secondFormulas = new ArrayList<>();
+    firstFormulas.add(new DoubleValue(1.0));
+    firstFormulas.add(new DoubleValue(1.0));
+    Cell val2 = new Function("SUM", secondFormulas);
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(< A1 A2)");
+    ArrayList<Formula> thirdFormulas = new ArrayList<>();
+    thirdFormulas.add(new Reference("A1", testSheet));
+    thirdFormulas.add(new Reference("A2", testSheet));
+    Cell val3 = new Function("<", thirdFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
-    Value comp1 = (Value) new BooleanValue(false);
+    Value comp1 = new BooleanValue(false);
     assertEquals(comp1, testSheet.getCellAt(coord3).evaluateCell());
   }
 
   //tests comparison of two string references
   @Test(expected = IllegalArgumentException.class)
   public void testCompStrings() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new StringValue("a. ham");
     Coord coord2 = new Coord(2, 1);
     Cell val2 = new StringValue("a. burr");
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(< A1 A2)");
+    ArrayList<Formula> thirdFormulas = new ArrayList<>();
+    thirdFormulas.add(new Reference("A1", testSheet));
+    thirdFormulas.add(new Reference("A2", testSheet));
+    Cell val3 = new Function("<", thirdFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -544,16 +594,18 @@ public class SpreadsheetTest {
   //tests comparison of two boolean references
   @Test(expected = IllegalArgumentException.class)
   public void testCompBools() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\" +
+            "cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new BooleanValue(false);
     Coord coord2 = new Coord(2, 1);
     Cell val2 = new BooleanValue(true);
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(< A1 A2)");
+    ArrayList<Formula> thirdFormulas = new ArrayList<>();
+    thirdFormulas.add(new Reference("A1", testSheet));
+    thirdFormulas.add(new Reference("A2", testSheet));
+    Cell val3 = new Function("<", thirdFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -563,12 +615,14 @@ public class SpreadsheetTest {
   //tests comparison of blanks
   @Test(expected = IllegalArgumentException.class)
   public void testCompBlanks() {
-    Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord coord3 = new Coord(1, 2);
-    Cell val3 = new Formula("=(< A1 A2)");
+    ArrayList<Formula> thirdFormulas = new ArrayList<>();
+    thirdFormulas.add(new Reference("A1", testSheet));
+    thirdFormulas.add(new Reference("A2", testSheet));
+    Cell val3 = new Function("<", thirdFormulas);
     testSheet.setCellAt(coord3, val3);
     testSheet.getCellAt(coord3).evaluateCell();
   }

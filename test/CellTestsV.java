@@ -1,11 +1,16 @@
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.BooleanValue;
 import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.DoubleValue;
 import edu.cs3500.spreadsheets.model.Formula;
+import edu.cs3500.spreadsheets.model.Function;
+import edu.cs3500.spreadsheets.model.Reference;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.StringValue;
 
@@ -16,7 +21,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class CellTestsV {
 
-  private Spreadsheet spreadsheet = new BasicSpreadsheet();
+  private BasicSpreadsheet spreadsheet = new BasicSpreadsheet();
+
   private Coord a1 = new Coord(1, 1);
   private Coord b1 = new Coord(2, 1);
   private Coord c1 = new Coord(3, 1);
@@ -35,6 +41,11 @@ public class CellTestsV {
   private Cell numberVal2 = new DoubleValue(2.0);
   private Cell numberVal4 = new DoubleValue(4.0);
 
+  public CellTestsV() {
+    spreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
+  }
+
   // THESE ARE THE TESTS FOR EVALUATE CELL (WHEN IT IS A VALUE)
 
   // this is to check that the returned value is correct (when boolean)
@@ -52,7 +63,10 @@ public class CellTestsV {
   // this is the test for product (when has strings)
   @Test(expected = IllegalArgumentException.class)
   public void productWithStrings() {
-    Cell stringCell = new Formula("= SUM(hello 1)");
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new StringValue("hello"));
+    ourFormulas.add(new DoubleValue(1.0));
+    Cell stringCell = new Function("SUM",  ourFormulas);
     stringCell.evaluateCell();
   }
 
@@ -61,7 +75,10 @@ public class CellTestsV {
   public void productWithTrue() {
     spreadsheet.setCellAt(a1, trueVal);
     spreadsheet.setCellAt(c3, numberVal10);
-    spreadsheet.setCellAt(b2, new Formula("=(PRODUCT A1 C3)"));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", spreadsheet));
+    ourFormulas.add(new Reference("C3", spreadsheet));
+    spreadsheet.setCellAt(b2, new Function("=(PRODUCT A1 C3)", ourFormulas));
     assertEquals(new DoubleValue(10.0), spreadsheet.getCellAt(b2).evaluateCell());
   }
 
@@ -70,7 +87,10 @@ public class CellTestsV {
   public void productWithFalse() {
     spreadsheet.setCellAt(a1, falseVal);
     spreadsheet.setCellAt(c3, numberVal10);
-    spreadsheet.setCellAt(b2, new Formula("=(PRODUCT A1 C3)"));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", spreadsheet));
+    ourFormulas.add(new Reference("C3", spreadsheet));
+    spreadsheet.setCellAt(b2, new Function("=(PRODUCT A1 C3)", ourFormulas));
     assertEquals(new BooleanValue(false), spreadsheet.getCellAt(b2).evaluateCell());
   }
 
@@ -81,7 +101,12 @@ public class CellTestsV {
     spreadsheet.setCellAt(c3, numberVal5);
     spreadsheet.setCellAt(c2, numberVal4);
     spreadsheet.setCellAt(b1, numberVal2);
-    spreadsheet.setCellAt(b2, new Formula("=(PRODUCT A1 C3 C2 B1)"));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", spreadsheet));
+    ourFormulas.add(new Reference("C3", spreadsheet));
+    ourFormulas.add(new Reference("C2", spreadsheet));
+    ourFormulas.add(new Reference("B1", spreadsheet));
+    spreadsheet.setCellAt(b2, new Function("PRODUCT", ourFormulas));
     assertEquals(new DoubleValue(160.0), spreadsheet.getCellAt(b2).evaluateCell());
   }
 
@@ -94,7 +119,12 @@ public class CellTestsV {
     spreadsheet.setCellAt(c3, numberVal5);
     spreadsheet.setCellAt(c2, numberVal4);
     spreadsheet.setCellAt(b1, numberVal2);
-    spreadsheet.setCellAt(b2, new Formula("=(SUM A1 C3 C2 B1)"));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", spreadsheet));
+    ourFormulas.add(new Reference("C3", spreadsheet));
+    ourFormulas.add(new Reference("C2", spreadsheet));
+    ourFormulas.add(new Reference("B1", spreadsheet));
+    spreadsheet.setCellAt(b2, new Function("SUM", ourFormulas));
     assertEquals(new DoubleValue(11.0), spreadsheet.getCellAt(b2).evaluateCell());
   }
 
@@ -105,7 +135,12 @@ public class CellTestsV {
     spreadsheet.setCellAt(c3, numberVal5);
     spreadsheet.setCellAt(c2, numberVal4);
     spreadsheet.setCellAt(b1, falseVal);
-    spreadsheet.setCellAt(b2, new Formula("=(SUM A1 C3 C2 B1)"));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", spreadsheet));
+    ourFormulas.add(new Reference("C3", spreadsheet));
+    ourFormulas.add(new Reference("C2", spreadsheet));
+    ourFormulas.add(new Reference("B1", spreadsheet));
+    spreadsheet.setCellAt(b2, new Function("SUM", ourFormulas));
     assertEquals(new DoubleValue(9.0), spreadsheet.getCellAt(b2).evaluateCell());
   }
 
@@ -116,7 +151,12 @@ public class CellTestsV {
     spreadsheet.setCellAt(c3, numberVal5);
     spreadsheet.setCellAt(c2, numberVal4);
     spreadsheet.setCellAt(b1, numberVal2);
-    spreadsheet.setCellAt(b2, new Formula("=(SUM A1 C3 C2 B1)"));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", spreadsheet));
+    ourFormulas.add(new Reference("C3", spreadsheet));
+    ourFormulas.add(new Reference("C2", spreadsheet));
+    ourFormulas.add(new Reference("B1", spreadsheet));
+    spreadsheet.setCellAt(b2, new Function("SUM", ourFormulas));
     assertEquals(new DoubleValue(21.0), spreadsheet.getCellAt(b2).evaluateCell());
   }
 
@@ -127,7 +167,9 @@ public class CellTestsV {
   @Test(expected = IllegalArgumentException.class)
   public void sqrtWithStrings() {
     spreadsheet.setCellAt(a1, stringVal);
-    spreadsheet.setCellAt(b2, new Formula("=(SQRT A1)"));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", spreadsheet));
+    spreadsheet.setCellAt(b2, new Function("SQRT", ourFormulas));
     spreadsheet.getCellAt(b2).evaluateCell();
   }
 
@@ -136,7 +178,9 @@ public class CellTestsV {
   public void sqrtWithTrue() {
     spreadsheet.setCellAt(a1, trueVal);
 
-    spreadsheet.setCellAt(b1, new Formula("=(SQRT A1)"));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", spreadsheet));
+    spreadsheet.setCellAt(b1, new Function("SQRT", ourFormulas));
     assertEquals(new DoubleValue(1.0), spreadsheet.getCellAt(b1).evaluateCell());
   }
 
@@ -145,7 +189,9 @@ public class CellTestsV {
   public void sqrtWithFalse() {
     spreadsheet.setCellAt(a1, falseVal);
 
-    spreadsheet.setCellAt(b1, new Formula("=(SQRT A1)"));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", spreadsheet));
+    spreadsheet.setCellAt(b1, new Function("SQRT", ourFormulas));
     assertEquals(new DoubleValue(0.0), spreadsheet.getCellAt(b1).evaluateCell());
   }
 
@@ -154,7 +200,9 @@ public class CellTestsV {
   public void sqrtWithValid() {
     spreadsheet.setCellAt(a1, numberVal4);
 
-    spreadsheet.setCellAt(b1, new Formula("=(SQRT A1)"));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", spreadsheet));
+    spreadsheet.setCellAt(b1, new Function("SQRT", ourFormulas));
     assertEquals(new DoubleValue(2.0), spreadsheet.getCellAt(b1).evaluateCell());
   }
 
@@ -164,16 +212,23 @@ public class CellTestsV {
   public void sqrtWithValidNotPerfect() {
     spreadsheet.setCellAt(a1, numberVal10);
 
-    spreadsheet.setCellAt(b1, new Formula("=(SQRT A1)"));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", spreadsheet));
+    spreadsheet.setCellAt(b1, new Function("SQRT", ourFormulas));
     assertEquals(new DoubleValue(Math.sqrt(10)), spreadsheet.getCellAt(b1).evaluateCell());
   }
 
   // this is the test for when the input does something within the SQRT
   @Test
   public void sqrtWithMoreInside() {
-    spreadsheet.setCellAt(a1, new Formula("=(SUM 5 5)"));
+    ArrayList<Formula> firstFormulas = new ArrayList<>();
+    firstFormulas.add(new DoubleValue(5.0));
+    firstFormulas.add(new DoubleValue(5.0));
+    spreadsheet.setCellAt(a1, new Function("SUM", firstFormulas));
 
-    spreadsheet.setCellAt(b1, new Formula("=(SQRT A1)"));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", spreadsheet));
+    spreadsheet.setCellAt(b1, new Function("SQRT", ourFormulas));
     assertEquals(new DoubleValue(Math.sqrt(10)), spreadsheet.getCellAt(b1).evaluateCell());
   }
 
@@ -186,18 +241,34 @@ public class CellTestsV {
     spreadsheet.setCellAt(c3, numberVal5);
     spreadsheet.setCellAt(c2, numberVal4);
     spreadsheet.setCellAt(b1, numberVal2);
-    spreadsheet.setCellAt(b2, new Formula("=(PRODUCT A1 C3 C2 B1 B2)"));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", spreadsheet));
+    ourFormulas.add(new Reference("C3", spreadsheet));
+    ourFormulas.add(new Reference("C2", spreadsheet));
+    ourFormulas.add(new Reference("B1", spreadsheet));
+    ourFormulas.add(new Reference("B2", spreadsheet));
+    spreadsheet.setCellAt(b2, new Function("PRODUCT", ourFormulas));
   }
 
 
   // referring to own cell indirectly
   @Test(expected = IllegalArgumentException.class)
   public void invalidReferenceIndirect() {
-    spreadsheet.setCellAt(a1, new Formula("=SUM(B2 5)"));
+    ArrayList<Formula> firstFormulas = new ArrayList<>();
+    firstFormulas.add(new Reference("B2", spreadsheet));
+    firstFormulas.add(new DoubleValue(5.0));
+    spreadsheet.setCellAt(a1, new Function("SUM", firstFormulas));
     spreadsheet.setCellAt(c3, numberVal5);
     spreadsheet.setCellAt(c2, numberVal4);
     spreadsheet.setCellAt(b1, numberVal2);
-    spreadsheet.setCellAt(b2, new Formula("=(PRODUCT A1 C3 C2 B1 B2)"));
+
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", spreadsheet));
+    ourFormulas.add(new Reference("C3", spreadsheet));
+    ourFormulas.add(new Reference("C2", spreadsheet));
+    ourFormulas.add(new Reference("B1", spreadsheet));
+    ourFormulas.add(new Reference("B2", spreadsheet));
+    spreadsheet.setCellAt(b2, new Function("PRODUCT", ourFormulas));
   }
 
 

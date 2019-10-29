@@ -10,6 +10,8 @@ import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.DoubleValue;
 import edu.cs3500.spreadsheets.model.Formula;
+import edu.cs3500.spreadsheets.model.Function;
+import edu.cs3500.spreadsheets.model.Reference;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.StringValue;
 
@@ -21,7 +23,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class SpreadsheetTestsV {
 
-  private Spreadsheet basicSpreadsheet = new BasicSpreadsheet();
+  private BasicSpreadsheet basicSpreadsheet = new BasicSpreadsheet();
 
 
   // THESE ARE THE TESTS FOR GET CELL AT
@@ -29,14 +31,22 @@ public class SpreadsheetTestsV {
   // the test for when the given cell has a formula
   @Test
   public void getCellFormula() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\" +
+            "src\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(1, 3);
-    Cell addedCell = new Formula("=(PRODUCT (SUB C1 A1) (SUB C1 A1))");
+    ArrayList<Formula> firstFormulas = new ArrayList<>();
+    firstFormulas.add(new Reference("C1", basicSpreadsheet));
+    firstFormulas.add(new Reference("A1", basicSpreadsheet));
+    ArrayList<Formula> secondFormulas = new ArrayList<>();
+    secondFormulas.add(new Reference("C1", basicSpreadsheet));
+    secondFormulas.add(new Reference("A1", basicSpreadsheet));
+    ArrayList<Formula> thirdFormulas = new ArrayList<>();
+    thirdFormulas.add(new Function("SUB", firstFormulas));
+    thirdFormulas.add(new Function("SUB", secondFormulas));
+    Cell addedCell = new Function("PRODUCT", thirdFormulas);
     basicSpreadsheet.setCellAt(index, addedCell);
 
-    assertEquals(new Formula("=(PRODUCT (SUB C1 A1) (SUB C1 A1))"),
+    assertEquals(new Function("PRODUCT", thirdFormulas),
             basicSpreadsheet.getCellAt(index));
   }
 
@@ -44,9 +54,8 @@ public class SpreadsheetTestsV {
   // the test for when the given cell has a numeric value
   @Test
   public void getCellNumericValue() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(1, 3);
     Cell addedCell = new DoubleValue(7.0);
     basicSpreadsheet.setCellAt(index, addedCell);
@@ -58,9 +67,8 @@ public class SpreadsheetTestsV {
   // the test for when the given cell has a boolean value
   @Test
   public void getCellBooleanValue() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(5, 3);
     Cell addedCell = new BooleanValue(true);
     basicSpreadsheet.setCellAt(index, addedCell);
@@ -73,9 +81,8 @@ public class SpreadsheetTestsV {
   // the test for when the given cell has a string value
   @Test
   public void getCellStringValue() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(5, 3);
     Cell addedCell = new StringValue("I am not throwing away my shot!");
     basicSpreadsheet.setCellAt(index, addedCell);
@@ -88,9 +95,8 @@ public class SpreadsheetTestsV {
   // the test for when the given cell is blank
   @Test
   public void getCellBlankValue() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(5, 3);
     Cell addedCell = new Blank();
     basicSpreadsheet.setCellAt(index, addedCell);
@@ -103,9 +109,8 @@ public class SpreadsheetTestsV {
   // new blank cells added so it should return a blank cell
   @Test
   public void getOutColumnSide() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(15, 3);
     assertEquals(new Blank(),
             basicSpreadsheet.getCellAt(index));
@@ -114,9 +119,8 @@ public class SpreadsheetTestsV {
   // the test for when the given cell is out of bounds on the row side
   @Test
   public void getOutRowSide() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(5, 10);
     assertEquals(new Blank(),
             basicSpreadsheet.getCellAt(index));
@@ -126,9 +130,8 @@ public class SpreadsheetTestsV {
   // the test for when the given cell is out of bounds on the row and column
   @Test
   public void getOutBothRowCol() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(15, 20);
     assertEquals(new Blank(),
             basicSpreadsheet.getCellAt(index));
@@ -137,9 +140,8 @@ public class SpreadsheetTestsV {
   // the test for when the row is over double the current row size
   @Test
   public void getOutRowOverDouble() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(3, 50);
     assertEquals(new Blank(),
             basicSpreadsheet.getCellAt(index));
@@ -148,9 +150,8 @@ public class SpreadsheetTestsV {
   // the test for when the column is over double the current column size
   @Test
   public void getOutColumnOverDouble() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(70, 8);
     assertEquals(new Blank(),
             basicSpreadsheet.getCellAt(index));
@@ -159,9 +160,8 @@ public class SpreadsheetTestsV {
   // the test for when the column and the row are over double the current column and row size
   @Test
   public void getOutColumnRowOverDouble() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(40, 50);
     assertEquals(new Blank(),
             basicSpreadsheet.getCellAt(index));
@@ -171,9 +171,8 @@ public class SpreadsheetTestsV {
   // on the row input (the doubling will go over but the number itself will still be valid
   @Test
   public void getOutRowOverMaxIntRow() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(3, 1000000);
     assertEquals(new Blank(),
             basicSpreadsheet.getCellAt(index));
@@ -183,9 +182,8 @@ public class SpreadsheetTestsV {
   // on the column input
   @Test
   public void getOutColumnMaxIntCol() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(1000000, 5);
     assertEquals(new Blank(),
             basicSpreadsheet.getCellAt(index));
@@ -196,9 +194,8 @@ public class SpreadsheetTestsV {
   // on the row and column inputs
   @Test
   public void getOutColumnMaxIntColRow() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(1000000, 1000000);
     assertEquals(new Blank(),
             basicSpreadsheet.getCellAt(index));
@@ -208,9 +205,8 @@ public class SpreadsheetTestsV {
   // on the row and col inputs (the doubling will go over but the number itself will still be valid
   @Test (expected = IllegalArgumentException.class)
   public void getOutRowColOverMaxIntRow() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index = new Coord(10000000, 1000001);
     assertEquals(new Blank(),
             basicSpreadsheet.getCellAt(index));
@@ -221,9 +217,8 @@ public class SpreadsheetTestsV {
   // the test for when the given cells are all empty (in a rectangle formation)
   @Test
   public void getSectionBlank() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index1 = new Coord(1, 1);  // section of blank cells
     Coord index2 = new Coord(3, 3);
 
@@ -247,13 +242,21 @@ public class SpreadsheetTestsV {
   // the test for when the given cells  have some formulas
   @Test
   public void getSectionFormulas() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     // setting up the board to be all formulas in given section
-    basicSpreadsheet.setCellAt(new Coord(1, 1), new Formula("=(SUM 3 4)"));
-    basicSpreadsheet.setCellAt(new Coord(2, 1), new Formula("=(SUM A1 2)"));
-    basicSpreadsheet.setCellAt(new Coord(3, 3), new Formula("=(PRODUCT A1 B1)"));
+    ArrayList<Formula> firstFormulas = new ArrayList<>();
+    firstFormulas.add(new DoubleValue(3.0));
+    firstFormulas.add(new DoubleValue(4.0));
+    basicSpreadsheet.setCellAt(new Coord(1, 1), new Function("SUM", firstFormulas));
+    ArrayList<Formula> secondFormulas = new ArrayList<>();
+    secondFormulas.add(new Reference("A1", basicSpreadsheet));
+    secondFormulas.add(new DoubleValue(2.0));
+    basicSpreadsheet.setCellAt(new Coord(2, 1), new Function("SUM", secondFormulas));
+    ArrayList<Formula> thirdFormulas = new ArrayList<>();
+    thirdFormulas.add(new Reference("A1", basicSpreadsheet));
+    thirdFormulas.add(new Reference("B1", basicSpreadsheet));
+    basicSpreadsheet.setCellAt(new Coord(3, 3), new Function("PRODUCT", thirdFormulas));
 
 
     Coord index1 = new Coord(1, 1);  // section of blank cells
@@ -261,15 +264,15 @@ public class SpreadsheetTestsV {
 
     List<Cell> expected = new ArrayList<>();
 
-    expected.add(new Formula("=(SUM 3 4)"));  // adding all blanks to the expected list
-    expected.add(new Formula("=(SUM A1 2)"));
+    expected.add(new Function("SUM", firstFormulas));  // adding all blanks to the expected list
+    expected.add(new Function("SUM", secondFormulas));
     expected.add(new Blank());
     expected.add(new Blank());
     expected.add(new Blank());
     expected.add(new Blank());
     expected.add(new Blank());
     expected.add(new Blank());
-    expected.add(new Formula("=(PRODUCT A1 B1)"));
+    expected.add(new Function("PRODUCT", thirdFormulas));
 
     List<Cell> actual = basicSpreadsheet.getCellSection(index1, index2);
 
@@ -289,9 +292,8 @@ public class SpreadsheetTestsV {
   // the test for when the given cells are some values and blanks
   @Test
   public void getSectionValues() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     // setting up the board to be all formulas in given section
     basicSpreadsheet.setCellAt(new Coord(1, 1), new StringValue("hi"));
     basicSpreadsheet.setCellAt(new Coord(2, 1), new DoubleValue(9.0));
@@ -332,14 +334,16 @@ public class SpreadsheetTestsV {
   // the test for when the given cells have a mix of formulas, values, and empty
   @Test
   public void getSectionAllTypes() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     // setting up the board to be all formulas in given section
     basicSpreadsheet.setCellAt(new Coord(1, 1), new StringValue("hi"));
     basicSpreadsheet.setCellAt(new Coord(2, 1), new DoubleValue(9.0));
-    basicSpreadsheet.setCellAt(new Coord(3, 1), new Formula("=B1"));
-    basicSpreadsheet.setCellAt(new Coord(1, 2), new Formula("=(SUM B1 C1)"));
+    basicSpreadsheet.setCellAt(new Coord(3, 1), new Reference("B1", basicSpreadsheet));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("B1", basicSpreadsheet));
+    ourFormulas.add(new Reference("C1", basicSpreadsheet));
+    basicSpreadsheet.setCellAt(new Coord(1, 2), new Function("SUM", ourFormulas));
     basicSpreadsheet.setCellAt(new Coord(3, 3), new BooleanValue(true));
 
 
@@ -350,8 +354,8 @@ public class SpreadsheetTestsV {
 
     expected.add(new StringValue("hi"));  // adding all blanks to the expected list
     expected.add(new DoubleValue(9.0));
-    expected.add(new Formula("=B1"));
-    expected.add(new Formula("=(SUM B1 C1)"));
+    expected.add(new Reference("B1", basicSpreadsheet));
+    expected.add(new Function("SUM", ourFormulas));
     expected.add(new Blank());
     expected.add(new Blank());
     expected.add(new Blank());
@@ -379,9 +383,8 @@ public class SpreadsheetTestsV {
   // all cells out of range
   @Test
   public void getSectionAllTypesColOut() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     Coord index1 = new Coord(11, 1);  // section of blank cells
     Coord index2 = new Coord(11, 4);
 
@@ -415,14 +418,16 @@ public class SpreadsheetTestsV {
   // two columns and 5 rows
   @Test
   public void getSectionSomeOutOfRange() {
-    basicSpreadsheet.initializeSpreadsheet("/Users/victoriabowen/Desktop/NEU 1st year/" +
-            "Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingBlankTenByTen.txt");
+    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry" +
+            "\\src\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
     // setting up the board to be all formulas in given section
     basicSpreadsheet.setCellAt(new Coord(10, 1), new StringValue("hi"));
     basicSpreadsheet.setCellAt(new Coord(10, 2), new DoubleValue(9.0));
-    basicSpreadsheet.setCellAt(new Coord(10, 3), new Formula("=J2"));
-    basicSpreadsheet.setCellAt(new Coord(10, 4), new Formula("=(SUM J3 J2)"));
+    basicSpreadsheet.setCellAt(new Coord(10, 3), new Reference("J2", basicSpreadsheet));
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("J3", basicSpreadsheet));
+    ourFormulas.add(new Reference("J2", basicSpreadsheet));
+    basicSpreadsheet.setCellAt(new Coord(10, 4), new Function("SUM", ourFormulas));
     basicSpreadsheet.setCellAt(new Coord(10, 5), new BooleanValue(true));
 
 
@@ -435,9 +440,9 @@ public class SpreadsheetTestsV {
     expected.add(new Blank());
     expected.add(new DoubleValue(9.0));
     expected.add(new Blank());
-    expected.add(new Formula("=J2"));
+    expected.add(new Reference("J2", basicSpreadsheet));
     expected.add(new Blank());
-    expected.add(new Formula("=(SUM J3 J2)"));
+    expected.add(new Function("SUM", ourFormulas));
     expected.add(new Blank());
     expected.add(new BooleanValue(true));
     expected.add(new Blank());
