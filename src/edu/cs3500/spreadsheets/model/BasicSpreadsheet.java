@@ -5,6 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Scanner;
+
+import edu.cs3500.spreadsheets.sexp.BasicSexpVisitor;
+import edu.cs3500.spreadsheets.sexp.Parser;
+import edu.cs3500.spreadsheets.sexp.SBoolean;
+import edu.cs3500.spreadsheets.sexp.Sexp;
+import edu.cs3500.spreadsheets.sexp.SexpVisitor;
 
 public class BasicSpreadsheet implements Spreadsheet {
 
@@ -41,9 +48,9 @@ public class BasicSpreadsheet implements Spreadsheet {
    *
    * @param fileName the name of the initial file.
    */
-  public BasicSpreadsheet(String fileName) {
+  public BasicSpreadsheet(String fileName) throws FileNotFoundException {
     this.fileName = fileName;
-    createWorksheet();
+    initializeSpreadsheet(fileName);
   }
 
 
@@ -132,7 +139,67 @@ public class BasicSpreadsheet implements Spreadsheet {
    *
    * @param fileName the name of the given file
    */
-  private void initializeSpreadsheet(String fileName) {
+  private void initializeSpreadsheet(String fileName) throws FileNotFoundException {
+    ArrayList<ArrayList<Cell>> newSpreadsheet;
+    FileReader fr;
+
+    //try {
+      fr = new FileReader(fileName);  // get the given file
+    //}
+//    catch(FileNotFoundException e){
+//      throw new IllegalArgumentException("The given file does not exist");
+//    }
+    // scan the file in
+    Scanner scan = new Scanner(fr);
+    Parser parser = new Parser();
+    Coord givenCoord;
+    String coordAsString;
+    String currLine;
+
+
+    while(scan.hasNextLine()){
+      currLine = scan.nextLine();
+      Scanner scanLine = new Scanner(currLine);
+
+      String firstInput = scanLine.next();
+
+      char[] cellName = firstInput.toCharArray();
+
+      String actualFirstInput = "";
+
+
+      for(int i = 0; i < cellName.length; i++){
+        if(Character.isLetter(cellName[i])){
+          actualFirstInput = actualFirstInput + cellName[i];
+          if(Character.isDigit(cellName[i+1])){
+            actualFirstInput = actualFirstInput +" ";
+          }
+        }
+        else if(Character.isDigit(cellName[i])){
+          actualFirstInput = actualFirstInput + cellName[i];
+        }
+      }
+
+      Scanner colAndRow = new Scanner(actualFirstInput);
+      String givenCol = colAndRow.next();
+      int givenRow = colAndRow.nextInt();
+
+      givenCoord = new Coord(Coord.colNameToIndex(givenCol),givenRow);
+
+      System.out.println(givenCoord.col);
+      System.out.println(givenCoord.row);
+
+      String secondInput = scanLine.next();
+      if(secondInput != "="){
+        Sexp element = Parser.parse(secondInput);
+        SexpVisitor visitor = new BasicSexpVisitor();
+          Cell addedCell = (Cell) element.accept(visitor);
+          this.setCellAt(givenCoord, addedCell);
+      }
+
+    }
+
+
 
   }
 
@@ -186,13 +253,6 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   @Override
   public Object createWorksheet() {
-    try {
-      FileReader fr = new FileReader(fileName);
-    }
-    catch(FileNotFoundException e){
-      throw new IllegalArgumentException("The given file does not exist");
-    }
-
 
     return this;
   }

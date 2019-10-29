@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
+
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Blank;
 import edu.cs3500.spreadsheets.model.BooleanValue;
@@ -39,6 +41,17 @@ public class SpreadsheetTest {
   }
 
   //tests initializing with a given file
+
+  // this is the test for initializing with a file (testing basic double setting)
+  @Test
+  public void testInitSheetWithFile() throws FileNotFoundException {
+    Spreadsheet testSheet = new BasicSpreadsheet("/Users/victoriabowen/Desktop/" +
+            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingText.txt");
+    assertEquals(new DoubleValue(3.0),testSheet.getCellAt(new Coord(1,1)));
+
+  }
+
 
   //TEST SET CELL AT
 
