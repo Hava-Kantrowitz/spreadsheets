@@ -6,14 +6,26 @@ package edu.cs3500.spreadsheets.model;
 public class BooleanValue implements Value {
 
   private Boolean bool;
+  private String rawContents;
 
   /**
-   * Constructs an instance of the boolean value class.
+   * Constructs an instance of the boolean value class with the value only.
    * @param val the given boolean value
    */
   public BooleanValue(Boolean val) {
     this.bool = val;
   }
+
+  /**
+   * Constructs an instance of the boolean with the value and rawContents.
+   * @param val the given boolean value
+   * @param rawContents the raw contents when cell is added
+   */
+  public BooleanValue(Boolean val, String rawContents) {
+    this.bool = val;
+    this.rawContents = rawContents;
+  }
+
 
 
   @Override
@@ -74,11 +86,17 @@ public class BooleanValue implements Value {
   public boolean equals(Object otherCell) {
     boolean isEqual = false;
 
-    if (otherCell instanceof BooleanValue && ((BooleanValue) otherCell).bool.equals(this.bool)) {
+    if (otherCell instanceof BooleanValue && ((BooleanValue) otherCell).bool.equals(this.bool)
+    && ((BooleanValue) otherCell).rawContents.equals(this.rawContents)) {
       isEqual = true;
     }
 
     return isEqual;
+  }
+
+  @Override
+  public String toString(){
+    return this.rawContents;
   }
 
   @Override

@@ -117,8 +117,6 @@ public class BasicSpreadsheet implements Spreadsheet {
       expandSheet(givenCol, givenRow);
     }
 
-    System.out.println("This is the cell returned: " + sheet.get(givenRow).get(givenCol).toString());
-
     return sheet.get(givenRow).get(givenCol);
   }
 
@@ -135,6 +133,8 @@ public class BasicSpreadsheet implements Spreadsheet {
     // get the given row then set the column of that row
     sheet.get(givenRow).set(givenCol, cellVal);
 
+    System.out.println("Cell at " +coord.toString() + " is " + cellVal.toString());
+
   }
 
   @Override
@@ -148,12 +148,9 @@ public class BasicSpreadsheet implements Spreadsheet {
       throw new IllegalArgumentException("Cannot find cell range");
     }
 
-    // checking if it is greater than the number of columns (1 based index)
+    // checking if it is greater than the number of columns (1 based index) or rows for the
+    // second input
     // expand the board to fit
-    if (givenCol1 >= numCols || givenRow1 >= numRows) {
-      expandSheet(givenCol1, givenRow1);
-    }
-
     if (givenCol2 >= numCols || givenRow2 >= numRows) {
       expandSheet(givenCol2, givenRow2);
     }

@@ -15,8 +15,8 @@ public class SBoolean implements Sexp {
   }
 
   @Override
-  public <R> R accept(SexpVisitor<R> visitor, Spreadsheet sheet) {
-    return visitor.visitBoolean(this.val);
+  public <R> R accept(SexpVisitor<R> visitor, Spreadsheet sheet, String contentCopy) {
+    return visitor.visitBoolean(this.val, contentCopy);
   }
 
   @Override

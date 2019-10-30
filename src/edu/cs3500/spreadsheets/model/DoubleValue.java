@@ -4,7 +4,9 @@ package edu.cs3500.spreadsheets.model;
  * This class models the double value in the cell.
  */
 public class DoubleValue implements Value {
-  double val;
+
+  private double val;
+  private String rawContents;
 
   /**
    * The constructor for the double value.
@@ -19,6 +21,21 @@ public class DoubleValue implements Value {
     } else {
       throw new IllegalArgumentException("Not a double value.");
     }
+  }
+
+  /**
+   * Constructs an instance of the double value with the value and rawContents.
+   * @param val the given boolean value
+   * @param rawContents the raw contents when cell is added
+   */
+  public DoubleValue(Double val, String rawContents) {
+    // making sure not null
+    if (val != null) {
+      this.val = val;
+    } else {
+      throw new IllegalArgumentException("Not a double value.");
+    }
+    this.rawContents = rawContents;
   }
 
   @Override
@@ -61,20 +78,22 @@ public class DoubleValue implements Value {
     return this;
   }
 
-  @Override
-  public String toString() {
-    return String.valueOf(val);
-  }
 
   @Override
   public boolean equals(Object otherCell) {
     boolean isEqual = false;
 
-    if (otherCell instanceof DoubleValue && ((DoubleValue) otherCell).val == (this.val)) {
+    if (otherCell instanceof DoubleValue && ((DoubleValue) otherCell).val == (this.val)
+    && ((DoubleValue) otherCell).rawContents.equals(this.rawContents)) {
       isEqual = true;
     }
 
     return isEqual;
+  }
+
+  @Override
+  public String toString(){
+    return this.rawContents;
   }
 
   @Override

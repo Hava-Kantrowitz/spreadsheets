@@ -6,9 +6,10 @@ package edu.cs3500.spreadsheets.model;
 public class StringValue implements Value {
 
   private String val;
+  private String rawContents;
 
   /**
-   * This is the constructor for a StringValue.
+   * This is the constructor for a StringValue without the raw contents.
    *
    * @param val the value of the String
    * @throws IllegalArgumentException if the value is null
@@ -20,6 +21,23 @@ public class StringValue implements Value {
     } else {
       throw new IllegalArgumentException("Not a string value.");
     }
+  }
+
+  /**
+   * This is the constructor for a StringValue with raw contents.
+   *
+   * @param val the value of the String
+   * @param rawContents the raw input for the string value
+   * @throws IllegalArgumentException if the value is null
+   */
+  public StringValue(String val, String rawContents) throws IllegalArgumentException {
+    // making sure not null
+    if (val != null) {
+      this.val = val;
+    } else {
+      throw new IllegalArgumentException("Not a string value.");
+    }
+    this.rawContents = rawContents;
   }
 
   @Override
@@ -77,27 +95,22 @@ public class StringValue implements Value {
     return this;
   }
 
-  @Override
-  public String toString() {
-    return val;
-  }
+
 
   @Override
   public boolean equals(Object otherString) {
     boolean isEqual = false;
 
-//    if (otherString instanceof StringValue) {
-//      System.out.println("Not a string value");
-//    }
-//
-//    if (((StringValue) otherString).val.equals(this.val)) {
-//      System.out.println("Fields not equal");
-//    }
-
-    if (otherString instanceof StringValue && ((StringValue) otherString).val.equals(this.val)) {
+    if (otherString instanceof StringValue && ((StringValue) otherString).val.equals(this.val)
+    && ((StringValue) otherString).rawContents.equals(this.rawContents)) {
       isEqual = true;
     }
     return isEqual;
+  }
+
+  @Override
+  public String toString(){
+    return this.rawContents;
   }
 
   @Override

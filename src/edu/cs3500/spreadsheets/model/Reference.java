@@ -12,12 +12,31 @@ public class Reference implements Formula{
 
   private String symbol;
   private Spreadsheet spreadsheet; // change to spread sheet getter
+  private String rawContents;
 
 
+  /**
+   * Constructs a reference to another cell.
+   * @param symbol the symbol for the given reference
+   * @param spreadsheet the spreadsheet to compare the reference to
+   */
   public Reference(String symbol, Spreadsheet spreadsheet){
 
     this.symbol = symbol;
     this.spreadsheet = spreadsheet;
+  }
+
+  /**
+   * Constructs a reference to another cell.
+   * @param symbol the symbol for the given reference
+   * @param spreadsheet the spreadsheet to compare the reference to
+   * @param rawContents
+   */
+  public Reference(String symbol, Spreadsheet spreadsheet, String rawContents){
+
+    this.symbol = symbol;
+    this.spreadsheet = spreadsheet;
+    this.rawContents = rawContents;
   }
 
   @Override
@@ -66,11 +85,16 @@ public class Reference implements Formula{
   public boolean equals(Object otherCell) {
     boolean isEqual = false;
 
-    if (otherCell instanceof Reference && ((Reference) otherCell).symbol == (this.symbol)) {
+    if (otherCell instanceof Reference && ((Reference) otherCell).symbol.equals((this.symbol))) {
       isEqual = true;
     }
 
     return isEqual;
+  }
+
+  @Override
+  public String toString(){
+    return this.rawContents;
   }
 
   @Override

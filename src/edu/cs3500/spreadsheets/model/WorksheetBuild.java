@@ -27,6 +27,7 @@ public class WorksheetBuild implements WorksheetReader.WorksheetBuilder<BasicSpr
   @Override
   public WorksheetReader.WorksheetBuilder<BasicSpreadsheet>
   createCell(int col, int row, String contents) {
+    String contentCopy = new String(contents);
     char[] arrayForm = contents.toCharArray();
 
     // checking if it is a formula to get only the s expression
@@ -36,7 +37,7 @@ public class WorksheetBuild implements WorksheetReader.WorksheetBuilder<BasicSpr
     }
     Coord coord = new Coord(col,row);
     SexpVisitor visit = new BasicSexpVisitor();
-    Cell addedCell = (Cell) Parser.parse(contents).accept(visit, sheet);
+    Cell addedCell = (Cell) Parser.parse(contents).accept(visit, sheet,contentCopy);
     sheet.setCellAt(coord, addedCell);
 
 

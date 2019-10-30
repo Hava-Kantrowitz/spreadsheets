@@ -6,8 +6,9 @@ package edu.cs3500.spreadsheets.model;
 public class Blank implements Cell {
   private Value val;
 
+
   /**
-   * This is an empty constructor for an instance of Blank.
+   * This is the Blank constructor.
    */
   public Blank() {
     this.val = null;
@@ -67,6 +68,11 @@ public class Blank implements Cell {
       isEqual = true;
     }
     return isEqual;
+  }
+
+  @Override
+  public String toString(){
+    return "";
   }
 
   @Override

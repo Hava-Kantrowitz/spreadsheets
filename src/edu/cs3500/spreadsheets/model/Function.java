@@ -5,70 +5,78 @@ import java.util.List;
 import java.util.Scanner;
 
 
-
-public class Function implements Formula{
+public class Function implements Formula {
 
   private String functionName;
   List<Formula> funParams;
+  String rawContents;
 
 
   /**
-   * Constructs an instance of a formula cell.
+   * Constructs an instance of a formula cell with the function name and list of parameters.
    *
    * @param functionName the name of the function
-   * @param funParams the list of all the function parameters
+   * @param funParams    the list of all the function parameters
    */
   public Function(String functionName, List<Formula> funParams) {
     this.functionName = functionName;
     this.funParams = funParams;
+  }
+
+  /**
+   * Constructs an instance of a formula cell with the raw contents included.
+   *
+   * @param functionName the name of the function
+   * @param funParams    the list of all the function parameters
+   * @param rawContents  the string entered to the cell
+   */
+  public Function(String functionName, List<Formula> funParams, String rawContents) {
+    this.functionName = functionName;
+    this.funParams = funParams;
+    this.rawContents = rawContents;
 
   }
 
+
   @Override
-  public Value evaluateCell() throws IllegalArgumentException{
+  public Value evaluateCell() throws IllegalArgumentException {
     Value output;
 
     // making sure the function parameters are at least greater than zero
-    if(funParams.size() < 1){
+    if (funParams.size() < 1) {
       throw new IllegalArgumentException("There must be at least one parameter for any function");
     }
 
-    if(functionName.equals("SUM")){
+    if (functionName.equals("SUM")) {
       output = new DoubleValue(sum(funParams));
-    }
-    else if(functionName.equals("PRODUCT")){
+    } else if (functionName.equals("PRODUCT")) {
       output = new DoubleValue(product(funParams));
-    }
-    else if(functionName.equals("SUB")){
+    } else if (functionName.equals("SUB")) {
       // making sure there are two inputs
-      if(funParams.size() != 2){
+      if (funParams.size() != 2) {
         throw new IllegalArgumentException("Subtraction cannot have more than two " +
                 "function parameters");
       }
       output = new DoubleValue(difference(funParams.get(0), funParams.get(1)));
-    }
-    else if(functionName.equals("<")){
+    } else if (functionName.equals("<")) {
       // making sure there are two inputs
-      if(funParams.size() != 2){
+      if (funParams.size() != 2) {
         throw new IllegalArgumentException("Subtraction cannot have more than two " +
                 "function parameters");
       }
       output = new BooleanValue(comparison(funParams.get(0), funParams.get(1)));
-    }
-    else if(functionName.equals("SQRT")){
+    } else if (functionName.equals("SQRT")) {
       //making sure the input is only one
-      if(funParams.size() != 1){
+      if (funParams.size() != 1) {
         throw new IllegalArgumentException("Square root must have one parameter");
       }
       output = new DoubleValue(sqrt(funParams.get(0)));
-    }
-    else if(functionName.equals("HAM")){
-      if(funParams.size() != 1){ // making sure one input
+    } else if (functionName.equals("HAM")) {
+      if (funParams.size() != 1) { // making sure one input
         throw new IllegalArgumentException("Hamilton function must only have one input.");
       }
       output = new StringValue(hamilton(funParams.get(0)));
-    }
-    else{
+    } else {
       throw new IllegalArgumentException("Function entered does not exist" + functionName);
     }
 
@@ -82,7 +90,7 @@ public class Function implements Formula{
   }
 
   @Override
-  public double evaluateCellProduct(Formula...formulas) throws IllegalArgumentException {
+  public double evaluateCellProduct(Formula... formulas) throws IllegalArgumentException {
     return this.evaluateCell().evaluateCellProduct();
   }
 
@@ -186,12 +194,18 @@ public class Function implements Formula{
   public boolean equals(Object otherCell) {
     boolean isEqual = false;
     // checking that it is a formula and has the same string
-    if (otherCell instanceof Function && ((Function) otherCell).
-            functionName.equals(this.functionName) && ((Function) otherCell).funParams.equals(
-                    this.funParams)) {
+    if (otherCell instanceof Function
+            && ((Function) otherCell).functionName.equals(this.functionName)
+            && ((Function) otherCell).funParams.equals(this.funParams)
+            && ((Function) otherCell).rawContents.equals(this.rawContents)) {
       isEqual = true;
     }
     return isEqual;
+  }
+
+  @Override
+  public String toString() {
+    return this.rawContents;
   }
 
   @Override
