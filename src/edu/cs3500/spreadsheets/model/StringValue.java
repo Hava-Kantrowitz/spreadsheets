@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.List;
+
 /**
  * This class models the string value of a cell.
  */
@@ -28,7 +30,7 @@ public class StringValue implements Value {
   }
 
   @Override
-  public double evaluateCellProduct(Formula...formulas) {
+  public double evaluateCellProduct(List<Formula> formulas) {
     int numCount = 0;
     double evalNum;
 
@@ -73,6 +75,16 @@ public class StringValue implements Value {
   }
 
   @Override
+  public boolean isRef() {
+    return false;
+  }
+
+  @Override
+  public boolean isFunction() {
+    return false;
+  }
+
+  @Override
   public Value evaluateCell() {
     return this;
   }
@@ -85,14 +97,6 @@ public class StringValue implements Value {
   @Override
   public boolean equals(Object otherString) {
     boolean isEqual = false;
-
-//    if (otherString instanceof StringValue) {
-//      System.out.println("Not a string value");
-//    }
-//
-//    if (((StringValue) otherString).val.equals(this.val)) {
-//      System.out.println("Fields not equal");
-//    }
 
     if (otherString instanceof StringValue && ((StringValue) otherString).val.equals(this.val)) {
       isEqual = true;

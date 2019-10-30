@@ -3,7 +3,6 @@ import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.List;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.BooleanValue;
@@ -27,9 +26,8 @@ public class CellTestsV {
 
   private static void initializeTestSheet(Spreadsheet sheet){
     try {
-      sheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/NEU 1st " +
-              "year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-              "spreadsheets/testingBlankTenByTen.txt"));
+      sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
+              "\\src\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -104,7 +102,7 @@ public class CellTestsV {
     ourFormulas.add(new Reference("A1", spreadsheet));
     ourFormulas.add(new Reference("C3", spreadsheet));
     spreadsheet.setCellAt(b2, new Function("PRODUCT", ourFormulas));
-    assertEquals(new BooleanValue(false), spreadsheet.getCellAt(b2).evaluateCell());
+    assertEquals(new DoubleValue(10.0), spreadsheet.getCellAt(b2).evaluateCell());
   }
 
   // this is the test for product (when has all numbers)
@@ -259,6 +257,14 @@ public class CellTestsV {
   // TESTS FOR CHECKING THE VALIDITY OF THE FORMULA
   // referring to own cell directly
   @Test(expected = IllegalArgumentException.class)
+  public void directSelfReference() {
+    initializeTestSheet(spreadsheet);
+    spreadsheet.setCellAt(b2, new Reference("B2", spreadsheet));
+    spreadsheet.evaluateSheet();
+  }
+
+  //referring to own cell directly within formula
+  @Test(expected = IllegalArgumentException.class)
   public void productWithInvalidReference() {
     initializeTestSheet(spreadsheet);
     spreadsheet.setCellAt(a1, numberVal4);
@@ -272,6 +278,7 @@ public class CellTestsV {
     ourFormulas.add(new Reference("B1", spreadsheet));
     ourFormulas.add(new Reference("B2", spreadsheet));
     spreadsheet.setCellAt(b2, new Function("PRODUCT", ourFormulas));
+    spreadsheet.evaluateSheet();
   }
 
 
@@ -279,13 +286,6 @@ public class CellTestsV {
   @Test(expected = IllegalArgumentException.class)
   public void invalidReferenceIndirect() {
     initializeTestSheet(spreadsheet);
-    ArrayList<Formula> firstFormulas = new ArrayList<>();
-    firstFormulas.add(new Reference("B2", spreadsheet));
-    firstFormulas.add(new DoubleValue(5.0));
-    spreadsheet.setCellAt(a1, new Function("SUM", firstFormulas));
-    spreadsheet.setCellAt(c3, numberVal5);
-    spreadsheet.setCellAt(c2, numberVal4);
-    spreadsheet.setCellAt(b1, numberVal2);
 
     ArrayList<Formula> ourFormulas = new ArrayList<>();
     ourFormulas.add(new Reference("A1", spreadsheet));
@@ -294,6 +294,7 @@ public class CellTestsV {
     ourFormulas.add(new Reference("B1", spreadsheet));
     ourFormulas.add(new Reference("B2", spreadsheet));
     spreadsheet.setCellAt(b2, new Function("PRODUCT", ourFormulas));
+    spreadsheet.evaluateSheet();
   }
 
 

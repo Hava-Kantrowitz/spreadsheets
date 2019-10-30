@@ -1,6 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
-import java.sql.Ref;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,8 +10,10 @@ import java.util.regex.Pattern;
  */
 public class Reference implements Formula{
 
-  private String symbol;
+  protected String symbol;
   private Spreadsheet spreadsheet; // change to spread sheet getter
+  protected int rowOver;
+  protected int colOver;
 
 
   public Reference(String symbol, Spreadsheet spreadsheet){
@@ -31,8 +33,8 @@ public class Reference implements Formula{
   }
 
   @Override
-  public double evaluateCellProduct(Formula...formulas) throws IllegalArgumentException {
-    return getReferredCell().evaluateCellProduct();
+  public double evaluateCellProduct(List<Formula> formulas) throws IllegalArgumentException {
+    return getReferredCell().evaluateCellProduct(formulas);
   }
 
   @Override
@@ -63,10 +65,20 @@ public class Reference implements Formula{
   }
 
   @Override
+  public boolean isRef() {
+    return true;
+  }
+
+  @Override
+  public boolean isFunction() {
+    return false;
+  }
+
+  @Override
   public boolean equals(Object otherCell) {
     boolean isEqual = false;
 
-    if (otherCell instanceof Reference && ((Reference) otherCell).symbol == (this.symbol)) {
+    if (otherCell instanceof Reference && ((Reference) otherCell).symbol.equals(this.symbol)) {
       isEqual = true;
     }
 
@@ -82,7 +94,7 @@ public class Reference implements Formula{
    * This is a helper that gets the cell that is being referred to.
    * @return The cell corresponding to the string symbol of cell
    */
-  private Cell getReferredCell(){
+  public Cell getReferredCell(){
     Scanner scan = new Scanner(symbol);
     final Pattern cellRef = Pattern.compile("([A-Za-z]+)([1-9][0-9]*)");
     scan.useDelimiter("\\s+");
@@ -99,7 +111,11 @@ public class Reference implements Formula{
       } else {
         throw new IllegalStateException("Expected cell ref");
       }
+      colOver = col;
+      rowOver = row;
     }
+
+
 
     assert coord1 != null;
     return spreadsheet.getCellAt(coord1);

@@ -2,8 +2,6 @@ import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.StringReader;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +30,8 @@ public class SpreadsheetTest {
 
   private static void initializeTestSheet(Spreadsheet sheet){
     try {
-      sheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/NEU 1st " +
-              "year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-              "spreadsheets/testingBlankTenByTen.txt"));
+      sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
+              "\\src\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -50,9 +47,8 @@ public class SpreadsheetTest {
     Spreadsheet testSheet = new BasicSpreadsheet();
 //    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
 //            "\\cs3500\\spreadsheets\\testingText.txt");
-    testSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/NEU 1st " +
-            "year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/testingText.txt"));
+    testSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects" +
+            "\\nextTry\\src\\edu\\cs3500\\spreadsheets\\testingText.txt"));
 
     assertEquals(new DoubleValue(3.0),testSheet.getCellAt(new Coord(1,1)));//simple double
     assertEquals(new DoubleValue(7.0),testSheet.getCellAt(new Coord(28,1)));//two double
@@ -348,9 +344,6 @@ public class SpreadsheetTest {
   @Test
   public void testEvalReferences() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
-
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new DoubleValue(4.0);
@@ -361,9 +354,9 @@ public class SpreadsheetTest {
     Coord coord4 = new Coord(1, 3);
     Cell val4 = new Reference("A1", testSheet);
     Coord coord5 = new Coord(2, 3);
-    Cell val5 = new Reference("A2", testSheet);
+    Cell val5 = new Reference("B1", testSheet);
     Coord coord6 = new Coord(3, 3);
-    Cell val6 = new Reference("B1", testSheet);
+    Cell val6 = new Reference("A2", testSheet);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -372,8 +365,8 @@ public class SpreadsheetTest {
     testSheet.setCellAt(coord6, val6);
     testSheet.evaluateSheet();
     assertEquals(val1, testSheet.getCellAt(coord4).evaluateCell());
-    assertEquals(val3, testSheet.getCellAt(coord5).evaluateCell());
-    assertEquals(val2, testSheet.getCellAt(coord6).evaluateCell());
+    assertEquals(val2, testSheet.getCellAt(coord5).evaluateCell());
+    assertEquals(val3, testSheet.getCellAt(coord6).evaluateCell());
   }
 
   //tests evaluating all cells, cells mixed types
@@ -503,7 +496,7 @@ public class SpreadsheetTest {
     Coord coord3 = new Coord(1, 2);
     ArrayList<Formula> ourFormulas = new ArrayList<>();
     ourFormulas.add(new Reference("A1", testSheet));
-    ourFormulas.add(new Reference("B2", testSheet));
+    ourFormulas.add(new Reference("B1", testSheet));
     Cell val3 = new Function("SUB", ourFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
@@ -672,13 +665,13 @@ public class SpreadsheetTest {
     Cell val1 = new Function("SUM", firstFormulas);
     Coord coord2 = new Coord(2, 1);
     ArrayList<Formula> secondFormulas = new ArrayList<>();
-    firstFormulas.add(new DoubleValue(1.0));
-    firstFormulas.add(new DoubleValue(1.0));
+    secondFormulas.add(new DoubleValue(1.0));
+    secondFormulas.add(new DoubleValue(1.0));
     Cell val2 = new Function("SUM", secondFormulas);
     Coord coord3 = new Coord(1, 2);
     ArrayList<Formula> thirdFormulas = new ArrayList<>();
     thirdFormulas.add(new Reference("A1", testSheet));
-    thirdFormulas.add(new Reference("B2", testSheet));
+    thirdFormulas.add(new Reference("B1", testSheet));
     Cell val3 = new Function("<", thirdFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);

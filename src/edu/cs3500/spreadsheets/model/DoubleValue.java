@@ -1,10 +1,12 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.List;
+
 /**
  * This class models the double value in the cell.
  */
 public class DoubleValue implements Value {
-  double val;
+  private double val;
 
   /**
    * The constructor for the double value.
@@ -27,7 +29,7 @@ public class DoubleValue implements Value {
   }
 
   @Override
-  public double evaluateCellProduct(Formula...formulas) {
+  public double evaluateCellProduct(List<Formula> formulas) {
     return val;
   }
 
@@ -54,6 +56,16 @@ public class DoubleValue implements Value {
   @Override
   public boolean isNum() {
     return true;
+  }
+
+  @Override
+  public boolean isRef() {
+    return false;
+  }
+
+  @Override
+  public boolean isFunction() {
+    return false;
   }
 
   @Override
