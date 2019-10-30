@@ -1,10 +1,19 @@
 package edu.cs3500.spreadsheets.model;
 
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.sql.Ref;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
 
-import edu.cs3500.spreadsheets.sexp.CreatorVisitor;
+import edu.cs3500.spreadsheets.sexp.BasicSexpVisitor;
 import edu.cs3500.spreadsheets.sexp.Parser;
+import edu.cs3500.spreadsheets.sexp.Sexp;
 import edu.cs3500.spreadsheets.sexp.SexpVisitor;
 
 public class BasicSpreadsheet implements Spreadsheet {
@@ -13,6 +22,7 @@ public class BasicSpreadsheet implements Spreadsheet {
   private ArrayList<ArrayList<Cell>> sheet;
   private int numRows;
   private int numCols;
+  private ArrayList<String> references = new ArrayList<>();
 
   /**
    * This is the blank constructor for a basic spreadsheet. Constructs a 10 by 10 spreadsheet of
@@ -28,77 +38,6 @@ public class BasicSpreadsheet implements Spreadsheet {
     numCols = 0;
     WorksheetBuild builder = new WorksheetBuild(this);  // calling the builder to actually initialize
     WorksheetReader.read(builder,fileName);  // reading from the file and passing it in
-
-
-//    sheet = new ArrayList<ArrayList<Cell>>();
-//    FileReader fr;
-//
-//    try {
-//      fr = new FileReader(fileName);  // get the given file
-//    }
-//    catch(FileNotFoundException e){
-//      throw new IllegalArgumentException("The given file does not exist");
-//    }
-//    // scan the file in
-//    Scanner scan = new Scanner(fr);
-//    Parser parser = new Parser();
-//    Coord givenCoord;
-//    String coordAsString;
-//    String currLine;
-//
-//
-//    while(scan.hasNextLine()){
-//      currLine = scan.nextLine();
-//      Scanner scanLine = new Scanner(currLine);
-//
-//      String firstInput = scanLine.next();
-//
-//      char[] cellName = firstInput.toCharArray();
-//
-//      String actualFirstInput = "";
-//
-//
-//      for(int i = 0; i < cellName.length; i++){
-//        if(Character.isLetter(cellName[i])){
-//          actualFirstInput = actualFirstInput + cellName[i];
-//          if(Character.isDigit(cellName[i+1])){
-//            actualFirstInput = actualFirstInput +" ";
-//          }
-//        }
-//        else if(Character.isDigit(cellName[i])){
-//          actualFirstInput = actualFirstInput + cellName[i];
-//        }
-//      }
-//
-//      Scanner colAndRow = new Scanner(actualFirstInput);
-//      String givenCol = colAndRow.next();
-//      int givenRow = colAndRow.nextInt();
-//
-//      givenCoord = new Coord(Coord.colNameToIndex(givenCol),givenRow);
-//
-//      System.out.println(givenCoord.col);
-//      System.out.println(givenCoord.row);
-//
-//      String secondInput = scanLine.next();
-//      if(!secondInput.equals("=")){
-//        Sexp element = Parser.parse(secondInput);
-//        SexpVisitor visitor = new BasicSexpVisitor();
-//        Cell addedCell = (Cell) element.accept(visitor);
-//        System.out.println(addedCell.toString());
-//        this.setCellAt(givenCoord, addedCell);
-//        numRows = sheet.size();
-//        numCols = sheet.get(0).size();
-//      }
-//
-//      else if(!secondInput.equals("=")){
-//
-//      }
-//
-//
-//    }
-
-
-
   }
 
 
@@ -116,34 +55,6 @@ public class BasicSpreadsheet implements Spreadsheet {
     return sheet.get(givenRow).get(givenCol);
   }
 
-
-
-  @Override
-  public void setCellAt(Coord coord, String rawContents){
-    char[] arrayForm = rawContents.toCharArray();
-
-    // taking off the equals
-    if(arrayForm[0] == '='){
-      rawContents = rawContents.substring(1,rawContents.length());
-    }
-    // parsing the added contents
-    SexpVisitor visit = new CreatorVisitor(this,rawContents);
-    Cell addedCell = (Cell) Parser.parse(rawContents).accept(visit);
-
-    // setting the given cell
-    setCellAt(coord,addedCell);
-
-
-//    WorksheetBuild builder = new WorksheetBuild(this);
-//    builder.createCell(coord.col,coord.row,rawContents);
-  }
-
-  // PUT THIS IN INTERFACE
-  /**
-   * This is a helper to set a cell given the coordinates and raw contents.
-   * @param coord the given coordinate
-   * @param cellVal the value of the cell
-   */
   @Override
   public void setCellAt(Coord coord, Cell cellVal) {
     int givenCol = coord.col - 1;  // adjust for the 1 based indexing
@@ -195,15 +106,130 @@ public class BasicSpreadsheet implements Spreadsheet {
 
 
   @Override
-  public void evaluateSheet() {
+  public void evaluateSheet() throws IllegalArgumentException{
 
     for (int i = 1; i < numCols; i++) {
       for (int j = 1; j < numRows; j++) {
         Coord currCor = new Coord(i, j);
+        //testDirectRef(currCor);
+        //testDirectFun(currCor);
+        if (hasIndirectRef(currCor)) {
+          throw new IllegalArgumentException("There is a self reference in cell " + currCor.toString());
+        }
         getCellAt(currCor).evaluateCell();
       }
     }
 
+  }
+
+  private boolean hasIndirectRef(Coord currCor) {
+    if (getCellAt(currCor).isRef()) {
+      Reference ref = (Reference) getCellAt(currCor);
+      references.add(ref.symbol);
+      if (ref.isFunction()) {
+        Function funIn = (Function) ref.getReferredCell();
+        int numRefs = 0;
+        int numFuns = 0;
+        ArrayList<Reference> actualRefs = new ArrayList<>();
+        ArrayList<Function> actualFuns = new ArrayList<>();
+        for (Formula f : funIn.funParams) {
+          if (f.isRef()) {
+            numRefs++;
+            Reference nextRef = (Reference) f;
+            references.add(nextRef.symbol);
+            actualRefs.add(nextRef);
+          }
+          if (f.isFunction()) {
+            numFuns++;
+            Function nextFun = (Function) f;
+            actualFuns.add(nextFun);
+          }
+        }
+
+        if (numRefs == 0 && numFuns == 0) {
+          Set<String> noDuplicates = new HashSet<>(references);
+          if (!(references.size() < noDuplicates.size())) {
+            return true;
+          }
+        }
+
+        else if (numRefs != 0 && numFuns == 0){
+          for (Reference r : actualRefs) {
+            if (hasIndirectRef(new Coord(r.colOver, r.rowOver))) {
+              return true;
+            }
+          }
+
+          for (Function f : actualFuns) {
+            for (Formula formula : f.funParams) {
+              if (formula.isFunction()) {
+                Function nextFun = (Function) formula;
+                for (Formula nextParams : nextFun.funParams) {
+                  if (nextParams.isRef()) {
+                    Reference nextRef = (Reference) nextParams;
+                    if (hasIndirectRef(new Coord(nextRef.colOver, nextRef.rowOver))) {
+                      return true;
+                    }
+                  }
+                }
+              }
+              else if (formula.isRef()) {
+                Reference nextRef = (Reference) formula;
+                if (hasIndirectRef(new Coord(nextRef.colOver, nextRef.rowOver))) {
+                  return true;
+                }
+              }
+            }
+          }
+        }
+
+      }
+      else if (ref.isRef()) {
+        Reference refIn = (Reference) ref.getReferredCell();
+        references.add(refIn.symbol);
+        Coord newCoord = new Coord(refIn.colOver, refIn.rowOver);
+        return hasIndirectRef(newCoord);
+      }
+      else {
+        Set<String> noDuplicates = new HashSet<>(references);
+        if (!(references.size() < noDuplicates.size())) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  private void testDirectFun(Coord currCor) {
+    if (getCellAt(currCor).isFunction()) {
+      Function fun = (Function) getCellAt(currCor);
+      List<Formula> formulas = fun.funParams;
+      ArrayList<String> refSymbols = new ArrayList<>();
+      for (Formula f : formulas) {
+        if (f.isRef()) {
+          Reference newRef = (Reference) f;
+          refSymbols.add(newRef.symbol);
+        }
+      }
+
+      for (String s : refSymbols) {
+        if (s.equals(currCor.toString())) {
+          throw new IllegalArgumentException("Cell " + currCor.toString()
+                  + " references itself directly.");
+        }
+      }
+    }
+  }
+
+  private void testDirectRef(Coord currCor) {
+    if (getCellAt(currCor).isRef()) {
+      Reference ref = (Reference) getCellAt(currCor);
+      String refSymbol = ref.symbol;
+      if (currCor.toString().equals(refSymbol)) {
+        throw new IllegalArgumentException("Cell " + currCor.toString()
+                + " references itself directly.");
+      }
+    }
   }
 
   @Override

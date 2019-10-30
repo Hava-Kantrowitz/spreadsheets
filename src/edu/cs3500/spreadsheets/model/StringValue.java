@@ -1,15 +1,16 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.List;
+
 /**
  * This class models the string value of a cell.
  */
 public class StringValue implements Value {
 
   private String val;
-  private String rawContents;
 
   /**
-   * This is the constructor for a StringValue without the raw contents.
+   * This is the constructor for a StringValue.
    *
    * @param val the value of the String
    * @throws IllegalArgumentException if the value is null
@@ -23,30 +24,13 @@ public class StringValue implements Value {
     }
   }
 
-  /**
-   * This is the constructor for a StringValue with raw contents.
-   *
-   * @param val the value of the String
-   * @param rawContents the raw input for the string value
-   * @throws IllegalArgumentException if the value is null
-   */
-  public StringValue(String val, String rawContents) throws IllegalArgumentException {
-    // making sure not null
-    if (val != null) {
-      this.val = val;
-    } else {
-      throw new IllegalArgumentException("Not a string value.");
-    }
-    this.rawContents = rawContents;
-  }
-
   @Override
   public double evaluateCellSum() {
     return 0;
   }
 
   @Override
-  public double evaluateCellProduct(Formula...formulas) {
+  public double evaluateCellProduct(List<Formula> formulas) {
     int numCount = 0;
     double evalNum;
 
@@ -91,11 +75,24 @@ public class StringValue implements Value {
   }
 
   @Override
+  public boolean isRef() {
+    return false;
+  }
+
+  @Override
+  public boolean isFunction() {
+    return false;
+  }
+
+  @Override
   public Value evaluateCell() {
     return this;
   }
 
-
+  @Override
+  public String toString() {
+    return val;
+  }
 
   @Override
   public boolean equals(Object otherString) {
@@ -105,11 +102,6 @@ public class StringValue implements Value {
       isEqual = true;
     }
     return isEqual;
-  }
-
-  @Override
-  public String toString(){
-    return this.rawContents;
   }
 
   @Override

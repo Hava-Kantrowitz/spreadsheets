@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.List;
+
 /**
  * Models a blank cell.
  */
@@ -25,7 +27,7 @@ public class Blank implements Cell {
   }
 
   @Override
-  public double evaluateCellProduct(Formula...formulas) throws IllegalArgumentException {
+  public double evaluateCellProduct(List<Formula> formulas) throws IllegalArgumentException {
     int product = 0;
     for (Formula c : formulas) {
       if (c.isNum()) {
@@ -57,6 +59,16 @@ public class Blank implements Cell {
 
   @Override
   public boolean isNum() {
+    return false;
+  }
+
+  @Override
+  public boolean isRef() {
+    return false;
+  }
+
+  @Override
+  public boolean isFunction() {
     return false;
   }
 

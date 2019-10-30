@@ -1,12 +1,12 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.List;
+
 /**
  * This class models the double value in the cell.
  */
 public class DoubleValue implements Value {
-
   private double val;
-  private String rawContents;
 
   /**
    * The constructor for the double value.
@@ -23,28 +23,13 @@ public class DoubleValue implements Value {
     }
   }
 
-  /**
-   * Constructs an instance of the double value with the value and rawContents.
-   * @param val the given boolean value
-   * @param rawContents the raw contents when cell is added
-   */
-  public DoubleValue(Double val, String rawContents) {
-    // making sure not null
-    if (val != null) {
-      this.val = val;
-    } else {
-      throw new IllegalArgumentException("Not a double value.");
-    }
-    this.rawContents = rawContents;
-  }
-
   @Override
   public double evaluateCellSum() {
     return val;
   }
 
   @Override
-  public double evaluateCellProduct(Formula...formulas) {
+  public double evaluateCellProduct(List<Formula> formulas) {
     return val;
   }
 
@@ -74,10 +59,24 @@ public class DoubleValue implements Value {
   }
 
   @Override
+  public boolean isRef() {
+    return false;
+  }
+
+  @Override
+  public boolean isFunction() {
+    return false;
+  }
+
+  @Override
   public Value evaluateCell() {
     return this;
   }
 
+  @Override
+  public String toString() {
+    return String.valueOf(val);
+  }
 
   @Override
   public boolean equals(Object otherCell) {
@@ -88,11 +87,6 @@ public class DoubleValue implements Value {
     }
 
     return isEqual;
-  }
-
-  @Override
-  public String toString(){
-    return this.rawContents;
   }
 
   @Override

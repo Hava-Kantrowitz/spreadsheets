@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.List;
+
 /**
  * Models a boolean value.
  */
@@ -34,7 +36,7 @@ public class BooleanValue implements Value {
   }
 
   @Override
-  public double evaluateCellProduct(Formula...formulas) {
+  public double evaluateCellProduct(List<Formula> formulas) {
     int product = 0;
     for (Formula c : formulas) {
       if (c.isNum()) {
@@ -74,6 +76,16 @@ public class BooleanValue implements Value {
 
   @Override
   public boolean isNum() {
+    return false;
+  }
+
+  @Override
+  public boolean isRef() {
+    return false;
+  }
+
+  @Override
+  public boolean isFunction() {
     return false;
   }
 

@@ -1,6 +1,8 @@
 package edu.cs3500.spreadsheets.model;
 
 
+import java.util.List;
+
 /**
  * Models a single cell within the current spreadsheet.
  */
@@ -26,7 +28,7 @@ public interface Cell {
    * @return the value of the value when calculating product
    * @throws IllegalArgumentException if the value cannot be used in a product operation
    */
-  double evaluateCellProduct(Formula...formulas) throws IllegalArgumentException;
+  double evaluateCellProduct(List<Formula> formulas) throws IllegalArgumentException;
 
   /**
    * This evaluates the cell for the number used when calculating the SQRT.
@@ -64,6 +66,10 @@ public interface Cell {
    * @return true if the cell is a number, false otherwise
    */
   boolean isNum();
+
+  boolean isRef();
+
+  boolean isFunction();
 
 
 }

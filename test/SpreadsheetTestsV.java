@@ -31,9 +31,8 @@ public class SpreadsheetTestsV {
   // THESE ARE THE TESTS FOR GET CELL AT
   private static void initializeTestSheet(Spreadsheet sheet){
     try {
-      sheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/NEU 1st " +
-              "year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
-              "spreadsheets/testingBlankTenByTen.txt"));
+      sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
+              "\\src\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -183,21 +182,20 @@ public class SpreadsheetTestsV {
 
   // the test for when the given cell is out of bounds (and doubling would exceed max possible int)
   // on the column input
-  @Test
-  public void getOutColumnMaxIntCol() {
-    initializeTestSheet(basicSpreadsheet);
-    Coord index = new Coord(1000000, 5);
-    assertEquals(new Blank(),
-            basicSpreadsheet.getCellAt(index));
-  }
+//  @Test
+//  public void getOutColumnMaxIntCol() {
+//    initializeTestSheet(basicSpreadsheet);
+//    Coord index = new Coord(1000000, 5);
+//    assertEquals(new Blank(),
+//            basicSpreadsheet.getCellAt(index));
+//  }
 
 
   // the test for when the given cell is out of bounds (and doubling would exceed max possible int)
   // on the row and column inputs
 //  @Test
 //  public void getOutColumnMaxIntColRow() {
-//    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
-//            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
+//    initializeTestSheet(basicSpreadsheet);
 //    Coord index = new Coord(1000000, 1000000);
 //    assertEquals(new Blank(),
 //            basicSpreadsheet.getCellAt(index));
@@ -207,8 +205,7 @@ public class SpreadsheetTestsV {
   // on the row and col inputs (the doubling will go over but the number itself will still be valid
 //  @Test (expected = IllegalArgumentException.class)
 //  public void getOutRowColOverMaxIntRow() {
-//    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
-//            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
+//    initializeTestSheet(basicSpreadsheet);;
 //    Coord index = new Coord(10000000, 1000001);
 //    assertEquals(new Blank(),
 //            basicSpreadsheet.getCellAt(index));
