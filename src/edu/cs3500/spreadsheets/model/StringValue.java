@@ -8,6 +8,7 @@ import java.util.List;
 public class StringValue implements Value {
 
   private String val;
+  private String rawContents;
 
   /**
    * This is the constructor for a StringValue.
@@ -22,6 +23,22 @@ public class StringValue implements Value {
     } else {
       throw new IllegalArgumentException("Not a string value.");
     }
+  }
+
+  /**
+   * This is the constructor for a StringValue with the raw contents.
+   *
+   * @param val the value of the String
+   * @throws IllegalArgumentException if the value is null
+   */
+  public StringValue(String val, String rawContents) throws IllegalArgumentException {
+    // making sure not null
+    if (val != null) {
+      this.val = val;
+    } else {
+      throw new IllegalArgumentException("Not a string value.");
+    }
+    this.rawContents = rawContents;
   }
 
   @Override
@@ -89,10 +106,7 @@ public class StringValue implements Value {
     return this;
   }
 
-  @Override
-  public String toString() {
-    return val;
-  }
+
 
   @Override
   public boolean equals(Object otherString) {
@@ -102,6 +116,11 @@ public class StringValue implements Value {
       isEqual = true;
     }
     return isEqual;
+  }
+
+  @Override
+  public String toString() {
+    return rawContents;
   }
 
   @Override

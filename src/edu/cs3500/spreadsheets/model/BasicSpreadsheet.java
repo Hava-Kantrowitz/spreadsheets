@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-import edu.cs3500.spreadsheets.sexp.BasicSexpVisitor;
+import edu.cs3500.spreadsheets.sexp.CreatorVisitor;
 import edu.cs3500.spreadsheets.sexp.Parser;
 import edu.cs3500.spreadsheets.sexp.Sexp;
 import edu.cs3500.spreadsheets.sexp.SexpVisitor;
@@ -69,6 +69,23 @@ public class BasicSpreadsheet implements Spreadsheet {
     sheet.get(givenRow).set(givenCol, cellVal);
 
     System.out.println("Cell at " +coord.toString() + " is " + cellVal.toString());
+
+  }
+
+  @Override
+  public void setCellAt(Coord coord, String rawContents) {
+    String contentCopy = new String(rawContents);
+    char[] arrayForm = rawContents.toCharArray();
+
+    // checking if it is a formula to get only the s expression
+    // NEED TO DEAL WITH IF IT HAS EQUALS BUT IT IS A VALUE
+    if(arrayForm[0] == '='){
+      rawContents = rawContents.substring(1,rawContents.length());
+    }
+    SexpVisitor visit = new CreatorVisitor(this);
+    Cell addedCell = (Cell) Parser.parse(rawContents).accept(visit,contentCopy);
+
+    setCellAt(coord, addedCell);
 
   }
 

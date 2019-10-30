@@ -22,8 +22,9 @@ public interface Sexp {
   /**
    * This is the method to accept the visitor to the Sexp.
    * @param visitor the given visitor
+   * @param rawContent the raw content of the cell
    * @param <R> Cell object
    * @return the cell object of the specified information
    */
-  <R> R accept(SexpVisitor<R> visitor);  // ADD JAVA DOC
+  <R> R accept(SexpVisitor<R> visitor, String rawContent);  // ADD JAVA DOC
 }

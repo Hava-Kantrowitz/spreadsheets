@@ -7,6 +7,7 @@ public class Function implements Formula{
 
   private String functionName;
   protected List<Formula> funParams;
+  private String rawContent;
 
 
   /**
@@ -18,6 +19,20 @@ public class Function implements Formula{
   public Function(String functionName, List<Formula> funParams) {
     this.functionName = functionName;
     this.funParams = funParams;
+
+  }
+
+  /**
+   * Constructs an instance of a formula cell.
+   *
+   * @param functionName the name of the function
+   * @param funParams the list of all the function parameters
+   * @param rawContent the raw content of the cell
+   */
+  public Function(String functionName, List<Formula> funParams, String rawContent) {
+    this.functionName = functionName;
+    this.funParams = funParams;
+    this.rawContent = rawContent;
 
   }
 
@@ -201,6 +216,12 @@ public class Function implements Formula{
     }
     return isEqual;
   }
+
+  @Override
+  public String toString(){
+    return this.rawContent;
+  }
+
 
   @Override
   public int hashCode() {

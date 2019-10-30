@@ -14,9 +14,22 @@ public class Reference implements Formula{
   private Spreadsheet spreadsheet; // change to spread sheet getter
   protected int rowOver;
   protected int colOver;
+  private String rawContent;
 
 
   public Reference(String symbol, Spreadsheet spreadsheet){
+
+    this.symbol = symbol;
+    this.spreadsheet = spreadsheet;
+  }
+
+  /**
+   * This is the constructor for the reference with the raw content.
+   * @param symbol the given symbol
+   * @param spreadsheet the given spreadsheet
+   * @param rawContent the raw contents of the string
+   */
+  public Reference(String symbol, Spreadsheet spreadsheet, String rawContent){
 
     this.symbol = symbol;
     this.spreadsheet = spreadsheet;
@@ -83,6 +96,11 @@ public class Reference implements Formula{
     }
 
     return isEqual;
+  }
+
+  @Override
+  public String toString(){
+    return this.rawContent;
   }
 
   @Override

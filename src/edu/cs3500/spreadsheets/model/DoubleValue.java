@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class DoubleValue implements Value {
   private double val;
+  private String rawContent;
 
   /**
    * The constructor for the double value.
@@ -21,6 +22,23 @@ public class DoubleValue implements Value {
     } else {
       throw new IllegalArgumentException("Not a double value.");
     }
+  }
+
+  /**
+   * The constructor for the double value.
+   *
+   * @param val the input double value
+   * @param rawContent the raw content of the cell
+   * @throws IllegalArgumentException if the input is not a double
+   */
+  public DoubleValue(Double val, String rawContent) throws IllegalArgumentException {
+    // making sure not null
+    if (val != null) {
+      this.val = val;
+    } else {
+      throw new IllegalArgumentException("Not a double value.");
+    }
+    this.rawContent = rawContent;
   }
 
   @Override
@@ -73,10 +91,6 @@ public class DoubleValue implements Value {
     return this;
   }
 
-  @Override
-  public String toString() {
-    return String.valueOf(val);
-  }
 
   @Override
   public boolean equals(Object otherCell) {
@@ -87,6 +101,11 @@ public class DoubleValue implements Value {
     }
 
     return isEqual;
+  }
+
+  @Override
+  public String toString() {
+    return this.rawContent;
   }
 
   @Override

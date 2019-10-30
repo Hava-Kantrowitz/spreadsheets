@@ -15,8 +15,8 @@ public class SString implements Sexp {
   }
 
   @Override
-  public <R> R accept(SexpVisitor<R> visitor) {
-    return visitor.visitString(this.val);
+  public <R> R accept(SexpVisitor<R> visitor, String rawContent) {
+    return visitor.visitString(this.val, rawContent);
   }
 
   @Override

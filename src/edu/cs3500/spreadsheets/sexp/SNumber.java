@@ -15,8 +15,8 @@ public class SNumber implements Sexp {
   }
 
   @Override
-  public <R> R accept(SexpVisitor<R> visitor) {
-    return visitor.visitNumber(this.num);
+  public <R> R accept(SexpVisitor<R> visitor,String rawContent) {
+    return visitor.visitNumber(this.num, rawContent);
   }
 
   @Override

@@ -20,34 +20,32 @@ public class CreatorVisitor implements SexpVisitor<Cell> {
   /**
    * This constructs the visitor to take in the spreadsheet and rawContent.
    * @param sheet the spreadsheet
-   * @param rawContent the raw content of the cell
    */
-  public CreatorVisitor(Spreadsheet sheet, String rawContent){
+  public CreatorVisitor(Spreadsheet sheet){
     this.sheet = sheet;
-    this.rawContent = rawContent;
   }
 
   @Override
-  public Cell visitBoolean(boolean b) {
+  public Cell visitBoolean(boolean b, String rawContent) {
     Cell output = new BooleanValue(b, rawContent);
     return output;
   }
 
   @Override
-  public Cell visitNumber(double d) {
+  public Cell visitNumber(double d, String rawContent) {
     Cell output = new DoubleValue(d, rawContent);
     return output;
   }
 
   @Override
-  public Cell visitSymbol(String s) {  // NEED TO FIGURE OUT HOW TO GET REFERENCE
+  public Cell visitSymbol(String s, String rawContent) {  // NEED TO FIGURE OUT HOW TO GET REFERENCE
     Cell symbol = new Reference(s, sheet, rawContent);
 
     return symbol;
   }
 
   @Override
-  public Cell visitString(String s) {
+  public Cell visitString(String s,String rawContent) {
     Cell output = new StringValue(s, rawContent);
     return output;
   }
@@ -55,8 +53,8 @@ public class CreatorVisitor implements SexpVisitor<Cell> {
 
 
   @Override
-  public Cell visitSList(List<Sexp> l) {
-    CreatorVisitor visit = new CreatorVisitor(sheet,rawContent);
+  public Cell visitSList(List<Sexp> l, String rawContent) {
+    CreatorVisitor visit = new CreatorVisitor(sheet);
     // set the name of the outer function
     ArrayList<Formula> params = new ArrayList<Formula>();
     Cell output = new Function(l.get(0).toString(),params, rawContent);
@@ -64,8 +62,7 @@ public class CreatorVisitor implements SexpVisitor<Cell> {
 
     // need to figure out how we are representing a formula value
     for(int i = 1; i < l.size(); i++){
-      params.add((Formula) l.get(i).accept(visit)); // within formula no null
-      System.out.println("In the list visit " + l.get(i).accept(visit).toString());
+      params.add((Formula) l.get(i).accept(visit, "")); // within formula no raw
     }
 
 

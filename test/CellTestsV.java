@@ -26,8 +26,9 @@ public class CellTestsV {
 
   private static void initializeTestSheet(Spreadsheet sheet){
     try {
-      sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
-              "\\src\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt"));
+      sheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+              "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets" +
+              "/src/edu/cs3500/spreadsheets/testingBlankTenByTen.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
