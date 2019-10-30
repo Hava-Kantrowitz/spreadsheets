@@ -27,16 +27,18 @@ public class Function implements Formula{
   @Override
   public Value evaluateCell() throws IllegalArgumentException{
 
+    Value result = null;
+
     // making sure the function parameters are at least greater than zero
     if(funParams.size() < 1){
       throw new IllegalArgumentException("There must be at least one parameter for any function");
     }
 
     if(functionName.equals("SUM")){
-     sum(funParams);
+     result = new DoubleValue(sum(funParams));
     }
     else if(functionName.equals("PRODUCT")){
-      product(funParams);
+      result = new DoubleValue(product(funParams));
     }
     else if(functionName.equals("SUB")){
       // making sure there are two inputs
@@ -44,7 +46,7 @@ public class Function implements Formula{
         throw new IllegalArgumentException("Subtraction cannot have more than two " +
                 "function parameters");
       }
-      difference(funParams.get(0), funParams.get(1));
+      result = new DoubleValue(difference(funParams.get(0), funParams.get(1)));
     }
     else if(functionName.equals("<")){
       // making sure there are two inputs
@@ -52,16 +54,16 @@ public class Function implements Formula{
         throw new IllegalArgumentException("Subtraction cannot have more than two " +
                 "function parameters");
       }
-      comparison(funParams.get(0), funParams.get(1));
+      result = new BooleanValue(comparison(funParams.get(0), funParams.get(1)));
     }
     else if(functionName.equals("HAM")){
       if(funParams.size() != 1){
         throw new IllegalArgumentException("Hamilton function must only have one input.");
       }
-      hamilton(funParams.get(0));
+      result = new StringValue(hamilton(funParams.get(0)));
     }
 
-    return null;
+    return result;
   }
 
   /**

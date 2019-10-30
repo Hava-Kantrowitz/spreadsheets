@@ -62,6 +62,11 @@ public class DoubleValue implements Value {
   }
 
   @Override
+  public String toString() {
+    return String.valueOf(val);
+  }
+
+  @Override
   public boolean equals(Object otherCell) {
     boolean isEqual = false;
 

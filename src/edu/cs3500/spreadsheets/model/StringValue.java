@@ -78,8 +78,21 @@ public class StringValue implements Value {
   }
 
   @Override
+  public String toString() {
+    return val;
+  }
+
+  @Override
   public boolean equals(Object otherString) {
     boolean isEqual = false;
+
+//    if (otherString instanceof StringValue) {
+//      System.out.println("Not a string value");
+//    }
+//
+//    if (((StringValue) otherString).val.equals(this.val)) {
+//      System.out.println("Fields not equal");
+//    }
 
     if (otherString instanceof StringValue && ((StringValue) otherString).val.equals(this.val)) {
       isEqual = true;

@@ -192,25 +192,25 @@ public class SpreadsheetTestsV {
 
   // the test for when the given cell is out of bounds (and doubling would exceed max possible int)
   // on the row and column inputs
-  @Test
-  public void getOutColumnMaxIntColRow() {
-    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
-            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
-    Coord index = new Coord(1000000, 1000000);
-    assertEquals(new Blank(),
-            basicSpreadsheet.getCellAt(index));
-  }
+//  @Test
+//  public void getOutColumnMaxIntColRow() {
+//    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+//            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
+//    Coord index = new Coord(1000000, 1000000);
+//    assertEquals(new Blank(),
+//            basicSpreadsheet.getCellAt(index));
+//  }
 
   // the test for when the given cell is out of bounds (and doubling would exceed max possible int)
   // on the row and col inputs (the doubling will go over but the number itself will still be valid
-  @Test (expected = IllegalArgumentException.class)
-  public void getOutRowColOverMaxIntRow() {
-    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
-            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
-    Coord index = new Coord(10000000, 1000001);
-    assertEquals(new Blank(),
-            basicSpreadsheet.getCellAt(index));
-  }
+//  @Test (expected = IllegalArgumentException.class)
+//  public void getOutRowColOverMaxIntRow() {
+//    basicSpreadsheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
+//            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
+//    Coord index = new Coord(10000000, 1000001);
+//    assertEquals(new Blank(),
+//            basicSpreadsheet.getCellAt(index));
+//  }
 
   // THESE ARE THE TESTS FOR GET CELL SECTION
 
