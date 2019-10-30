@@ -69,16 +69,16 @@ public class CellTestsV {
 
   // THESE ARE THE TESTS FOR EVALUATE CELL (WHEN IT IS A FORMULA)
 
-  //PRODUCT TESTS (true and false and strings are zero)
+  //PRODUCT TESTS (true and false are zero string is one)
   // this is the test for product (when has strings)
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void productWithStrings() {
     initializeTestSheet(spreadsheet);
     ArrayList<Formula> ourFormulas = new ArrayList<>();
     ourFormulas.add(new StringValue("hello"));
     ourFormulas.add(new DoubleValue(1.0));
-    Cell stringCell = new Function("SUM",  ourFormulas);
-    stringCell.evaluateCell();
+    Cell stringCell = new Function("PRODUCT",  ourFormulas);
+    assertEquals(new DoubleValue(1.0),stringCell.evaluateCell());
   }
 
   // this is the test for product (when it has true) - true is one here
@@ -90,7 +90,7 @@ public class CellTestsV {
     ArrayList<Formula> ourFormulas = new ArrayList<>();
     ourFormulas.add(new Reference("A1", spreadsheet));
     ourFormulas.add(new Reference("C3", spreadsheet));
-    spreadsheet.setCellAt(b2, new Function("=(PRODUCT A1 C3)", ourFormulas));
+    spreadsheet.setCellAt(b2, new Function("PRODUCT", ourFormulas));
     assertEquals(new DoubleValue(10.0), spreadsheet.getCellAt(b2).evaluateCell());
   }
 
@@ -103,7 +103,7 @@ public class CellTestsV {
     ArrayList<Formula> ourFormulas = new ArrayList<>();
     ourFormulas.add(new Reference("A1", spreadsheet));
     ourFormulas.add(new Reference("C3", spreadsheet));
-    spreadsheet.setCellAt(b2, new Function("=(PRODUCT A1 C3)", ourFormulas));
+    spreadsheet.setCellAt(b2, new Function("PRODUCT", ourFormulas));
     assertEquals(new BooleanValue(false), spreadsheet.getCellAt(b2).evaluateCell());
   }
 

@@ -10,6 +10,7 @@ import edu.cs3500.spreadsheets.model.DoubleValue;
 import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.Function;
 import edu.cs3500.spreadsheets.model.Reference;
+import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.StringValue;
 import edu.cs3500.spreadsheets.model.Value;
 
@@ -28,8 +29,8 @@ public class BasicSexpVisitor implements SexpVisitor<Cell> {
   }
 
   @Override
-  public Cell visitSymbol(String s) {  // NEED TO FIGURE OUT HOW TO GET REFERENCE
-    Cell symbol = new Reference(s, new BasicSpreadsheet());
+  public Cell visitSymbol(String s, Spreadsheet sheet) {  // NEED TO FIGURE OUT HOW TO GET REFERENCE
+    Cell symbol = new Reference(s, sheet);
 
     return symbol;
   }
@@ -46,7 +47,7 @@ public class BasicSexpVisitor implements SexpVisitor<Cell> {
 
 
   @Override
-  public Cell visitSList(List<Sexp> l) {
+  public Cell visitSList(List<Sexp> l, Spreadsheet sheet) {
     //SList inputList = (SList) l;
     BasicSexpVisitor visit = new BasicSexpVisitor();
     // set the name of the outer function
@@ -56,8 +57,8 @@ public class BasicSexpVisitor implements SexpVisitor<Cell> {
 
     // need to figure out how we are representing a formula value
     for(int i = 1; i < l.size(); i++){
-      params.add((Formula) l.get(i).accept(visit));
-      System.out.println("In the list visit " + l.get(i).accept(visit).toString());
+      params.add((Formula) l.get(i).accept(visit,sheet));
+      System.out.println("In the list visit " + l.get(i).accept(visit,sheet).toString());
     }
 
 

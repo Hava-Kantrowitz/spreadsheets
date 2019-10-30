@@ -38,8 +38,8 @@ public class StringValue implements Value {
       }
     }
 
-    if (numCount == 1) {
-      evalNum = 0;
+    if (numCount >= 1) {
+      evalNum = 1;
     } else {
       evalNum = 0;
     }

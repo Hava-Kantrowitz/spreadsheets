@@ -33,7 +33,7 @@ public class DoubleValue implements Value {
 
   @Override
   public double evaluateCellSqrt() {
-    return val;
+    return Math.sqrt(val);
   }
 
   @Override

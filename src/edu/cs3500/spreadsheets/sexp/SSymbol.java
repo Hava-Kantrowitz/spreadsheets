@@ -2,6 +2,8 @@ package edu.cs3500.spreadsheets.sexp;
 
 import java.util.Objects;
 
+import edu.cs3500.spreadsheets.model.Spreadsheet;
+
 /**
  * An arbitrary symbol.
  */
@@ -13,8 +15,8 @@ public class SSymbol implements Sexp {
   }
 
   @Override
-  public <R> R accept(SexpVisitor<R> visitor) {
-    return visitor.visitSymbol(this.name);
+  public <R> R accept(SexpVisitor<R> visitor, Spreadsheet sheet) {
+    return visitor.visitSymbol(this.name, sheet);
   }
 
   @Override

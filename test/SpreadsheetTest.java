@@ -71,6 +71,21 @@ public class SpreadsheetTest {
     assertEquals(new Function("SUM",formList),
             testSheet.getCellAt(new Coord(1,20)));
 
+
+    Function f1 = new Function("PRODUCT",formList);
+    Function f3 = new Function("PRODUCT",formList);
+
+    List<Formula> overallList = new ArrayList<Formula>();
+    overallList.add(f1);
+    overallList.add(f3);
+
+
+    Function overAllf = new Function("SUM", overallList);
+
+    assertEquals(overAllf,testSheet.getCellAt(new Coord(1,5)));
+
+    assertEquals(new DoubleValue(12.0), testSheet.getCellAt(new Coord(1,5)).evaluateCell());
+
   }
 
 
@@ -488,8 +503,8 @@ public class SpreadsheetTest {
     Coord coord3 = new Coord(1, 2);
     ArrayList<Formula> ourFormulas = new ArrayList<>();
     ourFormulas.add(new Reference("A1", testSheet));
-    ourFormulas.add(new Reference("A2", testSheet));
-    Cell val3 = new Function("SUM", ourFormulas);
+    ourFormulas.add(new Reference("B2", testSheet));
+    Cell val3 = new Function("SUB", ourFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
@@ -518,7 +533,7 @@ public class SpreadsheetTest {
     Coord coord3 = new Coord(1, 2);
     ArrayList<Formula> thirdFormulas = new ArrayList<>();
     thirdFormulas.add(new Reference("A1", testSheet));
-    thirdFormulas.add(new Reference("A2", testSheet));
+    thirdFormulas.add(new Reference("B1", testSheet));
     Cell val3 = new Function("SUB", thirdFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
@@ -553,7 +568,7 @@ public class SpreadsheetTest {
   }
 
   //tests difference of two boolean references
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testDifferenceBool() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
 //    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
@@ -567,17 +582,17 @@ public class SpreadsheetTest {
     Coord coord3 = new Coord(1, 2);
     ArrayList<Formula> thirdFormulas = new ArrayList<>();
     thirdFormulas.add(new Reference("A1", testSheet));
-    thirdFormulas.add(new Reference("A2", testSheet));
+    thirdFormulas.add(new Reference("B1", testSheet));
     Cell val3 = new Function("SUB", thirdFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
-    Value comp1 = new DoubleValue(0.0);
+    Value comp1 = new DoubleValue(1.0);
     assertEquals(comp1, testSheet.getCellAt(coord3).evaluateCell());
   }
 
   //tests difference of two blanks
-  @Test (expected = IllegalArgumentException.class)
+  @Test
   public void testDifferenceBlank() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
 //    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
@@ -587,7 +602,7 @@ public class SpreadsheetTest {
     Coord coord3 = new Coord(1, 2);
     ArrayList<Formula> thirdFormulas = new ArrayList<>();
     thirdFormulas.add(new Reference("A1", testSheet));
-    thirdFormulas.add(new Reference("A2", testSheet));
+    thirdFormulas.add(new Reference("B2", testSheet));
     Cell val3 = new Function("SUB", thirdFormulas);
     testSheet.setCellAt(coord3, val3);
     Value comp1 = new DoubleValue(0.0);
@@ -633,7 +648,7 @@ public class SpreadsheetTest {
     Coord coord3 = new Coord(1, 2);
     ArrayList<Formula> ourFormulas = new ArrayList<>();
     ourFormulas.add(new Reference("A1", testSheet));
-    ourFormulas.add(new Reference("A2", testSheet));
+    ourFormulas.add(new Reference("B2", testSheet));
     Cell val3 = new Function("<", ourFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
@@ -663,7 +678,7 @@ public class SpreadsheetTest {
     Coord coord3 = new Coord(1, 2);
     ArrayList<Formula> thirdFormulas = new ArrayList<>();
     thirdFormulas.add(new Reference("A1", testSheet));
-    thirdFormulas.add(new Reference("A2", testSheet));
+    thirdFormulas.add(new Reference("B2", testSheet));
     Cell val3 = new Function("<", thirdFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);

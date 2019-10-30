@@ -69,7 +69,7 @@ public class Function implements Formula{
       output = new StringValue(hamilton(funParams.get(0)));
     }
     else{
-      throw new IllegalArgumentException("Function entered does not exist");
+      throw new IllegalArgumentException("Function entered does not exist" + functionName);
     }
 
     return output;

@@ -17,10 +17,72 @@ public class Reference implements Formula{
   public Reference(String symbol, Spreadsheet spreadsheet){
 
     this.symbol = symbol;
+    this.spreadsheet = spreadsheet;
   }
 
   @Override
-  public Object evaluateCell() {
+  public Value evaluateCell() {
+      return getReferredCell().evaluateCell();
+  }
+
+  @Override
+  public double evaluateCellSum() throws IllegalArgumentException{
+    return getReferredCell().evaluateCellSum();
+  }
+
+  @Override
+  public double evaluateCellProduct(Formula...formulas) throws IllegalArgumentException {
+    return getReferredCell().evaluateCellProduct();
+  }
+
+  @Override
+  public double evaluateCellSqrt() throws IllegalArgumentException {
+    return getReferredCell().evaluateCellSqrt();
+  }
+
+  @Override
+  public double evaluateCellDifference() throws IllegalArgumentException {
+    return getReferredCell().evaluateCellDifference();
+  }
+
+  @Override
+  public double evaluateCellComparison() {
+    return getReferredCell().evaluateCellComparison();
+  }
+
+  @Override
+  public String evaluateCellHamilton() {
+    return getReferredCell().evaluateCellHamilton();
+  }
+
+
+
+  @Override
+  public boolean isNum() {
+    return getReferredCell().isNum();
+  }
+
+  @Override
+  public boolean equals(Object otherCell) {
+    boolean isEqual = false;
+
+    if (otherCell instanceof Reference && ((Reference) otherCell).symbol == (this.symbol)) {
+      isEqual = true;
+    }
+
+    return isEqual;
+  }
+
+  @Override
+  public int hashCode() {
+    return symbol.hashCode();
+  }
+
+  /**
+   * This is a helper that gets the cell that is being referred to.
+   * @return The cell corresponding to the string symbol of cell
+   */
+  private Cell getReferredCell(){
     Scanner scan = new Scanner(symbol);
     final Pattern cellRef = Pattern.compile("([A-Za-z]+)([1-9][0-9]*)");
     scan.useDelimiter("\\s+");
@@ -41,88 +103,5 @@ public class Reference implements Formula{
 
     assert coord1 != null;
     return spreadsheet.getCellAt(coord1);
-  }
-
-  @Override
-  public double evaluateCellSum() throws IllegalArgumentException{
-    try {
-      Double.parseDouble(this.evaluateCell().toString());
-    } catch (NumberFormatException e) {
-      throw new IllegalArgumentException("Cannot evaluate a sum of this cell");
-    }
-
-    return (double) this.evaluateCell();
-
-  }
-
-  @Override
-  public double evaluateCellProduct(Formula...formulas) throws IllegalArgumentException {
-    try {
-      Double.parseDouble(this.evaluateCell().toString());
-    } catch (NumberFormatException e) {
-      throw new IllegalArgumentException("Cannot evaluate a product of this cell");
-    }
-
-    return (double) this.evaluateCell();
-  }
-
-  @Override
-  public double evaluateCellSqrt() throws IllegalArgumentException {
-    try {
-      Double.parseDouble(this.evaluateCell().toString());
-    } catch (NumberFormatException e) {
-      throw new IllegalArgumentException("Cannot evaluate a square root of this cell");
-    }
-
-    return (double) this.evaluateCell();
-  }
-
-  @Override
-  public double evaluateCellDifference() throws IllegalArgumentException {
-    try {
-      Double.parseDouble(this.evaluateCell().toString());
-    } catch (NumberFormatException e) {
-      throw new IllegalArgumentException("Cannot evaluate a difference of this cell");
-    }
-
-    return (double) this.evaluateCell();
-  }
-
-  @Override
-  public double evaluateCellComparison() {
-    try {
-
-      Double.parseDouble(this.evaluateCell().toString());
-    } catch (NumberFormatException e) {
-      throw new IllegalArgumentException("Cannot evaluate a comparison of this cell");
-    }
-
-    return 0;
-  }
-
-  @Override
-  public String evaluateCellHamilton() {
-    return null;
-  }
-
-  @Override
-  public boolean isNum() {
-    return false;
-  }
-
-  @Override
-  public boolean equals(Object otherCell) {
-    boolean isEqual = false;
-
-    if (otherCell instanceof Reference && ((Reference) otherCell).symbol == (this.symbol)) {
-      isEqual = true;
-    }
-
-    return isEqual;
-  }
-
-  @Override
-  public int hashCode() {
-    return symbol.hashCode();
   }
 }

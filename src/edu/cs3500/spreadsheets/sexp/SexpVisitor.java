@@ -2,6 +2,8 @@ package edu.cs3500.spreadsheets.sexp;
 
 import java.util.List;
 
+import edu.cs3500.spreadsheets.model.Spreadsheet;
+
 /**
  * An abstracted function object for processing any {@link Sexp}ressions.
  * @param <R> The return type of this function
@@ -24,16 +26,18 @@ public interface SexpVisitor<R> {
   /**
    * Process a list value.
    * @param l the contents of the list (not yet visited)
+   * @param sheet the given spreadsheet
    * @return the desired result
    */
-  R visitSList(List<Sexp> l);
+  R visitSList(List<Sexp> l, Spreadsheet sheet);
 
   /**
    * Process a symbol.
    * @param s the value
+   * @param sheet the given spreadsheet
    * @return the desired result
    */
-  R visitSymbol(String s);
+  R visitSymbol(String s, Spreadsheet sheet);
 
   /**
    * Process a string value.

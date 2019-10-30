@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.sexp;
 
+import edu.cs3500.spreadsheets.model.Spreadsheet;
+
 /**
  * <p>Represents an s-expression.  An s-expression is one of</p>
  *
@@ -17,5 +19,5 @@ package edu.cs3500.spreadsheets.sexp;
  * </p>
  */
 public interface Sexp {
-  <R> R accept(SexpVisitor<R> visitor);
+  <R> R accept(SexpVisitor<R> visitor, Spreadsheet sheet);
 }

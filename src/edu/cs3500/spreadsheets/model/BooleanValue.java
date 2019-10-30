@@ -34,12 +34,20 @@ public class BooleanValue implements Value {
 
   @Override
   public double evaluateCellSqrt() throws IllegalArgumentException {
-    throw new IllegalArgumentException("Cannot take the square root ");
+    int output = 0;
+    if(bool){ // if it is true then one
+      output = 1;
+    }
+    return output;
   }
 
   @Override
   public double evaluateCellDifference() {
-    return 0;
+    int output = 0;
+    if(bool){ // if it is true then one
+      output = 1;
+    }
+    return output;
   }
 
   @Override

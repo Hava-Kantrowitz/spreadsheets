@@ -11,7 +11,7 @@ public interface Cell {
    *
    * @return the contents of the given cell
    */
-  Object evaluateCell();
+  Value evaluateCell();
 
   /**
    * This evaluates the cell for the number used when calculating a sum.

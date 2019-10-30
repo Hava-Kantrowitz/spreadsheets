@@ -2,6 +2,8 @@ package edu.cs3500.spreadsheets.sexp;
 
 import java.util.Objects;
 
+import edu.cs3500.spreadsheets.model.Spreadsheet;
+
 /**
  * A numeric constant {@link Sexp}.
  */
@@ -13,7 +15,7 @@ public class SNumber implements Sexp {
   }
 
   @Override
-  public <R> R accept(SexpVisitor<R> visitor) {
+  public <R> R accept(SexpVisitor<R> visitor, Spreadsheet sheet) {
     return visitor.visitNumber(this.num);
   }
 

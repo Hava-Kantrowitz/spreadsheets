@@ -36,7 +36,7 @@ public class WorksheetBuild implements WorksheetReader.WorksheetBuilder<BasicSpr
     }
     Coord coord = new Coord(col,row);
     SexpVisitor visit = new BasicSexpVisitor();
-    Cell addedCell = (Cell) Parser.parse(contents).accept(visit);
+    Cell addedCell = (Cell) Parser.parse(contents).accept(visit, sheet);
     sheet.setCellAt(coord, addedCell);
 
 
