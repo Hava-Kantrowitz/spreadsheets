@@ -54,10 +54,10 @@ public class SpreadsheetTest {
             "year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/cs3500/" +
             "spreadsheets/testingText.txt"));
 
-    //assertEquals(new DoubleValue(3.0),testSheet.getCellAt(new Coord(1,1)));//simple double
-    //assertEquals(new DoubleValue(7.0),testSheet.getCellAt(new Coord(28,1)));//two double
-    //assertEquals(new BooleanValue(true),testSheet.getCellAt(new Coord(1,3)));
-   // assertEquals(new BooleanValue(false),testSheet.getCellAt(new Coord(81,4)));
+    assertEquals(new DoubleValue(3.0),testSheet.getCellAt(new Coord(1,1)));//simple double
+    assertEquals(new DoubleValue(7.0),testSheet.getCellAt(new Coord(28,1)));//two double
+    assertEquals(new BooleanValue(true),testSheet.getCellAt(new Coord(1,3)));
+   assertEquals(new BooleanValue(false),testSheet.getCellAt(new Coord(81,4)));
     assertEquals(new StringValue("hello"),testSheet.getCellAt(new Coord(1,200)));
 
     Formula f = new DoubleValue(2.0);
@@ -68,8 +68,8 @@ public class SpreadsheetTest {
     formList.add(f2);
 
 
-    //assertEquals(new Function("SUM",formList),
-          //  testSheet.getCellAt(new Coord(1,20)));
+    assertEquals(new Function("SUM",formList),
+            testSheet.getCellAt(new Coord(1,20)));
 
   }
 
@@ -191,8 +191,11 @@ public class SpreadsheetTest {
   @Test
   public void inColumn() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
+//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
+
+    initializeTestSheet(testSheet);
+
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new StringValue("my name is");
     Coord coord2 = new Coord(1, 2);

@@ -55,6 +55,13 @@ public class Function implements Formula{
       }
       output = new BooleanValue(comparison(funParams.get(0), funParams.get(1)));
     }
+    else if(functionName.equals("SQRT")){
+      //making sure the input is only one
+      if(funParams.size() != 1){
+        throw new IllegalArgumentException("Square root must have one parameter");
+      }
+      output = new DoubleValue(sqrt(funParams.get(0)));
+    }
     else if(functionName.equals("HAM")){
       if(funParams.size() != 1){ // making sure one input
         throw new IllegalArgumentException("Hamilton function must only have one input.");
