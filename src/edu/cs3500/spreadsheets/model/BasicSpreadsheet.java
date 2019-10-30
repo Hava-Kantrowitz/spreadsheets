@@ -13,7 +13,7 @@ import edu.cs3500.spreadsheets.sexp.SexpVisitor;
 
 public class BasicSpreadsheet implements Spreadsheet {
 
-  private static final int MAXINT = 2147483647;
+  private static final int MAXINT = 10000000;
   private ArrayList<ArrayList<Cell>> sheet;
   private int numRows;
   private int numCols;
@@ -176,8 +176,8 @@ public class BasicSpreadsheet implements Spreadsheet {
   @Override
   public void evaluateSheet() {
 
-    for (int i = 1; i <= numCols; i++) {
-      for (int j = 1; j <= numRows; j++) {
+    for (int i = 1; i < numCols; i++) {
+      for (int j = 1; j < numRows; j++) {
         Coord currCor = new Coord(i, j);
         getCellAt(currCor).evaluateCell();
       }
@@ -202,11 +202,9 @@ public class BasicSpreadsheet implements Spreadsheet {
    */
   private void expandSheet(int inputCol, int inputRow) {
 
-    ArrayList<Cell> empty = new ArrayList<>();
-
     if (inputCol >= MAXINT) {
       while (sheet.size() <= MAXINT) {
-        sheet.add(empty);
+        sheet.add(new ArrayList<Cell>());
       }
     }
 
@@ -220,7 +218,7 @@ public class BasicSpreadsheet implements Spreadsheet {
       sheet.ensureCapacity(inputRow);
 
       while (sheet.size() <= inputRow) {
-        sheet.add(empty);
+        sheet.add(new ArrayList<Cell>());
       }
 
       for (int i = 0; i <= inputRow; i++) {

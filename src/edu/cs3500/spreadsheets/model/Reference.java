@@ -1,5 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.sql.Ref;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -90,12 +91,13 @@ public class Reference implements Formula{
   @Override
   public double evaluateCellComparison() {
     try {
+
       Double.parseDouble(this.evaluateCell().toString());
     } catch (NumberFormatException e) {
       throw new IllegalArgumentException("Cannot evaluate a comparison of this cell");
     }
 
-    return (double) this.evaluateCell();
+    return 0;
   }
 
   @Override
@@ -106,5 +108,21 @@ public class Reference implements Formula{
   @Override
   public boolean isNum() {
     return false;
+  }
+
+  @Override
+  public boolean equals(Object otherCell) {
+    boolean isEqual = false;
+
+    if (otherCell instanceof Reference && ((Reference) otherCell).symbol == (this.symbol)) {
+      isEqual = true;
+    }
+
+    return isEqual;
+  }
+
+  @Override
+  public int hashCode() {
+    return symbol.hashCode();
   }
 }

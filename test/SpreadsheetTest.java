@@ -187,6 +187,27 @@ public class SpreadsheetTest {
 
   //TEST EVAL ALL CELLS
 
+  //tests evaluating two in a column
+  @Test
+  public void inColumn() {
+    Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
+            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
+    Coord coord1 = new Coord(1, 1);
+    Cell val1 = new StringValue("my name is");
+    Coord coord2 = new Coord(1, 2);
+    Cell val2 = new StringValue("Alexander Hamilton");
+    testSheet.setCellAt(coord1, val1);
+    testSheet.setCellAt(coord2, val2);
+    testSheet.evaluateSheet();
+    StringValue comp1 = new StringValue("my name is");
+    StringValue comp2 = new StringValue("Alexander Hamilton");
+    //System.out.println(comp2.toString());
+    //System.out.println(testSheet.getCellAt(coord2).evaluateCell().toString());
+    assertEquals(comp1, testSheet.getCellAt(coord1).evaluateCell());
+    assertEquals(comp2, testSheet.getCellAt(coord2).evaluateCell());
+  }
+
   //tests evaluating all cells, cells strings
   @Test
   public void testEvalStrings() {
@@ -208,6 +229,8 @@ public class SpreadsheetTest {
     StringValue comp1 = new StringValue("my name is");
     StringValue comp2 = new StringValue("Alexander Hamilton");
     StringValue comp3 = new StringValue("and I'm treasury secretary");
+    System.out.println(comp1.toString());
+    System.out.println(testSheet.getCellAt(coord1).evaluateCell().toString());
     assertEquals(comp1, testSheet.getCellAt(coord1).evaluateCell());
     assertEquals(comp2, testSheet.getCellAt(coord2).evaluateCell());
     assertEquals(comp3, testSheet.getCellAt(coord3).evaluateCell());
@@ -294,7 +317,7 @@ public class SpreadsheetTest {
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
     testSheet.evaluateSheet();
-    DoubleValue comp1 = new DoubleValue(9.0);
+    DoubleValue comp1 = new DoubleValue(10.0);
     DoubleValue comp2 = new DoubleValue(6.0);
     DoubleValue comp3 = new DoubleValue(4.0);
     assertEquals(comp1, testSheet.getCellAt(coord1).evaluateCell());
@@ -330,12 +353,9 @@ public class SpreadsheetTest {
     testSheet.setCellAt(coord5, val5);
     testSheet.setCellAt(coord6, val6);
     testSheet.evaluateSheet();
-    DoubleValue comp1 = new DoubleValue(4.0);
-    DoubleValue comp2 = new DoubleValue(2.0);
-    DoubleValue comp3 = new DoubleValue(1.0);
-    assertEquals(comp1, testSheet.getCellAt(coord4).evaluateCell());
-    assertEquals(comp2, testSheet.getCellAt(coord5).evaluateCell());
-    assertEquals(comp3, testSheet.getCellAt(coord6).evaluateCell());
+    assertEquals(val1, testSheet.getCellAt(coord4).evaluateCell());
+    assertEquals(val3, testSheet.getCellAt(coord5).evaluateCell());
+    assertEquals(val2, testSheet.getCellAt(coord6).evaluateCell());
   }
 
   //tests evaluating all cells, cells mixed types
@@ -370,7 +390,7 @@ public class SpreadsheetTest {
     testSheet.evaluateSheet();
     Value comp1 = new DoubleValue(4.0);
     Value comp2 = new StringValue("hey");
-    Value comp3 = (Value) new BooleanValue(true);
+    Value comp3 = new BooleanValue(true);
     Value comp4 = new DoubleValue(4.0);
     Value comp5 = new DoubleValue(6.0);
     Value comp6 = new DoubleValue(0.0);
@@ -379,7 +399,7 @@ public class SpreadsheetTest {
     assertEquals(comp3, testSheet.getCellAt(coord3).evaluateCell());
     assertEquals(comp4, testSheet.getCellAt(coord4).evaluateCell());
     assertEquals(comp5, testSheet.getCellAt(coord5).evaluateCell());
-    assertEquals(comp6, testSheet.getCellAt(coord6).evaluateCell());
+    assertEquals(null, testSheet.getCellAt(coord6).evaluateCell());
   }
 
   //TEST EVAL BLANK CELL
@@ -434,7 +454,7 @@ public class SpreadsheetTest {
     ArrayList<Formula> ourFormulas = new ArrayList<>();
     ourFormulas.add(new DoubleValue(4.0));
     ourFormulas.add(new DoubleValue(3.0));
-    Cell cell1 = new Function("SUM", ourFormulas);
+    Cell cell1 = new Function("SUB", ourFormulas);
     Value comp1 = new DoubleValue(1.0);
     assertEquals(comp1, cell1.evaluateCell());
   }
@@ -446,7 +466,7 @@ public class SpreadsheetTest {
     ourFormulas.add(new DoubleValue(-4.0));
     ourFormulas.add(new DoubleValue(3.0));
     Cell cell1 = new Function("SUM", ourFormulas);
-    Value comp1 = new DoubleValue(-7.0);
+    Value comp1 = new DoubleValue(-1.0);
     assertEquals(comp1, cell1.evaluateCell());
   }
 
