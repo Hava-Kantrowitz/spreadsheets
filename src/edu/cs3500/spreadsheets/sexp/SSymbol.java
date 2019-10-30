@@ -15,8 +15,8 @@ public class SSymbol implements Sexp {
   }
 
   @Override
-  public <R> R accept(SexpVisitor<R> visitor, Spreadsheet sheet, String contentCopy) {
-    return visitor.visitSymbol(this.name, sheet, contentCopy);
+  public <R> R accept(SexpVisitor<R> visitor) {
+    return visitor.visitSymbol(this.name);
   }
 
   @Override

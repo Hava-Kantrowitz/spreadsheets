@@ -101,8 +101,7 @@ public class StringValue implements Value {
   public boolean equals(Object otherString) {
     boolean isEqual = false;
 
-    if (otherString instanceof StringValue && ((StringValue) otherString).val.equals(this.val)
-    && ((StringValue) otherString).rawContents.equals(this.rawContents)) {
+    if (otherString instanceof StringValue && ((StringValue) otherString).val.equals(this.val)) {
       isEqual = true;
     }
     return isEqual;

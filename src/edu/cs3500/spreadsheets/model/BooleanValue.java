@@ -86,8 +86,7 @@ public class BooleanValue implements Value {
   public boolean equals(Object otherCell) {
     boolean isEqual = false;
 
-    if (otherCell instanceof BooleanValue && ((BooleanValue) otherCell).bool.equals(this.bool)
-    && ((BooleanValue) otherCell).rawContents.equals(this.rawContents)) {
+    if (otherCell instanceof BooleanValue && ((BooleanValue) otherCell).bool.equals(this.bool)) {
       isEqual = true;
     }
 

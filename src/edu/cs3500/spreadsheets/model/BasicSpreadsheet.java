@@ -1,14 +1,10 @@
 package edu.cs3500.spreadsheets.model;
 
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-import edu.cs3500.spreadsheets.sexp.BasicSexpVisitor;
+import edu.cs3500.spreadsheets.sexp.CreatorVisitor;
 import edu.cs3500.spreadsheets.sexp.Parser;
-import edu.cs3500.spreadsheets.sexp.Sexp;
 import edu.cs3500.spreadsheets.sexp.SexpVisitor;
 
 public class BasicSpreadsheet implements Spreadsheet {
@@ -120,6 +116,34 @@ public class BasicSpreadsheet implements Spreadsheet {
     return sheet.get(givenRow).get(givenCol);
   }
 
+
+
+  @Override
+  public void setCellAt(Coord coord, String rawContents){
+    char[] arrayForm = rawContents.toCharArray();
+
+    // taking off the equals
+    if(arrayForm[0] == '='){
+      rawContents = rawContents.substring(1,rawContents.length());
+    }
+    // parsing the added contents
+    SexpVisitor visit = new CreatorVisitor(this,rawContents);
+    Cell addedCell = (Cell) Parser.parse(rawContents).accept(visit);
+
+    // setting the given cell
+    setCellAt(coord,addedCell);
+
+
+//    WorksheetBuild builder = new WorksheetBuild(this);
+//    builder.createCell(coord.col,coord.row,rawContents);
+  }
+
+  // PUT THIS IN INTERFACE
+  /**
+   * This is a helper to set a cell given the coordinates and raw contents.
+   * @param coord the given coordinate
+   * @param cellVal the value of the cell
+   */
   @Override
   public void setCellAt(Coord coord, Cell cellVal) {
     int givenCol = coord.col - 1;  // adjust for the 1 based indexing

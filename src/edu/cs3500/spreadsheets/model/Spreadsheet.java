@@ -23,13 +23,14 @@ public interface Spreadsheet {
    */
   Cell getCellAt(Coord coord);
 
+
   /**
-   * Sets the cell at the given coordinate to the given inhabitant. If the given cell is outside the
-   * size of the board, the board will be resized until it can be accommodated.
-   *
-   * @param coord   The x-y coordinate of the given cell
-   * @param cellVal The wanted inhabitant of the cell
+   * Sets the cell at the given coordinates to the raw contents given.
+   * @param coord the x-y coordinate of the given cell
+   * @param rawContents the wanted inhabitant of the cell in the form of a raw string
    */
+  void setCellAt(Coord coord, String rawContents);
+
   void setCellAt(Coord coord, Cell cellVal);
 
   /**

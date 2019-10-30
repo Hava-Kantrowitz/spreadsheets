@@ -12,42 +12,35 @@ public interface SexpVisitor<R> {
   /**
    * Process a boolean value.
    * @param b the value
-   * @param rawContent the raw input to the cell
    * @return the desired result
    */
-  R visitBoolean(boolean b, String rawContent);
+  R visitBoolean(boolean b);
 
   /**
    * Process a numeric value.
    * @param d the value
-   * @param rawContent the raw input to the cell
    * @return the desired result
    */
-  R visitNumber(double d, String rawContent);
+  R visitNumber(double d);
 
   /**
    * Process a list value.
    * @param l the contents of the list (not yet visited)
-   * @param sheet the given spreadsheet
-   * @param rawContent the raw input to the cell
    * @return the desired result
    */
-  R visitSList(List<Sexp> l, Spreadsheet sheet, String rawContent);
+  R visitSList(List<Sexp> l);
 
   /**
    * Process a symbol.
    * @param s the value
-   * @param sheet the given spreadsheet
-   * @param rawContent the raw input to the cell
    * @return the desired result
    */
-  R visitSymbol(String s, Spreadsheet sheet, String rawContent);
+  R visitSymbol(String s);
 
   /**
    * Process a string value.
    * @param s the value
-   * @param rawContent the raw input to the cell
    * @return the desired result
    */
-  R visitString(String s, String rawContent);
+  R visitString(String s);
 }

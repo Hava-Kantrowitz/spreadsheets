@@ -196,8 +196,7 @@ public class Function implements Formula {
     // checking that it is a formula and has the same string
     if (otherCell instanceof Function
             && ((Function) otherCell).functionName.equals(this.functionName)
-            && ((Function) otherCell).funParams.equals(this.funParams)
-            && ((Function) otherCell).rawContents.equals(this.rawContents)) {
+            && ((Function) otherCell).funParams.equals(this.funParams)) {
       isEqual = true;
     }
     return isEqual;

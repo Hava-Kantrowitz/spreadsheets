@@ -25,8 +25,8 @@ public class SList implements Sexp {
   }
 
   @Override
-  public <R> R accept(SexpVisitor<R> visitor, Spreadsheet sheet, String contentCopy) {
-    return visitor.visitSList(Collections.unmodifiableList(this.contents), sheet, contentCopy);
+  public <R> R accept(SexpVisitor<R> visitor) {
+    return visitor.visitSList(Collections.unmodifiableList(this.contents));
   }
 
   @Override

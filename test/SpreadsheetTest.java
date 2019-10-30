@@ -104,7 +104,7 @@ public class SpreadsheetTest {
 
     Coord coord1 = new Coord(1, 1);
     Cell hamCell = new StringValue("Ham the jam");
-    testSheet.setCellAt(coord1, hamCell);
+    testSheet.setCellAt(coord1, "\"Ham the jam\"");
     testSheet.setCellAt(coord1, new Blank());   // changed this to blank instead of null
     Cell compCell = new Blank();
     assertEquals(compCell, testSheet.getCellAt(coord1));
@@ -497,17 +497,17 @@ public class SpreadsheetTest {
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
-    Value val1 = new DoubleValue(10.0);
+////    Value val1 = new DoubleValue(10.0);
     Coord coord2 = new Coord(2, 1);
-    Value val2 = new DoubleValue(2.0);
+////    Value val2 = new DoubleValue(2.0);
     Coord coord3 = new Coord(1, 2);
-    ArrayList<Formula> ourFormulas = new ArrayList<>();
-    ourFormulas.add(new Reference("A1", testSheet));
-    ourFormulas.add(new Reference("B2", testSheet));
-    Cell val3 = new Function("SUB", ourFormulas);
-    testSheet.setCellAt(coord1, val1);
-    testSheet.setCellAt(coord2, val2);
-    testSheet.setCellAt(coord3, val3);
+////    ArrayList<Formula> ourFormulas = new ArrayList<>();
+//    ourFormulas.add(new Reference("A1", testSheet));
+//    ourFormulas.add(new Reference("B2", testSheet));
+//    Cell val3 = new Function("SUB", ourFormulas);
+    testSheet.setCellAt(coord1, "10");
+    testSheet.setCellAt(coord2, "2");
+    testSheet.setCellAt(coord3, "=(SUB A1 B1)");
     Value comp1 = new DoubleValue(8.0);
     assertEquals(comp1, testSheet.getCellAt(coord3).evaluateCell());
   }
@@ -524,7 +524,7 @@ public class SpreadsheetTest {
     ArrayList<Formula> firstFormulas = new ArrayList<>();
     firstFormulas.add(new DoubleValue(5.0));
     firstFormulas.add(new DoubleValue(5.0));
-    Cell val1 = new Function("SUM", firstFormulas);
+    Cell val1 = new Function("SUM", firstFormulas, "(SUM 5 5)");
     Coord coord2 = new Coord(2, 1);
     ArrayList<Formula> secondFormulas = new ArrayList<>();
     secondFormulas.add(new DoubleValue(1.0));
@@ -672,18 +672,18 @@ public class SpreadsheetTest {
     Cell val1 = new Function("SUM", firstFormulas);
     Coord coord2 = new Coord(2, 1);
     ArrayList<Formula> secondFormulas = new ArrayList<>();
-    firstFormulas.add(new DoubleValue(1.0));
-    firstFormulas.add(new DoubleValue(1.0));
+    secondFormulas.add(new DoubleValue(1.0));
+    secondFormulas.add(new DoubleValue(1.0));
     Cell val2 = new Function("SUM", secondFormulas);
     Coord coord3 = new Coord(1, 2);
     ArrayList<Formula> thirdFormulas = new ArrayList<>();
     thirdFormulas.add(new Reference("A1", testSheet));
-    thirdFormulas.add(new Reference("B2", testSheet));
+    thirdFormulas.add(new Reference("B1", testSheet));
     Cell val3 = new Function("<", thirdFormulas);
     testSheet.setCellAt(coord1, val1);
     testSheet.setCellAt(coord2, val2);
     testSheet.setCellAt(coord3, val3);
-    Value comp1 = new BooleanValue(false);
+    Value comp1 = new BooleanValue(false," ");
     assertEquals(comp1, testSheet.getCellAt(coord3).evaluateCell());
   }
 
