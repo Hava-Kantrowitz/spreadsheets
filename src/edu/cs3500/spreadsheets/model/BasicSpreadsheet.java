@@ -17,84 +17,89 @@ public class BasicSpreadsheet implements Spreadsheet {
   private ArrayList<ArrayList<Cell>> sheet;
   private int numRows;
   private int numCols;
-  String fileName;
 
   /**
    * This is the blank constructor for a basic spreadsheet. Constructs a 10 by 10 spreadsheet of
    * blank cells.
    */
   public BasicSpreadsheet() {
-
   }
 
   @Override
-  public void initializeSpreadsheet(String fileName) {
-    sheet = new ArrayList<ArrayList<Cell>>();
-    FileReader fr;
-
-    try {
-      fr = new FileReader(fileName);  // get the given file
-    }
-    catch(FileNotFoundException e){
-      throw new IllegalArgumentException("The given file does not exist");
-    }
-    // scan the file in
-    Scanner scan = new Scanner(fr);
-    Parser parser = new Parser();
-    Coord givenCoord;
-    String coordAsString;
-    String currLine;
+  public void initializeSpreadsheet(Readable fileName) {
+    sheet = new ArrayList<ArrayList<Cell>>();   // setting the values back to zero
+    numRows = 0;
+    numCols = 0;
+    WorksheetBuild builder = new WorksheetBuild(this);  // calling the builder to actually initialize
+    WorksheetReader.read(builder,fileName);  // reading from the file and passing it in
 
 
-    while(scan.hasNextLine()){
-      currLine = scan.nextLine();
-      Scanner scanLine = new Scanner(currLine);
-
-      String firstInput = scanLine.next();
-
-      char[] cellName = firstInput.toCharArray();
-
-      String actualFirstInput = "";
-
-
-      for(int i = 0; i < cellName.length; i++){
-        if(Character.isLetter(cellName[i])){
-          actualFirstInput = actualFirstInput + cellName[i];
-          if(Character.isDigit(cellName[i+1])){
-            actualFirstInput = actualFirstInput +" ";
-          }
-        }
-        else if(Character.isDigit(cellName[i])){
-          actualFirstInput = actualFirstInput + cellName[i];
-        }
-      }
-
-      Scanner colAndRow = new Scanner(actualFirstInput);
-      String givenCol = colAndRow.next();
-      int givenRow = colAndRow.nextInt();
-
-      givenCoord = new Coord(Coord.colNameToIndex(givenCol),givenRow);
-
-      System.out.println(givenCoord.col);
-      System.out.println(givenCoord.row);
-
-      String secondInput = scanLine.next();
-      if(!secondInput.equals("=")){
-        Sexp element = Parser.parse(secondInput);
-        SexpVisitor visitor = new BasicSexpVisitor();
-        Cell addedCell = (Cell) element.accept(visitor);
-        System.out.println(addedCell.toString());
-        this.setCellAt(givenCoord, addedCell);
-        numRows = sheet.size();
-        numCols = sheet.get(0).size();
-      }
-
-      else if(!secondInput.equals("=")){
-
-      }
-
-
-    }
+//    sheet = new ArrayList<ArrayList<Cell>>();
+//    FileReader fr;
+//
+//    try {
+//      fr = new FileReader(fileName);  // get the given file
+//    }
+//    catch(FileNotFoundException e){
+//      throw new IllegalArgumentException("The given file does not exist");
+//    }
+//    // scan the file in
+//    Scanner scan = new Scanner(fr);
+//    Parser parser = new Parser();
+//    Coord givenCoord;
+//    String coordAsString;
+//    String currLine;
+//
+//
+//    while(scan.hasNextLine()){
+//      currLine = scan.nextLine();
+//      Scanner scanLine = new Scanner(currLine);
+//
+//      String firstInput = scanLine.next();
+//
+//      char[] cellName = firstInput.toCharArray();
+//
+//      String actualFirstInput = "";
+//
+//
+//      for(int i = 0; i < cellName.length; i++){
+//        if(Character.isLetter(cellName[i])){
+//          actualFirstInput = actualFirstInput + cellName[i];
+//          if(Character.isDigit(cellName[i+1])){
+//            actualFirstInput = actualFirstInput +" ";
+//          }
+//        }
+//        else if(Character.isDigit(cellName[i])){
+//          actualFirstInput = actualFirstInput + cellName[i];
+//        }
+//      }
+//
+//      Scanner colAndRow = new Scanner(actualFirstInput);
+//      String givenCol = colAndRow.next();
+//      int givenRow = colAndRow.nextInt();
+//
+//      givenCoord = new Coord(Coord.colNameToIndex(givenCol),givenRow);
+//
+//      System.out.println(givenCoord.col);
+//      System.out.println(givenCoord.row);
+//
+//      String secondInput = scanLine.next();
+//      if(!secondInput.equals("=")){
+//        Sexp element = Parser.parse(secondInput);
+//        SexpVisitor visitor = new BasicSexpVisitor();
+//        Cell addedCell = (Cell) element.accept(visitor);
+//        System.out.println(addedCell.toString());
+//        this.setCellAt(givenCoord, addedCell);
+//        numRows = sheet.size();
+//        numCols = sheet.get(0).size();
+//      }
+//
+//      else if(!secondInput.equals("=")){
+//
+//      }
+//
+//
+//    }
 
 
 
@@ -111,6 +116,8 @@ public class BasicSpreadsheet implements Spreadsheet {
     if (givenCol >= numCols || givenRow >= numRows) {
       expandSheet(givenCol, givenRow);
     }
+
+    System.out.println("This is the cell returned: " + sheet.get(givenRow).get(givenCol).toString());
 
     return sheet.get(givenRow).get(givenCol);
   }
@@ -159,6 +166,8 @@ public class BasicSpreadsheet implements Spreadsheet {
       }
 
     }
+
+
 
     return multRows;
   }
@@ -222,7 +231,10 @@ public class BasicSpreadsheet implements Spreadsheet {
       }
     }
 
+    numRows = sheet.size();        // ADDED CHANGING THE NUM ROWS AND NUM COLS
+    numCols = sheet.get(0).size();
 
   }
+
 
 }

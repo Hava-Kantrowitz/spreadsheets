@@ -10,10 +10,11 @@ import java.util.regex.Pattern;
 public class Reference implements Formula{
 
   private String symbol;
-  private Spreadsheet spreadsheet = new BasicSpreadsheet(); // change to spread sheet getter
+  private Spreadsheet spreadsheet; // change to spread sheet getter
 
 
-  public Reference(String symbol){
+  public Reference(String symbol, Spreadsheet spreadsheet){
+
     this.symbol = symbol;
   }
 

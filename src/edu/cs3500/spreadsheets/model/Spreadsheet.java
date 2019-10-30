@@ -12,7 +12,7 @@ public interface Spreadsheet {
    *
    * @param fileName the name of the given file
    */
-  void initializeSpreadsheet(String fileName);
+  void initializeSpreadsheet(Readable fileName);
 
   /**
    * Gets the cell at the given coordinate. If the given cell is outside the size of the board, the
@@ -54,4 +54,6 @@ public interface Spreadsheet {
    * @param coord the coordinate of the cell to be evaluated
    */
   void evaluateCellAt(Coord coord);
+
+
 }
