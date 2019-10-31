@@ -127,4 +127,9 @@ public class StringValue extends Value {
   public int hashCode() {
     return val.hashCode();
   }
+
+  @Override
+  public String getRawContents(){
+    return this.rawContents;
+  }
 }

@@ -9,7 +9,7 @@ public class Function implements Formula {
 
   private String functionName;
   protected List<Formula> funParams;
-  private String rawContent;
+  private String rawContents;
 
 
   /**
@@ -34,7 +34,7 @@ public class Function implements Formula {
   public Function(String functionName, List<Formula> funParams, String rawContent) {
     this.functionName = functionName;
     this.funParams = funParams;
-    this.rawContent = rawContent;
+    this.rawContents = rawContent;
 
   }
 
@@ -221,7 +221,7 @@ public class Function implements Formula {
   }
 
   public String toStringRaw() {
-    return this.rawContent;
+    return this.rawContents;
   }
 
   @Override
@@ -233,5 +233,10 @@ public class Function implements Formula {
   @Override
   public int hashCode() {
     return functionName.hashCode();
+  }
+
+  @Override
+  public String getRawContents(){
+    return this.rawContents;
   }
 }

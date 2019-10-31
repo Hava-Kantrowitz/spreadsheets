@@ -15,10 +15,9 @@ public class Reference implements Formula{
   private Spreadsheet spreadsheet; // change to spread sheet getter
   protected int rowOver;
   protected int colOver;
-  private String rawContent;
+  private String rawContents;
 
   private ArrayList<Coord> referredCoords = new ArrayList<>();
-  private ArrayList<Coord> referredCells = new ArrayList<>();
 
 
   public Reference(String symbol, Spreadsheet spreadsheet){
@@ -38,7 +37,7 @@ public class Reference implements Formula{
 
     this.symbol = symbol;
     this.spreadsheet = spreadsheet;
-    this.rawContent = rawContent;
+    this.rawContents = rawContent;
     parseReferredCells(); // gets the cells referred to
   }
 
@@ -183,6 +182,11 @@ public class Reference implements Formula{
   @Override
   public int hashCode() {
     return symbol.hashCode();
+  }
+
+  @Override
+  public String getRawContents(){
+    return this.rawContents;
   }
 
   /**

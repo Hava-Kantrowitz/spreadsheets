@@ -117,4 +117,9 @@ public class BooleanValue extends Value {
   public int hashCode() {
     return bool.hashCode();
   }
+
+  @Override
+  public String getRawContents(){
+    return this.rawContents;
+  }
 }

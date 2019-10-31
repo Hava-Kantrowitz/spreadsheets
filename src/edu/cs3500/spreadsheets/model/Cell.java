@@ -79,5 +79,10 @@ public interface Cell {
    */
   boolean isFunction();
 
+  /**
+   * Gets the raw contents that were entered into the cell.
+   * @return the raw contents of the cell
+   */
+  String getRawContents();
 
 }

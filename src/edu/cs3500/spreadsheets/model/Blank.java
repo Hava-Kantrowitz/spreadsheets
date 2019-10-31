@@ -91,4 +91,9 @@ public class Blank implements Cell {
   public int hashCode() {
     return 1;
   }
+
+  @Override
+  public String getRawContents(){
+    return "";
+  }
 }

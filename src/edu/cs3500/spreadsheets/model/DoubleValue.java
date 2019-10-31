@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class DoubleValue extends Value {
   private double val;
-  private String rawContent;
+  private String rawContents;
 
   /**
    * The constructor for the double value.
@@ -38,7 +38,7 @@ public class DoubleValue extends Value {
     } else {
       throw new IllegalArgumentException("Not a double value.");
     }
-    this.rawContent = rawContent;
+    this.rawContents = rawContent;
   }
 
   @Override
@@ -115,5 +115,9 @@ public class DoubleValue extends Value {
     return (int) val;
   }
 
+  @Override
+  public String getRawContents(){
+    return this.rawContents;
+  }
 
 }
