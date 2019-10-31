@@ -231,10 +231,31 @@ public class Reference implements Formula{
    * This is a helper that gets the cell that is being referred to.   // CHANGE TO LIST OF REFERRED CELLS
    * @return the cells corresponding to the given references
    */
-  public Cell getReferredCell(){
+  Cell getReferredCell() {
+    Scanner scan = new Scanner(symbol);
+    final Pattern cellRef = Pattern.compile("([A-Za-z]+)([1-9][0-9]*)");
+    scan.useDelimiter("\\s+");
+    int col;
+    int row;
+    Coord coord1 = null;
+    while (scan.hasNext()) {
+      String cell = scan.next();
+      Matcher m = cellRef.matcher(cell);
+      if (m.matches()) {
+        col = Coord.colNameToIndex(m.group(1));
+        row = Integer.parseInt(m.group(2));
+        coord1 = new Coord(col, row);
+      } else {
+        throw new IllegalStateException("Expected cell ref");
+      }
+      colOver = col;
+      rowOver = row;
+    }
 
 
-    return null;
+
+    assert coord1 != null;
+    return spreadsheet.getCellAt(coord1);
   }
 
   /**
