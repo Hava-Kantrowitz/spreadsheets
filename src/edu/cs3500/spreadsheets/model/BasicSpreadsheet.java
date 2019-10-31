@@ -168,6 +168,9 @@ public class BasicSpreadsheet implements Spreadsheet {
     if (getCellAt(currCor).isRef()) {
       Reference ref = (Reference) getCellAt(currCor);
       references.add(ref.symbol);
+      if (ref.getReferredCell() == null) {
+        return false;
+      }
       if (ref.getReferredCell().isFunction()) {
         Function funIn = (Function) ref.getReferredCell();
         int numRefs = 0;
@@ -234,9 +237,7 @@ public class BasicSpreadsheet implements Spreadsheet {
       }
       else {
         Set<String> noDuplicates = new HashSet<>(references);
-        if ((references.size() != noDuplicates.size())) {
-          return true;
-        }
+        return (references.size() != noDuplicates.size());
       }
     }
     return false;
