@@ -122,7 +122,15 @@ public class BasicSpreadsheet implements Spreadsheet {
           throw new IllegalArgumentException("There is a self reference in cell "
                   + currCor.toString());
         }
-        getCellAt(currCor).evaluateCell();
+
+        try {
+          getCellAt(currCor).evaluateCell();
+        } catch (StackOverflowError e) {
+          badReferences.add(currCor.toString());
+          throw new IllegalArgumentException("There is a self reference in cell "
+                  + currCor.toString());
+        }
+
 
       }
     }
@@ -193,9 +201,7 @@ public class BasicSpreadsheet implements Spreadsheet {
 
         if (numRefs == 0 && numFuns == 0) {
           Set<String> noDuplicates = new HashSet<>(references);
-          if (!(references.size() < noDuplicates.size())) {
-            return true;
-          }
+          return (references.size() != noDuplicates.size());
         }
 
         else if (numRefs != 0 && numFuns == 0){

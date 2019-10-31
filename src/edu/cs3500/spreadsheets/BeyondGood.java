@@ -53,9 +53,6 @@ public class BeyondGood {
       Double resultNum = Double.parseDouble(result);
       System.out.print(String.format("%f", resultNum));
     } catch (NumberFormatException e) {
-        if (result.contentEquals("true") || result.contentEquals("false")) {
-          System.out.print(String.format("%b", result));
-        }
         System.out.print(result);
       }
 
