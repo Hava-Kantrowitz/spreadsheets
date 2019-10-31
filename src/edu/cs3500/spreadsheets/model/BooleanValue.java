@@ -50,7 +50,7 @@ public class BooleanValue extends Value {
   @Override
   public double evaluateCellSqrt() throws IllegalArgumentException {
     int output = 0;
-    if(bool){ // if it is true then one
+    if (bool) { // if it is true then one
       output = 1;
     }
     return output;
@@ -59,7 +59,7 @@ public class BooleanValue extends Value {
   @Override
   public double evaluateCellDifference() {
     int output = 0;
-    if(bool){ // if it is true then one
+    if (bool) { // if it is true then one
       output = 1;
     }
     return output;
@@ -107,7 +107,7 @@ public class BooleanValue extends Value {
   }
 
   @Override
-  public String toString(){
+  public String toString() {
     return this.rawContents;
   }
 

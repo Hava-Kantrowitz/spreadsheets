@@ -12,6 +12,9 @@ import edu.cs3500.spreadsheets.model.Reference;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.StringValue;
 
+/**
+ * Models a creator visitor.
+ */
 public class CreatorVisitor implements SexpVisitor<Cell> {
 
   protected Spreadsheet sheet;
@@ -21,7 +24,7 @@ public class CreatorVisitor implements SexpVisitor<Cell> {
    * This constructs the visitor to take in the spreadsheet and rawContent.
    * @param sheet the spreadsheet
    */
-  public CreatorVisitor(Spreadsheet sheet){
+  public CreatorVisitor(Spreadsheet sheet) {
     this.sheet = sheet;
   }
 
@@ -61,7 +64,7 @@ public class CreatorVisitor implements SexpVisitor<Cell> {
 
 
     // need to figure out how we are representing a formula value
-    for(int i = 1; i < l.size(); i++){
+    for (int i = 1; i < l.size(); i++) {
       params.add((Formula) l.get(i).accept(visit, "")); // within formula no raw
     }
 

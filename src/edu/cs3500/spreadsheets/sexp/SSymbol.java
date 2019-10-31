@@ -2,8 +2,6 @@ package edu.cs3500.spreadsheets.sexp;
 
 import java.util.Objects;
 
-import edu.cs3500.spreadsheets.model.Spreadsheet;
-
 /**
  * An arbitrary symbol.
  */

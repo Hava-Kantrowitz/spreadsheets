@@ -1,21 +1,17 @@
 package edu.cs3500.spreadsheets.model;
 
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.sql.Ref;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 import edu.cs3500.spreadsheets.sexp.CreatorVisitor;
 import edu.cs3500.spreadsheets.sexp.Parser;
-import edu.cs3500.spreadsheets.sexp.Sexp;
 import edu.cs3500.spreadsheets.sexp.SexpVisitor;
 
+/**
+ * This class models a basic spreadsheet.
+ */
 public class BasicSpreadsheet implements Spreadsheet {
 
   private static final int MAXINT = 10000000;
@@ -23,21 +19,16 @@ public class BasicSpreadsheet implements Spreadsheet {
   private int numRows;
   private int numCols;
   private ArrayList<String> references = new ArrayList<>();
-
-  /**
-   * This is the blank constructor for a basic spreadsheet. Constructs a 10 by 10 spreadsheet of
-   * blank cells.
-   */
-  public BasicSpreadsheet() {
-  }
+  public ArrayList<String> badReferences = new ArrayList<>();
 
   @Override
   public void initializeSpreadsheet(Readable fileName) {
     sheet = new ArrayList<ArrayList<Cell>>();   // setting the values back to zero
     numRows = 0;
     numCols = 0;
-    WorksheetBuild builder = new WorksheetBuild(this);  // calling the builder to actually initialize
-    WorksheetReader.read(builder,fileName);  // reading from the file and passing it in
+    // calling the builder to actually initialize
+    WorksheetBuild builder = new WorksheetBuild(this);
+    WorksheetReader.read(builder, fileName);  // reading from the file and passing it in
   }
 
 
@@ -68,8 +59,6 @@ public class BasicSpreadsheet implements Spreadsheet {
     // get the given row then set the column of that row
     sheet.get(givenRow).set(givenCol, cellVal);
 
-    System.out.println("Cell at " +coord.toString() + " is " + cellVal.toString() + "\n");
-
   }
 
   @Override
@@ -79,11 +68,11 @@ public class BasicSpreadsheet implements Spreadsheet {
 
     // checking if it is a formula to get only the s expression
     // NEED TO DEAL WITH IF IT HAS EQUALS BUT IT IS A VALUE
-    if(arrayForm[0] == '='){
-      rawContents = rawContents.substring(1,rawContents.length());
+    if (arrayForm[0] == '=') {
+      rawContents = rawContents.substring(1, rawContents.length());
     }
     SexpVisitor visit = new CreatorVisitor(this);
-    Cell addedCell = (Cell) Parser.parse(rawContents).accept(visit,contentCopy);
+    Cell addedCell = (Cell) Parser.parse(rawContents).accept(visit, contentCopy);
 
     setCellAt(coord, addedCell);
 
@@ -117,24 +106,22 @@ public class BasicSpreadsheet implements Spreadsheet {
     }
 
 
-
     return multRows;
   }
 
 
   @Override
-  public void evaluateSheet() throws IllegalArgumentException{
+  public void evaluateSheet() throws IllegalArgumentException {
     int rows = numRows;
     int cols = numCols;
 
     for (int i = 1; i < rows; i++) {
       for (int j = 1; j < cols; j++) {
         Coord currCor = new Coord(j, i);
-        //testDirectRef(currCor);
-        //testDirectFun(currCor);
-//        //if (hasIndirectRef(currCor)) {
-//          throw new IllegalArgumentException("There is a self reference in cell " + currCor.toString());
-//        }
+        if (!testDirectRef(currCor) || !testDirectFun(currCor) || hasIndirectRef(currCor)) {
+          throw new IllegalArgumentException("There is a self reference in cell "
+                  + currCor.toString());
+        }
         getCellAt(currCor).evaluateCell();
 
       }
@@ -142,11 +129,46 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   }
 
+  private boolean testDirectFun(Coord currCor) {
+    if (getCellAt(currCor).isFunction()) {
+      Function fun = (Function) getCellAt(currCor);
+      List<Formula> formulas = fun.funParams;
+      ArrayList<String> refSymbols = new ArrayList<>();
+      for (Formula f : formulas) {
+        if (f.isRef()) {
+          Reference newRef = (Reference) f;
+          refSymbols.add(newRef.symbol);
+        }
+      }
+
+      for (String s : refSymbols) {
+        if (s.equals(currCor.toString())) {
+          badReferences.add(currCor.toString());
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  private boolean testDirectRef(Coord currCor) {
+    if (getCellAt(currCor).isRef()) {
+      Reference ref = (Reference) getCellAt(currCor);
+      String refSymbol = ref.symbol;
+      if (currCor.toString().equals(refSymbol)) {
+        badReferences.add(currCor.toString());
+        return false;
+      }
+    }
+    return true;
+  }
+
   private boolean hasIndirectRef(Coord currCor) {
     if (getCellAt(currCor).isRef()) {
       Reference ref = (Reference) getCellAt(currCor);
       references.add(ref.symbol);
-      if (ref.isFunction()) {
+      if (ref.getReferredCell().isFunction()) {
         Function funIn = (Function) ref.getReferredCell();
         int numRefs = 0;
         int numFuns = 0;
@@ -204,7 +226,7 @@ public class BasicSpreadsheet implements Spreadsheet {
         }
 
       }
-      else if (ref.isRef()) {
+      else if (ref.getReferredCell().isRef()) {
         Reference refIn = (Reference) ref.getReferredCell();
         references.add(refIn.symbol);
         Coord newCoord = new Coord(refIn.colOver, refIn.rowOver);
@@ -212,7 +234,7 @@ public class BasicSpreadsheet implements Spreadsheet {
       }
       else {
         Set<String> noDuplicates = new HashSet<>(references);
-        if (!(references.size() < noDuplicates.size())) {
+        if ((references.size() != noDuplicates.size())) {
           return true;
         }
       }
@@ -220,43 +242,12 @@ public class BasicSpreadsheet implements Spreadsheet {
     return false;
   }
 
-  private void testDirectFun(Coord currCor) {
-    if (getCellAt(currCor).isFunction()) {
-      Function fun = (Function) getCellAt(currCor);
-      List<Formula> formulas = fun.funParams;
-      ArrayList<String> refSymbols = new ArrayList<>();
-      for (Formula f : formulas) {
-        if (f.isRef()) {
-          Reference newRef = (Reference) f;
-          refSymbols.add(newRef.symbol);
-        }
-      }
 
-      for (String s : refSymbols) {
-        if (s.equals(currCor.toString())) {
-          throw new IllegalArgumentException("Cell " + currCor.toString()
-                  + " references itself directly.");
-        }
-      }
-    }
-  }
-
-  private void testDirectRef(Coord currCor) {
-    if (getCellAt(currCor).isRef()) {
-      Reference ref = (Reference) getCellAt(currCor);
-      String refSymbol = ref.symbol;
-      if (currCor.toString().equals(refSymbol)) {
-        throw new IllegalArgumentException("Cell " + currCor.toString()
-                + " references itself directly.");
-      }
-    }
-  }
 
   @Override
   public void evaluateCellAt(Coord coord) throws IllegalArgumentException {
     getCellAt(coord).evaluateCell();
   }
-
 
 
   /**
@@ -268,41 +259,48 @@ public class BasicSpreadsheet implements Spreadsheet {
    * @param inputRow the row that was input
    */
   private void expandSheet(int inputCol, int inputRow) {
-    int newCols = numCols;
-    // getting the new value of columns if it is greater
-    if(inputCol > numCols){
-      newCols = inputCol * 2;
-    }
-    int newRows = numRows;
-    // getting new value for number rows if greater
-    if(inputRow > numRows){
-      newRows = inputRow * 2;
+
+    if (inputCol >= MAXINT) {
+      while (sheet.size() <= MAXINT) {
+        sheet.add(new ArrayList<Cell>());
+      }
     }
 
-    // setting to max if goes over
-    if (newCols >= MAXINT) {
-      newCols = MAXINT;
-    }
-    // setting to max if goes over
-    if (newRows >= MAXINT) {
-      newRows = MAXINT;
-    } else{
+    if (inputRow >= MAXINT) {
+      for (int i = 0; i <= MAXINT; i++) {
+        while (sheet.get(i).size() <= inputRow) {
+          sheet.get(i).add(new Blank());
+        }
+      }
+    } else {
       int oldSheetSize = numRows;
+      sheet.ensureCapacity(inputRow + 1);
+      numRows = sheet.size();
 
-       for (int i = oldSheetSize; i <= newRows; i++) {  // fill in the number of rows needed
-         sheet.add(new ArrayList<Cell>());       // rows from the old number of rows to the new
-         numRows++;                              // reset the num rows
-       }
+
+      for (int i = oldSheetSize; i <= inputRow + 1; i++) {  // fill in the number of rows needed
+        sheet.add(new ArrayList<Cell>());       // rows from the old number of rows to the new
+        numRows++;
+      }
+
+      int newCols = numCols;
+
+      if (inputCol > numCols) {
+        newCols = inputCol;
+      }
+
 
       for (int i = 0; i < numRows; i++) {        // all rows
-         for(int j = 0; j <= newCols; j++){     // go through and get each row and add blanks
-             sheet.get(i).add(new Blank());
+        for (int j = 0; j <= newCols; j++) {  // go through from where
+          sheet.get(i).add(new Blank());
+          if (j > numCols && i == 0) {
+            numCols++;
+          }
+
         }
       }
 
-      numCols = newCols;   // reset numCols
     }
-
 
 
   }

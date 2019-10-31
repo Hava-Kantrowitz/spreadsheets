@@ -3,13 +3,12 @@ package edu.cs3500.spreadsheets;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
-import java.io.StringReader;
-import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
-import edu.cs3500.spreadsheets.sexp.Parser;
-import edu.cs3500.spreadsheets.sexp.SList;
-//import edu.cs3500.spreadsheets.sexp.SexpVisitor;
+import edu.cs3500.spreadsheets.model.Coord;
 
 /**
  * The main class for our program.
@@ -17,51 +16,15 @@ import edu.cs3500.spreadsheets.sexp.SList;
 public class BeyondGood {
   /**
    * The main entry point.
+   *
    * @param args any command-line arguments
    */
-  public static void main(String[] args){
-    /*
-      TODO: For now, look in the args array to obtain a filename and a cell name,
-      - read the file and build a model from it, 
-      - evaluate all the cells, and
-      - report any errors, or print the evaluated value of the requested cell.
-    */
+  public static void main(String[] args) {
 
-
-
-//    Parser parser = new Parser();
-//
-//    String output = parser.parse("(PRODUCT (SUB (SUM C1 A1) (SUM 4 5)) (SUB C1 A1))").toString();
-//
-//    System.out.println(output);
-//
-//    String output2 = parser.parse("3").toString();
-//
-//    System.out.println(output2);
-//
-//    SList list = ((SList)parser.parse("(PRODUCT (SUB (SUM C1 A1) (SUM 4 5)) (SUB C1 A1))"));
-//    Object element = list.getSexpAt(0);
-//    System.out.println(element.toString());
-//    element = list.getSexpAt(1);
-//    System.out.println(element.toString());
-//    System.out.println("Sexp inside the previous element");
-//    element = ((SList) list.getSexpAt(1)).getSexpAt(0);
-//    System.out.println(element);
-//    element = ((SList) list.getSexpAt(1)).getSexpAt(1);
-//    System.out.println(element);
-//
-//
-//    System.out.println("\nThis is back to the whole original formula");
-//    element = list.getSexpAt(2);
-//    System.out.println(element.toString());
-
-//    if(args.length != 4 || !args[0].equals("-in") || !args[3].equals("-eval")){
-//
-//    }
-
-//    if(args.length != 4 || !args[0].equals("-in") || !args[3].equals("-eval")){
-//      throw new IllegalArgumentException("Malformed command line");
-//    }
+    if (args.length != 4 || !args[0].equals("-in") || !args[2].equals("-eval")) {
+      System.out.println("Command line is malformed.");
+      System.exit(1);
+    }
 
     BasicSpreadsheet sheet = new BasicSpreadsheet();
 
@@ -69,16 +32,58 @@ public class BeyondGood {
     try {
       fileName = new FileReader(args[1]);
     } catch (FileNotFoundException e) {
-      e.printStackTrace();
+      System.out.println("File not found");
+      System.exit(1);
     }
 
     sheet.initializeSpreadsheet(fileName);
 
-    sheet.evaluateSheet();
+    try {
+      sheet.evaluateSheet();
+    } catch (IllegalArgumentException e) {
+      for (String i : sheet.badReferences) {
+        System.out.println("Error in cell " + i + " : cell contains self reference.");
+      }
+      System.exit(1);
+    }
 
+    Coord inputCoord = parseCellVal(args[3]);
+    String result = sheet.getCellAt(inputCoord).toString();
+    try {
+      Double resultNum = Double.parseDouble(result);
+      System.out.print(String.format("%f", resultNum));
+    } catch (NumberFormatException e) {
+      try {
+        Boolean resultBool = Boolean.parseBoolean(result);
+        System.out.print(String.format("%b", resultBool));
+      } catch (Exception r) {
+        System.out.print(result);
+      }
 
-
+    }
 
   }
 
+
+  private static Coord parseCellVal(String arg) {
+    Scanner scan = new Scanner(arg);
+    final Pattern cellRef = Pattern.compile("([A-Za-z]+)([1-9][0-9]*)");
+    scan.useDelimiter("\\s+");
+    int col;
+    int row;
+    Coord coord1 = null;
+    while (scan.hasNext()) {
+      String cell = scan.next();
+      Matcher m = cellRef.matcher(cell);
+      if (m.matches()) {
+        col = Coord.colNameToIndex(m.group(1));
+        row = Integer.parseInt(m.group(2));
+        coord1 = new Coord(col, row);
+      } else {
+        throw new IllegalStateException("Expected cell ref");
+      }
+
+    }
+    return coord1;
+  }
 }

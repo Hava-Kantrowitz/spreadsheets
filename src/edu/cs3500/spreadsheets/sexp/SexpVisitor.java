@@ -2,7 +2,6 @@ package edu.cs3500.spreadsheets.sexp;
 
 import java.util.List;
 
-import edu.cs3500.spreadsheets.model.Spreadsheet;
 
 /**
  * An abstracted function object for processing any {@link Sexp}ressions.

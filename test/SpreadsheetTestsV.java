@@ -29,7 +29,7 @@ public class SpreadsheetTestsV {
 
 
   // THESE ARE THE TESTS FOR GET CELL AT
-  private static void initializeTestSheet(Spreadsheet sheet){
+  private static void initializeTestSheet(Spreadsheet sheet) {
     try {
       sheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
               "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets" +
@@ -183,34 +183,34 @@ public class SpreadsheetTestsV {
 
   // the test for when the given cell is out of bounds (and doubling would exceed max possible int)
   // on the column input
-//  @Test
-//  public void getOutColumnMaxIntCol() {
-//    initializeTestSheet(basicSpreadsheet);
-//    Coord index = new Coord(1000000, 5);
-//    assertEquals(new Blank(),
-//            basicSpreadsheet.getCellAt(index));
-//  }
+  @Test
+  public void getOutColumnMaxIntCol() {
+    initializeTestSheet(basicSpreadsheet);
+    Coord index = new Coord(1000000, 5);
+    assertEquals(new Blank(),
+            basicSpreadsheet.getCellAt(index));
+  }
 
 
   // the test for when the given cell is out of bounds (and doubling would exceed max possible int)
   // on the row and column inputs
-//  @Test
-//  public void getOutColumnMaxIntColRow() {
-//    initializeTestSheet(basicSpreadsheet);
-//    Coord index = new Coord(1000000, 1000000);
-//    assertEquals(new Blank(),
-//            basicSpreadsheet.getCellAt(index));
-//  }
+  @Test
+  public void getOutColumnMaxIntColRow() {
+    initializeTestSheet(basicSpreadsheet);
+    Coord index = new Coord(1000000, 1000000);
+    assertEquals(new Blank(),
+            basicSpreadsheet.getCellAt(index));
+  }
 
   // the test for when the given cell is out of bounds (and doubling would exceed max possible int)
   // on the row and col inputs (the doubling will go over but the number itself will still be valid
-//  @Test (expected = IllegalArgumentException.class)
-//  public void getOutRowColOverMaxIntRow() {
-//    initializeTestSheet(basicSpreadsheet);;
-//    Coord index = new Coord(10000000, 1000001);
-//    assertEquals(new Blank(),
-//            basicSpreadsheet.getCellAt(index));
-//  }
+  @Test (expected = IllegalArgumentException.class)
+  public void getOutRowColOverMaxIntRow() {
+    initializeTestSheet(basicSpreadsheet);
+    Coord index = new Coord(10000000, 1000001);
+    assertEquals(new Blank(),
+            basicSpreadsheet.getCellAt(index));
+  }
 
   // THESE ARE THE TESTS FOR GET CELL SECTION
 
@@ -454,9 +454,6 @@ public class SpreadsheetTestsV {
 
     assertTrue(isEqual);
   }
-
-
-
 
 
 }

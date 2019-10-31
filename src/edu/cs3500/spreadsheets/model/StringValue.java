@@ -83,7 +83,7 @@ public class StringValue extends Value {
 
   @Override
   public String evaluateCellHamilton() {
-    return null;
+    return "There's a million things we haven't done, just you wait!";
   }
 
   @Override
@@ -120,7 +120,7 @@ public class StringValue extends Value {
 
   @Override
   public String toString() {
-    return rawContents;
+    return val;
   }
 
   @Override

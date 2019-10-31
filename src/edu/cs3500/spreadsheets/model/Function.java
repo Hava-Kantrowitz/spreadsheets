@@ -2,8 +2,10 @@ package edu.cs3500.spreadsheets.model;
 
 import java.util.List;
 
-
-public class Function implements Formula{
+/**
+ * Models a cell with a function.
+ */
+public class Function implements Formula {
 
   private String functionName;
   protected List<Formula> funParams;
@@ -37,11 +39,11 @@ public class Function implements Formula{
   }
 
   @Override
-  public Value evaluateCell() throws IllegalArgumentException{
+  public Value evaluateCell() throws IllegalArgumentException {
     Value output;
 
     // making sure the function parameters are at least greater than zero
-    if(funParams.size() < 1){
+    if (funParams.size() < 1) {
       throw new IllegalArgumentException("There must be at least one parameter for any function");
     }
 
@@ -203,7 +205,7 @@ public class Function implements Formula{
   }
 
   private String hamilton(Formula formula) {
-    return "";
+    return "There's a million things we haven't done, just you wait!";
   }
 
   @Override
@@ -218,9 +220,13 @@ public class Function implements Formula{
     return isEqual;
   }
 
-  @Override
-  public String toString(){
+  public String toStringRaw() {
     return this.rawContent;
+  }
+
+  @Override
+  public String toString() {
+    return this.evaluateCell().toString();
   }
 
 

@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import edu.cs3500.spreadsheets.model.Spreadsheet;
 
 /**
  * Represents a list s-expression (i.e. <code>({@link Sexp} ...)</code>).
@@ -51,7 +50,7 @@ public class SList implements Sexp {
    * @param index the given index
    * @return the Sexp at the given index
    */
-  public Sexp getSexpAt(int index){
+  public Sexp getSexpAt(int index) {
     return contents.get(index);
   }
 

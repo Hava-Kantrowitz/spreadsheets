@@ -68,7 +68,8 @@ public class DoubleValue extends Value {
 
   @Override
   public String evaluateCellHamilton() {
-    return null;
+    String hamilton = "There's a million things we haven't done, just you wait!";
+    return hamilton;
   }
 
   @Override
@@ -103,9 +104,13 @@ public class DoubleValue extends Value {
     return isEqual;
   }
 
+  public String getRawContent() {
+    return this.rawContent;
+  }
+
   @Override
   public String toString() {
-    return this.rawContent;
+    return Double.toString(this.val);
   }
 
   @Override

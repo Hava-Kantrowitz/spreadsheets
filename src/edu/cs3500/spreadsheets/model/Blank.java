@@ -83,7 +83,7 @@ public class Blank implements Cell {
   }
 
   @Override
-  public String toString(){
+  public String toString() {
     return "";
   }
 
