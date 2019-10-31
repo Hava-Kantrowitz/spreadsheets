@@ -1,19 +1,13 @@
 package edu.cs3500.spreadsheets.model;
 
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.sql.Ref;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 import edu.cs3500.spreadsheets.sexp.CreatorVisitor;
 import edu.cs3500.spreadsheets.sexp.Parser;
-import edu.cs3500.spreadsheets.sexp.Sexp;
 import edu.cs3500.spreadsheets.sexp.SexpVisitor;
 
 public class BasicSpreadsheet implements Spreadsheet {
@@ -23,6 +17,7 @@ public class BasicSpreadsheet implements Spreadsheet {
   private int numRows;
   private int numCols;
   private ArrayList<String> references = new ArrayList<>();
+  private ArrayList<String> badReferences = new ArrayList<>();
 
   /**
    * This is the blank constructor for a basic spreadsheet. Constructs a 10 by 10 spreadsheet of
@@ -125,83 +120,40 @@ public class BasicSpreadsheet implements Spreadsheet {
   @Override
   public void evaluateSheet() throws IllegalArgumentException{
 
+    badReferences.clear();
+
     for (int i = 1; i < numCols; i++) {
       for (int j = 1; j < numRows; j++) {
         Coord currCor = new Coord(i, j);
-        //testDirectRef(currCor);
-        //testDirectFun(currCor);
+        testDirectRef(currCor);
+        testDirectFun(currCor);
         if (hasIndirectRef(currCor)) {
+          badReferences.add(currCor.toString());
           throw new IllegalArgumentException("There is a self reference in cell " + currCor.toString());
         }
         getCellAt(currCor).evaluateCell();
       }
     }
 
+    if (badReferences.size() != 0) {
+      throw new IllegalArgumentException("There is a self reference in cell a cell");
+    }
+
   }
 
+  /**
+   * Helper to determine if the cell contains a self reference.
+   * @param currCor the coordinate of the cell
+   * @return true if it contains a self reference, false otherwise
+   */
   private boolean hasIndirectRef(Coord currCor) {
     if (getCellAt(currCor).isRef()) {
       Reference ref = (Reference) getCellAt(currCor);
       references.add(ref.symbol);
       if (ref.isFunction()) {
-        Function funIn = (Function) ref.getReferredCell();
-        int numRefs = 0;
-        int numFuns = 0;
-        ArrayList<Reference> actualRefs = new ArrayList<>();
-        ArrayList<Function> actualFuns = new ArrayList<>();
-        for (Formula f : funIn.funParams) {
-          if (f.isRef()) {
-            numRefs++;
-            Reference nextRef = (Reference) f;
-            references.add(nextRef.symbol);
-            actualRefs.add(nextRef);
-          }
-          if (f.isFunction()) {
-            numFuns++;
-            Function nextFun = (Function) f;
-            actualFuns.add(nextFun);
-          }
-        }
-
-        if (numRefs == 0 && numFuns == 0) {
-          Set<String> noDuplicates = new HashSet<>(references);
-          if (!(references.size() < noDuplicates.size())) {
-            return true;
-          }
-        }
-
-        else if (numRefs != 0 && numFuns == 0){
-          for (Reference r : actualRefs) {
-            if (hasIndirectRef(new Coord(r.colOver, r.rowOver))) {
-              return true;
-            }
-          }
-
-          for (Function f : actualFuns) {
-            for (Formula formula : f.funParams) {
-              if (formula.isFunction()) {
-                Function nextFun = (Function) formula;
-                for (Formula nextParams : nextFun.funParams) {
-                  if (nextParams.isRef()) {
-                    Reference nextRef = (Reference) nextParams;
-                    if (hasIndirectRef(new Coord(nextRef.colOver, nextRef.rowOver))) {
-                      return true;
-                    }
-                  }
-                }
-              }
-              else if (formula.isRef()) {
-                Reference nextRef = (Reference) formula;
-                if (hasIndirectRef(new Coord(nextRef.colOver, nextRef.rowOver))) {
-                  return true;
-                }
-              }
-            }
-          }
-        }
-
+        return testAsFunction(ref);
       }
-      else if (ref.isRef()) {
+      else if (ref.getReferredCell().isRef()) {
         Reference refIn = (Reference) ref.getReferredCell();
         references.add(refIn.symbol);
         Coord newCoord = new Coord(refIn.colOver, refIn.rowOver);
@@ -209,8 +161,64 @@ public class BasicSpreadsheet implements Spreadsheet {
       }
       else {
         Set<String> noDuplicates = new HashSet<>(references);
-        if (!(references.size() < noDuplicates.size())) {
+        return (references.size() != noDuplicates.size());
+      }
+    }
+    return false;
+  }
+
+  private boolean testAsFunction(Reference ref) {
+    Function funIn = (Function) ref.getReferredCell();
+    int numRefs = 0;
+    int numFuns = 0;
+    ArrayList<Reference> actualRefs = new ArrayList<>();
+    ArrayList<Function> actualFuns = new ArrayList<>();
+    for (Formula f : funIn.funParams) {
+      if (f.isRef()) {
+        numRefs++;
+        Reference nextRef = (Reference) f;
+        references.add(nextRef.symbol);
+        actualRefs.add(nextRef);
+      }
+      if (f.isFunction()) {
+        numFuns++;
+        assert f instanceof Function;
+        Function nextFun = (Function) f;
+        actualFuns.add(nextFun);
+      }
+    }
+
+    if (numRefs == 0 && numFuns == 0) {
+      Set<String> noDuplicates = new HashSet<>(references);
+      return !(references.size() < noDuplicates.size());
+    }
+
+    else if (numRefs != 0 && numFuns == 0){
+      for (Reference r : actualRefs) {
+        if (hasIndirectRef(new Coord(r.colOver, r.rowOver))) {
           return true;
+        }
+      }
+
+      for (Function f : actualFuns) {
+        for (Formula formula : f.funParams) {
+          if (formula.isFunction()) {
+            Function nextFun = (Function) formula;
+            for (Formula nextParams : nextFun.funParams) {
+              if (nextParams.isRef()) {
+                Reference nextRef = (Reference) nextParams;
+                if (hasIndirectRef(new Coord(nextRef.colOver, nextRef.rowOver))) {
+                  return true;
+                }
+              }
+            }
+          }
+          else if (formula.isRef()) {
+            Reference nextRef = (Reference) formula;
+            if (hasIndirectRef(new Coord(nextRef.colOver, nextRef.rowOver))) {
+              return true;
+            }
+          }
         }
       }
     }
