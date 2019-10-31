@@ -104,9 +104,6 @@ public class DoubleValue extends Value {
     return isEqual;
   }
 
-  public String getRawContent() {
-    return this.rawContent;
-  }
 
   @Override
   public String toString() {
@@ -117,4 +114,6 @@ public class DoubleValue extends Value {
   public int hashCode() {
     return (int) val;
   }
+
+
 }

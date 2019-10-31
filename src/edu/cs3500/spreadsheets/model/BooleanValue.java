@@ -108,8 +108,10 @@ public class BooleanValue extends Value {
 
   @Override
   public String toString() {
-    return this.rawContents;
+    return Boolean.toString(this.bool);
   }
+
+
 
   @Override
   public int hashCode() {

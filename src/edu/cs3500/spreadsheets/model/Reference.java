@@ -177,7 +177,7 @@ public class Reference implements Formula{
 
   @Override
   public String toString(){
-    return this.rawContent;
+    return this.evaluateCell().toString();
   }
 
   @Override
