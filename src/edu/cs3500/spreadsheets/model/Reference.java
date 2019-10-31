@@ -76,7 +76,7 @@ public class Reference implements Formula{
       output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellProduct(formulas);
     }
     else if(referredCoords.size() == 2){ // if there is a range
-      output = product();
+      output = product(getListFormula());
     }
     else{ // no more than two arguments in sum range
       throw new IllegalArgumentException("Illegal number of references.");
@@ -150,7 +150,6 @@ public class Reference implements Formula{
         }
       }
     }
-
 
     return output;
   }
@@ -244,7 +243,7 @@ public class Reference implements Formula{
    * @param cells the list of cells to add
    * @return the added value of the cells
    */
-  protected double sum(List<Cell> cells) {
+  private double sum(List<Cell> cells) {
     int sum = 0;
     for (Cell c : cells) {
       sum += c.evaluateCellSum();
@@ -256,22 +255,53 @@ public class Reference implements Formula{
   /**
    * Multiplies multiple cells together.
    *
+   * @param formulas the list of cells to multiply
    * @return the multiplied value of the cells
    */
-  private double product() {
+  private double product(List<Formula> formulas) {
     double product = 1;
-    int numCount = 0;
-    // go through the referred coordinates
-    for(int i = 0; i < referredCoords.size(); i++){
-      Cell element = spreadsheet.getCellAt(referredCoords.get(i));
-      if(element.isNum()){
-        numCount++;
-        product = product * element.evaluateCellSum();
-      }
-    } // if num count is zero
-    if(numCount == 0){
-      product = 0;
+    for (Formula f : formulas) {
+      product = product * f.evaluateCellProduct(formulas);
     }
     return product;
+  }
+
+
+
+  /**
+   * Gets a list of the formulas in the referred cells.
+   *
+   * @return the multiplied value of the cells
+   */
+  private List<Formula> getListFormula() {
+    List<Formula> formulas = new ArrayList<>();
+
+    // if there is only one reference then only one referred to cell
+    if(referredCoords.size() == 1 &&
+            spreadsheet.getCellAt(referredCoords.get(0)) instanceof Formula){
+      formulas.add((Formula) spreadsheet.getCellAt(referredCoords.get(0))); //set the value for cells
+    }
+    // if there are two coordinates in the list go through and get all those lists
+    else if(referredCoords.size() == 2) {
+      // coordinates first cell
+      int rowOne = referredCoords.get(0).row;
+      int rowTwo = referredCoords.get(1).row;
+
+      // coordinates last cell
+      int colOne = referredCoords.get(0).col;
+      int colTwo = referredCoords.get(1).col;
+      // going through the section to get all the formulas
+      for (int i = rowOne; i <= rowTwo; i++){
+        for(int j = colOne; j <= colTwo; j++){
+          Coord cellCoord = new Coord(j,i);
+          Cell cellRef = spreadsheet.getCellAt(cellCoord);
+          // add to the list of formulas
+          if(cellRef instanceof Formula){
+            formulas.add((Formula) cellRef);
+          }
+        }
+      }
+    }
+    return formulas;
   }
 }

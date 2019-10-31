@@ -19,7 +19,7 @@ public class BeyondGood {
    * The main entry point.
    * @param args any command-line arguments
    */
-  public static void main(String[] args) throws FileNotFoundException {
+  public static void main(String[] args){
     /*
       TODO: For now, look in the args array to obtain a filename and a cell name,
       - read the file and build a model from it, 
@@ -59,13 +59,24 @@ public class BeyondGood {
 //
 //    }
 
+//    if(args.length != 4 || !args[0].equals("-in") || !args[3].equals("-eval")){
+//      throw new IllegalArgumentException("Malformed command line");
+//    }
+
     BasicSpreadsheet sheet = new BasicSpreadsheet();
 
-    Reader fileName = new FileReader(args[1]);
+    Reader fileName = null;
+    try {
+      fileName = new FileReader(args[1]);
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
 
     sheet.initializeSpreadsheet(fileName);
 
     sheet.evaluateSheet();
+
+
 
 
   }

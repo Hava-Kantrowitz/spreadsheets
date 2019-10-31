@@ -268,49 +268,39 @@ public class BasicSpreadsheet implements Spreadsheet {
    * @param inputRow the row that was input
    */
   private void expandSheet(int inputCol, int inputRow) {
-    int oldNumCols = numCols;
-    boolean tooFewRows = inputCol > numRows - 1;
-
-    if (inputCol >= MAXINT) {
-      while (sheet.size() <= MAXINT) {
-        sheet.add(new ArrayList<Cell>());
-      }
+    int newCols = numCols;
+    // getting the new value of columns if it is greater
+    if(inputCol > numCols){
+      newCols = inputCol * 2;
+    }
+    int newRows = numRows;
+    // getting new value for number rows if greater
+    if(inputRow > numRows){
+      newRows = inputRow * 2;
     }
 
-    if (inputRow >= MAXINT) {
-      for (int i = 0; i <= MAXINT; i++) {
-        while (sheet.get(i).size() <= inputRow) {
-          sheet.get(i).add(new Blank());
-        }
-      }
+    // setting to max if goes over
+    if (newCols >= MAXINT) {
+      newCols = MAXINT;
+    }
+    // setting to max if goes over
+    if (newRows >= MAXINT) {
+      newRows = MAXINT;
     } else{
       int oldSheetSize = numRows;
-     sheet.ensureCapacity(inputRow + 1);
-     numRows = sheet.size();
 
-
-       for (int i = oldSheetSize; i <= inputRow + 1; i++) {  // fill in the number of rows needed
+       for (int i = oldSheetSize; i <= newRows; i++) {  // fill in the number of rows needed
          sheet.add(new ArrayList<Cell>());       // rows from the old number of rows to the new
-         numRows++;
+         numRows++;                              // reset the num rows
        }
-
-       int newCols = numCols;
-
-       if(inputCol > numCols){
-         newCols = inputCol;
-       }
-
 
       for (int i = 0; i < numRows; i++) {        // all rows
-         for(int j = 0; j <= newCols; j++){  // go through from where
+         for(int j = 0; j <= newCols; j++){     // go through and get each row and add blanks
              sheet.get(i).add(new Blank());
-             if(j > numCols && i == 0){
-               numCols++;
-             }
-
         }
       }
 
+      numCols = newCols;   // reset numCols
     }
 
 

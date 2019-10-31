@@ -27,8 +27,9 @@ public class CellTestsV {
 
   private static void initializeTestSheet(Spreadsheet sheet){
     try {
-      sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
-              "\\src\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt"));
+      sheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+              "NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
+              "spreadsheets/src/edu/cs3500/spreadsheets/testingBlankTenByTen.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -305,8 +306,38 @@ public class CellTestsV {
 
     spreadsheet.setCellAt(c3,"=(PRODUCT A1:B2)");
 
-    assertEquals(new DoubleValue(10.0),spreadsheet.getCellAt(c3).evaluateCell());
+     assertEquals(new DoubleValue(10.0),spreadsheet.getCellAt(c3).evaluateCell());
   }
+
+  // the product case in which none of them are numbers
+  @Test
+  public void sectionCellsProductNoNums(){
+    initializeTestSheet(spreadsheet);
+    spreadsheet.setCellAt(a1, "\"hello\"");
+    spreadsheet.setCellAt(a2,"true");
+    spreadsheet.setCellAt(b1,"A1");
+    // then the last corner is blank
+
+    spreadsheet.setCellAt(c3,"=(PRODUCT A1:B2)");
+
+    assertEquals(new DoubleValue(0.0),spreadsheet.getCellAt(c3).evaluateCell());
+  }
+
+  // the product case in which some of them have a range and some do not
+  @Test
+  public void sectionCellsProductRangeAndNoRange(){
+    initializeTestSheet(spreadsheet);
+    spreadsheet.setCellAt(a1, "1");
+    spreadsheet.setCellAt(a2,"1");
+    spreadsheet.setCellAt(b1,"2");
+    // then the last corner is blank
+
+    spreadsheet.setCellAt(c3,"=(PRODUCT A1:B2 7)");
+
+    assertEquals(new DoubleValue(14.0),spreadsheet.getCellAt(c3).evaluateCell());
+  }
+
+
   // the difference case
   @Test(expected = IllegalArgumentException.class)
   public void sectionCellsDifference(){
@@ -399,22 +430,22 @@ public class CellTestsV {
     spreadsheet.evaluateSheet();
   }
 
-  //tests referring to cell very indirectly
-//  @Test (expected = IllegalArgumentException.class)
-//  public void testVeryIndirectReference() {
-//    initializeTestSheet(spreadsheet);
-//
-//    ArrayList<Formula> secondFormulas = new ArrayList<>();
-//    secondFormulas.add(new Reference("A1", spreadsheet));
-//    secondFormulas.add(new Reference("C3", spreadsheet));
-//    secondFormulas.add(new Reference("C2", spreadsheet));
-//    secondFormulas.add(new Reference("B1", spreadsheet));
-//
-//    spreadsheet.setCellAt(c2, new Function("SUM", secondFormulas));
-//    spreadsheet.setCellAt(b2, new Reference("C2", spreadsheet));
-//    spreadsheet.evaluateSheet();
-//
-//  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testVeryIndirectReference() {
+    initializeTestSheet(spreadsheet);
+
+    ArrayList<Formula> secondFormulas = new ArrayList<>();
+    secondFormulas.add(new Reference("A1", spreadsheet));
+    secondFormulas.add(new Reference("C3", spreadsheet));
+    secondFormulas.add(new Reference("C2", spreadsheet));
+    secondFormulas.add(new Reference("B1", spreadsheet));
+
+    spreadsheet.setCellAt(c2, new Function("SUM", secondFormulas));
+    spreadsheet.setCellAt(b2, new Reference("C2", spreadsheet));
+    spreadsheet.evaluateSheet();
+
+  }
 
 
 }

@@ -31,8 +31,8 @@ public class SpreadsheetTest {
   private static void initializeTestSheet(Spreadsheet sheet){
     try {
       sheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
-              "NEU_1st_year/Object_Oriented/CS_3500_Projects/spreadsheets/src/edu/" +
-              "cs3500/spreadsheets/testingBlankTenByTen.txt"));
+              "NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
+              "spreadsheets/src/edu/cs3500/spreadsheets/testingBlankTenByTen.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -49,8 +49,8 @@ public class SpreadsheetTest {
 //    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
 //            "\\cs3500\\spreadsheets\\testingText.txt");
     testSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
-            "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets" +
-            "/src/edu/cs3500/spreadsheets/testingText.txt"));
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/" +
+            "edu/cs3500/spreadsheets/testingText.txt"));
 
     assertEquals(new DoubleValue(3.0),testSheet.getCellAt(new Coord(1,1)));//simple double
     assertEquals(new DoubleValue(7.0),testSheet.getCellAt(new Coord(28,1)));//two double
