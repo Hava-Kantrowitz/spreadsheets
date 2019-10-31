@@ -2,6 +2,7 @@ import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.text.Normalizer;
 import java.util.ArrayList;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
@@ -26,9 +27,8 @@ public class CellTestsV {
 
   private static void initializeTestSheet(Spreadsheet sheet){
     try {
-      sheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
-              "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets" +
-              "/src/edu/cs3500/spreadsheets/testingBlankTenByTen.txt"));
+      sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
+              "\\src\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -398,6 +398,23 @@ public class CellTestsV {
     spreadsheet.setCellAt(b2, new Function("PRODUCT", ourFormulas));
     spreadsheet.evaluateSheet();
   }
+
+  //tests referring to cell very indirectly
+//  @Test (expected = IllegalArgumentException.class)
+//  public void testVeryIndirectReference() {
+//    initializeTestSheet(spreadsheet);
+//
+//    ArrayList<Formula> secondFormulas = new ArrayList<>();
+//    secondFormulas.add(new Reference("A1", spreadsheet));
+//    secondFormulas.add(new Reference("C3", spreadsheet));
+//    secondFormulas.add(new Reference("C2", spreadsheet));
+//    secondFormulas.add(new Reference("B1", spreadsheet));
+//
+//    spreadsheet.setCellAt(c2, new Function("SUM", secondFormulas));
+//    spreadsheet.setCellAt(b2, new Reference("C2", spreadsheet));
+//    spreadsheet.evaluateSheet();
+//
+//  }
 
 
 }

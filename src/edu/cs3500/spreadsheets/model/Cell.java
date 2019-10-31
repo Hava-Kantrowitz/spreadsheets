@@ -67,8 +67,16 @@ public interface Cell {
    */
   boolean isNum();
 
+  /**
+   * Determines if the cell is a reference.
+   * @return true if the cell is a reference, false otherwise
+   */
   boolean isRef();
 
+  /**
+   * Determines if the cell is a function.
+   * @return true if the cell is a function, false otherwise
+   */
   boolean isFunction();
 
 
