@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * This class models the string value of a cell.
  */
-public class StringValue implements Value {
+public class StringValue extends Value {
 
   private String val;
   private String rawContents;

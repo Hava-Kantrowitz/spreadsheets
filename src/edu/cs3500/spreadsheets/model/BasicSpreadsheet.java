@@ -68,7 +68,7 @@ public class BasicSpreadsheet implements Spreadsheet {
     // get the given row then set the column of that row
     sheet.get(givenRow).set(givenCol, cellVal);
 
-    System.out.println("Cell at " +coord.toString() + " is " + cellVal.toString());
+    System.out.println("Cell at " +coord.toString() + " is " + cellVal.toString() + "\n");
 
   }
 
@@ -124,16 +124,19 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   @Override
   public void evaluateSheet() throws IllegalArgumentException{
+    int rows = numRows;
+    int cols = numCols;
 
-    for (int i = 1; i < numCols; i++) {
-      for (int j = 1; j < numRows; j++) {
-        Coord currCor = new Coord(i, j);
+    for (int i = 1; i < rows; i++) {
+      for (int j = 1; j < cols; j++) {
+        Coord currCor = new Coord(j, i);
         //testDirectRef(currCor);
         //testDirectFun(currCor);
-        if (hasIndirectRef(currCor)) {
-          throw new IllegalArgumentException("There is a self reference in cell " + currCor.toString());
-        }
+//        //if (hasIndirectRef(currCor)) {
+//          throw new IllegalArgumentException("There is a self reference in cell " + currCor.toString());
+//        }
         getCellAt(currCor).evaluateCell();
+
       }
     }
 
@@ -265,6 +268,8 @@ public class BasicSpreadsheet implements Spreadsheet {
    * @param inputRow the row that was input
    */
   private void expandSheet(int inputCol, int inputRow) {
+    int oldNumCols = numCols;
+    boolean tooFewRows = inputCol > numRows - 1;
 
     if (inputCol >= MAXINT) {
       while (sheet.size() <= MAXINT) {
@@ -278,23 +283,37 @@ public class BasicSpreadsheet implements Spreadsheet {
           sheet.get(i).add(new Blank());
         }
       }
-    } else {
-      sheet.ensureCapacity(inputRow);
+    } else{
+      int oldSheetSize = numRows;
+     sheet.ensureCapacity(inputRow + 1);
+     numRows = sheet.size();
 
-      while (sheet.size() <= inputRow) {
-        sheet.add(new ArrayList<Cell>());
-      }
 
-      for (int i = 0; i <= inputRow; i++) {
-        sheet.get(i).ensureCapacity(inputCol);
-        while (sheet.get(i).size() <= inputCol) {
-          sheet.get(i).add(new Blank());
+       for (int i = oldSheetSize; i <= inputRow + 1; i++) {  // fill in the number of rows needed
+         sheet.add(new ArrayList<Cell>());       // rows from the old number of rows to the new
+         numRows++;
+       }
+
+       int newCols = numCols;
+
+       if(inputCol > numCols){
+         newCols = inputCol;
+       }
+
+
+      for (int i = 0; i < numRows; i++) {        // all rows
+         for(int j = 0; j <= newCols; j++){  // go through from where
+             sheet.get(i).add(new Blank());
+             if(j > numCols && i == 0){
+               numCols++;
+             }
+
         }
       }
+
     }
 
-    numRows = sheet.size();        // ADDED CHANGING THE NUM ROWS AND NUM COLS
-    numCols = sheet.get(0).size();
+
 
   }
 

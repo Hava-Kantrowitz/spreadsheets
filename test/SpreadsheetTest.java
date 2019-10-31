@@ -31,7 +31,7 @@ public class SpreadsheetTest {
   private static void initializeTestSheet(Spreadsheet sheet){
     try {
       sheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
-              "NEU 1st year/Object Oriented/CS 3500 Projects/spreadsheets/src/edu/" +
+              "NEU_1st_year/Object_Oriented/CS_3500_Projects/spreadsheets/src/edu/" +
               "cs3500/spreadsheets/testingBlankTenByTen.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();

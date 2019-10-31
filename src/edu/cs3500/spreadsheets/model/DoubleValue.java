@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * This class models the double value in the cell.
  */
-public class DoubleValue implements Value {
+public class DoubleValue extends Value {
   private double val;
   private String rawContent;
 

@@ -134,13 +134,14 @@ public class Function implements Formula{
     return true;
   }
 
+
   /**
    * Adds multiple cells together.
    *
    * @param formulas the list of cells to add
    * @return the added value of the cells
    */
-  private double sum(List<Formula> formulas) {
+  protected double sum(List<Formula> formulas) {
     int sum = 0;
     for (Formula f : formulas) {
       sum += f.evaluateCellSum();
@@ -155,14 +156,14 @@ public class Function implements Formula{
    * @param formulas the list of cells to multiply
    * @return the multiplied value of the cells
    */
-  private double product(List<Formula> formulas) {
+  protected double product(List<Formula> formulas) {
     double product = 1;
     for (Formula f : formulas) {
       product = product * f.evaluateCellProduct(formulas);
     }
-
     return product;
   }
+
 
   /**
    * This computes the difference between cell1 and cell2.

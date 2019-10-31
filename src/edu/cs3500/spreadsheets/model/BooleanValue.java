@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Models a boolean value.
  */
-public class BooleanValue implements Value {
+public class BooleanValue extends Value {
 
   private Boolean bool;
   private String rawContents;
@@ -16,6 +16,7 @@ public class BooleanValue implements Value {
    */
   public BooleanValue(Boolean val) {
     this.bool = val;
+    this.rawContents = "";
   }
 
   /**
@@ -91,7 +92,7 @@ public class BooleanValue implements Value {
 
   @Override
   public Value evaluateCell() {
-    return this;
+    return new BooleanValue(this.bool);
   }
 
   @Override
