@@ -135,6 +135,16 @@ public class BasicSpreadsheet implements Spreadsheet {
     getCellAt(coord).evaluateCell();
   }
 
+  @Override
+  public int getNumRows() {
+    return numRows;
+  }
+
+  @Override
+  public int getNumCols() {
+    return numCols;
+  }
+
 
   /**
    * This is the method to expand the spreadsheet when the coordinates selected are out of bounds.
