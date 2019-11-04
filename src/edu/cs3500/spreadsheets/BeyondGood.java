@@ -21,6 +21,8 @@ public class BeyondGood {
    */
   public static void main(String[] args) {
 
+
+
     if (args.length != 4 || !args[0].equals("-in") || !args[2].equals("-eval")) {
       System.out.println("Command line is malformed.");
       System.exit(1);

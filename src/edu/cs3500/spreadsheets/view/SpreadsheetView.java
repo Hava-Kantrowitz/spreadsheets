@@ -1,7 +1,5 @@
 package edu.cs3500.spreadsheets.view;
 
-import edu.cs3500.spreadsheets.model.Spreadsheet;
-
 /**
  * This is the spreadsheet interface to specify
  * the functionality of any given view of a spreadsheet.
