@@ -56,5 +56,17 @@ public interface Spreadsheet {
    */
   void evaluateCellAt(Coord coord);
 
+  /**
+   * To get the number of rows in the sheet.
+   * @return the number of rows
+   */
+  int getNumRows();
+
+  /**
+   * To get the number of columns in the sheet.
+   * @return the number of columns
+   */
+  int getNumCols();
+
 
 }

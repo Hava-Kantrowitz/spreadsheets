@@ -312,5 +312,16 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   }
 
+  @Override
+  public int getNumRows(){
+    return numRows;
+  }
+
+
+  @Override
+  public int getNumCols(){
+    return numCols;
+  }
+
 
 }
