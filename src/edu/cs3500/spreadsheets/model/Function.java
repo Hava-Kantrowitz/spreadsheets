@@ -8,7 +8,7 @@ import java.util.List;
 public class Function implements Formula {
 
   private String functionName;
-  protected List<Formula> funParams;
+  private List<Formula> funParams;
   private String rawContents;
 
 
@@ -118,22 +118,12 @@ public class Function implements Formula {
 
   @Override
   public String evaluateCellHamilton() {
-    return null;
+    return this.evaluateCell().evaluateCellHamilton();
   }
 
   @Override
   public boolean isNum() {
     return this.evaluateCell().isNum();
-  }
-
-  @Override
-  public boolean isRef() {
-    return false;
-  }
-
-  @Override
-  public boolean isFunction() {
-    return true;
   }
 
 
@@ -220,10 +210,6 @@ public class Function implements Formula {
     return isEqual;
   }
 
-  public String toStringRaw() {
-    return this.rawContents;
-  }
-
   @Override
   public String toString() {
     return this.evaluateCell().toString();
@@ -236,7 +222,7 @@ public class Function implements Formula {
   }
 
   @Override
-  public String getRawContents(){
+  public String getRawContents() {
     return this.rawContents;
   }
 }

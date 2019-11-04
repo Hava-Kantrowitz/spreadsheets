@@ -27,9 +27,11 @@ public class Blank implements Cell {
   }
 
   @Override
-  public double evaluateCellProduct(List<Formula> formulas) throws IllegalArgumentException {
+  public double evaluateCellProduct(List<Formula> formulas) {
     int product = 0;
     for (Formula c : formulas) {
+      //if there are any numbers the cell is being multiplied with
+      //it needs to evaluate to 1
       if (c.isNum()) {
         product = 1;
       }
@@ -63,16 +65,6 @@ public class Blank implements Cell {
   }
 
   @Override
-  public boolean isRef() {
-    return false;
-  }
-
-  @Override
-  public boolean isFunction() {
-    return false;
-  }
-
-  @Override
   public boolean equals(Object otherCell) {
     boolean isEqual = false;
     // checking if the other cell is a blank cell too
@@ -93,7 +85,7 @@ public class Blank implements Cell {
   }
 
   @Override
-  public String getRawContents(){
+  public String getRawContents() {
     return "";
   }
 }

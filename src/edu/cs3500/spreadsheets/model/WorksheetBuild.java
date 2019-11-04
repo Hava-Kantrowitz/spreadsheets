@@ -5,23 +5,23 @@ package edu.cs3500.spreadsheets.model;
  */
 public class WorksheetBuild implements WorksheetReader.WorksheetBuilder<BasicSpreadsheet> {
 
-  BasicSpreadsheet sheet;
+  private BasicSpreadsheet sheet;
 
 
   /**
    * This is the constructor for a worksheet builder.
    */
-  public WorksheetBuild(BasicSpreadsheet sheet) {
+  WorksheetBuild(BasicSpreadsheet sheet) {
     // this is the empty constructor for the worksheet
     this.sheet = sheet;
 
   }
 
   @Override
-  public WorksheetReader.WorksheetBuilder<BasicSpreadsheet> createCell(int col, int row, String contents) {
+  public WorksheetReader.WorksheetBuilder<BasicSpreadsheet> createCell(int col, int row, String c) {
 
     Coord coord = new Coord(col, row);
-    sheet.setCellAt(coord, contents);
+    sheet.setCellAt(coord, c);
 
     return this;
   }

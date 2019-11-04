@@ -92,21 +92,9 @@ public class StringValue extends Value {
   }
 
   @Override
-  public boolean isRef() {
-    return false;
-  }
-
-  @Override
-  public boolean isFunction() {
-    return false;
-  }
-
-  @Override
   public Value evaluateCell() {
     return this;
   }
-
-
 
   @Override
   public boolean equals(Object otherString) {
@@ -129,7 +117,7 @@ public class StringValue extends Value {
   }
 
   @Override
-  public String getRawContents(){
+  public String getRawContents() {
     return this.rawContents;
   }
 }

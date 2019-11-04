@@ -1,9 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import edu.cs3500.spreadsheets.sexp.CreatorVisitor;
 import edu.cs3500.spreadsheets.sexp.Parser;
@@ -14,11 +11,10 @@ import edu.cs3500.spreadsheets.sexp.SexpVisitor;
  */
 public class BasicSpreadsheet implements Spreadsheet {
 
-  private static final int MAXINT = 10000000;
+  private static final int MAXINT = 2147483647;
   private ArrayList<ArrayList<Cell>> sheet;
   private int numRows;
   private int numCols;
-  private ArrayList<String> references = new ArrayList<>();
   public ArrayList<String> badReferences = new ArrayList<>();
 
   @Override
@@ -63,14 +59,15 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   @Override
   public void setCellAt(Coord coord, String rawContents) {
-    String contentCopy = new String(rawContents);
+    String contentCopy = rawContents;
     char[] arrayForm = rawContents.toCharArray();
 
     // checking if it is a formula to get only the s expression
-    // NEED TO DEAL WITH IF IT HAS EQUALS BUT IT IS A VALUE
     if (arrayForm[0] == '=') {
-      rawContents = rawContents.substring(1, rawContents.length());
+      rawContents = rawContents.substring(1);
     }
+
+    //create visitor and parse the raw contents of the added cell
     SexpVisitor visit = new CreatorVisitor(this);
     Cell addedCell = (Cell) Parser.parse(rawContents).accept(visit, contentCopy);
 
@@ -90,8 +87,7 @@ public class BasicSpreadsheet implements Spreadsheet {
     }
 
     // checking if it is greater than the number of columns (1 based index) or rows for the
-    // second input
-    // expand the board to fit
+    // second input, expand the board to fit if needed
     if (givenCol2 >= numCols || givenRow2 >= numRows) {
       expandSheet(givenCol2, givenRow2);
     }
@@ -118,14 +114,11 @@ public class BasicSpreadsheet implements Spreadsheet {
     for (int i = 1; i < rows; i++) {
       for (int j = 1; j < cols; j++) {
         Coord currCor = new Coord(j, i);
-        if (!testDirectRef(currCor) || !testDirectFun(currCor) || hasIndirectRef(currCor)) {
-          throw new IllegalArgumentException("There is a self reference in cell "
-                  + currCor.toString());
-        }
-
         try {
           getCellAt(currCor).evaluateCell();
         } catch (StackOverflowError e) {
+          //if it overflows, there is a self reference within the given cell
+          //add the cell to a list of bad references
           badReferences.add(currCor.toString());
           throw new IllegalArgumentException("There is a self reference in cell "
                   + currCor.toString());
@@ -136,120 +129,6 @@ public class BasicSpreadsheet implements Spreadsheet {
     }
 
   }
-
-  private boolean testDirectFun(Coord currCor) {
-    if (getCellAt(currCor).isFunction()) {
-      Function fun = (Function) getCellAt(currCor);
-      List<Formula> formulas = fun.funParams;
-      ArrayList<String> refSymbols = new ArrayList<>();
-      for (Formula f : formulas) {
-        if (f.isRef()) {
-          Reference newRef = (Reference) f;
-          refSymbols.add(newRef.symbol);
-        }
-      }
-
-      for (String s : refSymbols) {
-        if (s.equals(currCor.toString())) {
-          badReferences.add(currCor.toString());
-          return false;
-        }
-      }
-    }
-
-    return true;
-  }
-
-  private boolean testDirectRef(Coord currCor) {
-    if (getCellAt(currCor).isRef()) {
-      Reference ref = (Reference) getCellAt(currCor);
-      String refSymbol = ref.symbol;
-      if (currCor.toString().equals(refSymbol)) {
-        badReferences.add(currCor.toString());
-        return false;
-      }
-    }
-    return true;
-  }
-
-  private boolean hasIndirectRef(Coord currCor) {
-    if (getCellAt(currCor).isRef()) {
-      Reference ref = (Reference) getCellAt(currCor);
-      references.add(ref.symbol);
-      if (ref.getReferredCell() == null) {
-        return false;
-      }
-      if (ref.getReferredCell().isFunction()) {
-        Function funIn = (Function) ref.getReferredCell();
-        int numRefs = 0;
-        int numFuns = 0;
-        ArrayList<Reference> actualRefs = new ArrayList<>();
-        ArrayList<Function> actualFuns = new ArrayList<>();
-        for (Formula f : funIn.funParams) {
-          if (f.isRef()) {
-            numRefs++;
-            Reference nextRef = (Reference) f;
-            references.add(nextRef.symbol);
-            actualRefs.add(nextRef);
-          }
-          if (f.isFunction()) {
-            numFuns++;
-            Function nextFun = (Function) f;
-            actualFuns.add(nextFun);
-          }
-        }
-
-        if (numRefs == 0 && numFuns == 0) {
-          Set<String> noDuplicates = new HashSet<>(references);
-          return (references.size() != noDuplicates.size());
-        }
-
-        else if (numRefs != 0 && numFuns == 0){
-          for (Reference r : actualRefs) {
-            if (hasIndirectRef(new Coord(r.colOver, r.rowOver))) {
-              return true;
-            }
-          }
-
-          for (Function f : actualFuns) {
-            for (Formula formula : f.funParams) {
-              if (formula.isFunction()) {
-                Function nextFun = (Function) formula;
-                for (Formula nextParams : nextFun.funParams) {
-                  if (nextParams.isRef()) {
-                    Reference nextRef = (Reference) nextParams;
-                    if (hasIndirectRef(new Coord(nextRef.colOver, nextRef.rowOver))) {
-                      return true;
-                    }
-                  }
-                }
-              }
-              else if (formula.isRef()) {
-                Reference nextRef = (Reference) formula;
-                if (hasIndirectRef(new Coord(nextRef.colOver, nextRef.rowOver))) {
-                  return true;
-                }
-              }
-            }
-          }
-        }
-
-      }
-      else if (ref.getReferredCell().isRef()) {
-        Reference refIn = (Reference) ref.getReferredCell();
-        references.add(refIn.symbol);
-        Coord newCoord = new Coord(refIn.colOver, refIn.rowOver);
-        return hasIndirectRef(newCoord);
-      }
-      else {
-        Set<String> noDuplicates = new HashSet<>(references);
-        return (references.size() != noDuplicates.size());
-      }
-    }
-    return false;
-  }
-
-
 
   @Override
   public void evaluateCellAt(Coord coord) throws IllegalArgumentException {
@@ -267,19 +146,11 @@ public class BasicSpreadsheet implements Spreadsheet {
    */
   private void expandSheet(int inputCol, int inputRow) {
 
-    if (inputCol >= MAXINT) {
-      while (sheet.size() <= MAXINT) {
-        sheet.add(new ArrayList<Cell>());
-      }
+    //first check if the requested cell is out of reasonable bounds
+    if (inputCol >= MAXINT || inputRow >= MAXINT) {
+      throw new IllegalArgumentException("Requested spreadsheet exceeds available space");
     }
-
-    if (inputRow >= MAXINT) {
-      for (int i = 0; i <= MAXINT; i++) {
-        while (sheet.get(i).size() <= inputRow) {
-          sheet.get(i).add(new Blank());
-        }
-      }
-    } else {
+    else {
       int oldSheetSize = numRows;
       sheet.ensureCapacity(inputRow + 1);
       numRows = sheet.size();
@@ -313,14 +184,20 @@ public class BasicSpreadsheet implements Spreadsheet {
   }
 
   @Override
-  public int getNumRows(){
-    return numRows;
+  public boolean equals(Object otherSheet) {
+    boolean isEqual = false;
+
+    if (otherSheet instanceof
+            BasicSpreadsheet && ((BasicSpreadsheet) otherSheet).sheet.equals(this.sheet)) {
+      isEqual = true;
+    }
+
+    return isEqual;
   }
 
-
   @Override
-  public int getNumCols(){
-    return numCols;
+  public int hashCode() {
+    return numRows + 1;
   }
 
 

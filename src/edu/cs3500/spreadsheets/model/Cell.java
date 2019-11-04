@@ -9,7 +9,7 @@ import java.util.List;
 public interface Cell {
 
   /**
-   * Evaluates the current cell. As it is with no methods being called.
+   * Evaluates the current cell.
    *
    * @return the contents of the given cell
    */
@@ -62,22 +62,9 @@ public interface Cell {
 
   /**
    * Determines if the cell is a number.
-   *
    * @return true if the cell is a number, false otherwise
    */
   boolean isNum();
-
-  /**
-   * Determines if the cell is a reference.
-   * @return true if the cell is a reference, false otherwise
-   */
-  boolean isRef();
-
-  /**
-   * Determines if the cell is a function.
-   * @return true if the cell is a function, false otherwise
-   */
-  boolean isFunction();
 
   /**
    * Gets the raw contents that were entered into the cell.
