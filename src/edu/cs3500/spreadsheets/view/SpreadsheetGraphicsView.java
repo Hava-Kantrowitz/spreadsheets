@@ -4,47 +4,35 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import edu.cs3500.spreadsheets.model.Spreadsheet;
+import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 
 public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
 
-  Spreadsheet sheet;
+  BasicSpreadsheet model;
 
-  public SpreadsheetGraphicsView(Spreadsheet sheet) {
+  public SpreadsheetGraphicsView(BasicSpreadsheet model) {
 
     super();
+    this.model = model;
     this.setTitle("Spreadsheet");
     this.setSize(600, 600);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setResizable(false);
 
     //use a borderlayout with drawing panel in center and button panel in south
     this.setLayout(new BorderLayout());
-    SpreadsheetPanel spreadsheetPanel = new SpreadsheetPanel();
+    SpreadsheetPanel spreadsheetPanel = new SpreadsheetPanel(model);
     spreadsheetPanel.setPreferredSize(new Dimension(500, 500));
     JScrollPane scrollPane = new JScrollPane(spreadsheetPanel);
     this.add(scrollPane, BorderLayout.CENTER);
 
-    this.sheet = sheet;
-
-  }
-
-  // default when there is no file??? empty file
-  public SpreadsheetGraphicsView(){
-    super();
-    this.setTitle("Spreadsheet");
-    this.setSize(600, 600);
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    //use a borderlayout with drawing panel in center and button panel in south
-    this.setLayout(new BorderLayout());
-    SpreadsheetPanel spreadsheetPanel = new SpreadsheetPanel();
-    spreadsheetPanel.setPreferredSize(new Dimension(500, 500));
-    JScrollPane scrollPane = new JScrollPane(spreadsheetPanel);
-    this.add(scrollPane, BorderLayout.CENTER);
   }
 
   @Override
   public void render() {
-    this.setVisible(true);
+    SpreadsheetGraphicsView view = new SpreadsheetGraphicsView(model);
+    view.setVisible(true);
+
+
   }
 }

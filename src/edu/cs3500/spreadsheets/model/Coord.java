@@ -44,7 +44,7 @@ public class Coord {
    * @param index the column index
    * @return the corresponding column name
    */
-  private static String colIndexToName(int index) {
+  public static String colIndexToName(int index) {
     StringBuilder ans = new StringBuilder();
     while (index > 0) {
       int colNum = (index - 1) % 26;

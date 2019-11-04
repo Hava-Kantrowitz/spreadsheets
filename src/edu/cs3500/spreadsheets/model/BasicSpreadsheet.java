@@ -12,7 +12,7 @@ import edu.cs3500.spreadsheets.sexp.SexpVisitor;
 public class BasicSpreadsheet implements Spreadsheet {
 
   private static final int MAXINT = 2147483647;
-  private ArrayList<ArrayList<Cell>> sheet;
+  public ArrayList<ArrayList<Cell>> sheet;
   private int numRows;
   private int prevNumRows; // the previous max before current
   private int numCols;
