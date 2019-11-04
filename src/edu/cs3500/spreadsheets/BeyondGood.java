@@ -53,12 +53,17 @@ public class BeyondGood {
       Double resultNum = Double.parseDouble(result);
       System.out.print(String.format("%f", resultNum));
     } catch (NumberFormatException e) {
-        System.out.print(result);
-      }
-
+      System.out.print(result);
     }
 
+  }
 
+
+  /**
+   * Parses the coordinate values of the cell.
+   * @param arg the string representation of the desired coordinate, as input by user
+   * @return the x-y coordinate of the given cell
+   */
   private static Coord parseCellVal(String arg) {
     Scanner scan = new Scanner(arg);
     final Pattern cellRef = Pattern.compile("([A-Za-z]+)([1-9][0-9]*)");

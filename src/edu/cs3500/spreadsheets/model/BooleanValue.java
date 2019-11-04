@@ -29,8 +29,6 @@ public class BooleanValue extends Value {
     this.rawContents = rawContents;
   }
 
-
-
   @Override
   public double evaluateCellSum() {
     return 0;
@@ -40,6 +38,8 @@ public class BooleanValue extends Value {
   public double evaluateCellProduct(List<Formula> formulas) {
     int product = 0;
     for (Formula c : formulas) {
+      //if there are any numbers the cell is being multiplied with
+      //it needs to evaluate to 1
       if (c.isNum()) {
         product = 1;
       }
@@ -81,16 +81,6 @@ public class BooleanValue extends Value {
   }
 
   @Override
-  public boolean isRef() {
-    return false;
-  }
-
-  @Override
-  public boolean isFunction() {
-    return false;
-  }
-
-  @Override
   public Value evaluateCell() {
     return new BooleanValue(this.bool);
   }
@@ -119,7 +109,7 @@ public class BooleanValue extends Value {
   }
 
   @Override
-  public String getRawContents(){
+  public String getRawContents() {
     return this.rawContents;
   }
 }

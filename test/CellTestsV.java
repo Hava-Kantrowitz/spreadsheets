@@ -2,7 +2,6 @@ import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.text.Normalizer;
 import java.util.ArrayList;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
@@ -19,16 +18,19 @@ import edu.cs3500.spreadsheets.model.StringValue;
 import static org.junit.Assert.assertEquals;
 
 
-
 /**
  * This is the testing class for methods related to the specific cells (Victoria's Half).
  */
 public class CellTestsV {
 
-  private static void initializeTestSheet(Spreadsheet sheet){
+  /**
+   * Initializes the spreadsheet to perform tests with.
+   * @param sheet the desired sheet
+   */
+  private static void initializeTestSheet(Spreadsheet sheet) {
     try {
-      sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects" +
-              "\\nextTry\\src\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt"));
+      sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
+              "\\src\\edu\\cs3500\\spreadsheets\\testingEmpty"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -38,12 +40,9 @@ public class CellTestsV {
 
   private Coord a1 = new Coord(1, 1);
   private Coord b1 = new Coord(2, 1);
-  private Coord c1 = new Coord(3, 1);
   private Coord a2 = new Coord(1, 2);
   private Coord b2 = new Coord(2, 2);
   private Coord c2 = new Coord(3, 2);
-  private Coord a3 = new Coord(1, 3);
-  private Coord b3 = new Coord(2, 3);
   private Coord c3 = new Coord(3, 3);
 
   private Cell trueVal = new BooleanValue(true);
@@ -59,7 +58,7 @@ public class CellTestsV {
 
   // this is to check that the returned value is correct (when boolean)
   @Test
-  public void evalBool(){
+  public void evalBool() {
     BooleanValue b = new BooleanValue(false);
     assertEquals(b, b.evaluateCell());
 
@@ -69,18 +68,30 @@ public class CellTestsV {
 
   // this is to check that the returned value is correct (when double)
   @Test
-  public void evalDouble(){
-     DoubleValue d = new DoubleValue(10.0);
-     assertEquals(d, d.evaluateCell());
+  public void evalDouble() {
+    DoubleValue d = new DoubleValue(10.0);
+    assertEquals(d, d.evaluateCell());
   }
 
   // this is to check that the returned value is correct (when string)
   @Test
-  public void evalString(){
+  public void evalString() {
     StringValue s = new StringValue("hello");
     assertEquals(s, s.evaluateCell());
   }
 
+  //test for hamilton
+  @Test
+  public void testHamiltonNums() {
+    initializeTestSheet(spreadsheet);
+    DoubleValue hamNum = new DoubleValue(7.0);
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(hamNum);
+    Cell ham = new Function("HAM", ourFormulas);
+    spreadsheet.setCellAt(new Coord(1, 1), ham);
+    assertEquals(new StringValue("There's a million things we haven't done, " +
+            "just you wait!"), spreadsheet.getCellAt(new Coord(1, 1)).evaluateCell());
+  }
 
 
   // THESE ARE THE TESTS FOR EVALUATE CELL (WHEN IT IS A FORMULA)
@@ -93,8 +104,8 @@ public class CellTestsV {
     ArrayList<Formula> ourFormulas = new ArrayList<>();
     ourFormulas.add(new StringValue("hello"));
     ourFormulas.add(new DoubleValue(1.0));
-    Cell stringCell = new Function("PRODUCT",  ourFormulas);
-    assertEquals(new DoubleValue(1.0),stringCell.evaluateCell());
+    Cell stringCell = new Function("PRODUCT", ourFormulas);
+    assertEquals(new DoubleValue(1.0), stringCell.evaluateCell());
   }
 
   // this is the test for product (when it has true) - true is one here
@@ -201,6 +212,7 @@ public class CellTestsV {
     spreadsheet.setCellAt(b2, "=(SQRT A1)");
     spreadsheet.getCellAt(b2).evaluateCell();
   }
+
   // this is the check for an illegal number of arguments for sqrt
   @Test(expected = IllegalArgumentException.class)
   public void sqrtWithTooMany() {
@@ -278,112 +290,108 @@ public class CellTestsV {
   }
 
 
-
   // THESE ARE THE TESTS FOR CELL REFERENCE WHEN THE REFERENCE HAS A COLON
 
   // the sum case
   @Test
-  public void sectionCellsSum(){
+  public void sectionCellsSum() {
     initializeTestSheet(spreadsheet);
     spreadsheet.setCellAt(a1, "10");
-    spreadsheet.setCellAt(a2,"11");
-    spreadsheet.setCellAt(b1,"10");
+    spreadsheet.setCellAt(a2, "11");
+    spreadsheet.setCellAt(b1, "10");
     // then the last corner is blank
 
-    spreadsheet.setCellAt(c3,"=(SUM A1:B2)");
+    spreadsheet.setCellAt(c3, "=(SUM A1:B2)");
 
-    assertEquals(new DoubleValue(31.0),spreadsheet.getCellAt(c3).evaluateCell());
+    assertEquals(new DoubleValue(31.0), spreadsheet.getCellAt(c3).evaluateCell());
   }
+
   // the product case
   @Test
-  public void sectionCellsProduct(){
+  public void sectionCellsProduct() {
     initializeTestSheet(spreadsheet);
     spreadsheet.setCellAt(a1, "5");
-    spreadsheet.setCellAt(a2,"2");
-    spreadsheet.setCellAt(b1,"1");
+    spreadsheet.setCellAt(a2, "2");
+    spreadsheet.setCellAt(b1, "1");
     // then the last corner is blank
 
-    spreadsheet.setCellAt(c3,"=(PRODUCT A1:B2)");
+    spreadsheet.setCellAt(c3, "=(PRODUCT A1:B2)");
 
-     assertEquals(new DoubleValue(10.0),spreadsheet.getCellAt(c3).evaluateCell());
+    assertEquals(new DoubleValue(10.0), spreadsheet.getCellAt(c3).evaluateCell());
   }
 
   // the product case in which none of them are numbers
   @Test
-  public void sectionCellsProductNoNums(){
+  public void sectionCellsProductNoNums() {
     initializeTestSheet(spreadsheet);
     spreadsheet.setCellAt(a1, "\"hello\"");
-    spreadsheet.setCellAt(a2,"true");
-    spreadsheet.setCellAt(b1,"A1");
+    spreadsheet.setCellAt(a2, "true");
+    spreadsheet.setCellAt(b1, "A1");
     // then the last corner is blank
 
-    spreadsheet.setCellAt(c3,"=(PRODUCT A1:B2)");
+    spreadsheet.setCellAt(c3, "=(PRODUCT A1:B2)");
 
-    assertEquals(new DoubleValue(0.0),spreadsheet.getCellAt(c3).evaluateCell());
+    assertEquals(new DoubleValue(0.0), spreadsheet.getCellAt(c3).evaluateCell());
   }
 
   // the product case in which some of them have a range and some do not
   @Test
-  public void sectionCellsProductRangeAndNoRange(){
+  public void sectionCellsProductRangeAndNoRange() {
     initializeTestSheet(spreadsheet);
     spreadsheet.setCellAt(a1, "1");
-    spreadsheet.setCellAt(a2,"1");
-    spreadsheet.setCellAt(b1,"2");
+    spreadsheet.setCellAt(a2, "1");
+    spreadsheet.setCellAt(b1, "2");
     // then the last corner is blank
 
-    spreadsheet.setCellAt(c3,"=(PRODUCT A1:B2 7)");
+    spreadsheet.setCellAt(c3, "=(PRODUCT A1:B2 7)");
 
-    assertEquals(new DoubleValue(14.0),spreadsheet.getCellAt(c3).evaluateCell());
+    assertEquals(new DoubleValue(14.0), spreadsheet.getCellAt(c3).evaluateCell());
   }
 
 
   // the difference case
   @Test(expected = IllegalArgumentException.class)
-  public void sectionCellsDifference(){
+  public void sectionCellsDifference() {
     initializeTestSheet(spreadsheet);
     spreadsheet.setCellAt(a1, "10");
-    spreadsheet.setCellAt(a2,"11");
+    spreadsheet.setCellAt(a2, "11");
     // middle is blank
-    spreadsheet.setCellAt(b2,"10");
+    spreadsheet.setCellAt(b2, "10");
 
 
-    spreadsheet.setCellAt(c3,"=(SUB A1:B2)");
+    spreadsheet.setCellAt(c3, "=(SUB A1:B2)");
 
-    assertEquals(new DoubleValue(31.0),spreadsheet.getCellAt(c3).evaluateCell());
+    assertEquals(new DoubleValue(31.0), spreadsheet.getCellAt(c3).evaluateCell());
 
   }
+
   // the square root case
   @Test(expected = IllegalArgumentException.class)
-  public void sectionCellsSqrt(){
+  public void sectionCellsSqrt() {
     initializeTestSheet(spreadsheet);
     spreadsheet.setCellAt(a1, "10");
-    spreadsheet.setCellAt(a2,"11");
-    spreadsheet.setCellAt(b1,"10");
+    spreadsheet.setCellAt(a2, "11");
+    spreadsheet.setCellAt(b1, "10");
     // then the last corner is blank
 
-    spreadsheet.setCellAt(c3,"=(SQRT A1:B2)");
+    spreadsheet.setCellAt(c3, "=(SQRT A1:B2)");
 
-    assertEquals(new DoubleValue(31.0),spreadsheet.getCellAt(c3).evaluateCell());
+    assertEquals(new DoubleValue(31.0), spreadsheet.getCellAt(c3).evaluateCell());
   }
+
   // the comparison case
   @Test(expected = IllegalArgumentException.class)
-  public void sectionCellComparison(){
+  public void sectionCellComparison() {
     initializeTestSheet(spreadsheet);
     spreadsheet.setCellAt(a1, "10");
-    spreadsheet.setCellAt(a2,"11");
-    spreadsheet.setCellAt(b1,"10");
+    spreadsheet.setCellAt(a2, "11");
+    spreadsheet.setCellAt(b1, "10");
 
 
-    spreadsheet.setCellAt(c3,"=(< A1:B2)");
+    spreadsheet.setCellAt(c3, "=(< A1:B2)");
 
-    assertEquals(new DoubleValue(31.0),spreadsheet.getCellAt(c3).evaluateCell());
+    assertEquals(new DoubleValue(31.0), spreadsheet.getCellAt(c3).evaluateCell());
   }
-
-  // the case where evaluate cell for a single reference
-
-
-  // the case where evaluate cell for multiple references
-
 
 
   // TESTS FOR CHECKING THE VALIDITY OF THE FORMULA
@@ -430,7 +438,7 @@ public class CellTestsV {
   }
 
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testVeryIndirectReference() {
     initializeTestSheet(spreadsheet);
 

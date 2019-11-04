@@ -26,18 +26,19 @@ import static org.junit.Assert.assertTrue;
  */
 public class SpreadsheetTest {
 
-  //TEST INTIALIZE SHEET
-
-  private static void initializeTestSheet(Spreadsheet sheet){
+  /**
+   * Initializes the spreadsheet to perform tests with.
+   *
+   * @param sheet the desired sheet
+   */
+  private static void initializeTestSheet(Spreadsheet sheet) {
     try {
-      sheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
-              "NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
-              "spreadsheets/src/edu/cs3500/spreadsheets/testingBlankTenByTen.txt"));
+      sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects" +
+              "\\nextTry\\src\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
   }
-
 
 
   //tests initializing with a given file
@@ -46,16 +47,13 @@ public class SpreadsheetTest {
   @Test
   public void testInitSheetWithFile() throws FileNotFoundException {
     Spreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingText.txt");
-    testSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
-            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/" +
-            "edu/cs3500/spreadsheets/testingText.txt"));
+    testSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
+            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testingText.txt"));
 
-    assertEquals(new DoubleValue(3.0),testSheet.getCellAt(new Coord(1,1)));//simple double
-    assertEquals(new DoubleValue(7.0),testSheet.getCellAt(new Coord(28,1)));//two double
-   assertEquals(new BooleanValue(false),testSheet.getCellAt(new Coord(81,4)));
-    assertEquals(new StringValue("hello"),testSheet.getCellAt(new Coord(1,200)));
+    assertEquals(new DoubleValue(3.0), testSheet.getCellAt(new Coord(1, 1)));
+    assertEquals(new DoubleValue(7.0), testSheet.getCellAt(new Coord(28, 1)));
+    assertEquals(new BooleanValue(false), testSheet.getCellAt(new Coord(81, 4)));
+    assertEquals(new StringValue("hello"), testSheet.getCellAt(new Coord(1, 200)));
 
     Formula f = new DoubleValue(2.0);
     Formula f2 = new DoubleValue(3.0);
@@ -65,12 +63,12 @@ public class SpreadsheetTest {
     formList.add(f2);
 
 
-    assertEquals(new Function("SUM",formList),
-            testSheet.getCellAt(new Coord(1,20)));
+    assertEquals(new Function("SUM", formList),
+            testSheet.getCellAt(new Coord(1, 20)));
 
 
-    Function f1 = new Function("PRODUCT",formList);
-    Function f3 = new Function("PRODUCT",formList);
+    Function f1 = new Function("PRODUCT", formList);
+    Function f3 = new Function("PRODUCT", formList);
 
     List<Formula> overallList = new ArrayList<Formula>();
     overallList.add(f1);
@@ -79,12 +77,34 @@ public class SpreadsheetTest {
 
     Function overAllf = new Function("SUM", overallList);
 
-    assertEquals(overAllf,testSheet.getCellAt(new Coord(1,5)));
+    assertEquals(overAllf, testSheet.getCellAt(new Coord(1, 5)));
 
-    assertEquals(new DoubleValue(12.0), testSheet.getCellAt(new Coord(1,5)).evaluateCell());
+    assertEquals(new DoubleValue(12.0),
+            testSheet.getCellAt(new Coord(1, 5)).evaluateCell());
 
   }
 
+
+  //tests creating an empty spreadsheet
+  @Test
+  public void testEmptySheet() throws FileNotFoundException {
+    Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
+            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testingText.txt"));
+    testSheet.setCellAt(new Coord(1, 1), new DoubleValue(8.0));
+    assertEquals(new DoubleValue(8.0), testSheet.getCellAt(new Coord(1, 1)));
+  }
+
+  //tests all set cells are there
+  @Test
+  public void testAllSetCells() throws FileNotFoundException {
+    //there are only two set cells in the file
+    Spreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects" +
+            "\\nextTry\\src\\edu\\cs3500\\spreadsheets\\testingSmall"));
+    assertEquals(new DoubleValue(7.0), testSheet.getCellAt(new Coord(1, 1)));
+    assertEquals(new DoubleValue(8.0), testSheet.getCellAt(new Coord(1, 2)));
+  }
 
   //TEST SET CELL AT
 
@@ -92,11 +112,8 @@ public class SpreadsheetTest {
   @Test
   public void testBlankCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
-
 
 
     Coord coord1 = new Coord(1, 1);
@@ -111,8 +128,6 @@ public class SpreadsheetTest {
   @Test
   public void testFormulaCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
 
@@ -130,8 +145,6 @@ public class SpreadsheetTest {
   @Test
   public void testStringCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
 
@@ -146,8 +159,6 @@ public class SpreadsheetTest {
   @Test
   public void testBoolCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
 
@@ -162,8 +173,6 @@ public class SpreadsheetTest {
   @Test
   public void testDoubleCell() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -176,9 +185,6 @@ public class SpreadsheetTest {
   @Test
   public void testReferenceCell() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
-
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
     Cell val1 = new DoubleValue(8.0);
@@ -195,7 +201,25 @@ public class SpreadsheetTest {
     assertEquals(val3, testSheet.getCellAt(coord3));
   }
 
-  //tests that a very large cell can be set
+  //tests referring to the same cell multiple times
+  @Test
+  public void sameCellMultipleTimes() {
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    initializeTestSheet(testSheet);
+    Coord coord1 = new Coord(1, 1);
+    Cell val1 = new DoubleValue(8.0);
+    Coord coord2 = new Coord(2, 1);
+    Cell val2 = new DoubleValue(2.0);
+    Coord coord3 = new Coord(1, 2);
+    ArrayList<Formula> ourFormulas = new ArrayList<>();
+    ourFormulas.add(new Reference("A1", testSheet));
+    ourFormulas.add(new Reference("A1", testSheet));
+    Cell val3 = new Function("SUM", ourFormulas);
+    testSheet.setCellAt(coord1, val1);
+    testSheet.setCellAt(coord2, val2);
+    testSheet.setCellAt(coord3, val3);
+    assertEquals(new DoubleValue(16.0), testSheet.getCellAt(coord3).evaluateCell());
+  }
 
   //TEST EVAL ALL CELLS
 
@@ -203,8 +227,6 @@ public class SpreadsheetTest {
   @Test
   public void inColumn() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
 
@@ -217,8 +239,6 @@ public class SpreadsheetTest {
     testSheet.evaluateSheet();
     StringValue comp1 = new StringValue("my name is");
     StringValue comp2 = new StringValue("Alexander Hamilton");
-    //System.out.println(comp2.toString());
-    //System.out.println(testSheet.getCellAt(coord2).evaluateCell().toString());
     assertEquals(comp1, testSheet.getCellAt(coord1).evaluateCell());
     assertEquals(comp2, testSheet.getCellAt(coord2).evaluateCell());
   }
@@ -227,8 +247,6 @@ public class SpreadsheetTest {
   @Test
   public void testEvalStrings() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -256,8 +274,6 @@ public class SpreadsheetTest {
   @Test
   public void testEvalBools() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -282,8 +298,6 @@ public class SpreadsheetTest {
   @Test
   public void testEvalDouble() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -309,8 +323,6 @@ public class SpreadsheetTest {
   @Test
   public void testEvalFormulas() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src" +
-//            "\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -374,8 +386,6 @@ public class SpreadsheetTest {
   @Test
   public void testEvalMixed() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -420,8 +430,6 @@ public class SpreadsheetTest {
   @Test
   public void testEvalBlank() {
     Spreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -447,8 +455,6 @@ public class SpreadsheetTest {
   @Test
   public void testEvalFormulaReference() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -486,8 +492,6 @@ public class SpreadsheetTest {
   @Test
   public void testDifferenceReference() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\" +
-//            "cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -510,8 +514,6 @@ public class SpreadsheetTest {
   @Test
   public void testDifferenceFormula() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -540,8 +542,6 @@ public class SpreadsheetTest {
   @Test(expected = IllegalArgumentException.class)
   public void testDifferenceStrings() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -565,8 +565,6 @@ public class SpreadsheetTest {
   @Test
   public void testDifferenceBool() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -589,8 +587,6 @@ public class SpreadsheetTest {
   @Test
   public void testDifferenceBlank() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord3 = new Coord(1, 2);
@@ -628,11 +624,9 @@ public class SpreadsheetTest {
   }
 
   //tests comparison of two positive references
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testCompReference() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -655,8 +649,6 @@ public class SpreadsheetTest {
   @Test
   public void testCompFormula() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -685,8 +677,6 @@ public class SpreadsheetTest {
   @Test(expected = IllegalArgumentException.class)
   public void testCompStrings() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -708,8 +698,6 @@ public class SpreadsheetTest {
   @Test(expected = IllegalArgumentException.class)
   public void testCompBools() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\" +
-//            "cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord1 = new Coord(1, 1);
@@ -731,8 +719,6 @@ public class SpreadsheetTest {
   @Test(expected = IllegalArgumentException.class)
   public void testCompBlanks() {
     BasicSpreadsheet testSheet = new BasicSpreadsheet();
-//    testSheet.initializeSpreadsheet("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu" +
-//            "\\cs3500\\spreadsheets\\testingBlankTenByTen.txt");
 
     initializeTestSheet(testSheet);
     Coord coord3 = new Coord(1, 2);
@@ -742,6 +728,27 @@ public class SpreadsheetTest {
     Cell val3 = new Function("<", thirdFormulas);
     testSheet.setCellAt(coord3, val3);
     testSheet.getCellAt(coord3).evaluateCell();
+  }
+
+  //tests rendering values as strings
+  @Test
+  public void testValuesAsStrings() {
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+
+    initializeTestSheet(testSheet);
+
+    //tests rendering a string value
+    Value string = new StringValue("man the man is nonstop");
+    assertEquals("\"man the man is nonstop\"", string.toString());
+
+    //test rendering a boolean value
+    Value boolVal = new BooleanValue(true);
+    assertEquals("true", boolVal.toString());
+
+    //tests rendering a double value
+    Value doubleVal = new DoubleValue(1776.0);
+    assertEquals("1776.0", doubleVal.toString());
+
   }
 
 

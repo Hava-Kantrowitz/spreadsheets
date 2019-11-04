@@ -6,8 +6,8 @@ import java.util.Objects;
  * A value type representing coordinates in a {@link Worksheet}.
  */
 public class Coord {
-  public final int row;
-  public final int col;
+  final int row;
+  final int col;
 
   /**
    * Creates an instance of the coord class.
@@ -44,7 +44,7 @@ public class Coord {
    * @param index the column index
    * @return the corresponding column name
    */
-  public static String colIndexToName(int index) {
+  private static String colIndexToName(int index) {
     StringBuilder ans = new StringBuilder();
     while (index > 0) {
       int colNum = (index - 1) % 26;
