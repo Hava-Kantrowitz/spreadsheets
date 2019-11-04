@@ -162,11 +162,8 @@ public class BasicSpreadsheet implements Spreadsheet {
     }
     else {
       int oldSheetSize = numRows;
-      sheet.ensureCapacity(inputRow + 1);
-      numRows = sheet.size();
 
-
-      for (int i = oldSheetSize; i <= inputRow + 1; i++) {  // fill in the number of rows needed
+      for (int i = oldSheetSize; i <= inputRow; i++) {  // fill in the number of rows needed
         sheet.add(new ArrayList<Cell>());       // rows from the old number of rows to the new
         numRows++;
       }
@@ -174,19 +171,15 @@ public class BasicSpreadsheet implements Spreadsheet {
       int newCols = numCols;
 
       if (inputCol > numCols) {
-        newCols = inputCol;
+        newCols = inputCol + 1;   // adding one to account for the indexing being 1 based            // CHECK THIS TO MAKE SURE ACCURATE
       }
-
 
       for (int i = 0; i < numRows; i++) {        // all rows
         for (int j = 0; j <= newCols; j++) {  // go through from where
           sheet.get(i).add(new Blank());
-          if (j > numCols && i == 0) {
-            numCols++;
-          }
-
         }
       }
+      numCols = newCols;
 
     }
 
