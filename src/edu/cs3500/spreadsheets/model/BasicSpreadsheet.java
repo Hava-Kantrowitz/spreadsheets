@@ -14,7 +14,9 @@ public class BasicSpreadsheet implements Spreadsheet {
   private static final int MAXINT = 2147483647;
   private ArrayList<ArrayList<Cell>> sheet;
   private int numRows;
+  private int prevNumRows; // the previous max before current
   private int numCols;
+  private int prevNumCols; // the previous max before current
   public ArrayList<String> badReferences = new ArrayList<>();
 
   @Override
@@ -55,24 +57,31 @@ public class BasicSpreadsheet implements Spreadsheet {
     // get the given row then set the column of that row
     sheet.get(givenRow).set(givenCol, cellVal);
 
+
   }
 
   @Override
   public void setCellAt(Coord coord, String rawContents) {
     String contentCopy = rawContents;
     char[] arrayForm = rawContents.toCharArray();
+    Cell addedCell;
 
-    // checking if it is a formula to get only the s expression
-    if (arrayForm[0] == '=') {
-      rawContents = rawContents.substring(1);
+    // if the contents are an empty string set it to a blank cell
+    if (arrayForm.length == 0) {
+      addedCell = new Blank();
     }
-
-    //create visitor and parse the raw contents of the added cell
-    SexpVisitor visit = new CreatorVisitor(this);
-    Cell addedCell = (Cell) Parser.parse(rawContents).accept(visit, contentCopy);
-
+    // if are raw contents there that are not blank
+    else {
+      // checking if it is a formula to get only the s expression
+      if (arrayForm[0] == '=') {
+        rawContents = rawContents.substring(1);
+      }
+      //create visitor and parse the raw contents of the added cell
+      SexpVisitor visit = new CreatorVisitor(this);
+      addedCell = (Cell) Parser.parse(rawContents).accept(visit, contentCopy);
+    }
+    // the setting could be blank or the new value
     setCellAt(coord, addedCell);
-
   }
 
   @Override
@@ -189,10 +198,24 @@ public class BasicSpreadsheet implements Spreadsheet {
   @Override
   public boolean equals(Object otherSheet) {
     boolean isEqual = false;
-
-    if (otherSheet instanceof
-            BasicSpreadsheet && ((BasicSpreadsheet) otherSheet).sheet.equals(this.sheet)) {
+    BasicSpreadsheet otherS = null;
+    // checking that they are the same class
+    if (otherSheet instanceof BasicSpreadsheet) {
+      otherS = (BasicSpreadsheet) otherSheet;
       isEqual = true;
+    }
+    // if the other sheet is an instance of basic spreadsheet
+    // now checking that each cell is equal
+    if(isEqual){
+      for(int row = 1; row < numRows; row++){
+        for(int col = 1; col < numCols; col++){
+          Coord currCoord = new Coord(col, row);
+          // checking that both cells are equal and if not false
+          if(!otherS.getCellAt(currCoord).equals(this.getCellAt(currCoord))){
+            isEqual = false;
+          }
+        }
+      }
     }
 
     return isEqual;

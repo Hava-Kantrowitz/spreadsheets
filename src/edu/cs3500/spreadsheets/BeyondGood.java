@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.view.SpreadsheetGraphicsView;
 import edu.cs3500.spreadsheets.view.SpreadsheetTextualView;
 import edu.cs3500.spreadsheets.view.SpreadsheetView;
 
@@ -72,7 +73,16 @@ public class BeyondGood {
       }
       // the code for running the gui with a given file
       else if (args[2].equals("-gui")) {
-
+        Reader fileName = null;
+        try {
+          fileName = new FileReader(args[1]);
+        } catch (FileNotFoundException e) {
+          System.out.println("File not found");
+          System.exit(1);
+        }
+          sheet.initializeSpreadsheet(fileName);
+        SpreadsheetGraphicsView view = new SpreadsheetGraphicsView(sheet);
+        view.render();
       }
       // this is the code for the saving of the file
       else if(args[2].equals("-save")){
