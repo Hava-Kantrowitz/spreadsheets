@@ -1,6 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import edu.cs3500.spreadsheets.sexp.CreatorVisitor;
 import edu.cs3500.spreadsheets.sexp.Parser;
@@ -12,7 +13,7 @@ import edu.cs3500.spreadsheets.sexp.SexpVisitor;
 public class BasicSpreadsheet implements Spreadsheet {
 
   private static final int MAXINT = 2147483647;
-  public ArrayList<ArrayList<Cell>> sheet;
+  public HashMap<Coord, Cell> sheet;
   private int numRows;
   private int prevNumRows; // the previous max before current
   private int numCols;
@@ -21,7 +22,7 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   @Override
   public void initializeSpreadsheet(Readable fileName) {
-    sheet = new ArrayList<ArrayList<Cell>>();   // setting the values back to zero
+    sheet = new HashMap<>();   // setting the values back to zero
     numRows = 0;
     numCols = 0;
     // calling the builder to actually initialize
@@ -32,32 +33,13 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   @Override
   public Cell getCellAt(Coord coord) {
-    int givenCol = coord.col - 1;
-    int givenRow = coord.row - 1;
 
-    // checking if it is greater than the number of columns (1 based index)
-    // expand the board to fit
-    if (givenCol >= numCols || givenRow >= numRows) {
-      expandSheet(givenCol, givenRow);
-    }
-
-    return sheet.get(givenRow).get(givenCol);
+    return sheet.getOrDefault(coord, new Blank());
   }
 
   @Override
   public void setCellAt(Coord coord, Cell cellVal) {
-    int givenCol = coord.col - 1;  // adjust for the 1 based indexing
-    int givenRow = coord.row - 1;
-
-    // checking if it is greater than the number of columns (1 based index)
-    // expand the board to fit
-    if (givenCol >= numCols || givenRow >= numRows) {
-      expandSheet(givenCol, givenRow);
-    }
-    // get the given row then set the column of that row
-    sheet.get(givenRow).set(givenCol, cellVal);
-
-
+    sheet.put(coord, cellVal);
   }
 
   @Override
@@ -95,17 +77,12 @@ public class BasicSpreadsheet implements Spreadsheet {
       throw new IllegalArgumentException("Cannot find cell range");
     }
 
-    // checking if it is greater than the number of columns (1 based index) or rows for the
-    // second input, expand the board to fit if needed
-    if (givenCol2 >= numCols || givenRow2 >= numRows) {
-      expandSheet(givenCol2, givenRow2);
-    }
-
     ArrayList multRows = new ArrayList<>();
 
     for (int i = givenRow1; i <= givenRow2; i++) {
       for (int j = givenCol1; j <= givenCol2; j++) {
-        multRows.add(sheet.get(i).get(j));
+        Coord newCoord = new Coord(j+1, i+1);
+        multRows.add(sheet.getOrDefault(newCoord, new Blank()));
       }
 
     }
@@ -155,45 +132,45 @@ public class BasicSpreadsheet implements Spreadsheet {
   }
 
 
-  /**
-   * This is the method to expand the spreadsheet when the coordinates selected are out of bounds.
-   * If the column is out of bounds then expand column wise, same with row. If both are out of
-   * bounds expand in both directions. When new cells are added they should be blank.
-   *
-   * @param inputCol the column that was input
-   * @param inputRow the row that was input
-   */
-  private void expandSheet(int inputCol, int inputRow) {
-
-    //first check if the requested cell is out of reasonable bounds
-    if (inputCol >= MAXINT || inputRow >= MAXINT) {
-      throw new IllegalArgumentException("Requested spreadsheet exceeds available space");
-    }
-    else {
-      int oldSheetSize = numRows;
-
-      for (int i = oldSheetSize; i <= inputRow; i++) {  // fill in the number of rows needed
-        sheet.add(new ArrayList<Cell>());       // rows from the old number of rows to the new
-        numRows++;
-      }
-
-      int newCols = numCols;
-
-      if (inputCol > numCols) {
-        newCols = inputCol + 1;   // adding one to account for the indexing being 1 based            // CHECK THIS TO MAKE SURE ACCURATE
-      }
-
-      for (int i = 0; i < numRows; i++) {        // all rows
-        for (int j = 0; j <= newCols; j++) {  // go through from where
-          sheet.get(i).add(new Blank());
-        }
-      }
-      numCols = newCols;
-
-    }
-
-
-  }
+//  /**
+//   * This is the method to expand the spreadsheet when the coordinates selected are out of bounds.
+//   * If the column is out of bounds then expand column wise, same with row. If both are out of
+//   * bounds expand in both directions. When new cells are added they should be blank.
+//   *
+//   * @param inputCol the column that was input
+//   * @param inputRow the row that was input
+//   */
+//  private void expandSheet(int inputCol, int inputRow) {
+//
+//    //first check if the requested cell is out of reasonable bounds
+//    if (inputCol >= MAXINT || inputRow >= MAXINT) {
+//      throw new IllegalArgumentException("Requested spreadsheet exceeds available space");
+//    }
+//    else {
+//      int oldSheetSize = numRows;
+//
+//      for (int i = oldSheetSize; i <= inputRow; i++) {  // fill in the number of rows needed
+//        sheet.add(new ArrayList<Cell>());       // rows from the old number of rows to the new
+//        numRows++;
+//      }
+//
+//      int newCols = numCols;
+//
+//      if (inputCol > numCols) {
+//        newCols = inputCol + 1;   // adding one to account for the indexing being 1 based            // CHECK THIS TO MAKE SURE ACCURATE
+//      }
+//
+//      for (int i = 0; i < numRows; i++) {        // all rows
+//        for (int j = 0; j <= newCols; j++) {  // go through from where
+//          sheet.get(i).add(new Blank());
+//        }
+//      }
+//      numCols = newCols;
+//
+//    }
+//
+//
+//  }
 
   @Override
   public boolean equals(Object otherSheet) {

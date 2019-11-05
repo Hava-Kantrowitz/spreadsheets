@@ -31,9 +31,8 @@ public class SpreadsheetTestsV {
   // THESE ARE THE TESTS FOR GET CELL AT
   private static void initializeTestSheet(Spreadsheet sheet) {
     try {
-      sheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
-              "NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
-              "spreadsheets/src/edu/cs3500/spreadsheets/testingBlankTenByTen.txt"));
+      sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
+              "\\src\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -204,7 +203,7 @@ public class SpreadsheetTestsV {
 
   // the test for when the given cell is out of bounds (and doubling would exceed max possible int)
   // on the row and col inputs (the doubling will go over but the number itself will still be valid
-  @Test (expected = IllegalArgumentException.class)
+  @Test
   public void getOutRowColOverMaxIntRow() {
     initializeTestSheet(basicSpreadsheet);
     Coord index = new Coord(10000000, 1000001);

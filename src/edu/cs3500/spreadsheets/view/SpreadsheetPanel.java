@@ -11,7 +11,7 @@ import edu.cs3500.spreadsheets.model.Coord;
 
 public class SpreadsheetPanel extends javax.swing.JPanel {
 
-  BasicSpreadsheet model;
+  private BasicSpreadsheet model;
 
   public SpreadsheetPanel(BasicSpreadsheet model) {
     this.model = model;

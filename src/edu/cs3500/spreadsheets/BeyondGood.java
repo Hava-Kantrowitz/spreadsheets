@@ -104,8 +104,6 @@ public class BeyondGood {
         } catch (FileNotFoundException e) {
           System.out.println("File not found");
           System.exit(1);
-        } catch (IOException e) {
-          e.printStackTrace();
         }
 
         SpreadsheetTextualView view = new SpreadsheetTextualView(sheet,outputFile);
