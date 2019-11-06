@@ -2,6 +2,7 @@ package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 import edu.cs3500.spreadsheets.sexp.CreatorVisitor;
 import edu.cs3500.spreadsheets.sexp.Parser;
@@ -15,9 +16,7 @@ public class BasicSpreadsheet implements Spreadsheet {
   private static final int MAXINT = 2147483647;
   public HashMap<Coord, Cell> sheet;
   private int numRows;
-  private int prevNumRows; // the previous max before current
   private int numCols;
-  private int prevNumCols; // the previous max before current
   public ArrayList<String> badReferences = new ArrayList<>();
 
   @Override
@@ -50,20 +49,20 @@ public class BasicSpreadsheet implements Spreadsheet {
 
     // if the contents are an empty string set it to a blank cell
     if (arrayForm.length == 0) {
-      addedCell = new Blank();
+      sheet.remove(coord); // remove the element no longer in the set of occupied cells
     }
     // if are raw contents there that are not blank
     else {
-      // checking if it is a formula to get only the s expression
+      // checking if it is a formula to get only the s expression without equals 
       if (arrayForm[0] == '=') {
         rawContents = rawContents.substring(1);
       }
       //create visitor and parse the raw contents of the added cell
       SexpVisitor visit = new CreatorVisitor(this);
       addedCell = (Cell) Parser.parse(rawContents).accept(visit, contentCopy);
+      setCellAt(coord, addedCell);  // setting the value of the cell
     }
-    // the setting could be blank or the new value
-    setCellAt(coord, addedCell);
+
   }
 
   @Override
@@ -86,8 +85,6 @@ public class BasicSpreadsheet implements Spreadsheet {
       }
 
     }
-
-
     return multRows;
   }
 
@@ -176,21 +173,33 @@ public class BasicSpreadsheet implements Spreadsheet {
   public boolean equals(Object otherSheet) {
     boolean isEqual = false;
     BasicSpreadsheet otherS = null;
+    Set otherListCoords = null;
+
     // checking that they are the same class
     if (otherSheet instanceof BasicSpreadsheet) {
       otherS = (BasicSpreadsheet) otherSheet;
-      isEqual = true;
+      otherListCoords = otherS.getListCoords();
+      // checking if the sheet has the correct number of cells
+      if(otherS.getListCoords().size() == this.sheet.size()){
+        isEqual = true;
+      }
     }
     // if the other sheet is an instance of basic spreadsheet
-    // now checking that each cell is equal
+    // and has the same number of cells
+    // now checking that all the cells are equal
     if(isEqual){
-      for(int row = 1; row < numRows; row++){
-        for(int col = 1; col < numCols; col++){
-          Coord currCoord = new Coord(col, row);
-          // checking that both cells are equal and if not false
-          if(!otherS.getCellAt(currCoord).equals(this.getCellAt(currCoord))){
-            isEqual = false;
-          }
+      // going through the cells of the first sheet
+      // gets all the coords of the first set
+      Set<Coord> coords = this.getListCoords();
+      // this goes through all the keys
+      for(Coord c: coords){
+        // if the other sheet does not contain the key
+        if(!otherListCoords.contains(c)){
+          isEqual = false;
+        }
+        // if the cell at the given coord does not equal the
+        else if(!(otherS.getCellAt(c).equals(this.getCellAt(c)))){
+          isEqual = false;
         }
       }
     }
@@ -201,6 +210,13 @@ public class BasicSpreadsheet implements Spreadsheet {
   @Override
   public int hashCode() {
     return numRows + 1;
+  }
+
+  @Override
+  public Set<Coord> getListCoords(){
+    HashMap<Coord,Cell> copyMap = new HashMap<Coord,Cell>(); // creates the new hash map
+    copyMap.putAll(this.sheet); // copies all of the mappings from this sheet to a new one
+    return copyMap.keySet(); // returns the key set
   }
 
 

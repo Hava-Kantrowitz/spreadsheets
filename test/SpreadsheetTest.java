@@ -33,8 +33,9 @@ public class SpreadsheetTest {
    */
   private static void initializeTestSheet(Spreadsheet sheet) {
     try {
-      sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
-              "\\src\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt"));
+      sheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+              "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/" +
+              "cs3500/spreadsheets/testingBlankTenByTen.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -47,8 +48,9 @@ public class SpreadsheetTest {
   @Test
   public void testInitSheetWithFile() throws FileNotFoundException {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testingText.txt"));
+    testSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
+            "spreadsheets/src/edu/cs3500/spreadsheets/testingText.txt"));
 
     assertEquals(new DoubleValue(3.0), testSheet.getCellAt(new Coord(1, 1)));
     assertEquals(new DoubleValue(7.0), testSheet.getCellAt(new Coord(28, 1)));
@@ -89,8 +91,9 @@ public class SpreadsheetTest {
   @Test
   public void testEmptySheet() throws FileNotFoundException {
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testingEmpty"));
+    testSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/" +
+            "Desktop/NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
+            "spreadsheets/src/edu/cs3500/spreadsheets/testingEmpty"));
     testSheet.setCellAt(new Coord(1, 1), new DoubleValue(8.0));
     assertEquals(new DoubleValue(8.0), testSheet.getCellAt(new Coord(1, 1)));
   }
@@ -100,8 +103,9 @@ public class SpreadsheetTest {
   public void testAllSetCells() throws FileNotFoundException {
     //there are only two set cells in the file
     Spreadsheet testSheet = new BasicSpreadsheet();
-    testSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testingSmall"));
+    testSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets" +
+            "/src/edu/cs3500/spreadsheets/testingSmall"));
     assertEquals(new DoubleValue(7.0), testSheet.getCellAt(new Coord(1, 1)));
     assertEquals(new DoubleValue(8.0), testSheet.getCellAt(new Coord(1, 2)));
   }

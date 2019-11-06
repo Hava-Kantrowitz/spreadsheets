@@ -58,6 +58,7 @@ public class SpreadsheetTextViewTests {
   // this tests the case in which some existing cells are changed
   // and new cells are added
   // before the textual view is rendered
+  // when it goes to the same value as a previously saved spreadsheet
   @Test
   public void fileChange() throws FileNotFoundException {
     Spreadsheet sheet1 = new BasicSpreadsheet();

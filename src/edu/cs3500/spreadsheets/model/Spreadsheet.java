@@ -1,6 +1,8 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Models the representation of a basic spreadsheet.
@@ -70,6 +72,12 @@ public interface Spreadsheet {
    * @return the number of columns
    */
   int getNumCols();
+
+  /**
+   * This is the method to get the list of coordinates that have cells.
+   * @return the set of occupied coordinates
+   */
+  Set<Coord> getListCoords();
 
 
 }
