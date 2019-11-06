@@ -91,23 +91,16 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   @Override
   public void evaluateSheet() throws IllegalArgumentException {
-    int rows = numRows;
-    int cols = numCols;
 
-    for (int i = 1; i < rows; i++) {
-      for (int j = 1; j < cols; j++) {
-        Coord currCor = new Coord(j, i);
-        try {
-          getCellAt(currCor).evaluateCell();
-        } catch (StackOverflowError e) {
-          //if it overflows, there is a self reference within the given cell
-          //add the cell to a list of bad references
-          badReferences.add(currCor.toString());
-          throw new IllegalArgumentException("There is a self reference in cell "
-                  + currCor.toString());
-        }
-
-
+    for (Coord coord : sheet.keySet()) {
+      try {
+        sheet.getOrDefault(coord, new Blank()).evaluateCell();
+      } catch (StackOverflowError e) {
+        //if it overflows, there is a self reference within the given cell
+        //add the cell to a list of bad references
+        badReferences.add(coord.toString());
+        throw new IllegalArgumentException("There is a self reference in cell "
+                + coord.toString());
       }
     }
 

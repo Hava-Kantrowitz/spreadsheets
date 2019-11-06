@@ -5,6 +5,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Coord;
@@ -12,6 +15,7 @@ import edu.cs3500.spreadsheets.model.Coord;
 public class SpreadsheetPanel extends javax.swing.JPanel {
 
   private BasicSpreadsheet model;
+  private JTable table;
 
   public SpreadsheetPanel(BasicSpreadsheet model) {
     this.model = model;
@@ -22,27 +26,25 @@ public class SpreadsheetPanel extends javax.swing.JPanel {
     super.paintComponent(g);
     Graphics2D g2d = (Graphics2D)g;
 
-    g2d.setColor(Color.PINK);
-    g2d.fillRect(0, 0, this.getWidth(), 20);
-    g2d.fillRect(0, 0, 50, this.getHeight());
-    g2d.setColor(Color.BLACK);
+    int highestCol = 0;
+    int highestRow = 0;
 
-    for (int i = 0; i < model.getNumRows(); i++) {
-      g2d.drawLine(i*50, 0, i*50, this.getHeight());
-      if (i > 1) {
-        g2d.drawString(getRowName(i), (i*50)-30, 15);
+    for (Coord coord : model.sheet.keySet()) {
+      int checkCol = coord.col;
+      int checkRow = coord.row;
+      if (checkCol > highestCol) {
+        highestCol = checkCol;
       }
-
-      for (int j = 0; j < model.getNumCols(); j++) {
-        g2d.drawLine(0, j*20, this.getWidth(), j*20);
-        if (j > 1) {
-          g2d.drawString(getColName(j), 15, (j*20)-5);
-        }
-        Coord newCoord = new Coord(j+1, i+1);
-        g2d.drawString(model.getCellAt(newCoord).toString(), (i*50) + 60, (j*80) - 5);
+      if (checkRow > highestRow) {
+        highestRow = checkRow;
       }
-
     }
+
+    String[] columnNames = {"Hava", "Vicky"};
+
+    String[][] data = {{"hey", "what"}, {"idk", "what"}};
+    table = new JTable(data, columnNames);
+
 
   }
 
