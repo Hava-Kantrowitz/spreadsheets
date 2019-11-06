@@ -53,7 +53,7 @@ public class BasicSpreadsheet implements Spreadsheet {
     }
     // if are raw contents there that are not blank
     else {
-      // checking if it is a formula to get only the s expression without equals 
+      // checking if it is a formula to get only the s expression without equals
       if (arrayForm[0] == '=') {
         rawContents = rawContents.substring(1);
       }
