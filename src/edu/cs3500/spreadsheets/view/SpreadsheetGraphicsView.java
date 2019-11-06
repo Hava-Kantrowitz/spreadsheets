@@ -15,15 +15,17 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     super();
     this.model = model;
     this.setTitle("Spreadsheet");
-    this.setSize(600, 600);
+    this.setSize(1000, 1000);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setResizable(false);
+    //this.setResizable(false);
+
+    SpreadsheetTable table = new SpreadsheetTable(model);
 
     //use a borderlayout with drawing panel in center and button panel in south
     this.setLayout(new BorderLayout());
     SpreadsheetPanel spreadsheetPanel = new SpreadsheetPanel(model);
     spreadsheetPanel.setPreferredSize(new Dimension(500, 500));
-    JScrollPane scrollPane = new JScrollPane(spreadsheetPanel);
+    JScrollPane scrollPane = new JScrollPane(table.getTable());
     this.add(scrollPane, BorderLayout.CENTER);
 
   }

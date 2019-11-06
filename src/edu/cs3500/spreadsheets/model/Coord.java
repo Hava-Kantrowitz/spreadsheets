@@ -6,8 +6,8 @@ import java.util.Objects;
  * A value type representing coordinates in a {@link Worksheet}.
  */
 public class Coord {
-  final int row;
-  final int col;
+  public final int row;
+  public final int col;
 
   /**
    * Creates an instance of the coord class.
