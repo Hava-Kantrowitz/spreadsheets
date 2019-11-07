@@ -9,7 +9,6 @@ import edu.cs3500.spreadsheets.model.Coord;
 public class SpreadsheetTable extends JTable {
 
   private BasicSpreadsheet spreadsheet;
-  JTable table;
 
   public SpreadsheetTable(BasicSpreadsheet model) {
     this.spreadsheet = model;
@@ -18,7 +17,7 @@ public class SpreadsheetTable extends JTable {
   public JTable getTable() {
 
     String[] colHeadings = getHeaders();
-    int numRows = 5 ;
+    int numRows = 1 ;
     DefaultTableModel model = new DefaultTableModel(numRows, colHeadings.length) ;
     model.setColumnIdentifiers(colHeadings);
     model.setNumRows(getMaxRows() + 1);
