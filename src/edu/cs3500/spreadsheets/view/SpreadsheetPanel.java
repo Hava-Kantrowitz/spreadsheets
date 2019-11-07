@@ -6,10 +6,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
-import edu.cs3500.spreadsheets.model.Cell;
+
 import edu.cs3500.spreadsheets.model.Coord;
 
 public class SpreadsheetPanel extends javax.swing.JPanel {
