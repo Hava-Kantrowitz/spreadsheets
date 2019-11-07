@@ -23,7 +23,7 @@ public class SpreadsheetTable extends JTable {
     model.setNumRows(getMaxRows() + 1);
 
     for (Coord c : spreadsheet.getListCoords()) {
-      model.setValueAt(spreadsheet.getCellAt(c).getRawContents(), c.row, c.col);
+      model.setValueAt(spreadsheet.getCellAt(c).toString(), c.row, c.col);
     }
 
     return new JTable(model);
