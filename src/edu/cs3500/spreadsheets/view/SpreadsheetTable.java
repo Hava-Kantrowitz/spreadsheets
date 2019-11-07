@@ -22,8 +22,8 @@ public class SpreadsheetTable extends JTable {
     DefaultTableModel model = new DefaultTableModel(numRows, colHeadings.length) ;
     model.setColumnIdentifiers(colHeadings);
     model.setNumRows(getMaxRows() + 1);
-    for (Coord c : spreadsheet.sheet.keySet()) {
-      model.setValueAt(spreadsheet.sheet.get(c), c.row, c.col);
+    for (Coord c : spreadsheet.getListCoords()) {
+      model.setValueAt(spreadsheet.getCellAt(c).getRawContents(), c.row, c.col);
     }
 
     return new JTable(model);
@@ -32,7 +32,7 @@ public class SpreadsheetTable extends JTable {
   private int getMaxRows() {
     int highestRow = 0;
 
-    for (Coord coord : spreadsheet.sheet.keySet()) {
+    for (Coord coord : spreadsheet.getListCoords()) {
       int checkRow = coord.row;
       if (checkRow > highestRow) {
         highestRow = checkRow;
@@ -45,7 +45,7 @@ public class SpreadsheetTable extends JTable {
   private String[] getHeaders() {
     int highestCol = 0;
 
-    for (Coord coord : spreadsheet.sheet.keySet()) {
+    for (Coord coord : spreadsheet.getListCoords()) {
       int checkCol = coord.col;
       if (checkCol > highestCol) {
         highestCol = checkCol;

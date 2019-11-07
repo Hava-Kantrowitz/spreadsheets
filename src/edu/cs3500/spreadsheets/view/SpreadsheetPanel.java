@@ -29,7 +29,7 @@ public class SpreadsheetPanel extends javax.swing.JPanel {
     int highestCol = 0;
     int highestRow = 0;
 
-    for (Coord coord : model.sheet.keySet()) {
+    for (Coord coord : model.getListCoords()) {
       int checkCol = coord.col;
       int checkRow = coord.row;
       if (checkCol > highestCol) {

@@ -14,7 +14,7 @@ import edu.cs3500.spreadsheets.sexp.SexpVisitor;
 public class BasicSpreadsheet implements Spreadsheet {
 
   private static final int MAXINT = 2147483647;
-  public HashMap<Coord, Cell> sheet;
+  private HashMap<Coord, Cell> sheet;
   private int numRows;
   private int numCols;
   public ArrayList<String> badReferences = new ArrayList<>();
