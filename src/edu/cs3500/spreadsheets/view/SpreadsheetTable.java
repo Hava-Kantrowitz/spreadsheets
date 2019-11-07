@@ -18,9 +18,10 @@ public class SpreadsheetTable extends JTable {
 
     String[] colHeadings = getHeaders();
     int numRows = 1 ;
-    DefaultTableModel model = new DefaultTableModel(numRows, colHeadings.length) ;
+    DefaultTableModel model = new DefaultTableModel(numRows, colHeadings.length);
     model.setColumnIdentifiers(colHeadings);
     model.setNumRows(getMaxRows() + 1);
+
     for (Coord c : spreadsheet.getListCoords()) {
       model.setValueAt(spreadsheet.getCellAt(c).getRawContents(), c.row, c.col);
     }
@@ -51,19 +52,15 @@ public class SpreadsheetTable extends JTable {
       }
     }
     String[] headerList = new String[highestCol+1];
-    for (int i = 1; i < highestCol; i++) {
-      headerList[i] = getColName(i+1);
+    // starting at zero for empty string 0 col (gets a list of columns to the highest
+    for (int i = 0; i < highestCol + 1; i++) {
+      headerList[i] = Coord.colIndexToName(i);
     }
     return headerList;
   }
 
   private String getRowName(int num) {
     return Coord.colIndexToName(num-1);
-  }
-
-  private String getColName(int num) {
-    int parseNum = num-1;
-    return Integer.toString(parseNum);
   }
 
 
