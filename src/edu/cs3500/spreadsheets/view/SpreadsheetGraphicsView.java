@@ -33,7 +33,7 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     sheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
     DefaultTableCellRenderer rowRenderer = new DefaultTableCellRenderer();
-    rowRenderer.setBackground(Color.LIGHT_GRAY);
+    rowRenderer.setBackground(Color.PINK);
     sheet.getColumnModel().getColumn(0).setCellRenderer(rowRenderer);
 
     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
