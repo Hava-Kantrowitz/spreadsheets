@@ -21,7 +21,7 @@ public class SpreadsheetTable extends JTable {
   public JTable getTable() {
 
     String[] colHeadings = getHeaders();
-    int numRows = getMaxRows()+1;
+    int numRows = getMaxRows() + 1;
     DefaultTableModel model = new DefaultTableModel(numRows, colHeadings.length) ;
     model.setColumnIdentifiers(colHeadings);
     for (Coord c : spreadsheet.getListCoords()) {
@@ -57,21 +57,16 @@ public class SpreadsheetTable extends JTable {
         highestCol = checkCol;
       }
     }
-    String[] headerList = new String[highestCol+1];
-    for (int i = 0; i < highestCol+1; i++) {
+
+
+
+    String[] headerList = new String[highestCol + 1];
+    for (int i = 0; i < highestCol + 1; i++) {
       headerList[i] = Coord.colIndexToName(i);
     }
     return headerList;
   }
 
-  private String getRowName(int num) {
-    return Coord.colIndexToName(num-1);
-  }
-
-  private String getColName(int num) {
-    int parseNum = num-1;
-    return Integer.toString(parseNum);
-  }
 
 
 }

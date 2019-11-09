@@ -1,6 +1,7 @@
 package edu.cs3500.spreadsheets.view;
 
 import java.awt.*;
+import java.awt.event.AdjustmentListener;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -42,15 +43,18 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     sheet.getColumnModel().getColumn(0).setCellRenderer(rowRenderer);
 
     JScrollPane scrollPane = new JScrollPane(sheet);
+
+    AdjustmentListener scrollListener = new SpreadsheetScrollListener(scrollPane, table);
+
+
+    scrollPane.getHorizontalScrollBar().addAdjustmentListener(scrollListener);
+    scrollPane.getVerticalScrollBar().addAdjustmentListener(scrollListener);
     this.add(scrollPane, BorderLayout.CENTER);
 
   }
 
   @Override
   public void render() {
-    SpreadsheetGraphicsView view = new SpreadsheetGraphicsView(model);
-    view.setVisible(true);
-
-
+    this.setVisible(true);
   }
 }
