@@ -43,7 +43,7 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
       sheet.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
     }
 
-    rowRenderer.setBackground(Color.LIGHT_GRAY);
+    rowRenderer.setBackground(Color.PINK);
     rowRenderer.setHorizontalAlignment(JLabel.CENTER);
     sheet.getColumnModel().getColumn(0).setCellRenderer(rowRenderer);
 
