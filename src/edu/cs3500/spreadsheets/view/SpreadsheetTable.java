@@ -1,12 +1,15 @@
 package edu.cs3500.spreadsheets.view;
 
+import java.awt.*;
+import java.awt.event.AdjustmentListener;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
 
-public class SpreadsheetTable extends JTable {
+public class SpreadsheetTable extends DefaultTableModel {
 
   private BasicSpreadsheet spreadsheet;
   private int INIT_NUM_CELLS = 300;

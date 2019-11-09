@@ -26,6 +26,7 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     //use a borderlayout with drawing panel in center and button panel in south
     this.setLayout(new BorderLayout());
     JTable sheet = table.getTable();
+    sheet.setGridColor(Color.black);
 
     sheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 

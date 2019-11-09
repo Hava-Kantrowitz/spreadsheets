@@ -27,10 +27,12 @@ public class SpreadsheetScrollListener implements AdjustmentListener {
   @Override
   public void adjustmentValueChanged(AdjustmentEvent e) {
     // checks if the value of the bar is at the maximum
-    // creates new rows if so
+    // creates new columns if so
       if(e.getValue() == scrollPane.getHorizontalScrollBar().getMaximum()){
         TableColumn addCol = new TableColumn();
-        table.addColumn(addCol);
+        table.addColumn("hi");
+        
+
       }
   }
 }
