@@ -47,11 +47,13 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
 
     JScrollPane scrollPane = new JScrollPane(sheet);
 
-    AdjustmentListener scrollListener = new SpreadsheetScrollListener(scrollPane, table);
-
+    // listener takes in the scroll bar and the default table
+    // so that it will change what is displayed
+    AdjustmentListener scrollListener = new HorizontalScrollListener(scrollPane, table.model);
+    AdjustmentListener vertScrollListener = new VerticalScrollListener(scrollPane, table.model);
 
     scrollPane.getHorizontalScrollBar().addAdjustmentListener(scrollListener);
-    scrollPane.getVerticalScrollBar().addAdjustmentListener(scrollListener);
+    scrollPane.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
     this.add(scrollPane, BorderLayout.CENTER);
 
   }

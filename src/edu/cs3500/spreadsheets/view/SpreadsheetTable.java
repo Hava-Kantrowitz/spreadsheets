@@ -9,10 +9,13 @@ import javax.swing.table.DefaultTableModel;
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
 
-public class SpreadsheetTable extends DefaultTableModel {
+public class SpreadsheetTable  extends JTable{
 
   private BasicSpreadsheet spreadsheet;
   private int INIT_NUM_CELLS = 300;
+
+  public DefaultTableModel model;      // NEED TO CHANGE THIS FROM PUBLIC BUT HAVE IT HERE FOR NOW TO SEE IF SOMETHING WORKS
+
 
   public SpreadsheetTable(BasicSpreadsheet spreadsheet) {
     this.spreadsheet = spreadsheet;
@@ -43,7 +46,7 @@ public class SpreadsheetTable extends DefaultTableModel {
 
     String[] colHeadings = getHeaders(getCols());
 
-    DefaultTableModel model = new SpecialTableModel(getRows(), getCols()) ;
+    model = new SpecialTableModel(getRows(), getCols()) ;
     model.setColumnIdentifiers(colHeadings);
     for (Coord c : spreadsheet.getListCoords()) {
       model.setValueAt(spreadsheet.getCellAt(c).toString(), c.row, c.col);
@@ -52,7 +55,6 @@ public class SpreadsheetTable extends DefaultTableModel {
     for (int i = 1; i < getRows()+1; i++) {
       model.setValueAt(i, i-1, 0);
     }
-
     return new JTable(model);
   }
 
