@@ -34,11 +34,9 @@ public class VerticalScrollListener implements AdjustmentListener {
       System.out.println(e.getValue());
 
       if(e.getValue() == scrollPane.getVerticalScrollBar().getMaximum() - 755){
-//        System.out.println("in here");
-//        System.out.println(scrollPane.getVerticalScrollBar().getMaximum());
         Integer currRow = table.getRowCount();
 //        table.addRowSelectionInterval(currRow-1, currRow -1);
-        table.addRow(new Integer[table.getColumnCount()]);
+       table.addRow(new Integer[table.getColumnCount()]);
       }
     }
 
