@@ -26,6 +26,8 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     this.setLayout(new BorderLayout());
     JTable sheet = table.getTable();
 
+    sheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
     DefaultTableCellRenderer rowRenderer = new DefaultTableCellRenderer();
     rowRenderer.setBackground(Color.LIGHT_GRAY);
     sheet.getColumnModel().getColumn(0).setCellRenderer(rowRenderer);

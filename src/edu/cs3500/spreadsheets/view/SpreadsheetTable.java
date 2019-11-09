@@ -1,11 +1,7 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.*;
-
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
@@ -13,22 +9,44 @@ import edu.cs3500.spreadsheets.model.Coord;
 public class SpreadsheetTable extends JTable {
 
   private BasicSpreadsheet spreadsheet;
+  private int INIT_NUM_CELLS = 300;
 
-  public SpreadsheetTable(BasicSpreadsheet model) {
-    this.spreadsheet = model;
+  public SpreadsheetTable(BasicSpreadsheet spreadsheet) {
+    this.spreadsheet = spreadsheet;
   }
 
-  public JTable getTable() {
-
-    String[] colHeadings = getHeaders();
+  private int getRows() {
+    int rowNum = INIT_NUM_CELLS;
     int numRows = getMaxRows()+1;
-    DefaultTableModel model = new DefaultTableModel(numRows, colHeadings.length) ;
+    if (numRows > rowNum) {
+      rowNum = numRows;
+    }
+
+    return rowNum;
+  }
+
+  private int getCols() {
+    int colNum = INIT_NUM_CELLS;
+    int numCols = getMaxCols()+1;
+
+    if (numCols > colNum) {
+      colNum = numCols;
+    }
+
+    return colNum;
+  }
+
+  JTable getTable() {
+
+    String[] colHeadings = getHeaders(getCols());
+
+    DefaultTableModel model = new SpecialTableModel(getRows(), getCols()) ;
     model.setColumnIdentifiers(colHeadings);
     for (Coord c : spreadsheet.getListCoords()) {
       model.setValueAt(spreadsheet.getCellAt(c).toString(), c.row, c.col);
     }
 
-    for (int i = 1; i < getMaxRows()+1; i++) {
+    for (int i = 1; i < getRows()+1; i++) {
       model.setValueAt(i, i-1, 0);
     }
 
@@ -48,7 +66,7 @@ public class SpreadsheetTable extends JTable {
     return highestRow;
   }
 
-  private String[] getHeaders() {
+  private int getMaxCols() {
     int highestCol = 0;
 
     for (Coord coord : spreadsheet.getListCoords()) {
@@ -57,20 +75,18 @@ public class SpreadsheetTable extends JTable {
         highestCol = checkCol;
       }
     }
-    String[] headerList = new String[highestCol+1];
-    for (int i = 0; i < highestCol+1; i++) {
+
+    return highestCol;
+
+  }
+
+  private String[] getHeaders(int size) {
+
+    String[] headerList = new String[size];
+    for (int i = 0; i < size; i++) {
       headerList[i] = Coord.colIndexToName(i);
     }
     return headerList;
-  }
-
-  private String getRowName(int num) {
-    return Coord.colIndexToName(num-1);
-  }
-
-  private String getColName(int num) {
-    int parseNum = num-1;
-    return Integer.toString(parseNum);
   }
 
 
