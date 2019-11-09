@@ -28,6 +28,8 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     JTable sheet = table.getTable();
     sheet.setGridColor(Color.black);
 
+    sheet.setGridColor(Color.BLACK);
+
     sheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
     DefaultTableCellRenderer rowRenderer = new DefaultTableCellRenderer();

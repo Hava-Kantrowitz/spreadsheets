@@ -20,7 +20,8 @@ public class Reference implements Formula {
 
   /**
    * Creates an instances of the reference class.
-   * @param symbol the cell the reference is referring to
+   *
+   * @param symbol      the cell the reference is referring to
    * @param spreadsheet the spreadsheet the cell exists in
    */
   public Reference(String symbol, Spreadsheet spreadsheet) {
@@ -32,9 +33,10 @@ public class Reference implements Formula {
 
   /**
    * This is the constructor for the reference with the raw content.
-   * @param symbol the given symbol
+   *
+   * @param symbol      the given symbol
    * @param spreadsheet the given spreadsheet
-   * @param rawContent the raw contents of the string
+   * @param rawContent  the raw contents of the string
    */
   public Reference(String symbol, Spreadsheet spreadsheet, String rawContent) {
 
@@ -49,8 +51,7 @@ public class Reference implements Formula {
     Value output;
     if (referredCoords.size() == 1) { // if there is only one reference
       output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCell();// eval the given cell
-    }
-    else { // multiple references cannot be evaluated alone
+    } else { // multiple references cannot be evaluated alone
       throw new IllegalArgumentException("A section of cells needs an operation to evaluate");
     }
     return output;
@@ -61,11 +62,9 @@ public class Reference implements Formula {
     double output;
     if (referredCoords.size() == 1) { // if there is only one reference
       output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSum();// eval the given cell
-    }
-    else if (referredCoords.size() == 2) {  // if there is a range
-      output = sum(spreadsheet.getCellSection(referredCoords.get(0),referredCoords.get(1)));
-    }
-    else {  // no more than two arguments in sum range
+    } else if (referredCoords.size() == 2) {  // if there is a range
+      output = sum(spreadsheet.getCellSection(referredCoords.get(0), referredCoords.get(1)));
+    } else {  // no more than two arguments in sum range
       throw new IllegalArgumentException("Illegal number of arguments");
     }
     return output;
@@ -76,11 +75,9 @@ public class Reference implements Formula {
     double output;
     if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
       output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellProduct(formulas);
-    }
-    else if (referredCoords.size() == 2) { // if there is a range
+    } else if (referredCoords.size() == 2) { // if there is a range
       output = product(getListFormula());
-    }
-    else { // no more than two arguments in sum range
+    } else { // no more than two arguments in sum range
       throw new IllegalArgumentException("Illegal number of references.");
     }
     return output;
@@ -91,8 +88,7 @@ public class Reference implements Formula {
     double output;
     if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
       output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSqrt();
-    }
-    else { // no more than one argument for sqrt
+    } else { // no more than one argument for sqrt
       throw new IllegalArgumentException("Illegal number of references.");
     }
     return output;
@@ -103,8 +99,7 @@ public class Reference implements Formula {
     double output;
     if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
       output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellDifference();
-    }
-    else { // no more than one argument for difference
+    } else { // no more than one argument for difference
       throw new IllegalArgumentException("Illegal number of references.");
     }
     return output;
@@ -115,8 +110,7 @@ public class Reference implements Formula {
     double output;
     if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
       output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellComparison();
-    }
-    else { // no more than one argument for comparison
+    } else { // no more than one argument for comparison
       throw new IllegalArgumentException("Illegal number of references.");
     }
     return output;
@@ -127,13 +121,11 @@ public class Reference implements Formula {
     String output;
     if (referredCoords.size() == 1) { // if there is only one reference, eval the given cell
       output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellHamilton();
-    }
-    else { // no more than one argument for Hamilton
+    } else { // no more than one argument for Hamilton
       throw new IllegalArgumentException("Illegal number of references.");
     }
     return output;
   }
-
 
 
   @Override
@@ -142,10 +134,9 @@ public class Reference implements Formula {
 
     if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
       output = spreadsheet.getCellAt(referredCoords.get(0)).isNum();
-    }
-    else { // no more than one argument for Hamilton
+    } else { // no more than one argument for Hamilton
       ArrayList<Cell> cells
-              = spreadsheet.getCellSection(referredCoords.get(0),referredCoords.get(1));
+              = spreadsheet.getCellSection(referredCoords.get(0), referredCoords.get(1));
       // going through to see if each is a number
       for (Cell cell : cells) {
         if (cell.isNum()) { // checking if any are numbers
@@ -184,23 +175,22 @@ public class Reference implements Formula {
   }
 
   /**
-   * This is a helper that gets the cell that is being referred to.
-   * Sets the referred coordinates variable of the class and returns the list of symbols.
+   * This is a helper that gets the cell that is being referred to. Sets the referred coordinates
+   * variable of the class and returns the list of symbols.
    */
   private void parseReferredCells() {
     ArrayList<String> symbolsEntered = new ArrayList<>();
     if (symbol.contains(":")) { // determines if multiple
       int splitIndex = symbol.lastIndexOf(":"); // finds where to split
-      String firstSymbol = symbol.substring(0,splitIndex); // splits first half
+      String firstSymbol = symbol.substring(0, splitIndex); // splits first half
       String secondSymbol = symbol.substring(splitIndex + 1); // splits second half
       symbolsEntered.add(firstSymbol); // adds first
       symbolsEntered.add(secondSymbol); // adds second
-    }
-    else {
+    } else {
       symbolsEntered.add(symbol);
     }
 
-    for (String s: symbolsEntered) {
+    for (String s : symbolsEntered) {
       Scanner scan = new Scanner(s);
       final Pattern cellRef = Pattern.compile("([A-Za-z]+)([1-9][0-9]*)");
       scan.useDelimiter("\\s+");
@@ -253,7 +243,6 @@ public class Reference implements Formula {
   }
 
 
-
   /**
    * Gets a list of the formulas in the referred cells.
    *
@@ -280,7 +269,7 @@ public class Reference implements Formula {
       // going through the section to get all the formulas
       for (int i = rowOne; i <= rowTwo; i++) {
         for (int j = colOne; j <= colTwo; j++) {
-          Coord cellCoord = new Coord(j,i);
+          Coord cellCoord = new Coord(j, i);
           Cell cellRef = spreadsheet.getCellAt(cellCoord);
           // add to the list of formulas
           if (cellRef instanceof Formula) {
