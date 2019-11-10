@@ -3,12 +3,9 @@ package edu.cs3500.spreadsheets;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
-import java.io.StringReader;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -88,15 +85,13 @@ public class BeyondGood {
       // checking if it is the textual evaluation
       else if (args.length == 4 && args[2].equals("-eval")) {
         // evaluate the given cell
-        evaluateCellTextView(inputFile,args[3]);
-      }
-      else{
+        evaluateCellTextView(inputFile, args[3]);
+      } else {
         throw new IllegalArgumentException("Malformed command line");
 
-    }
+      }
 
-  }
-    else{
+    } else {
       throw new IllegalArgumentException("Malformed command line");
     }
 
@@ -134,6 +129,7 @@ public class BeyondGood {
 
   /**
    * This is the method to create the gui from the given file.
+   *
    * @param fileName the name of the file
    */
   private static void renderGui(Reader fileName) {
@@ -145,10 +141,11 @@ public class BeyondGood {
 
   /**
    * Runs the evaluation of a given cell.
-   * @param fileName the name of the file to run
+   *
+   * @param fileName  the name of the file to run
    * @param givenCell the given cell to be evaluated
    */
-  private static void evaluateCellTextView(Reader fileName, String givenCell){
+  private static void evaluateCellTextView(Reader fileName, String givenCell) {
     sheet.initializeSpreadsheet(fileName);
 
     try {

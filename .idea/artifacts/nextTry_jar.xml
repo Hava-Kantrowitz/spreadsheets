@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="nextTry:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/nextTry_jar</output-path>
+    <root id="archive" name="nextTry.jar">
+      <element id="module-output" name="nextTry" />
+    </root>
+  </artifact>
+</component>

@@ -3,41 +3,41 @@ package edu.cs3500.spreadsheets.view;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
-import javax.swing.*;
+import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
-import edu.cs3500.spreadsheets.model.Coord;
-
+/**
+ * Models a vertical scroll bar.
+ */
 public class VerticalScrollListener implements AdjustmentListener {
 
 
-    JScrollPane scrollPane;
-    DefaultTableModel table;
+  private JScrollPane scrollPane;
+  private DefaultTableModel table;
+  private int scrollDifference = 755;
 
-    /**
-     * This constructs a new spreadsheet scroll listener.
-     */
-  public VerticalScrollListener(JScrollPane scrollPane, DefaultTableModel table){
-      super();
-      this.scrollPane = scrollPane;
-      this.table = table;
-    }
+  /**
+   * This constructs a new spreadsheet scroll listener.
+   */
+  VerticalScrollListener(JScrollPane scrollPane, DefaultTableModel table) {
+    super();
+    this.scrollPane = scrollPane;
+    this.table = table;
+  }
 
 
-    @Override
-    public void adjustmentValueChanged(AdjustmentEvent e) {
-      // checks if the current value of the vertical scroll bar is at max (subtraction accounts
-      // for the difference in max and how far scroll goes
+  @Override
+  public void adjustmentValueChanged(AdjustmentEvent e) {
+    // checks if the current value of the vertical scroll bar is at max (subtraction accounts
+    // for the difference in max and how far scroll goes
 
-      System.out.println(scrollPane.getVerticalScrollBar().getMaximum());
-      System.out.println(e.getValue());
-
-      if(e.getValue() == scrollPane.getVerticalScrollBar().getMaximum() - 755){
-        Integer currRow = table.getRowCount();
-//        table.addRowSelectionInterval(currRow-1, currRow -1);
-       table.addRow(new Integer[table.getColumnCount()]);
+    if (e.getValue() >= scrollPane.getVerticalScrollBar().getMaximum() - scrollDifference) {
+      Integer[] addedRow = new Integer[table.getColumnCount()];
+      table.addRow(addedRow);
+      for (int i = 1; i < table.getRowCount() + 1; i++) {
+        table.setValueAt(i, i - 1, 0);
       }
     }
+  }
 
 }

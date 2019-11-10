@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
-import edu.cs3500.spreadsheets.model.BooleanValue;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.view.SpreadsheetTextualView;
