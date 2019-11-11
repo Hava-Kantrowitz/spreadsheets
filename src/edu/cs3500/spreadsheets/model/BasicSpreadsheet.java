@@ -80,7 +80,7 @@ public class BasicSpreadsheet implements Spreadsheet {
 
     for (int i = givenRow1; i <= givenRow2; i++) {
       for (int j = givenCol1; j <= givenCol2; j++) {
-        Coord newCoord = new Coord(j+1, i+1);
+        Coord newCoord = new Coord(j + 1, i + 1);
         multRows.add(sheet.getOrDefault(newCoord, new Blank()));
       }
 
@@ -121,47 +121,6 @@ public class BasicSpreadsheet implements Spreadsheet {
     return numCols;
   }
 
-
-//  /**
-//   * This is the method to expand the spreadsheet when the coordinates selected are out of bounds.
-//   * If the column is out of bounds then expand column wise, same with row. If both are out of
-//   * bounds expand in both directions. When new cells are added they should be blank.
-//   *
-//   * @param inputCol the column that was input
-//   * @param inputRow the row that was input
-//   */
-//  private void expandSheet(int inputCol, int inputRow) {
-//
-//    //first check if the requested cell is out of reasonable bounds
-//    if (inputCol >= MAXINT || inputRow >= MAXINT) {
-//      throw new IllegalArgumentException("Requested spreadsheet exceeds available space");
-//    }
-//    else {
-//      int oldSheetSize = numRows;
-//
-//      for (int i = oldSheetSize; i <= inputRow; i++) {  // fill in the number of rows needed
-//        sheet.add(new ArrayList<Cell>());       // rows from the old number of rows to the new
-//        numRows++;
-//      }
-//
-//      int newCols = numCols;
-//
-//      if (inputCol > numCols) {
-//        newCols = inputCol + 1;   // adding one to account for the indexing being 1 based            // CHECK THIS TO MAKE SURE ACCURATE
-//      }
-//
-//      for (int i = 0; i < numRows; i++) {        // all rows
-//        for (int j = 0; j <= newCols; j++) {  // go through from where
-//          sheet.get(i).add(new Blank());
-//        }
-//      }
-//      numCols = newCols;
-//
-//    }
-//
-//
-//  }
-
   @Override
   public boolean equals(Object otherSheet) {
     boolean isEqual = false;
@@ -173,25 +132,25 @@ public class BasicSpreadsheet implements Spreadsheet {
       otherS = (BasicSpreadsheet) otherSheet;
       otherListCoords = otherS.getListCoords();
       // checking if the sheet has the correct number of cells
-      if(otherS.getListCoords().size() == this.sheet.size()){
+      if (otherS.getListCoords().size() == this.sheet.size()) {
         isEqual = true;
       }
     }
     // if the other sheet is an instance of basic spreadsheet
     // and has the same number of cells
     // now checking that all the cells are equal
-    if(isEqual){
+    if (isEqual) {
       // going through the cells of the first sheet
       // gets all the coords of the first set
       Set<Coord> coords = this.getListCoords();
       // this goes through all the keys
-      for(Coord c: coords){
+      for (Coord c : coords) {
         // if the other sheet does not contain the key
-        if(!otherListCoords.contains(c)){
+        if (!otherListCoords.contains(c)) {
           isEqual = false;
         }
         // if the cell at the given coord does not equal the
-        else if(!(otherS.getCellAt(c).equals(this.getCellAt(c)))){
+        else if (!(otherS.getCellAt(c).equals(this.getCellAt(c)))) {
           isEqual = false;
         }
       }
@@ -206,8 +165,8 @@ public class BasicSpreadsheet implements Spreadsheet {
   }
 
   @Override
-  public Set<Coord> getListCoords(){
-    HashMap<Coord,Cell> copyMap = new HashMap<Coord,Cell>(); // creates the new hash map
+  public Set<Coord> getListCoords() {
+    HashMap<Coord, Cell> copyMap = new HashMap<Coord, Cell>(); // creates the new hash map
     copyMap.putAll(this.sheet); // copies all of the mappings from this sheet to a new one
     return copyMap.keySet(); // returns the key set
   }

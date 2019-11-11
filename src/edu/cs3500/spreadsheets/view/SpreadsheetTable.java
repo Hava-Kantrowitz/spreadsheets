@@ -1,29 +1,48 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.*;
-import java.awt.event.AdjustmentListener;
-
-import javax.swing.*;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
 
-public class SpreadsheetTable  extends JTable{
+/**
+ * Models a spreadsheet table.
+ */
+public class SpreadsheetTable extends JTable {
 
   private BasicSpreadsheet spreadsheet;
-  private int INIT_NUM_CELLS = 300;
+  private int initNumCells = 300;
 
-  public DefaultTableModel model;      // NEED TO CHANGE THIS FROM PUBLIC BUT HAVE IT HERE FOR NOW TO SEE IF SOMETHING WORKS
+  private DefaultTableModel model;
+  // NEED TO CHANGE THIS FROM PUBLIC BUT HAVE IT HERE FOR NOW TO SEE IF SOMETHING WORKS
 
 
-  public SpreadsheetTable(BasicSpreadsheet spreadsheet) {
+  /**
+   * Constructs an instance of the table.
+   *
+   * @param spreadsheet the spreadsheet to construct
+   */
+  SpreadsheetTable(BasicSpreadsheet spreadsheet) {
     this.spreadsheet = spreadsheet;
   }
 
+  /**
+   * Gets the default table model.
+   * @return the model
+   */
+  public DefaultTableModel getModel() {
+    return model;
+  }
+
+  /**
+   * Gets the number of rows in the table.
+   *
+   * @return the number of rows
+   */
   private int getRows() {
-    int rowNum = INIT_NUM_CELLS;
-    int numRows = getMaxRows()+1;
+    int rowNum = initNumCells;
+    int numRows = getMaxRows() + 1;
     if (numRows > rowNum) {
       rowNum = numRows;
     }
@@ -31,9 +50,14 @@ public class SpreadsheetTable  extends JTable{
     return rowNum;
   }
 
+  /**
+   * Gets the number of columns in the table.
+   *
+   * @return the number of columns
+   */
   private int getCols() {
-    int colNum = INIT_NUM_CELLS;
-    int numCols = getMaxCols()+1;
+    int colNum = initNumCells;
+    int numCols = getMaxCols() + 1;
 
     if (numCols > colNum) {
       colNum = numCols;
@@ -42,22 +66,32 @@ public class SpreadsheetTable  extends JTable{
     return colNum;
   }
 
+  /**
+   * Gets the created table.
+   *
+   * @return the table
+   */
   JTable getTable() {
 
     String[] colHeadings = getHeaders(getCols());
 
-    model = new SpecialTableModel(getRows(), getCols()) ;
+    model = new SpecialTableModel(getRows(), getCols());
     model.setColumnIdentifiers(colHeadings);
     for (Coord c : spreadsheet.getListCoords()) {
       model.setValueAt(spreadsheet.getCellAt(c).toString(), c.row, c.col);
     }
 
-    for (int i = 1; i < getRows()+1; i++) {
-      model.setValueAt(i, i-1, 0);
+    for (int i = 1; i < getRows() + 1; i++) {
+      model.setValueAt(i, i - 1, 0);
     }
     return new JTable(model);
   }
 
+  /**
+   * Gets the maximum row number.
+   *
+   * @return the max amount of rows
+   */
   private int getMaxRows() {
     int highestRow = 0;
 
@@ -71,6 +105,11 @@ public class SpreadsheetTable  extends JTable{
     return highestRow;
   }
 
+  /**
+   * Gets the maximum column number.
+   *
+   * @return the max col
+   */
   private int getMaxCols() {
     int highestCol = 0;
 
@@ -85,6 +124,12 @@ public class SpreadsheetTable  extends JTable{
 
   }
 
+  /**
+   * Gets the column headers.
+   *
+   * @param size the number of columns in the table
+   * @return the list of the headers
+   */
   private String[] getHeaders(int size) {
 
     String[] headerList = new String[size];
