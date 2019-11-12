@@ -163,7 +163,7 @@ public class BeyondGood {
       Double resultNum = Double.parseDouble(result);
       System.out.print(String.format("%f", resultNum));
     } catch (NumberFormatException e) {
-      System.out.print(result);
+      System.out.print("\"" + result +"\"");  // adding the quotes if it is a string
     }
   }
 
