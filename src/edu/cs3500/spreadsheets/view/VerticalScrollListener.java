@@ -30,7 +30,7 @@ public class VerticalScrollListener implements AdjustmentListener {
   @Override
   public void adjustmentValueChanged(AdjustmentEvent e) {
     // checks if the current value of the vertical scroll bar is at greater than max it has been
-    if (e.getValue() > scrollMaxCount) {
+    if (e.getValue() >= scrollMaxCount) {
       Integer[] addedRow = new Integer[table.getColumnCount()];
       table.addRow(addedRow);
       for (int i = 1; i < table.getRowCount() + 1; i++) {

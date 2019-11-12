@@ -17,6 +17,8 @@ import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
  */
 public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
 
+  JTable sheet;
+
   /**
    * Constructs an instance of the GUI spreadsheet view.
    * @param model the model to render
@@ -27,13 +29,12 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     this.setTitle("Spreadsheet");
     this.setSize(1000, 1000);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setResizable(false);
 
     SpreadsheetTable table = new SpreadsheetTable(model);
 
     //use a borderlayout with drawing panel in center and button panel in south
     this.setLayout(new BorderLayout());
-    JTable sheet = table.getTable();
+    sheet = table.getTable();
     sheet.setGridColor(Color.black);
 
     sheet.setGridColor(Color.BLACK);
@@ -44,7 +45,7 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
 
     // listener takes in the scroll bar and the default table
     // so that it will change what is displayed
-    AdjustmentListener scrollListener = new HorizontalScrollListener(scrollPane, table.getModel());
+    AdjustmentListener scrollListener = new HorizontalScrollListener(sheet, table.getModel());
     AdjustmentListener vertScrollListener
             = new VerticalScrollListener(scrollPane, table.getModel());
 
