@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.Spreadsheet;
+import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 import edu.cs3500.spreadsheets.view.SpreadsheetGraphicsView;
 import edu.cs3500.spreadsheets.view.SpreadsheetTextualView;
 import edu.cs3500.spreadsheets.view.SpreadsheetView;

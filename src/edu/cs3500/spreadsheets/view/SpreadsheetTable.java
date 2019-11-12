@@ -5,13 +5,14 @@ import javax.swing.table.DefaultTableModel;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
 /**
  * Models a spreadsheet table.
  */
 public class SpreadsheetTable extends JTable {
 
-  private BasicSpreadsheet spreadsheet;
+  private SpreadsheetReadOnlyAdapter spreadsheet;
   private int initNumCells = 300;
 
   private DefaultTableModel model;
@@ -23,7 +24,7 @@ public class SpreadsheetTable extends JTable {
    *
    * @param spreadsheet the spreadsheet to construct
    */
-  SpreadsheetTable(BasicSpreadsheet spreadsheet) {
+  SpreadsheetTable(SpreadsheetReadOnlyAdapter spreadsheet) {
     this.spreadsheet = spreadsheet;
   }
 

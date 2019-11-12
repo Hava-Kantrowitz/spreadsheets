@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
+import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 import edu.cs3500.spreadsheets.view.SpreadsheetTextualView;
 import edu.cs3500.spreadsheets.view.SpreadsheetView;
 
@@ -20,7 +21,7 @@ public class SpreadsheetTextViewTests {
   // this is the test for when the file has not changed
   @Test
   public void fileNoChange() throws FileNotFoundException {
-    Spreadsheet sheet1 = new BasicSpreadsheet();
+    BasicSpreadsheet sheet1 = new BasicSpreadsheet();
 
     // setting up the first spreadsheet with the file
     FileReader inputFile1 = new FileReader("/Users/victoriabowen/Desktop" +
@@ -60,7 +61,7 @@ public class SpreadsheetTextViewTests {
   // when it goes to the same value as a previously saved spreadsheet
   @Test
   public void fileChange() throws FileNotFoundException {
-    Spreadsheet sheet1 = new BasicSpreadsheet();
+    BasicSpreadsheet sheet1 = new BasicSpreadsheet();
 
     // setting up the first spreadsheet with the file
     FileReader inputFile1 = new FileReader("/Users/victoriabowen/Desktop" +
