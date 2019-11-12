@@ -27,7 +27,6 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     this.setTitle("Spreadsheet");
     this.setSize(1000, 1000);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setResizable(false);
 
     SpreadsheetTable table = new SpreadsheetTable(model);
 

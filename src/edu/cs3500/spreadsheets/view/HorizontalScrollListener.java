@@ -32,7 +32,7 @@ public class HorizontalScrollListener implements AdjustmentListener {
   public void adjustmentValueChanged(AdjustmentEvent e) {
     // checks if the current value of the horizontal scroll bar is at max (subtraction accounts
     // for the difference in max and how far scroll goes
-    if (e.getValue() > scrollMaxCount) {
+    if (e.getValue() >= scrollMaxCount) {
 
       // getting the name of the new column
       String colName = Coord.colIndexToName(table.getColumnCount());
