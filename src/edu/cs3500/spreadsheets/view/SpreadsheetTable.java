@@ -78,7 +78,7 @@ public class SpreadsheetTable extends JTable {
     model = new SpecialTableModel(getRows(), getCols());
     model.setColumnIdentifiers(colHeadings);
     for (Coord c : spreadsheet.getListCoords()) {
-      model.setValueAt(spreadsheet.getCellAt(c).toString(), c.row, c.col);
+      model.setValueAt(spreadsheet.getCellAt(c).toString(), c.row - 1, c.col);
     }
 
     for (int i = 1; i < getRows() + 1; i++) {
