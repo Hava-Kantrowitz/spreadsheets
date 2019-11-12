@@ -26,7 +26,7 @@ public class HorizontalScrollListener implements AdjustmentListener {
     super();
     this.sheet = sheet;
     this.table = table;
-    this.scrollMaxCount = 0;
+    this.scrollMaxCount = 50;
   }
 
 
