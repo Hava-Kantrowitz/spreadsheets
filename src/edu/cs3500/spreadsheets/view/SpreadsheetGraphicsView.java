@@ -19,8 +19,6 @@ import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
  */
 public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
 
-  JTable sheet;
-
   /**
    * Constructs an instance of the GUI spreadsheet view.
    * @param model the model to render
@@ -37,7 +35,7 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
 
     //use a borderlayout with drawing panel in center and button panel in south
     this.setLayout(new BorderLayout());
-    sheet = table.getTable();
+    JTable sheet = table.getTable();
     sheet.setGridColor(Color.black);
     sheet.getTableHeader().setReorderingAllowed(false);
 
@@ -55,21 +53,6 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
 
     scrollPane.getHorizontalScrollBar().addAdjustmentListener(scrollListener);
     scrollPane.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
-
-    DefaultTableCellRenderer rowRenderer = new DefaultTableCellRenderer();
-    sheet.getColumnModel().getColumn(0).setCellRenderer(rowRenderer);
-
-    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-    centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-
-    for (int i = 0; i < sheet.getColumnCount(); i++) {
-      sheet.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-    }
-
-    rowRenderer.setBackground(Color.LIGHT_GRAY);
-    rowRenderer.setHorizontalAlignment(JLabel.CENTER);
-    sheet.getColumnModel().getColumn(0).setCellRenderer(rowRenderer);
-
 
     this.add(scrollPane, BorderLayout.CENTER);
 
