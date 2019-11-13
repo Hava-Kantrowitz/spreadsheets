@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 public class VerticalScrollListener implements AdjustmentListener {
 
 
-  private JScrollPane scrollPane;
   private DefaultTableModel table;
   private int scrollMaxCount;
 
@@ -21,7 +20,6 @@ public class VerticalScrollListener implements AdjustmentListener {
    */
   VerticalScrollListener(JScrollPane scrollPane, DefaultTableModel table) {
     super();
-    this.scrollPane = scrollPane;
     this.table = table;
     this.scrollMaxCount = 0;
   }
