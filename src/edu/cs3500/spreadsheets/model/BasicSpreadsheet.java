@@ -13,11 +13,17 @@ import edu.cs3500.spreadsheets.sexp.SexpVisitor;
  */
 public class BasicSpreadsheet implements Spreadsheet {
 
-  private static final int MAXINT = 2147483647;
   private HashMap<Coord, Cell> sheet;
   private int numRows;
   private int numCols;
   public ArrayList<String> badReferences = new ArrayList<>();
+
+  /**
+   * The empty constructor for a basic spreadsheet.
+   */
+  public BasicSpreadsheet(){
+      // empty constructor ready to initialize the sheet
+  }
 
   @Override
   public void initializeSpreadsheet(Readable fileName) {
