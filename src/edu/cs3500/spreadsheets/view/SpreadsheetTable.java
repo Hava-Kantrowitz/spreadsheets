@@ -6,7 +6,7 @@ import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
 /**
- * Models a spreadsheet table.
+ * Models a spreadsheet table for the GUI view component.
  */
 public class SpreadsheetTable extends JTable {
 

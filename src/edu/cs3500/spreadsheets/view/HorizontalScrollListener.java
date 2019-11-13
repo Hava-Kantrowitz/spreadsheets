@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import edu.cs3500.spreadsheets.model.Coord;
 
 /**
- * This is the class for a scroll specifically for a spreadsheet.
+ * This is the class for a horizontal scroll listener for the spreadsheet.
  */
 public class HorizontalScrollListener implements AdjustmentListener {
 
@@ -22,6 +22,8 @@ public class HorizontalScrollListener implements AdjustmentListener {
 
   /**
    * This constructs a new spreadsheet scroll listener.
+   * @param sheet the JTable component of the panel
+   * @param table the data represented as a table
    */
   HorizontalScrollListener(JTable sheet, DefaultTableModel table) {
     super();
