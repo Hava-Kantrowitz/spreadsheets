@@ -3,7 +3,6 @@ package edu.cs3500.spreadsheets.view;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
-import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,7 +17,7 @@ public class VerticalScrollListener implements AdjustmentListener {
   /**
    * This constructs a new spreadsheet scroll listener.
    */
-  VerticalScrollListener(JScrollPane scrollPane, DefaultTableModel table) {
+  VerticalScrollListener(DefaultTableModel table) {
     super();
     this.table = table;
     this.scrollMaxCount = 0;

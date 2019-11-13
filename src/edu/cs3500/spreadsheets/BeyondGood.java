@@ -12,8 +12,6 @@ import java.util.regex.Pattern;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
-import edu.cs3500.spreadsheets.model.Spreadsheet;
-import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 import edu.cs3500.spreadsheets.view.SpreadsheetGraphicsView;
 import edu.cs3500.spreadsheets.view.SpreadsheetTextualView;
 import edu.cs3500.spreadsheets.view.SpreadsheetView;
@@ -165,7 +163,7 @@ public class BeyondGood {
       Double resultNum = Double.parseDouble(result);
       System.out.print(String.format("%f", resultNum));
     } catch (NumberFormatException e) {
-      System.out.print("\"" + result +"\"");  // adding the quotes if it is a string
+      System.out.print("\"" + result + "\"");  // adding the quotes if it is a string
     }
   }
 

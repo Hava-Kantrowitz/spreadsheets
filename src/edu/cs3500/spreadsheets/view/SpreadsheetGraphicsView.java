@@ -1,13 +1,12 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.Color;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.AdjustmentListener;
 
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
-
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
@@ -46,7 +45,7 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     // so that it will change what is displayed
     AdjustmentListener scrollListener = new HorizontalScrollListener(sheet, table.getModel());
     AdjustmentListener vertScrollListener
-            = new VerticalScrollListener(scrollPane, table.getModel());
+            = new VerticalScrollListener(table.getModel());
 
     scrollPane.getHorizontalScrollBar().addAdjustmentListener(scrollListener);
     scrollPane.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);

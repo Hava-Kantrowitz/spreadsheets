@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.Set;
 
 /**
- * This is the class that makes a read only version of the spreadsheet.
- * Defaults to the observation methods of a Basic Spreadsheet and does nothing when trying to
- * mutate the data.
+ * This is the class that makes a read only version of the spreadsheet. Defaults to the observation
+ * methods of a Basic Spreadsheet and does nothing when trying to mutate the data.
  */
-public class SpreadsheetReadOnlyAdapter implements Spreadsheet{
+public class SpreadsheetReadOnlyAdapter implements Spreadsheet {
 
-  Spreadsheet sheet;
+  private Spreadsheet sheet;
 
   /**
    * The constructor for the given read only spreadsheet.
+   *
    * @param sheet the given mutable spreadsheet
    */
-  public SpreadsheetReadOnlyAdapter(Spreadsheet sheet){
+  public SpreadsheetReadOnlyAdapter(Spreadsheet sheet) {
     this.sheet = sheet;
   }
 
@@ -43,17 +43,17 @@ public class SpreadsheetReadOnlyAdapter implements Spreadsheet{
 
   @Override
   public ArrayList getCellSection(Coord upper, Coord lower) {
-    return sheet.getCellSection(upper,lower);
+    return sheet.getCellSection(upper, lower);
   }
 
   @Override
   public void evaluateSheet() {
-      sheet.evaluateSheet();
+    sheet.evaluateSheet();
   }
 
   @Override
   public void evaluateCellAt(Coord coord) {
-      sheet.evaluateCellAt(coord);
+    sheet.evaluateCellAt(coord);
   }
 
   @Override
