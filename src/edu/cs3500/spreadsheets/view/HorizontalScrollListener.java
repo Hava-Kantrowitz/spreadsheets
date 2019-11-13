@@ -1,10 +1,11 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
-import javax.swing.*;
+import javax.swing.JTable;
+import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 

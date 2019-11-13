@@ -2,8 +2,6 @@ package edu.cs3500.spreadsheets.view;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
-import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
@@ -16,8 +14,6 @@ public class SpreadsheetTable extends JTable {
   private int initNumCells = 300;
 
   private DefaultTableModel model;
-  // NEED TO CHANGE THIS FROM PUBLIC BUT HAVE IT HERE FOR NOW TO SEE IF SOMETHING WORKS
-
 
   /**
    * Constructs an instance of the table.
