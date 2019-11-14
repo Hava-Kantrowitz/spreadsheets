@@ -47,6 +47,8 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
    scrollPane.setViewportView(sheet);
 
 
+
+
     // listener takes in the scroll bar and the default table
     // so that it will change what is displayed
     AdjustmentListener scrollListener = new HorizontalScrollListener(sheet, table.getModel(), myRows);
@@ -55,6 +57,7 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
 
     scrollPane.getHorizontalScrollBar().addAdjustmentListener(scrollListener);
     scrollPane.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
+
 
 
     this.add(myRows, BorderLayout.WEST);

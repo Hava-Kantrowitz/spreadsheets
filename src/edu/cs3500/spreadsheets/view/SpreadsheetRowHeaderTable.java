@@ -51,10 +51,11 @@ public class SpreadsheetRowHeaderTable extends JTable {
    */
   JTable getTable() {
 
-    model = new SpecialTableModel(getRows(), 1);
+    model = new DefaultTableModel(getRows(), 1);
 
-    for (int i = 1; i < getRows() + 1; i++) {
-      model.setValueAt(i, i - 1, 0);
+
+    for (int i = 2; i < getRows(); i++) {
+      model.setValueAt(i, i, 0);
     }
     return new JTable(model);
   }
