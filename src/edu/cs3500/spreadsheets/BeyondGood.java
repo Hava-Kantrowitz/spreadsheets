@@ -134,6 +134,16 @@ public class BeyondGood {
    */
   private static void renderGui(Reader fileName) {
     sheet.initializeSpreadsheet(fileName);
+
+    try {
+      sheet.evaluateSheet();
+    } catch (IllegalArgumentException e) {
+      for (String i : sheet.getBadReferences()) {
+        System.out.println("Error in cell " + i + " : cell contains self reference.");
+      }
+      System.exit(1);
+    }
+
     SpreadsheetView view = new SpreadsheetGraphicsView(sheet);
     view.render();
   }
@@ -151,7 +161,7 @@ public class BeyondGood {
     try {
       sheet.evaluateSheet();
     } catch (IllegalArgumentException e) {
-      for (String i : sheet.badReferences) {
+      for (String i : sheet.getBadReferences()) {
         System.out.println("Error in cell " + i + " : cell contains self reference.");
       }
       System.exit(1);

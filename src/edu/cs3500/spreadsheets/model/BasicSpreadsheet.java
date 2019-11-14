@@ -1,6 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class BasicSpreadsheet implements Spreadsheet {
   private HashMap<Coord, Cell> sheet;
   private int numRows;
   private int numCols;
-  public ArrayList<String> badReferences = new ArrayList<>();
+  private ArrayList<String> badReferences = new ArrayList<>();
 
   /**
    * The empty constructor for a basic spreadsheet.
@@ -175,6 +176,19 @@ public class BasicSpreadsheet implements Spreadsheet {
     HashMap<Coord, Cell> copyMap = new HashMap<Coord, Cell>(); // creates the new hash map
     copyMap.putAll(this.sheet); // copies all of the mappings from this sheet to a new one
     return copyMap.keySet(); // returns the key set
+  }
+
+  /**
+   * Method to return a copy of the bad references.
+   * @return the bad references in the given file
+   */
+  public ArrayList<String> getBadReferences() {
+    ArrayList<String> outputList = new ArrayList<String>(badReferences.size());
+    for (int i = 0; i < badReferences.size(); i++) {
+      outputList.add("");
+    }
+    Collections.copy(outputList, this.badReferences);
+    return outputList;
   }
 
 

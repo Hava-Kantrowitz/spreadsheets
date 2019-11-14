@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * Models a vertical scroll bar.
+ * Models a vertical scroll bar listener for the spreadsheet graphical view.
  */
 public class VerticalScrollListener implements AdjustmentListener {
 
@@ -18,6 +18,7 @@ public class VerticalScrollListener implements AdjustmentListener {
 
   /**
    * This constructs a new spreadsheet scroll listener.
+   * @param table the data of the spreadsheet in the form of a table
    */
   VerticalScrollListener(DefaultTableModel table, DefaultTableModel rows) {
     super();
