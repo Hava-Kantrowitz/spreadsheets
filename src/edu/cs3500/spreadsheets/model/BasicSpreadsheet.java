@@ -22,8 +22,8 @@ public class BasicSpreadsheet implements Spreadsheet {
   /**
    * The empty constructor for a basic spreadsheet.
    */
-  public BasicSpreadsheet(){
-      // empty constructor ready to initialize the sheet
+  public BasicSpreadsheet() {
+    // empty constructor ready to initialize the sheet
   }
 
   @Override
@@ -180,6 +180,7 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   /**
    * Method to return a copy of the bad references.
+   *
    * @return the bad references in the given file
    */
   public ArrayList<String> getBadReferences() {

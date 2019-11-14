@@ -6,6 +6,9 @@ import javax.swing.table.DefaultTableModel;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
+/**
+ * This class represents the table which holds the row headers (a table with one column).
+ */
 public class SpreadsheetRowHeaderTable extends JTable {
   private SpreadsheetReadOnlyAdapter spreadsheet;
   private int initNumCells = 300;
@@ -23,6 +26,7 @@ public class SpreadsheetRowHeaderTable extends JTable {
 
   /**
    * Gets the default table model.
+   *
    * @return the model
    */
   public DefaultTableModel getModel() {
@@ -53,8 +57,14 @@ public class SpreadsheetRowHeaderTable extends JTable {
 
     model = new DefaultTableModel(getRows(), 1);
 
+    String[] col = new String[1];
+    col[0] = " ";
 
-    for (int i = 2; i < getRows(); i++) {
+
+    model.setColumnIdentifiers(col);
+
+
+    for (int i = 1; i < getRows(); i++) {
       model.setValueAt(i, i, 0);
     }
     return new JTable(model);

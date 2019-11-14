@@ -1,6 +1,7 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.*;
+
+import java.awt.Color;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
@@ -23,8 +24,10 @@ public class HorizontalScrollListener implements AdjustmentListener {
 
   /**
    * This constructs a new spreadsheet scroll listener.
+   *
    * @param sheet the JTable component of the panel
    * @param table the data represented as a table
+   * @param rows the row headers from the table
    */
   HorizontalScrollListener(JTable sheet, DefaultTableModel table, JTable rows) {
     super();

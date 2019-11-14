@@ -1,6 +1,8 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.AdjustmentListener;
 
 import javax.swing.JFrame;
@@ -18,6 +20,7 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
 
   /**
    * Constructs an instance of the GUI spreadsheet view.
+   *
    * @param model the model to render
    */
   public SpreadsheetGraphicsView(Spreadsheet model) {
@@ -44,22 +47,29 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     SpreadsheetRowHeaderTable rows = new SpreadsheetRowHeaderTable(modelRead);
     JTable myRows = rows.getTable();
     myRows.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
     JScrollPane rowScroller = new JScrollPane();
     scrollPane.getViewport().add(sheet);
     rowScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+    rowScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     rowScroller.getViewport().setPreferredSize(new Dimension(50, 4800));
     rowScroller.getViewport().add(myRows);
 
 
     // listener takes in the scroll bar and the default table
     // so that it will change what is displayed
-    AdjustmentListener scrollListener = new HorizontalScrollListener(sheet, table.getModel(), myRows);
+    AdjustmentListener scrollListener = new HorizontalScrollListener(sheet, table.getModel(),
+            myRows);
     AdjustmentListener vertScrollListener
-            = new VerticalScrollListener(table.getModel(), (DefaultTableModel) myRows.getModel());
+            = new VerticalScrollListener(table.getModel(), (DefaultTableModel) myRows.getModel(),
+            rowScroller.getVerticalScrollBar());
+
 
     scrollPane.getHorizontalScrollBar().addAdjustmentListener(scrollListener);
     scrollPane.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
 
+
+    JScrollPane rowScroll = new JScrollPane();
 
     this.add(rowScroller, BorderLayout.WEST);
     this.add(scrollPane, BorderLayout.CENTER);

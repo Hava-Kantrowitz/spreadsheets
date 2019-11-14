@@ -3,7 +3,7 @@ package edu.cs3500.spreadsheets.view;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
-import javax.swing.*;
+import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,16 +15,21 @@ public class VerticalScrollListener implements AdjustmentListener {
   private DefaultTableModel table;
   private int scrollMaxCount;
   private DefaultTableModel rows;
+  private JScrollBar rowScroll;
 
   /**
    * This constructs a new spreadsheet scroll listener.
-   * @param table the data of the spreadsheet in the form of a table
+   *
+   * @param table     the data of the spreadsheet in the form of a table
+   * @param rows      the row headers of the table
+   * @param rowScroll the vertical scroll bar for the rows
    */
-  VerticalScrollListener(DefaultTableModel table, DefaultTableModel rows) {
+  VerticalScrollListener(DefaultTableModel table, DefaultTableModel rows, JScrollBar rowScroll) {
     super();
     this.table = table;
     this.scrollMaxCount = 0;
     this.rows = rows;
+    this.rowScroll = rowScroll;
   }
 
 
@@ -42,6 +47,8 @@ public class VerticalScrollListener implements AdjustmentListener {
 
       scrollMaxCount = e.getValue(); // set new max it has scrolled to current value
     }
+    // scrolling the row headers (setting to the value of the table scroll)
+    rowScroll.setValue(e.getValue());
   }
 
 }

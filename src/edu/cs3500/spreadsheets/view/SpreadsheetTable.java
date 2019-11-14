@@ -1,9 +1,9 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.util.Arrays;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
@@ -28,6 +28,7 @@ public class SpreadsheetTable extends JTable {
 
   /**
    * Gets the default table model.
+   *
    * @return the model
    */
   public DefaultTableModel getModel() {
@@ -77,7 +78,7 @@ public class SpreadsheetTable extends JTable {
     model = new DefaultTableModel(getRows(), 1);
     model.setColumnIdentifiers(colHeadings);
     for (Coord c : spreadsheet.getListCoords()) {
-      model.setValueAt(spreadsheet.getCellAt(c).toString(), c.row - 1, c.col-1);
+      model.setValueAt(spreadsheet.getCellAt(c).toString(), c.row - 1, c.col - 1);
     }
 
     return new JTable(model);
@@ -130,7 +131,7 @@ public class SpreadsheetTable extends JTable {
 
     String[] headerList = new String[size];
     for (int i = 1; i < size; i++) {
-      headerList[i] = Coord.colIndexToName(i+1);
+      headerList[i] = Coord.colIndexToName(i + 1);
     }
     return headerList;
   }
