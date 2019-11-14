@@ -77,23 +77,4 @@ public class SpreadsheetRowHeaderTable extends JTable {
     return highestRow;
   }
 
-  /**
-   * Gets the maximum column number.
-   *
-   * @return the max col
-   */
-  private int getMaxCols() {
-    int highestCol = 0;
-
-    for (Coord coord : spreadsheet.getListCoords()) {
-      int checkCol = coord.col;
-      if (checkCol > highestCol) {
-        highestCol = checkCol;
-      }
-    }
-
-    return highestCol;
-
-  }
-
 }

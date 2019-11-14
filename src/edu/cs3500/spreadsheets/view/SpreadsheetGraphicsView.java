@@ -47,6 +47,7 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     JScrollPane rowScroller = new JScrollPane();
     scrollPane.getViewport().add(sheet);
     rowScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+    rowScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     rowScroller.getViewport().setPreferredSize(new Dimension(50, 4800));
     rowScroller.getViewport().add(myRows);
 
@@ -59,6 +60,7 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
 
     scrollPane.getHorizontalScrollBar().addAdjustmentListener(scrollListener);
     scrollPane.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
+    rowScroller.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
 
 
     this.add(rowScroller, BorderLayout.WEST);
