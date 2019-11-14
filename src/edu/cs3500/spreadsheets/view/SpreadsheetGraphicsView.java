@@ -1,7 +1,6 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.AdjustmentListener;
 
 import javax.swing.JFrame;
@@ -44,8 +43,6 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     JScrollPane scrollPane = new JScrollPane(sheet);
     SpreadsheetRowHeaderTable rows = new SpreadsheetRowHeaderTable(modelRead);
     JTable myRows = rows.getTable();
-    myRows.getColumnModel().getColumn(0).setPreferredWidth(10);
-    myRows.getColumnModel().getColumn(0).setWidth(10);
     scrollPane.setRowHeaderView(myRows);
 
     // listener takes in the scroll bar and the default table

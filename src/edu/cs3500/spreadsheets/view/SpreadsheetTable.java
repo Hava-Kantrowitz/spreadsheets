@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.view;
 
+import java.util.Arrays;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import edu.cs3500.spreadsheets.model.Coord;
@@ -127,7 +129,7 @@ public class SpreadsheetTable extends JTable {
   private String[] getHeaders(int size) {
 
     String[] headerList = new String[size];
-    for (int i = 0; i < size; i++) {
+    for (int i = 1; i < size; i++) {
       headerList[i] = Coord.colIndexToName(i);
     }
     return headerList;

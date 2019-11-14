@@ -61,7 +61,5 @@ public class HorizontalScrollListener implements AdjustmentListener {
     rowRenderer.setBackground(Color.LIGHT_GRAY);
     rowRenderer.setHorizontalAlignment(JLabel.CENTER);
     rows.getColumnModel().getColumn(0).setCellRenderer(rowRenderer);
-    rows.getColumnModel().getColumn(0).setPreferredWidth(10);
-    rows.getColumnModel().getColumn(0).setWidth(10);
   }
 }
