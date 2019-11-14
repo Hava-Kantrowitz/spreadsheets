@@ -130,7 +130,7 @@ public class SpreadsheetTable extends JTable {
 
     String[] headerList = new String[size];
     for (int i = 1; i < size; i++) {
-      headerList[i] = Coord.colIndexToName(i);
+      headerList[i] = Coord.colIndexToName(i+1);
     }
     return headerList;
   }

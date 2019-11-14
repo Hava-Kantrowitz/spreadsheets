@@ -40,11 +40,12 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
 
     sheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-    JScrollPane scrollPane = new JScrollPane(sheet);
+    JScrollPane scrollPane = new JScrollPane();
     SpreadsheetRowHeaderTable rows = new SpreadsheetRowHeaderTable(modelRead);
     JTable myRows = rows.getTable();
     myRows.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    scrollPane.setRowHeaderView(myRows);
+   scrollPane.setViewportView(sheet);
+
 
     // listener takes in the scroll bar and the default table
     // so that it will change what is displayed
@@ -55,6 +56,8 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     scrollPane.getHorizontalScrollBar().addAdjustmentListener(scrollListener);
     scrollPane.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
 
+
+    this.add(myRows, BorderLayout.WEST);
     this.add(scrollPane, BorderLayout.CENTER);
 
   }
