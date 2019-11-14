@@ -45,22 +45,6 @@ public class SpreadsheetRowHeaderTable extends JTable {
   }
 
   /**
-   * Gets the number of columns in the table.
-   *
-   * @return the number of columns
-   */
-  private int getCols() {
-    int colNum = initNumCells;
-    int numCols = getMaxCols() + 1;
-
-    if (numCols > colNum) {
-      colNum = numCols;
-    }
-
-    return colNum;
-  }
-
-  /**
    * Gets the created table.
    *
    * @return the table

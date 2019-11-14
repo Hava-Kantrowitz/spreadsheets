@@ -43,6 +43,7 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     JScrollPane scrollPane = new JScrollPane(sheet);
     SpreadsheetRowHeaderTable rows = new SpreadsheetRowHeaderTable(modelRead);
     JTable myRows = rows.getTable();
+    myRows.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     scrollPane.setRowHeaderView(myRows);
 
     // listener takes in the scroll bar and the default table
