@@ -2,14 +2,11 @@ package edu.cs3500.spreadsheets.view;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
-/**
- * Models a spreadsheet table.
- */
-public class SpreadsheetTable extends JTable {
-
+public class SpreadsheetRowHeaderTable extends JTable {
   private SpreadsheetReadOnlyAdapter spreadsheet;
   private int initNumCells = 300;
 
@@ -20,7 +17,7 @@ public class SpreadsheetTable extends JTable {
    *
    * @param spreadsheet the spreadsheet to construct
    */
-  SpreadsheetTable(SpreadsheetReadOnlyAdapter spreadsheet) {
+  SpreadsheetRowHeaderTable(SpreadsheetReadOnlyAdapter spreadsheet) {
     this.spreadsheet = spreadsheet;
   }
 
@@ -70,14 +67,11 @@ public class SpreadsheetTable extends JTable {
    */
   JTable getTable() {
 
-    String[] colHeadings = getHeaders(getCols());
+    model = new SpecialTableModel(getRows(), 1);
 
-    model = new DefaultTableModel(getRows(), 1);
-    model.setColumnIdentifiers(colHeadings);
-    for (Coord c : spreadsheet.getListCoords()) {
-      model.setValueAt(spreadsheet.getCellAt(c).toString(), c.row - 1, c.col-1);
+    for (int i = 1; i < getRows() + 1; i++) {
+      model.setValueAt(i, i - 1, 0);
     }
-
     return new JTable(model);
   }
 
@@ -117,21 +111,5 @@ public class SpreadsheetTable extends JTable {
     return highestCol;
 
   }
-
-  /**
-   * Gets the column headers.
-   *
-   * @param size the number of columns in the table
-   * @return the list of the headers
-   */
-  private String[] getHeaders(int size) {
-
-    String[] headerList = new String[size];
-    for (int i = 0; i < size; i++) {
-      headerList[i] = Coord.colIndexToName(i);
-    }
-    return headerList;
-  }
-
 
 }

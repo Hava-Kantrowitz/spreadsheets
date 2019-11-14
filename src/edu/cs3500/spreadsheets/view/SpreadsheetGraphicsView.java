@@ -7,6 +7,8 @@ import java.awt.event.AdjustmentListener;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
@@ -40,12 +42,17 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     sheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
     JScrollPane scrollPane = new JScrollPane(sheet);
+    SpreadsheetRowHeaderTable rows = new SpreadsheetRowHeaderTable(modelRead);
+    JTable myRows = rows.getTable();
+    myRows.getColumnModel().getColumn(0).setPreferredWidth(10);
+    myRows.getColumnModel().getColumn(0).setWidth(10);
+    scrollPane.setRowHeaderView(myRows);
 
     // listener takes in the scroll bar and the default table
     // so that it will change what is displayed
-    AdjustmentListener scrollListener = new HorizontalScrollListener(sheet, table.getModel());
+    AdjustmentListener scrollListener = new HorizontalScrollListener(sheet, table.getModel(), myRows);
     AdjustmentListener vertScrollListener
-            = new VerticalScrollListener(table.getModel());
+            = new VerticalScrollListener(table.getModel(), (DefaultTableModel) myRows.getModel());
 
     scrollPane.getHorizontalScrollBar().addAdjustmentListener(scrollListener);
     scrollPane.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);

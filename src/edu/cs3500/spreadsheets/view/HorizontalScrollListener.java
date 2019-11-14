@@ -1,6 +1,6 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
@@ -19,15 +19,17 @@ public class HorizontalScrollListener implements AdjustmentListener {
   private DefaultTableModel table;
   private int scrollMaxCount;
   private JTable sheet;
+  private JTable rows;
 
   /**
    * This constructs a new spreadsheet scroll listener.
    */
-  HorizontalScrollListener(JTable sheet, DefaultTableModel table) {
+  HorizontalScrollListener(JTable sheet, DefaultTableModel table, JTable rows) {
     super();
     this.sheet = sheet;
     this.table = table;
     this.scrollMaxCount = 50;
+    this.rows = rows;
   }
 
 
@@ -46,7 +48,6 @@ public class HorizontalScrollListener implements AdjustmentListener {
     }
 
     DefaultTableCellRenderer rowRenderer = new DefaultTableCellRenderer();
-    sheet.getColumnModel().getColumn(0).setCellRenderer(rowRenderer);
 
     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
     centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -57,6 +58,8 @@ public class HorizontalScrollListener implements AdjustmentListener {
 
     rowRenderer.setBackground(Color.LIGHT_GRAY);
     rowRenderer.setHorizontalAlignment(JLabel.CENTER);
-    sheet.getColumnModel().getColumn(0).setCellRenderer(rowRenderer);
+    rows.getColumnModel().getColumn(0).setCellRenderer(rowRenderer);
+    rows.getColumnModel().getColumn(0).setPreferredWidth(10);
+    rows.getColumnModel().getColumn(0).setWidth(10);
   }
 }
