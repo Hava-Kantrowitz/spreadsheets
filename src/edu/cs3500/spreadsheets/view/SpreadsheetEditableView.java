@@ -5,9 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.AdjustmentListener;
 
-import javax.swing.JFrame;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import edu.cs3500.spreadsheets.model.Spreadsheet;
@@ -16,14 +14,14 @@ import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 /**
  * Models the GUI view of the spreadsheet.
  */
-public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
+public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
 
   /**
    * Constructs an instance of the GUI spreadsheet view.
    *
    * @param model the model to render
    */
-  public SpreadsheetGraphicsView(Spreadsheet model) {
+  public SpreadsheetEditableView(Spreadsheet model) {
 
     super();
 
@@ -68,6 +66,9 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     scrollPane.getHorizontalScrollBar().addAdjustmentListener(scrollListener);
     scrollPane.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
     rowScroller.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
+
+    JTextField text = new JTextField();
+    this.add(text, BorderLayout.NORTH);
 
     this.add(rowScroller, BorderLayout.WEST);
     this.add(scrollPane, BorderLayout.CENTER);
