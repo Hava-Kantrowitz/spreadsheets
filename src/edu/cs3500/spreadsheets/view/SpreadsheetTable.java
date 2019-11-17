@@ -24,6 +24,7 @@ public class SpreadsheetTable extends JTable {
    */
   SpreadsheetTable(SpreadsheetReadOnlyAdapter spreadsheet) {
     this.spreadsheet = spreadsheet;
+
   }
 
   /**
@@ -71,7 +72,7 @@ public class SpreadsheetTable extends JTable {
    *
    * @return the table
    */
-  JTable getTable() {
+  NoEditTable getTable() {
 
     String[] colHeadings = getHeaders(getCols());
 
@@ -81,7 +82,8 @@ public class SpreadsheetTable extends JTable {
       model.setValueAt(spreadsheet.getCellAt(c).toString(), c.row - 1, c.col - 1);
     }
 
-    return new JTable(model);
+
+    return new NoEditTable(model);
   }
 
   /**

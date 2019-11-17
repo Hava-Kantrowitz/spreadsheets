@@ -38,6 +38,8 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     JTable sheet = table.getTable();
     sheet.setGridColor(Color.black);
     sheet.getTableHeader().setReorderingAllowed(false);
+    sheet.setRowSelectionAllowed(false);
+    sheet.setColumnSelectionAllowed(false);
 
     sheet.setGridColor(Color.BLACK);
 
@@ -68,6 +70,8 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     scrollPane.getHorizontalScrollBar().addAdjustmentListener(scrollListener);
     scrollPane.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
     rowScroller.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
+
+
 
     this.add(rowScroller, BorderLayout.WEST);
     this.add(scrollPane, BorderLayout.CENTER);
