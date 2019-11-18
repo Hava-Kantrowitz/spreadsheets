@@ -6,8 +6,8 @@ import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 
 public class EditableSheetController implements Features {
 
-  SpreadsheetEditableView view;
-  Spreadsheet model;
+  private SpreadsheetEditableView view;
+  private Spreadsheet model;
 
   public EditableSheetController(SpreadsheetEditableView view, Spreadsheet model){
     this.view = view;
@@ -21,6 +21,12 @@ public class EditableSheetController implements Features {
     // sets within the view (subtracting 1 because column based)
     // setting to the now evaluated value of the cells
     view.setCellAt(model.getCellAt(coord).toString(),coord.row - 1, coord.col - 1);
+    //loop through whole sheet and reset
+    model.evaluateSheet();
+    for (Coord c : model.getListCoords()) {
+      view.setCellAt(model.getCellAt(c).toString(), c.row - 1, c.col - 1);
+    }
+
   }
 
   @Override
