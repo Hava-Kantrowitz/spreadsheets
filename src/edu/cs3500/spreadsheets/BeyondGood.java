@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 import edu.cs3500.spreadsheets.view.SpreadsheetGraphicsView;
 import edu.cs3500.spreadsheets.view.SpreadsheetTextualView;
 import edu.cs3500.spreadsheets.view.SpreadsheetView;
@@ -63,6 +64,10 @@ public class BeyondGood {
         // render the view of the file with the gui
         renderGui(inputFile);
       }
+      else if(args.length == 3 && args[2].equals("-edit")){
+        // render the editable form of the view
+        renderEditable(inputFile);
+      }
       // check if it is length 4
       else if (args.length == 4 && args[2].equals("-save")) {
         // checking if the save one
@@ -86,7 +91,8 @@ public class BeyondGood {
       else if (args.length == 4 && args[2].equals("-eval")) {
         // evaluate the given cell
         evaluateCellTextView(inputFile, args[3]);
-      } else {
+      }
+      else {
         throw new IllegalArgumentException("Malformed command line");
 
       }
@@ -175,6 +181,28 @@ public class BeyondGood {
     } catch (NumberFormatException e) {
       System.out.print("\"" + result + "\"");  // adding the quotes if it is a string
     }
+  }
+
+
+  /**
+   * This is the method to create the gui from the given file.
+   *
+   * @param fileName the name of the file
+   */
+  private static void renderEditable(Reader fileName) {
+    sheet.initializeSpreadsheet(fileName);
+
+    try {
+      sheet.evaluateSheet();
+    } catch (IllegalArgumentException e) {
+      for (String i : sheet.getBadReferences()) {
+        System.out.println("Error in cell " + i + " : cell contains self reference.");
+      }
+      System.exit(1);
+    }
+
+    SpreadsheetView view = new SpreadsheetEditableView(sheet);
+    view.render();
   }
 
 }
