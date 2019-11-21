@@ -66,7 +66,18 @@ public class BasicSpreadsheet implements Spreadsheet {
       }
       //create visitor and parse the raw contents of the added cell
       SexpVisitor visit = new CreatorVisitor(this);
-      addedCell = (Cell) Parser.parse(rawContents).accept(visit, contentCopy);
+      try {
+        addedCell = (Cell) Parser.parse(rawContents).accept(visit, contentCopy);
+      }
+      // checking if expected a cell reference error in the sexp
+      // so setting an error here
+      catch(IllegalStateException e){
+        addedCell = new ErrorCell(new StringValue("#NAME?"),contentCopy);
+      }
+      // checking if there is an invalid sexp
+      catch(IllegalArgumentException e){
+        addedCell = new ErrorCell(new StringValue("#NAME?"),contentCopy);
+      }
       setCellAt(coord, addedCell);  // setting the value of the cell
     }
 

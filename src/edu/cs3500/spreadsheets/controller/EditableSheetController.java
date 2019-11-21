@@ -1,7 +1,10 @@
 package edu.cs3500.spreadsheets.controller;
 
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.ErrorCell;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
+import edu.cs3500.spreadsheets.model.StringValue;
+import edu.cs3500.spreadsheets.model.Value;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 
 public class EditableSheetController implements Features {
@@ -17,14 +20,30 @@ public class EditableSheetController implements Features {
 
   @Override
   public void onCellAffirmed(Coord coord) {
-    model.setCellAt(coord, view.getTextField());  // sets the cell in the model
-    // sets within the view (subtracting 1 because column based)
-    // setting to the now evaluated value of the cells
-    view.setCellAt(model.getCellAt(coord).toString(),coord.row - 1, coord.col - 1);
-    //loop through whole sheet and reset
-    model.evaluateSheet();
+    try {
+      model.setCellAt(coord, view.getTextField());  // sets the cell in the model
+      // sets within the view (subtracting 1 because column based)
+      // setting to the now evaluated value of the cells
+      view.setCellAt(model.getCellAt(coord).toString(), coord.row - 1, coord.col - 1);
+    }
+    // checking for error in evaluation of the cell being set
+    catch(IllegalArgumentException e){
+        view.setCellAt("#VALUE!", coord.row - 1, coord.col - 1);
+        // setting the given cell to an error cell
+        model.setCellAt(coord, new ErrorCell(new StringValue("#VALUE!"), view.getTextField()));
+    }
+
+    // still need to deal with self reference
     for (Coord c : model.getListCoords()) {
-      view.setCellAt(model.getCellAt(c).toString(), c.row - 1, c.col - 1);
+      try{
+        view.setCellAt(model.getCellAt(c).toString(), c.row - 1, c.col - 1);       // THE toString has evaluate within we may want to change this tho so it is more explicit that we evaluate
+      }
+      // catching if there was an error in the evaluation because a cell referred to has an error
+      catch(IllegalArgumentException e){
+        // not setting this cell to an error in model but showing error caused by previous cell
+          view.setCellAt("#VALUE!", coord.row - 1, coord.col - 1);
+      }
+
     }
 
   }
