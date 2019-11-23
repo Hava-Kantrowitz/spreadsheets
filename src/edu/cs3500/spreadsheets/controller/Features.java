@@ -28,4 +28,11 @@ public interface Features {
    */
   void onCellSelected(Coord coord);
 
+  /**
+   * Method to delete the contents of the given cell.
+   */
+  void onCellDelete(Coord coord);
+
+
+
 }

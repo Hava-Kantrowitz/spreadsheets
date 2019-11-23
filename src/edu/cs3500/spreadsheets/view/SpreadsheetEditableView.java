@@ -3,6 +3,7 @@ package edu.cs3500.spreadsheets.view;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentListener;
+import java.awt.event.KeyListener;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
@@ -75,6 +76,7 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     scrollPane.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
     rowScroller.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
 
+    // BUTTONS
     // the button to accept the input to the cell
     JButton acceptChangeB = new JButton("Accept");
     acceptChangeB.setBackground(Color.GREEN);
@@ -104,7 +106,8 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     userInput.add(text, BorderLayout.NORTH);
     userInput.add(buttons, BorderLayout.EAST);
 
-    // add the buttons and search to the whole panel
+
+    // adds the upper panel (user input) to the whole panel
     this.add(userInput, BorderLayout.NORTH);
 
 
@@ -117,6 +120,27 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     sheet.getColumnModel().getSelectionModel().addListSelectionListener(cellClickListener);
 
 
+    // adding listener for delete key
+    KeyListener deleteListener = new DeleteListener(sheet, controller);
+    sheet.addKeyListener(deleteListener);
+
+
+    // SETTING THE MENU
+    JMenuBar menuBar = new JMenuBar();  // create the whole menu bar
+    JMenu addLoadMenu = new JMenu("File");    // create the individual menu
+
+
+    JMenuItem load = new JMenuItem("Load"); // adding the load option
+    addLoadMenu.add(load);
+
+    JMenuItem save = new JMenuItem("Save"); // adding the save option
+    addLoadMenu.add(save);
+
+    menuBar.add(addLoadMenu);           // add the menu
+
+
+
+    this.setJMenuBar(menuBar);
     this.add(rowScroller, BorderLayout.WEST);
     this.add(scrollPane, BorderLayout.CENTER);
 

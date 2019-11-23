@@ -4,7 +4,6 @@ import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.ErrorCell;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.StringValue;
-import edu.cs3500.spreadsheets.model.Value;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 
 public class EditableSheetController implements Features {
@@ -27,6 +26,7 @@ public class EditableSheetController implements Features {
       view.setCellAt(model.getCellAt(coord).toString(), coord.row - 1, coord.col - 1);
     }
     // checking for error in evaluation of the cell being set
+    // error checking for parser is done in the model set cell at
     catch(IllegalArgumentException e){
         view.setCellAt("#VALUE!", coord.row - 1, coord.col - 1);
         // setting the given cell to an error cell
@@ -58,5 +58,17 @@ public class EditableSheetController implements Features {
   @Override
   public void onCellSelected(Coord modelCoord) {
     this.view.updateTextField(model.getCellAt(modelCoord).getRawContents()); // update text field
+  }
+
+  @Override
+  public void onCellDelete(Coord coord) {
+    // set the value in the view (adjust for zero based)
+    this.view.setCellAt("",coord.row - 1, coord.col - 1);
+
+    // set in the model
+    this.model.setCellAt(coord, "");
+
+    // set the text field
+    this.view.updateTextField("");
   }
 }

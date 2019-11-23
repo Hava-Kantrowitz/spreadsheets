@@ -6,6 +6,8 @@ import java.util.List;
  * This is the class to represent the cell which has an error. The error could have come from an
  * invalid sexp or an invalid argument in a formula. Once the cell has an error a new error cell is
  * created to take its place.
+ * Throws IllegalArgumentExceptions in all the methods when the cell is trying to be used in a
+ * function to show that the cell is unable to be used
  */
 public class ErrorCell implements Cell {
 

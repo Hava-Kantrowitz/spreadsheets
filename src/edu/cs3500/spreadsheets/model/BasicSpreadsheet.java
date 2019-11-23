@@ -101,7 +101,6 @@ public class BasicSpreadsheet implements Spreadsheet {
         Coord newCoord = new Coord(j + 1, i + 1);
         multRows.add(sheet.getOrDefault(newCoord, new Blank()));
       }
-
     }
     return multRows;
   }
@@ -117,7 +116,7 @@ public class BasicSpreadsheet implements Spreadsheet {
         //if it overflows, there is a self reference within the given cell
         //add the cell to a list of bad references
         badReferences.add(coord.toString());
-        throw new IllegalArgumentException("There is a self reference in cell "
+        throw new IllegalArgumentException("There is a self reference in cell. "
                 + coord.toString());
       }
     }
@@ -126,7 +125,7 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   @Override
   public void evaluateCellAt(Coord coord) throws IllegalArgumentException {
-    getCellAt(coord).evaluateCell();
+      getCellAt(coord).evaluateCell();
   }
 
   @Override
