@@ -2,7 +2,6 @@ package edu.cs3500.spreadsheets.controller;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -37,8 +36,11 @@ public class EditableSheetController implements Features {
     // error checking for parser is done in the model set cell at
     catch(IllegalArgumentException e){
         view.setCellAt("#VALUE!", coord.row - 1, coord.col - 1);
-        // setting the given cell to an error cell
+        // setting the given cell to an error cell (if problem not caused by error cell)
+        // preserves cells that are set with reference to an error
+      if(!e.getMessage().contains("Error in cell.")) {
         model.setCellAt(coord, new ErrorCell(new StringValue("#VALUE!"), view.getTextField()));
+      }
     }
 
     for (Coord c : model.getListCoords()) {
@@ -49,7 +51,7 @@ public class EditableSheetController implements Features {
       // catching if there was an error in the evaluation because a cell referred to has an error
       catch(IllegalArgumentException | StackOverflowError e){
         // not setting this cell to an error in model but showing error caused by previous cell
-          view.setCellAt("#VALUE!", coord.row - 1, coord.col - 1);
+          view.setCellAt("#VALUE!", c.row - 1, c.col - 1);
       }
 
     }
@@ -71,14 +73,11 @@ public class EditableSheetController implements Features {
 
   @Override
   public void onCellDelete(Coord coord) {
-    // set the value in the view (adjust for zero based)
-    this.view.setCellAt("",coord.row - 1, coord.col - 1);
-
-    // set in the model
-    this.model.setCellAt(coord, "");
-
     // set the text field
     this.view.updateTextField("");
+
+    // set the view and model as if on cell affirmed (cause references to change)
+    this.onCellAffirmed(coord);
   }
 
   @Override
@@ -99,6 +98,7 @@ public class EditableSheetController implements Features {
 
   @Override
   public void onSaveSelect(String filePath) {
+
     try {
       // get the print writer form of the file
       PrintWriter fileToSaveTo = new PrintWriter(filePath);
