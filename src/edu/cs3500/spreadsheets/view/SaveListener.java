@@ -12,7 +12,7 @@ public class SaveListener implements ActionListener {
   private JFrame mainFrame;
   private EditableSheetController controller;
 
-  public SaveListener(JFrame mainFrame, EditableSheetController controller){
+  SaveListener(JFrame mainFrame, EditableSheetController controller){
     this.mainFrame = mainFrame;
     this.controller = controller;
   }

@@ -8,12 +8,12 @@ import edu.cs3500.spreadsheets.model.Coord;
 
 public class DeleteListener implements KeyListener {
 
-  private static final int DELETE_CODE = 8;
+  private static final int DELETE_CODE = 127;
 
   private EditableSheetController controller;
   private NoEditTable sheet;
 
-  public DeleteListener( NoEditTable sheet, EditableSheetController controller){
+  DeleteListener(NoEditTable sheet, EditableSheetController controller){
     this.controller = controller;
     this.sheet = sheet;
   }

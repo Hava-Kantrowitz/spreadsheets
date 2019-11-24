@@ -13,10 +13,10 @@ import edu.cs3500.spreadsheets.model.Coord;
  */
 public class RevertActionListener implements ActionListener {
 
-  JTable sheet;
-  EditableSheetController controller;
+  private JTable sheet;
+  private EditableSheetController controller;
 
-  public RevertActionListener(JTable sheet, EditableSheetController controller){
+  RevertActionListener(JTable sheet, EditableSheetController controller){
     this.sheet = sheet;
     this.controller = controller;
   }

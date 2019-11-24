@@ -48,13 +48,17 @@ public class Reference implements Formula {
 
   @Override
   public Value evaluateCell() {
-    Value output;
-    if (referredCoords.size() == 1) { // if there is only one reference
-      output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCell();// eval the given cell
-    } else { // multiple references cannot be evaluated alone
-      throw new IllegalArgumentException("A section of cells needs an operation to evaluate");
+    try {
+      Value output;
+      if (referredCoords.size() == 1) { // if there is only one reference
+        output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCell();// eval the given cell
+      } else { // multiple references cannot be evaluated alone
+        throw new IllegalArgumentException("A section of cells needs an operation to evaluate");
+      }
+      return output;
+    } catch(StackOverflowError e) {
+      throw new IllegalArgumentException();
     }
-    return output;
   }
 
   @Override

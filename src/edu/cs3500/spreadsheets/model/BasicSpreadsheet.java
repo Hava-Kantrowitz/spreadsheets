@@ -39,7 +39,6 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   @Override
   public Cell getCellAt(Coord coord) {
-
     return sheet.getOrDefault(coord, new Blank());
   }
 

@@ -11,7 +11,6 @@ import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
  */
 public class SpreadsheetRowHeaderTable extends JTable {
   private SpreadsheetReadOnlyAdapter spreadsheet;
-  private int initNumCells = 300;
 
   private DefaultTableModel model;
 
@@ -39,6 +38,7 @@ public class SpreadsheetRowHeaderTable extends JTable {
    * @return the number of rows
    */
   private int getRows() {
+    int initNumCells = 300;
     int rowNum = initNumCells;
     int numRows = getMaxRows() + 1;
     if (numRows > rowNum) {
