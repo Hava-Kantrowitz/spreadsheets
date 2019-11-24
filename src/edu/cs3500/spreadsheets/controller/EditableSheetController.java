@@ -73,14 +73,11 @@ public class EditableSheetController implements Features {
 
   @Override
   public void onCellDelete(Coord coord) {
-    // set the value in the view (adjust for zero based)
-    this.view.setCellAt("",coord.row - 1, coord.col - 1);
-
-    // set in the model
-    this.model.setCellAt(coord, "");
-
     // set the text field
     this.view.updateTextField("");
+
+    // set the view and model as if on cell affirmed (cause references to change)
+    this.onCellAffirmed(coord);
   }
 
   @Override
