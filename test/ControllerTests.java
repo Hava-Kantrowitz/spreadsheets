@@ -30,9 +30,8 @@ public class ControllerTests {
 
   private void beginMethod() {
     try {
-      model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/" +
-              "Desktop/NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/" +
-              "src/edu/cs3500/spreadsheets/testingText.txt"));
+      model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
+              "\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingText.txt"));
     } catch (FileNotFoundException e) {
       System.out.println("Unable to read file in tests");
     }
@@ -236,6 +235,63 @@ public class ControllerTests {
     model.getCellAt(coord2).evaluateCell(); // expected to throw the error
 
   }
+
+  //THESE ARE THE TESTS FOR ON CELL SELECTED
+
+  // this is to check when there is a double value in the text field
+  @Test
+  public void onCellSelectedDouble(){
+    beginMethod();
+    Coord coord = new Coord(1,1);
+    controller.onCellSelected(coord);            // calling the method
+
+    assertEquals(new DoubleValue(3.0), model.getCellAt(coord));  // checking model updated
+  }
+
+  // this is to check when there is a string value in the text field
+  @Test
+  public void onCellSelectedString(){
+    beginMethod();
+    Coord coord = new Coord(1,200);
+    controller.onCellSelected(coord);            // calling the method
+
+    assertEquals(new StringValue("hello"), model.getCellAt(coord));  // checking model updated
+  }
+
+  // this is to check when there is a boolean value in the text field
+  @Test
+  public void onCellSelectedBoolean(){
+    beginMethod();
+    Coord coord = new Coord(81,4);
+    controller.onCellSelected(coord);            // calling the method
+
+    assertEquals(new BooleanValue(false), model.getCellAt(coord));  // checking model updated
+  }
+
+  // this is to check when the text field is a valid formula
+  @Test
+  public void onCellSelectedFormula(){
+    beginMethod();
+    Coord coord = new Coord(1,20);
+    controller.onCellSelected(coord);            // calling the method
+
+    List<Formula> formulas = new ArrayList<Formula>();  // setting up expected output
+    formulas.add(new DoubleValue(2.0));
+    formulas.add(new DoubleValue(3.0));
+    Cell expectedCell = new Function("SUM", formulas);
+
+    assertEquals(expectedCell, model.getCellAt(coord));  // checking model updated
+  }
+
+  // this is to check when there is nothing in the text field
+  @Test
+  public void onCellSelectedNull(){
+    beginMethod();
+    Coord coord = new Coord(50, 3);
+    controller.onCellSelected(coord);
+    assertEquals(new Blank(), model.getCellAt(coord));
+  }
+
 
 
 

@@ -194,8 +194,4 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     JOptionPane.showMessageDialog(this,"Invalid file selected.",
             "File Error", JOptionPane.ERROR_MESSAGE);
   }
-
-  public void highlight(Coord modelCoord) {
-    
-  }
 }

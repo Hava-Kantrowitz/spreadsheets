@@ -41,15 +41,15 @@ public class EditableSheetController implements Features {
       if(!e.getMessage().contains("Error in cell.")) {
         model.setCellAt(coord, new ErrorCell(new StringValue("#VALUE!"), view.getTextField()));
       }
+
     }
 
     for (Coord c : model.getListCoords()) {
       try{
         view.setCellAt(model.getCellAt(c).toString(), c.row - 1, c.col - 1);       // THE toString has evaluate within we may want to change this tho so it is more explicit that we evaluate
-        model.evaluateSheet();
       }
       // catching if there was an error in the evaluation because a cell referred to has an error
-      catch(IllegalArgumentException | StackOverflowError e){
+      catch (IllegalArgumentException | StackOverflowError e) {
         // not setting this cell to an error in model but showing error caused by previous cell
           view.setCellAt("#VALUE!", c.row - 1, c.col - 1);
       }
@@ -67,7 +67,6 @@ public class EditableSheetController implements Features {
 
   @Override
   public void onCellSelected(Coord modelCoord) {
-    view.highlight(modelCoord);
     this.view.updateTextField(model.getCellAt(modelCoord).getRawContents()); // update text field
   }
 

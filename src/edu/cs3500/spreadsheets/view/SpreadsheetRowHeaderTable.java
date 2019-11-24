@@ -19,7 +19,7 @@ public class SpreadsheetRowHeaderTable extends JTable {
    *
    * @param spreadsheet the spreadsheet to construct
    */
-  SpreadsheetRowHeaderTable(SpreadsheetReadOnlyAdapter spreadsheet) {
+  public SpreadsheetRowHeaderTable(SpreadsheetReadOnlyAdapter spreadsheet) {
     this.spreadsheet = spreadsheet;
   }
 
