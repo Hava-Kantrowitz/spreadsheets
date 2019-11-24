@@ -1,10 +1,18 @@
 package edu.cs3500.spreadsheets.controller;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.ErrorCell;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.StringValue;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
+import edu.cs3500.spreadsheets.view.SpreadsheetTextualView;
 
 public class EditableSheetController implements Features {
 
@@ -70,5 +78,36 @@ public class EditableSheetController implements Features {
 
     // set the text field
     this.view.updateTextField("");
+  }
+
+  @Override
+  public void onLoadSelect(String filePath) {
+
+    BasicSpreadsheet newSheet = new BasicSpreadsheet();
+    try {
+      newSheet.initializeSpreadsheet(new FileReader(filePath));
+      this.view.setVisible(false); // close the current view
+      this.model = newSheet;  // setting up the model
+      this.view = new SpreadsheetEditableView(this.model); // setting up the view
+      this.view.render(); // display the new view
+    } catch (FileNotFoundException e) {
+      // show error if unable to load
+      this.view.displayFileError();
+    }
+  }
+
+  @Override
+  public void onSaveSelect(String filePath) {
+    try {
+      // get the print writer form of the file
+      PrintWriter fileToSaveTo = new PrintWriter(filePath);
+      // create the textual view
+      SpreadsheetTextualView savedFile = new SpreadsheetTextualView(this.model, fileToSaveTo);
+      // actually save the file
+      savedFile.render();
+    } catch (IOException e) {
+      // show error if unable to save
+      view.displayFileError();
+    }
   }
 }

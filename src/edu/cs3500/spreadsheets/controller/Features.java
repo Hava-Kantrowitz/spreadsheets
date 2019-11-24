@@ -34,5 +34,14 @@ public interface Features {
   void onCellDelete(Coord coord);
 
 
+  /**
+   * Method to activate the new table when the load is selected.
+   */
+  void onLoadSelect(String filePath);
 
+  /**
+   * This is the method called to save the file.
+   * @param filePath the given file path to save the file to
+   */
+  void onSaveSelect(String filePath);
 }

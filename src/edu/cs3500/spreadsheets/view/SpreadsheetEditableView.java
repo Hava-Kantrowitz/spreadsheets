@@ -20,7 +20,7 @@ import edu.cs3500.spreadsheets.model.Value;
 public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
 
   private JTextField text;
-  private NoEditTable sheet;
+  private NoEditTable sheet;   // the table representation of the spreadsheet
 
   /**
    * Constructs an instance of the GUI spreadsheet view.
@@ -52,7 +52,6 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     JScrollPane scrollPane = new JScrollPane();
     SpreadsheetRowHeaderTable rows = new SpreadsheetRowHeaderTable(modelRead);
     JTable myRows = rows.getTable();
-    myRows.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     myRows.setEnabled(false);
 
     JScrollPane rowScroller = new JScrollPane();
@@ -131,9 +130,15 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
 
 
     JMenuItem load = new JMenuItem("Load"); // adding the load option
+    ActionListener loadListener = new LoadListener(this, controller);
+    load.addActionListener(loadListener);
     addLoadMenu.add(load);
 
+
+
     JMenuItem save = new JMenuItem("Save"); // adding the save option
+    ActionListener saveListener = new SaveListener(this, controller);
+    save.addActionListener(saveListener);
     addLoadMenu.add(save);
 
     menuBar.add(addLoadMenu);           // add the menu
@@ -180,4 +185,12 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
   }
 
 
+  /**
+   * This is to display a warning message when there is an error in the file.
+   */
+  public void displayFileError() {
+    // display a dialog error message because of invalid input
+    JOptionPane.showMessageDialog(this,"Invalid file selected.",
+            "File Error", JOptionPane.ERROR_MESSAGE);
+  }
 }
