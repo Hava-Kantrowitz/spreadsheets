@@ -79,7 +79,13 @@ public class SpreadsheetTable extends JTable {
     model = new DefaultTableModel(getRows(), 1);
     model.setColumnIdentifiers(colHeadings);
     for (Coord c : spreadsheet.getListCoords()) {
-      model.setValueAt(spreadsheet.getCellAt(c).toString(), c.row - 1, c.col - 1);
+      try {
+        model.setValueAt(spreadsheet.getCellAt(c).toString(), c.row - 1, c.col - 1);
+      }
+      // if a cell was invalid due to a reference to an invalid cell within calculation
+      catch(IllegalArgumentException e){
+        model.setValueAt("#VALUE!",c.row - 1, c.col - 1);
+      }
     }
 
 

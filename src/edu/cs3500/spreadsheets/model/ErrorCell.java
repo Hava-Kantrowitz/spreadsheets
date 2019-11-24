@@ -73,4 +73,17 @@ public class ErrorCell implements Cell {
   public String toString(){
     return this.evaluateCell().toString();
   }
+
+  @Override
+  public boolean equals(Object otherCell){
+    boolean isEqual = false;
+
+    if (otherCell instanceof ErrorCell && ((ErrorCell) otherCell).error.equals((this.error)) &&
+            ((ErrorCell) otherCell).rawContents.equals(this.rawContents)){
+      isEqual = true;
+    }
+
+    return isEqual;
+  }
+
 }

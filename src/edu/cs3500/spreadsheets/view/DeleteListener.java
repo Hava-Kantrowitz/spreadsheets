@@ -8,8 +8,6 @@ import edu.cs3500.spreadsheets.model.Coord;
 
 public class DeleteListener implements KeyListener {
 
-  private static final int DELETE_CODE = 8;
-
   private EditableSheetController controller;
   private NoEditTable sheet;
 
@@ -30,8 +28,9 @@ public class DeleteListener implements KeyListener {
 
   @Override
   public void keyReleased(KeyEvent e) {
-    // checking if delete key was pressed
-    if(e.getKeyCode() == DELETE_CODE){
+
+    // checking if delete key was pressed (which is backspace on Mac)
+    if(e.getKeyCode() == KeyEvent.VK_DELETE || e.getKeyCode() == KeyEvent.VK_BACK_SPACE){
       int modelCol = sheet.getSelectedColumn() + 1;
       int modelRow = sheet.getSelectedRow() + 1;
 
