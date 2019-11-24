@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
+import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 import edu.cs3500.spreadsheets.model.Value;
@@ -192,5 +193,9 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     // display a dialog error message because of invalid input
     JOptionPane.showMessageDialog(this,"Invalid file selected.",
             "File Error", JOptionPane.ERROR_MESSAGE);
+  }
+
+  public void highlight(Coord modelCoord) {
+    
   }
 }
