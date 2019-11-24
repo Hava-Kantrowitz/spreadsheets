@@ -12,14 +12,14 @@ import edu.cs3500.spreadsheets.model.Coord;
  */
 public class CellClickListener implements ListSelectionListener {
 
-  JTable sheet;
-  EditableSheetController controller;
+  private JTable sheet;
+  private EditableSheetController controller;
 
   /**
    * The constructor for the cell click listener.
    * @param sheet the given JTable being listened to
    */
-  public CellClickListener(JTable sheet, EditableSheetController controller){
+  CellClickListener(JTable sheet, EditableSheetController controller){
 
     this.sheet = sheet;
     this.controller = controller;

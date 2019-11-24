@@ -14,7 +14,7 @@ public class LoadListener implements ActionListener {
   private JFrame mainFrame;
   private EditableSheetController controller;
 
-  public LoadListener(JFrame mainFrame, EditableSheetController controller){
+  LoadListener(JFrame mainFrame, EditableSheetController controller){
     this.mainFrame = mainFrame;
     this.controller = controller;
   }

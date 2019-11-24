@@ -13,7 +13,7 @@ public class NoEditTable extends JTable {
    * The constructor for a non editable form of a jtable.
    * @param model the given model for the JTable
    */
-  public NoEditTable(DefaultTableModel model){
+  NoEditTable(DefaultTableModel model){
     super(model);
   }
 

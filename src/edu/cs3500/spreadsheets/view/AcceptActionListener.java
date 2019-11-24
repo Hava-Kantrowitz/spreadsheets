@@ -17,7 +17,7 @@ public class AcceptActionListener implements ActionListener {
   private JTable sheet;
   private EditableSheetController controller;
 
-  public AcceptActionListener(JTable sheet, EditableSheetController controller){
+  AcceptActionListener(JTable sheet, EditableSheetController controller){
     this.sheet = sheet;
     this.controller = controller;
   }
