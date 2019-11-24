@@ -43,7 +43,6 @@ public class EditableSheetController implements Features {
       }
     }
 
-    // still need to deal with self reference
     for (Coord c : model.getListCoords()) {
       try{
         view.setCellAt(model.getCellAt(c).toString(), c.row - 1, c.col - 1);       // THE toString has evaluate within we may want to change this tho so it is more explicit that we evaluate
@@ -68,6 +67,7 @@ public class EditableSheetController implements Features {
 
   @Override
   public void onCellSelected(Coord modelCoord) {
+    view.highlight(modelCoord);
     this.view.updateTextField(model.getCellAt(modelCoord).getRawContents()); // update text field
   }
 
