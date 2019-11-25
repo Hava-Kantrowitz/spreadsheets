@@ -11,19 +11,19 @@ public class MockSpreadsheetModel extends BasicSpreadsheet {
 
 
 
-  private String receivedVals;
+  private String receivedVals = "";
 
 
 
   @Override
   public Cell getCellAt(Coord coord) {
-    receivedVals = "Coord: " + coord.toString();
+    receivedVals = receivedVals.concat("Coord: " + coord.toString());
     return new Blank();   // do not care about this but should not be null
   }
 
   @Override
   public void setCellAt(Coord coord, String rawContents) {
-    receivedVals = "Coord: " + coord.toString() + " Raw contents: " + rawContents;
+    receivedVals = receivedVals.concat("Coord: " + coord.toString() + " Raw contents: " + rawContents);
   }
 
   @Override
@@ -33,7 +33,7 @@ public class MockSpreadsheetModel extends BasicSpreadsheet {
 
   @Override
   public ArrayList getCellSection(Coord upper, Coord lower) {
-    receivedVals = "Coord 1: " + upper.toString() + " Coord 2: " + lower.toString();
+    receivedVals = receivedVals.concat("Coord 1: " + upper.toString() + " Coord 2: " + lower.toString());
     return null;
   }
 
@@ -41,7 +41,7 @@ public class MockSpreadsheetModel extends BasicSpreadsheet {
 
   @Override
   public void evaluateCellAt(Coord coord) {
-    receivedVals = "Coord: " + coord.toString();
+    receivedVals = receivedVals.concat("Eval Coord: " + coord.toString());
   }
 
 
