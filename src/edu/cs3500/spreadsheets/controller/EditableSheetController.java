@@ -17,6 +17,7 @@ public class EditableSheetController implements Features {
 
   private SpreadsheetEditableView view;
   private Spreadsheet model;
+  private int timesClicked;
 
   public EditableSheetController(SpreadsheetEditableView view, Spreadsheet model){
     this.view = view;
@@ -41,6 +42,7 @@ public class EditableSheetController implements Features {
       if(e.getMessage() != null && !e.getMessage().contains("Error in cell.")) {
         model.setCellAt(coord, new ErrorCell(new StringValue("#VALUE!"), view.getTextField()));
       }
+
     }
 
 
@@ -49,7 +51,7 @@ public class EditableSheetController implements Features {
         view.setCellAt(model.getCellAt(c).toString(), c.row - 1, c.col - 1);       // THE toString has evaluate within we may want to change this tho so it is more explicit that we evaluate
       }
       // catching if there was an error in the evaluation because a cell referred to has an error
-      catch(IllegalArgumentException | StackOverflowError e){
+      catch (IllegalArgumentException | StackOverflowError e) {
         // not setting this cell to an error in model but showing error caused by previous cell
           view.setCellAt("#VALUE!", c.row - 1, c.col - 1);
       }
@@ -67,8 +69,10 @@ public class EditableSheetController implements Features {
 
   @Override
   public void onCellSelected(Coord modelCoord) {
-    view.highlight(modelCoord);
+    System.out.println("Cell selected here");
+    this.view.highlight(timesClicked);
     this.view.updateTextField(model.getCellAt(modelCoord).getRawContents()); // update text field
+    timesClicked++;
   }
 
   @Override

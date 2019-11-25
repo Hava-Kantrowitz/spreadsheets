@@ -60,7 +60,7 @@ public class MockSpreadsheetModel implements Spreadsheet {
 
   @Override
   public Set<Coord> getListCoords() {
-    // nothing to recieve
+    // nothing to receive
     return null;
   }
 }

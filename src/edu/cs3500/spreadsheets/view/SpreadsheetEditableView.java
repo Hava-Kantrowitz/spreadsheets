@@ -195,7 +195,12 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
             "File Error", JOptionPane.ERROR_MESSAGE);
   }
 
-  public void highlight(Coord modelCoord) {
-    
+  public void highlight(int numClicked) {
+    sheet.trackNumClicked(numClicked);
+    JHighlightBox highlightBox = new JHighlightBox();
+    JLayeredPane topBox = new JLayeredPane();
+    topBox.add(highlightBox, JLayeredPane.POPUP_LAYER);
+    this.add(topBox);
+    this.render();
   }
 }

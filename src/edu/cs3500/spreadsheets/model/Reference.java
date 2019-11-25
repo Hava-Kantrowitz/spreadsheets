@@ -63,72 +63,102 @@ public class Reference implements Formula {
 
   @Override
   public double evaluateCellSum() throws IllegalArgumentException {
-    double output;
-    if (referredCoords.size() == 1) { // if there is only one reference
-      output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSum();// eval the given cell
-    } else if (referredCoords.size() == 2) {  // if there is a range
-      output = sum(spreadsheet.getCellSection(referredCoords.get(0), referredCoords.get(1)));
-    } else {  // no more than two arguments in sum range
-      throw new IllegalArgumentException("Illegal number of arguments");
+    try {
+      double output;
+      if (referredCoords.size() == 1) { // if there is only one reference
+        output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSum();// eval the given cell
+      } else if (referredCoords.size() == 2) {  // if there is a range
+        output = sum(spreadsheet.getCellSection(referredCoords.get(0), referredCoords.get(1)));
+      } else {  // no more than two arguments in sum range
+        throw new IllegalArgumentException("Illegal number of arguments");
+      }
+      return output;
+    } catch(StackOverflowError e) {
+      throw new IllegalArgumentException();
     }
-    return output;
+
   }
 
   @Override
   public double evaluateCellProduct(List<Formula> formulas) throws IllegalArgumentException {
-    double output;
-    if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
-      output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellProduct(formulas);
-    } else if (referredCoords.size() == 2) { // if there is a range
-      output = product(getListFormula());
-    } else { // no more than two arguments in sum range
-      throw new IllegalArgumentException("Illegal number of references.");
+    try {
+      double output;
+      if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
+        output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellProduct(formulas);
+      } else if (referredCoords.size() == 2) { // if there is a range
+        output = product(getListFormula());
+      } else { // no more than two arguments in sum range
+        throw new IllegalArgumentException("Illegal number of references.");
+      }
+      return output;
+    } catch(StackOverflowError e) {
+      throw new IllegalArgumentException();
     }
-    return output;
+
   }
 
   @Override
   public double evaluateCellSqrt() throws IllegalArgumentException {
-    double output;
-    if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
-      output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSqrt();
-    } else { // no more than one argument for sqrt
-      throw new IllegalArgumentException("Illegal number of references.");
+    try {
+      double output;
+      if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
+        output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSqrt();
+      } else { // no more than one argument for sqrt
+        throw new IllegalArgumentException("Illegal number of references.");
+      }
+      return output;
+    } catch (StackOverflowError e) {
+      throw new IllegalArgumentException();
     }
-    return output;
+
   }
 
   @Override
   public double evaluateCellDifference() throws IllegalArgumentException {
-    double output;
-    if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
-      output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellDifference();
-    } else { // no more than one argument for difference
-      throw new IllegalArgumentException("Illegal number of references.");
+    try {
+      double output;
+      if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
+        output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellDifference();
+      } else { // no more than one argument for difference
+        throw new IllegalArgumentException("Illegal number of references.");
+      }
+      return output;
+    } catch (StackOverflowError e) {
+      throw new IllegalArgumentException();
     }
-    return output;
+
   }
 
   @Override
   public double evaluateCellComparison() {
-    double output;
-    if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
-      output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellComparison();
-    } else { // no more than one argument for comparison
-      throw new IllegalArgumentException("Illegal number of references.");
+    try {
+      double output;
+      if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
+        output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellComparison();
+      } else { // no more than one argument for comparison
+        throw new IllegalArgumentException("Illegal number of references.");
+      }
+      return output;
+    } catch (StackOverflowError e) {
+      throw new IllegalArgumentException();
     }
-    return output;
+
   }
 
   @Override
   public String evaluateCellHamilton() {
-    String output;
-    if (referredCoords.size() == 1) { // if there is only one reference, eval the given cell
-      output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellHamilton();
-    } else { // no more than one argument for Hamilton
-      throw new IllegalArgumentException("Illegal number of references.");
+    try {
+      String output;
+      if (referredCoords.size() == 1) { // if there is only one reference, eval the given cell
+        output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellHamilton();
+      } else { // no more than one argument for Hamilton
+        throw new IllegalArgumentException("Illegal number of references.");
+      }
+      return output;
+    } catch (StackOverflowError e) {
+      throw new IllegalArgumentException();
     }
-    return output;
+
   }
 
 
@@ -165,7 +195,14 @@ public class Reference implements Formula {
 
   @Override
   public String toString() {
-    return this.evaluateCell().toString();
+    if (this.evaluateCell() != null) {
+      return this.evaluateCell().toString();
+    }
+
+    else {
+      return "";
+    }
+
   }
 
   @Override
