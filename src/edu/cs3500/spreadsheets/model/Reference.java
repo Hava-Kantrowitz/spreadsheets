@@ -195,7 +195,14 @@ public class Reference implements Formula {
 
   @Override
   public String toString() {
-    return this.evaluateCell().toString();
+    if (this.evaluateCell() != null) {
+      return this.evaluateCell().toString();
+    }
+
+    else {
+      return "";
+    }
+
   }
 
   @Override

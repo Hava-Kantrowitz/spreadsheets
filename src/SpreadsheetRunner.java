@@ -19,7 +19,7 @@ public class SpreadsheetRunner {
   public static void main(String[] args) throws FileNotFoundException {
     BasicSpreadsheet sheet = new BasicSpreadsheet();
     sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry\\" +
-            "src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+            "src\\edu\\cs3500\\spreadsheets\\testFiles\\testingText.txt"));
     SpreadsheetView view = new SpreadsheetEditableView(sheet);
     view.render();
   }

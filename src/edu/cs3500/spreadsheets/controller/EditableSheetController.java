@@ -17,6 +17,7 @@ public class EditableSheetController implements Features {
 
   private SpreadsheetEditableView view;
   private Spreadsheet model;
+  private int timesClicked;
 
   public EditableSheetController(SpreadsheetEditableView view, Spreadsheet model){
     this.view = view;
@@ -67,7 +68,10 @@ public class EditableSheetController implements Features {
 
   @Override
   public void onCellSelected(Coord modelCoord) {
+    System.out.println("Cell selected here");
+    this.view.highlight(timesClicked);
     this.view.updateTextField(model.getCellAt(modelCoord).getRawContents()); // update text field
+    timesClicked++;
   }
 
   @Override

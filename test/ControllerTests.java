@@ -292,10 +292,163 @@ public class ControllerTests {
     assertEquals(new Blank(), model.getCellAt(coord));
   }
 
+  //TESTS FOR ON CELL REVERTED
 
+  // this is to check when there is a double value in the text field
+  @Test
+  public void onCellRevertedDouble(){
+    beginMethod();
+    Coord coord = new Coord(1,1);
+    view.updateTextField("12");  // this is the user input
+    controller.onCellReverted(coord);            // calling the method
 
+    assertEquals(new DoubleValue(3.0), model.getCellAt(coord));  // checking model updated
+  }
 
-  // these are the tests to ensure that the model is receiving the correct values (mock model)
+  // this is to check when there is a string value in the text field
+  @Test
+  public void onCellRevertedString(){
+    beginMethod();
+    Coord coord = new Coord(1,200);
+    view.updateTextField("Testing");  // this is the user input
+    controller.onCellReverted(coord);            // calling the method
+
+    assertEquals(new StringValue("hello"), model.getCellAt(coord));  // checking model updated
+  }
+
+  // this is to check when there is a boolean value in the text field
+  @Test
+  public void onCellRevertedBoolean(){
+    beginMethod();
+    Coord coord = new Coord(81,4);
+    view.updateTextField("5");  // this is the user input
+    controller.onCellReverted(coord);            // calling the method
+
+    assertEquals(new BooleanValue(false), model.getCellAt(coord));  // checking model updated
+  }
+
+  // this is to check when the text field is a valid formula
+  @Test
+  public void onCellRevertedFormula(){
+    beginMethod();
+    Coord coord = new Coord(1,20);
+    view.updateTextField("hey");  // this is the user input
+    controller.onCellReverted(coord);            // calling the method
+
+    List<Formula> formulas = new ArrayList<Formula>();  // setting up expected output
+    formulas.add(new DoubleValue(2.0));
+    formulas.add(new DoubleValue(3.0));
+    Cell expectedCell = new Function("SUM", formulas);
+
+    assertEquals(expectedCell, model.getCellAt(coord));  // checking model updated
+  }
+
+  // this is to check when there is a blank in the text field
+  @Test
+  public void onCellRevertedBlank(){
+    beginMethod();
+    Coord coord = new Coord(200,4);
+    view.updateTextField("5");  // this is the user input
+    controller.onCellReverted(coord);            // calling the method
+
+    assertEquals(new Blank(), model.getCellAt(coord));  // checking model updated
+  }
+
+  //TESTS FOR ON CELL DELETE
+
+  // this is to check when there is a double value in the text field
+  @Test
+  public void onCellDeleteDouble(){
+    beginMethod();
+    Coord coord = new Coord(1,1);
+    controller.onCellDelete(coord);            // calling the method
+
+    assertEquals(new Blank(), model.getCellAt(coord));  // checking model updated
+  }
+
+  // this is to check when there is a string value in the text field
+  @Test
+  public void onCellDeleteString(){
+    beginMethod();
+    Coord coord = new Coord(1,200);
+    controller.onCellDelete(coord);            // calling the method
+
+    assertEquals(new Blank(), model.getCellAt(coord));  // checking model updated
+  }
+
+  // this is to check when there is a boolean value in the text field
+  @Test
+  public void onCellDeleteBoolean(){
+    beginMethod();
+    Coord coord = new Coord(81,4);
+    controller.onCellDelete(coord);            // calling the method
+
+    assertEquals(new Blank(), model.getCellAt(coord));  // checking model updated
+  }
+
+  // this is to check when there is a blank value in the text field
+  @Test
+  public void onCellDeleteBlank(){
+    beginMethod();
+    Coord coord = new Coord(200,5);
+    controller.onCellDelete(coord);            // calling the method
+
+    assertEquals(new Blank(), model.getCellAt(coord));  // checking model updated
+  }
+
+  // this is to check when there is a formula value in the text field
+  @Test
+  public void onCellDeleteFormula(){
+    beginMethod();
+    Coord coord = new Coord(1,5);
+    controller.onCellDelete(coord);            // calling the method
+
+    assertEquals(new Blank(), model.getCellAt(coord));  // checking model updated
+  }
+
+  //TESTS FOR ON LOAD SELECT
+
+  // this is to check that formulas, doubles, booleans, strings, and blanks are all correctly loaded
+  @Test
+  public void onCellLoadGood(){
+    beginMethod();
+    controller.onLoadSelect("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\cs3500" +
+            "\\spreadsheets\\testFiles\\testingSpecial");
+
+    //check for double
+    Coord doubleCoord = new Coord(1, 1);
+    controller.onCellSelected(doubleCoord);
+    assertEquals(new DoubleValue(3.0), model.getCellAt(doubleCoord));
+
+    //check for string
+    Coord stringCoord = new Coord(2, 1);
+    controller.onCellSelected(stringCoord);
+    assertEquals(new StringValue("Vicky"), this.model.getCellAt(stringCoord));
+
+    //check for boolean
+
+    //check for formula
+
+    //check for null
+  }
+
+  //test that revert still works
+
+  //test that delete still works
+
+  //test that affirm still works
+
+  //test that a bad file throws an error
+
+  //TESTS FOR ON FILE SAVE
+
+  //tests that a good file can be saved and then opened
+
+  //tests that select, delete, affirm, revert still work
+
+  //tests that a bad file can be saved but throws error when opened
+
+  // TESTS USING MOCK TO ENSURE MODEL IS RECEIVING CORRECT VALUES
 
 
 }
