@@ -2,6 +2,7 @@ import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +17,12 @@ import edu.cs3500.spreadsheets.model.ErrorCell;
 import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.Function;
 import edu.cs3500.spreadsheets.model.Reference;
+import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.StringValue;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class ControllerTests {
 
@@ -408,47 +411,107 @@ public class ControllerTests {
 
   //TESTS FOR ON LOAD SELECT
 
-  // this is to check that formulas, doubles, booleans, strings, and blanks are all correctly loaded
+  // this is to check that a working sheet is correctly loaded
   @Test
   public void onCellLoadGood(){
     beginMethod();
     controller.onLoadSelect("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\cs3500" +
             "\\spreadsheets\\testFiles\\testingSpecial");
 
-    //check for double
-    Coord doubleCoord = new Coord(1, 1);
-    controller.onCellSelected(doubleCoord);
-    assertEquals(new DoubleValue(3.0), model.getCellAt(doubleCoord));
+    //test with string
+    Coord coord = new Coord(1,5);
+    view.updateTextField("\"hello\"");  // this is the user input
+    controller.onCellAffirmed(coord);            // calling the method
 
-    //check for string
-    Coord stringCoord = new Coord(2, 1);
-    controller.onCellSelected(stringCoord);
-    assertEquals(new StringValue("Vicky"), this.model.getCellAt(stringCoord));
+    assertNotEquals(new StringValue("hello"), model.getCellAt(coord));  // checking model itself not updated
 
-    //check for boolean
+    //test with double
+    Coord doubleCoord = new Coord(1,5);
+    view.updateTextField("3.0");  // this is the user input
+    controller.onCellAffirmed(coord);            // calling the method
 
-    //check for formula
+    assertNotEquals(new DoubleValue(3.0), model.getCellAt(doubleCoord));  // checking model itself not updated
 
-    //check for null
+    //test with boolean
+    Coord boolCoord = new Coord(1,5);
+    view.updateTextField("true");  // this is the user input
+    controller.onCellAffirmed(coord);            // calling the method
+
+    assertNotEquals(new BooleanValue(true), model.getCellAt(boolCoord));  // checking model itself not updated
   }
 
-  //test that revert still works
+  //test that a bad file still loads
+  @Test
+  public void testBadFileLoad() {
+    beginMethod();
+    controller.onLoadSelect("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\cs3500\\" +
+            "spreadsheets\\testFiles\\testingBad");
 
-  //test that delete still works
+    //test with string
+    Coord coord = new Coord(1,5);
+    view.updateTextField("\"hello\"");  // this is the user input
+    controller.onCellAffirmed(coord);            // calling the method
 
-  //test that affirm still works
+    assertNotEquals(new StringValue("hello"), model.getCellAt(coord));  // checking model itself not updated
 
-  //test that a bad file throws an error
+    //test with double
+    Coord doubleCoord = new Coord(1,5);
+    view.updateTextField("3.0");  // this is the user input
+    controller.onCellAffirmed(coord);            // calling the method
+
+    assertNotEquals(new DoubleValue(3.0), model.getCellAt(doubleCoord));  // checking model itself not updated
+
+    //test with boolean
+    Coord boolCoord = new Coord(1,5);
+    view.updateTextField("true");  // this is the user input
+    controller.onCellAffirmed(coord);            // calling the method
+
+    assertNotEquals(new BooleanValue(true), model.getCellAt(boolCoord));  // checking model itself not updated
+  }
 
   //TESTS FOR ON FILE SAVE
 
-  //tests that a good file can be saved and then opened
+  @Test
+  public void testFileSave() {
 
-  //tests that select, delete, affirm, revert still work
+    beginMethod();
+    Coord coord = new Coord(5,5);
+    view.updateTextField("hey");
+    controller.onCellSelected(coord);
 
-  //tests that a bad file can be saved but throws error when opened
+    //The file here is a file that doesn't currently exist
+    controller.onSaveSelect("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\cs3500" +
+            "\\spreadsheets\\testFiles\\testingHamilton");
+
+    controller.onLoadSelect("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\cs3500" +
+            "\\spreadsheets\\testFiles\\testingHamilton");
+
+    assertNotEquals(new StringValue("hey"), model.getCellAt(coord));  // checking model itself not updated
+  }
 
   // TESTS USING MOCK TO ENSURE MODEL IS RECEIVING CORRECT VALUES
+
+  //test inputs for initialize spreadsheet
+  @Test
+  public void testInitializeSheetMock() throws FileNotFoundException {
+
+    Spreadsheet mockSheet = new MockSpreadsheetModel();
+    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\" +
+            "cs3500\\spreadsheets\\testingText.txt"));
+    controller = new EditableSheetController(view, mockSheet);
+    Coord coord = new Coord(1,5);
+    controller.onCellAffirmed(coord);            // calling the method
+
+    //assertEquals("hey", );  // checking model updated
+  }
+
+  //test inputs for get cell at
+
+  //test inputs for set cell at
+
+  //test inputs for get cell section
+
+  //tests inputs for evaluate cell at
 
 
 }
