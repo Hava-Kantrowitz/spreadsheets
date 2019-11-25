@@ -129,24 +129,34 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     sheet.addKeyListener(deleteListener);
 
 
-    // SETTING THE MENU
+    // SETTING THE MENUBAR
     JMenuBar menuBar = new JMenuBar();  // create the whole menu bar
+
+
+
     JMenu addLoadMenu = new JMenu("File");    // create the individual menu
 
-
-    JMenuItem load = new JMenuItem("Load"); // adding the load option
+    JMenuItem load = new JMenuItem("Load"); // adding the load option to file menu
     ActionListener loadListener = new LoadListener(this, controller);
     load.addActionListener(loadListener);
     addLoadMenu.add(load);
 
-
-
-    JMenuItem save = new JMenuItem("Save"); // adding the save option
+    JMenuItem save = new JMenuItem("Save"); // adding the save option to file menu
     ActionListener saveListener = new SaveListener(this, controller);
     save.addActionListener(saveListener);
     addLoadMenu.add(save);
 
-    menuBar.add(addLoadMenu);           // add the menu
+
+    JMenu helpMenu = new JMenu("Help"); // creating the help menu
+
+    // adding options to the help menu
+    JMenuItem validInput = new JMenuItem("Valid Input"); // adding the load option to file menu
+    ActionListener validInputListener = new ValidInputListener(this);
+    validInput.addActionListener(validInputListener);
+    helpMenu.add(validInput);
+
+    menuBar.add(addLoadMenu);           // add the file menu
+    menuBar.add(helpMenu);             // add the help menu
 
 
 
