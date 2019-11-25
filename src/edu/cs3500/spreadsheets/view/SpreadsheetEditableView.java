@@ -24,6 +24,8 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
 
   private JTextField text;
   private NoEditTable sheet;   // the table representation of the spreadsheet
+  private int prevSelectedRow = - 1;
+  private int prevSelectedCol = -1;
 
   /**
    * Constructs an instance of the GUI spreadsheet view.
@@ -185,29 +187,31 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
   }
 
   @Override
-  public void highlight(int numClicked) {
-    if (sheet.getGridColor() == Color.BLACK && numClicked % 4 == 0) {
-      sheet.setGridColor(Color.PINK);
+  public void highlight() {
+
+    // checking if it is a different column
+    if(prevSelectedCol != -1 && prevSelectedCol != sheet.getSelectedColumn()){
+      // creates a renderer for no border to be applied to the previous cell
+      DefaultTableCellRenderer noBorderRender =
+              new NoBorderRenderer(prevSelectedRow, prevSelectedCol);
+      // keeping the center feature
+      noBorderRender.setHorizontalAlignment(JLabel.CENTER);
+      // setting the previous column so that the cells do not have a cell border (with prev column)
+      sheet.getColumnModel().getColumn(prevSelectedCol).setCellRenderer(noBorderRender);
     }
 
-    else if (sheet.getGridColor() == Color.PINK && numClicked % 4 == 0) {
-      sheet.setGridColor(Color.BLACK);
-    }
+    // create a border renderer to be applied to the currently selected cell
+    DefaultTableCellRenderer borderRender =
+            new ClickedCellRenderer(sheet.getSelectedRow(), sheet.getSelectedColumn());
+    // keep the centering
+    borderRender.setHorizontalAlignment(JLabel.CENTER);
+    //  going through the selected column to add the border
+    sheet.getColumnModel().getColumn(sheet.getSelectedColumn()).setCellRenderer(borderRender);
+
+
+
+    prevSelectedRow = sheet.getSelectedRow();
+    prevSelectedCol = sheet.getSelectedColumn();
   }
 
-//  @Override
-//  public void highlight(int numClicked, int row, int col) {
-//    DefaultTableCellRenderer origRenderer = (DefaultTableCellRenderer) sheet.getCellRenderer(row, col-1);
-//    DefaultTableCellRenderer newRenderer = new ClickedCellRenderer(row, col-1);
-//
-//    sheet.getColumnModel().getColumn(col).setCellRenderer(newRenderer);
-//
-//    if (sheet.getCellRenderer(row, col) == newRenderer) {
-//      sheet.getColumnModel().getColumn(col).setCellRenderer(origRenderer);
-//    }
-//  }
-
-//  public void highlight(int numClicked, int row, int col) {
-//
-//  }
 }

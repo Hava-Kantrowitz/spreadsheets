@@ -61,7 +61,7 @@ public class SpreadsheetTextualView implements SpreadsheetView {
   }
 
   @Override
-  public void highlight(int numClicked) {
+  public void highlight() {
     // nothing should happen here because cells cannot be selected
   }
 

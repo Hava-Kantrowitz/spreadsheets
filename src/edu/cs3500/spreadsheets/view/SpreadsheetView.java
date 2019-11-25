@@ -40,9 +40,8 @@ public interface SpreadsheetView {
   void displayFileError();
 
   /**
-   *
-   * @param numClicked
+   * This method ensures that the selected cell has a different marking than the rest of the cells.
    */
-  void highlight(int numClicked);
+  void highlight();
 
 }

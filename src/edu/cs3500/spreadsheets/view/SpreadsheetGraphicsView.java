@@ -106,7 +106,7 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
   }
 
   @Override
-  public void highlight(int numClicked) {
+  public void highlight() {
     // nothing should happen here because the cells cannot be edited
   }
 }

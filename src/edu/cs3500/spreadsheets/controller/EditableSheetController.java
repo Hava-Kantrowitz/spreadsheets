@@ -22,7 +22,6 @@ public class EditableSheetController implements Features {
 
   private SpreadsheetEditableView view;
   private Spreadsheet model;
-  private int timesClicked;
 
   /**
    * This is the constructor for the controller of the editable view.
@@ -79,9 +78,8 @@ public class EditableSheetController implements Features {
 
   @Override
   public void onCellSelected(Coord modelCoord) {
-    this.view.highlight(timesClicked);
+    this.view.highlight();
     this.view.updateTextField(model.getCellAt(modelCoord).getRawContents()); // update text field
-    timesClicked++;
   }
 
   @Override
