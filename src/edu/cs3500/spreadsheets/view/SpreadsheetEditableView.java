@@ -216,9 +216,6 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     if (sheet.getCellRenderer(row, col) == newRenderer) {
       sheet.getColumnModel().getColumn(col-1).setCellRenderer(origRenderer);
     }
-
-    int origRow = row;
-    int origCol = col;
   }
 
 //  public void highlight(int numClicked, int row, int col) {
