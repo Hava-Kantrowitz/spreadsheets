@@ -634,6 +634,112 @@ public class ControllerTests {
             " A5", mockSheet.getReceivedVals());  // checking model updated
   }
 
+  //TESTING THE MOCK VIEW
+
+  //test inputs for view affirm
+  @Test
+  public void testAffirmViewMock() throws FileNotFoundException {
+
+    BasicSpreadsheet model = new BasicSpreadsheet();
+    model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
+            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    MockViewModel mockView = new MockViewModel(model);
+    controller = new EditableSheetController(mockView, model);
+    Coord coord = new Coord(1,5);
+    controller.onCellAffirmed(coord);            // calling the method
+
+    //makes sure that get cell at, set cell at are both triggered
+    assertEquals("Value is  row is 4 col is 0 Value is 4.0 row is 1 col is 0 Value is Ham " +
+            "row is 2 col is 1 Value is 3.0 row is 0 col is 0 Value is Hava row is 1 col is 1 Value " +
+            "is Vicky row is 0 col is 1 Value is 50.0 row is 199 col is 27 Value is 7.0 row is 11 " +
+            "col is 5 Value is 5.0 row is 7 col is 2 Value is 7.0 row is 2 " +
+            "col is 0 ", mockView.getReceivedVals());  // checking model updated
+  }
+
+  //test inputs for view revert
+  @Test
+  public void testRevertViewMock() throws FileNotFoundException {
+
+    BasicSpreadsheet model = new BasicSpreadsheet();
+    model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
+            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    MockViewModel mockView = new MockViewModel(model);
+    controller = new EditableSheetController(mockView, model);
+    Coord coord = new Coord(1,5);
+    controller.onCellReverted(coord);            // calling the method
+
+    //makes sure that get cell at, set cell at are both triggered
+    assertEquals("New text is  ", mockView.getReceivedVals());  // checking model updated
+  }
+
+  //test inputs for view select
+  @Test
+  public void testSelectViewMock() throws FileNotFoundException {
+
+    BasicSpreadsheet model = new BasicSpreadsheet();
+    model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
+            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    MockViewModel mockView = new MockViewModel(model);
+    controller = new EditableSheetController(mockView, model);
+    Coord coord = new Coord(1,5);
+    controller.onCellSelected(coord);            // calling the method
+
+    //makes sure that get cell at, set cell at are both triggered
+    assertEquals("We are highlighting now New text is  ", mockView.getReceivedVals());  // checking model updated
+  }
+
+  //test inputs for view delete
+  @Test
+  public void testDeleteViewMock() throws FileNotFoundException {
+
+    BasicSpreadsheet model = new BasicSpreadsheet();
+    model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
+            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    MockViewModel mockView = new MockViewModel(model);
+    controller = new EditableSheetController(mockView, model);
+    Coord coord = new Coord(1,5);
+    controller.onCellDelete(coord);            // calling the method
+
+    //makes sure that get cell at, set cell at are both triggered
+    assertEquals("New text is  Value is  row is 4 col is 0 Value is 4.0 row is 1 col " +
+            "is 0 Value is Ham row is 2 col is 1 Value is 3.0 row is 0 col is 0 Value is Hava " +
+            "row is 1 col is 1 Value is Vicky row is 0 col is 1 Value is 50.0 row is 199 col " +
+            "is 27 Value is 7.0 row is 11 col is 5 Value is 5.0 row is 7 col is 2 Value is 7.0 " +
+            "row is 2 col is 0 ", mockView.getReceivedVals());  // checking model updated
+  }
+
+  //tests loading existing sheet mock view inputs
+  @Test
+  public void testLoadGoodSheetViewMock() throws FileNotFoundException {
+
+    BasicSpreadsheet model = new BasicSpreadsheet();
+    model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
+            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    MockViewModel mockView = new MockViewModel(model);
+    controller = new EditableSheetController(mockView, model);
+    Coord coord = new Coord(1,5);
+    controller.onLoadSelect("C:\\Users\\havak\\IdeaProjects\\nextTry" +
+            "\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingText.txt");            // calling the method
+
+    //makes sure that get cell at, set cell at are both triggered
+    assertEquals("", mockView.getReceivedVals());  // checking model updated
+  }
+
+  //tests loading nonexistent sheet view inputs
+  @Test
+  public void testLoadNonexistentSheetViewMock() throws FileNotFoundException {
+
+    BasicSpreadsheet model = new BasicSpreadsheet();
+    model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
+            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    MockViewModel mockView = new MockViewModel(model);
+    controller = new EditableSheetController(mockView, model);
+    controller.onLoadSelect("thisSheetDoesntExist");            // calling the method
+
+    //makes sure that get cell at, set cell at are both triggered
+    assertEquals("We are displaying a file error now ", mockView.getReceivedVals());  // checking model updated
+  }
+
 
 
 
