@@ -31,8 +31,9 @@ public class ControllerTests {
 
   private void beginMethod() {
     try {
-      model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry\\" +
-              "src\\edu\\cs3500\\spreadsheets\\testFiles\\testingText.txt"));
+      model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+              "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/" +
+              "src/edu/cs3500/spreadsheets/testingText.txt"));
     } catch (FileNotFoundException e) {
       System.out.println("Unable to read file in tests");
     }
@@ -413,8 +414,9 @@ public class ControllerTests {
   @Test
   public void onCellLoadGood(){
     beginMethod();
-    controller.onLoadSelect("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\cs3500" +
-            "\\spreadsheets\\testFiles\\testingSpecial");
+    controller.onLoadSelect("/Users/victoriabowen/Desktop/NEU_1st_year/" +
+            "ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/spreadsheets/testFiles/" +
+            "testingSpecial");
 
     //test with string
     Coord coord = new Coord(1,5);
@@ -442,8 +444,8 @@ public class ControllerTests {
   @Test
   public void testBadFileLoad() {
     beginMethod();
-    controller.onLoadSelect("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\cs3500\\" +
-            "spreadsheets\\testFiles\\testingBad");
+    controller.onLoadSelect("/Users/victoriabowen/Desktop/NEU_1st_year/ObjectOriented" +
+            "/CS_3500_Projects/spreadsheets/src/edu/cs3500/spreadsheets/testingBad");
 
     //test with string
     Coord coord = new Coord(1,5);
@@ -495,8 +497,9 @@ public class ControllerTests {
   public void testAffirmCallsMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
-            "\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingEmpty"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/" +
+            "src/edu/cs3500/spreadsheets/testingEmpty"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1,5);
@@ -511,8 +514,9 @@ public class ControllerTests {
   public void testDeleteCallsMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
-            "\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingEmpty"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingEmpty"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1,5);
@@ -527,8 +531,9 @@ public class ControllerTests {
   public void testSelectCallsMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
-            "\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingEmpty"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop" +
+            "/NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testingEmpty"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1,5);
@@ -543,8 +548,9 @@ public class ControllerTests {
   public void testRevertCallsMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
-            "\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingEmpty"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
+            "spreadsheets/src/edu/cs3500/spreadsheets/testingEmpty"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1,5);
@@ -559,8 +565,9 @@ public class ControllerTests {
   public void testAffirmCallsMultipleMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testFiles/testingSpecial"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1,5);
@@ -579,8 +586,9 @@ public class ControllerTests {
   public void testSelectCallsMultipleMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/" +
+            "src/edu/cs3500/spreadsheets/testFiles/testingSpecial"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1,5);
@@ -599,8 +607,9 @@ public class ControllerTests {
   public void testRevertCallsMultipleMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets" +
+            "/src/edu/cs3500/spreadsheets/testFiles/testingSpecial"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1,5);
@@ -619,8 +628,9 @@ public class ControllerTests {
   public void testDeleteCallsMultipleMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testFiles/testingSpecial"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1,5);

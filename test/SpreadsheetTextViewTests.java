@@ -17,6 +17,32 @@ import static org.junit.Assert.assertEquals;
  */
 public class SpreadsheetTextViewTests {
 
+
+  // this is the test to check that references and functions are rendered as their raw contents
+  @Test
+  public void fileRawContents() throws FileNotFoundException {
+    BasicSpreadsheet sheet1 = new BasicSpreadsheet();
+
+    // setting up the first spreadsheet with the file
+    FileReader inputFile1 = new FileReader("/Users/victoriabowen/Desktop" +
+            "/NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
+            "spreadsheets/src/edu/cs3500/spreadsheets/testingText.txt");
+
+    sheet1.initializeSpreadsheet(inputFile1);
+
+    PrintWriter outputFile = new PrintWriter("/Users/victoriabowen/Desktop/NEU_1st_year" +
+            "/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/outputFileSave.txt");
+
+
+    // render the text file from the actual spreadsheet
+    SpreadsheetView view = new SpreadsheetTextualView(sheet1,outputFile);
+    view.render();
+
+    System.out.println(outputFile.toString());
+
+  }
+
   // this is the test for when the file has not changed
   @Test
   public void fileNoChange() throws FileNotFoundException {

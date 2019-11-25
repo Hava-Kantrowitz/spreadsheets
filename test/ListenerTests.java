@@ -1,16 +1,16 @@
 import org.junit.Test;
 
+import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 import javax.swing.*;
 
-import edu.cs3500.spreadsheets.controller.EditableSheetController;
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.view.AcceptActionListener;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 
-import static org.junit.Assert.assertEquals;
+
 
 /**
  * This is the test class to ensure that the methods of each listener activate the correct feature
@@ -44,7 +44,7 @@ public class ListenerTests {
   public void acceptActionCallsAffirm(){
     JTable sheet = new JTable();
     AcceptActionListener accept = new AcceptActionListener(sheet, controller);
-
+    
 
   }
 

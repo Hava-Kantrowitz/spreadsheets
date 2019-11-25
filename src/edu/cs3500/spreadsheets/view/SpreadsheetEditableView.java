@@ -210,18 +210,19 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
       sheet.getColumnModel().getColumn(prevSelectedCol).setCellRenderer(noBorderRender);
     }
 
-    // create a border renderer to be applied to the currently selected cell
-    DefaultTableCellRenderer borderRender =
-            new ClickedCellRenderer(sheet.getSelectedRow(), sheet.getSelectedColumn());
-    // keep the centering
-    borderRender.setHorizontalAlignment(JLabel.CENTER);
-    //  going through the selected column to add the border
-    sheet.getColumnModel().getColumn(sheet.getSelectedColumn()).setCellRenderer(borderRender);
+    if(sheet.getSelectedColumn() >= 0) {
+      // create a border renderer to be applied to the currently selected cell
+      DefaultTableCellRenderer borderRender =
+              new ClickedCellRenderer(sheet.getSelectedRow(), sheet.getSelectedColumn());
+      // keep the centering
+      borderRender.setHorizontalAlignment(JLabel.CENTER);
+      //  going through the selected column to add the border
+      sheet.getColumnModel().getColumn(sheet.getSelectedColumn()).setCellRenderer(borderRender);
 
 
-
-    prevSelectedRow = sheet.getSelectedRow();
-    prevSelectedCol = sheet.getSelectedColumn();
+      prevSelectedRow = sheet.getSelectedRow();
+      prevSelectedCol = sheet.getSelectedColumn();
+    }
   }
 
 }
