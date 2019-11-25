@@ -7,7 +7,9 @@ import java.awt.event.KeyListener;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
 import edu.cs3500.spreadsheets.model.Coord;
@@ -195,12 +197,31 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
             "File Error", JOptionPane.ERROR_MESSAGE);
   }
 
-  public void highlight(int numClicked) {
-    sheet.trackNumClicked(numClicked);
-    JHighlightBox highlightBox = new JHighlightBox();
-    JLayeredPane topBox = new JLayeredPane();
-    topBox.add(highlightBox, JLayeredPane.POPUP_LAYER);
-    this.add(topBox);
-    this.render();
+//  public void highlight(int numClicked) {
+//    if (sheet.getGridColor() == Color.BLACK && numClicked % 4 == 0) {
+//      sheet.setGridColor(Color.PINK);
+//    }
+//
+//    else if (sheet.getGridColor() == Color.PINK && numClicked % 4 == 0) {
+//      sheet.setGridColor(Color.BLACK);
+//    }
+//  }
+
+  public void highlight(int numClicked, int row, int col) {
+    DefaultTableCellRenderer origRenderer = (DefaultTableCellRenderer) sheet.getCellRenderer(row, col);
+    DefaultTableCellRenderer newRenderer = new ClickedCellRenderer(row, col-1);
+
+    sheet.getColumnModel().getColumn(col-1).setCellRenderer(newRenderer);
+
+    if (sheet.getCellRenderer(row, col) == newRenderer) {
+      sheet.getColumnModel().getColumn(col-1).setCellRenderer(origRenderer);
+    }
+
+    int origRow = row;
+    int origCol = col;
   }
+
+//  public void highlight(int numClicked, int row, int col) {
+//
+//  }
 }

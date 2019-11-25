@@ -1,8 +1,12 @@
 package edu.cs3500.spreadsheets.view;
 
 
-import javax.swing.JTable;
+import java.awt.*;
+
+import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
