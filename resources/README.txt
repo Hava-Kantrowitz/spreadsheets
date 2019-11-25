@@ -23,10 +23,13 @@ ClickedCellRenderer Class: A class to render the highlighted version of a cell.
 DeleteListener Class: The key listener for the delete button of the editable view with the
                       purpose of alerting the controller when a cell should be deleted.
 
-JHighlightBox Class: A class to render a highlighted version of a cell.
 
 LoadListener Class: The action listener for when the load selection is chosen from the file menu
                     with the purpose of alerting the controller that a new file should be loaded.
+
+NoBorderRenderer Class: A subclass of ClickedCellRenderer to remove the highlight from the border
+                        of a highlighted cell. This is activated to the previous cell when a new
+                        cell is selected.
 
 NoEditTable Class: A class to represent a JTable that does not have the ability to edit the cells
                    by double clicking on them. This is used in the SpreadsheetTable class.
@@ -36,6 +39,10 @@ RevertActionListener Class: The action listener for the revert button of the edi
 
 SaveListenerClass: The action listener for when the save selection is chosen from the file menu
                    with the purpose of alerting the controller that the data should be saved.
+
+ValidInputListener: The action listener for when the valid input menu is selected from the help
+                    menu with the purpose of displaying a message to the user regarding the valid
+                    input types.
 
 
 Our code also contains a controller which is located in the controller package. The controller
@@ -90,6 +97,8 @@ SpecialTableModel Class: Implements specific functionality for a DefaultTableMod
 HorizontalScrollListener Class: Implements a listener for horizontal scrolling.
 
 VerticalScrollListener Class: Implements a listener for vertical scrolling.
+
+SpreadsheetRowHeaderTable Class: The one column table for the row headers of the table.
 
 CHANGES BETWEEN HOMEWORKS 5 AND 6
 

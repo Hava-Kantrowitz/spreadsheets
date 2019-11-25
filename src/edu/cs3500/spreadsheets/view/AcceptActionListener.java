@@ -23,7 +23,7 @@ public class AcceptActionListener implements ActionListener {
    * @param sheet the JTable for the cell information
    * @param controller the controller for the view and model
    */
-  AcceptActionListener(JTable sheet, EditableSheetController controller){
+  public AcceptActionListener(JTable sheet, EditableSheetController controller){
     this.sheet = sheet;
     this.controller = controller;
   }

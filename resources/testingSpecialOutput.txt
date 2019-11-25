@@ -1,9 +1,0 @@
-A2 4
-B3 "Ham"
-A1 3
-B2 "Hava"
-B1 "Vicky"
-AB200 50
-F12 =A3
-C8 =(SUM 2 3)
-A3 7
