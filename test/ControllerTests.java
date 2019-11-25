@@ -2,7 +2,6 @@ import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,6 @@ import edu.cs3500.spreadsheets.model.ErrorCell;
 import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.Function;
 import edu.cs3500.spreadsheets.model.Reference;
-import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.StringValue;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 
@@ -33,8 +31,9 @@ public class ControllerTests {
 
   private void beginMethod() {
     try {
-      model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
-              "\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingText.txt"));
+      model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+              "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/" +
+              "src/edu/cs3500/spreadsheets/testingText.txt"));
     } catch (FileNotFoundException e) {
       System.out.println("Unable to read file in tests");
     }
@@ -480,11 +479,12 @@ public class ControllerTests {
     controller.onCellSelected(coord);
 
     //The file here is a file that doesn't currently exist
-    controller.onSaveSelect("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\cs3500" +
-            "\\spreadsheets\\testFiles\\testingHamilton");
+    controller.onSaveSelect("/Users/victoriabowen/Desktop/NEU_1st_year/" +
+            "ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/spreadsheets/" +
+            "testingHamilton.txt");
 
-    controller.onLoadSelect("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\cs3500" +
-            "\\spreadsheets\\testFiles\\testingHamilton");
+    controller.onLoadSelect("/Users/victoriabowen/Desktop/NEU_1st_year/ObjectOriented/" +
+            "CS_3500_Projects/spreadsheets/src/edu/cs3500/spreadsheets/testingHamilton.txt");
 
     assertNotEquals(new StringValue("hey"), model.getCellAt(coord));  // checking model itself not updated
   }
@@ -495,14 +495,16 @@ public class ControllerTests {
   @Test
   public void testInitializeSheetMock() throws FileNotFoundException {
 
-    Spreadsheet mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\" +
-            "cs3500\\spreadsheets\\testingText.txt"));
+    MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/" +
+            "Desktop/NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/" +
+            "src/edu/cs3500/spreadsheets/testingEmpty"));
+    view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1,5);
     controller.onCellAffirmed(coord);            // calling the method
 
-    //assertEquals("hey", );  // checking model updated
+    assertEquals("Coord: A5", mockSheet.getReceivedVals());  // checking model updated
   }
 
   //test inputs for get cell at

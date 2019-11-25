@@ -1,28 +1,29 @@
 import java.util.ArrayList;
-import java.util.Set;
 
+import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
+import edu.cs3500.spreadsheets.model.Blank;
 import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Coord;
-import edu.cs3500.spreadsheets.model.Spreadsheet;
 
-public class MockSpreadsheetModel implements Spreadsheet {
 
-  String receivedVals;
 
-  @Override
-  public void initializeSpreadsheet(Readable fileName) {
-    receivedVals = fileName.toString();
-  }
+public class MockSpreadsheetModel extends BasicSpreadsheet {
+
+
+
+  private String receivedVals;
+
+
 
   @Override
   public Cell getCellAt(Coord coord) {
-    receivedVals = "Coord:" + coord.toString();
-    return null;
+    receivedVals = "Coord: " + coord.toString();
+    return new Blank();   // do not care about this but should not be null
   }
 
   @Override
   public void setCellAt(Coord coord, String rawContents) {
-    receivedVals = "Coord:" + coord.toString() + " Raw contents: " + rawContents;
+    receivedVals = "Coord: " + coord.toString() + " Raw contents: " + rawContents;
   }
 
   @Override
@@ -36,31 +37,24 @@ public class MockSpreadsheetModel implements Spreadsheet {
     return null;
   }
 
-  @Override
-  public void evaluateSheet() {
-    // nothing to receive
-  }
+
 
   @Override
   public void evaluateCellAt(Coord coord) {
     receivedVals = "Coord: " + coord.toString();
   }
 
-  @Override
-  public int getNumRows() {
-    // nothing to receive
-    return 0;
-  }
 
-  @Override
-  public int getNumCols() {
-    // nothing to receive
-    return 0;
-  }
 
-  @Override
-  public Set<Coord> getListCoords() {
-    // nothing to receive
-    return null;
+
+
+
+
+  /**
+   * This is a method to get the log of received values.
+   * @return the log of received values
+   */
+  public String getReceivedVals(){
+    return receivedVals;
   }
 }
