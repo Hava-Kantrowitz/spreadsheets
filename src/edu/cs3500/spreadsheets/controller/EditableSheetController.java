@@ -38,15 +38,15 @@ public class EditableSheetController implements Features {
         view.setCellAt("#VALUE!", coord.row - 1, coord.col - 1);
         // setting the given cell to an error cell (if problem not caused by error cell)
         // preserves cells that are set with reference to an error
-      if(!e.getMessage().contains("Error in cell.")) {
+      if(e.getMessage() != null && !e.getMessage().contains("Error in cell.")) {
         model.setCellAt(coord, new ErrorCell(new StringValue("#VALUE!"), view.getTextField()));
       }
     }
 
+
     for (Coord c : model.getListCoords()) {
       try{
         view.setCellAt(model.getCellAt(c).toString(), c.row - 1, c.col - 1);       // THE toString has evaluate within we may want to change this tho so it is more explicit that we evaluate
-        model.evaluateSheet();
       }
       // catching if there was an error in the evaluation because a cell referred to has an error
       catch(IllegalArgumentException | StackOverflowError e){
