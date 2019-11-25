@@ -79,7 +79,7 @@ public class EditableSheetController implements Features {
 
   @Override
   public void onCellSelected(Coord modelCoord) {
-    this.view.highlight(timesClicked, modelCoord.row, modelCoord.col);
+    this.view.highlight(timesClicked);
     this.view.updateTextField(model.getCellAt(modelCoord).getRawContents()); // update text field
     timesClicked++;
   }
