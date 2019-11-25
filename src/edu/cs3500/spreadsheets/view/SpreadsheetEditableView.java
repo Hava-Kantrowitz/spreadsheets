@@ -18,7 +18,7 @@ import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 import edu.cs3500.spreadsheets.model.Value;
 
 /**
- * Models the GUI view of the spreadsheet.
+ * Models the editable GUI view of the spreadsheet.
  */
 public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
 
@@ -161,62 +161,51 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
 
   }
 
-
-  /**
-   * This is the method to update the text of the text field of the view.
-   * @param newText the new text field
-   */
+  @Override
   public void updateTextField(String newText){
     this.text.setText(newText);
   }
 
-  /**
-   * This is the method to get the text field of the current model.
-   */
+  @Override
   public String getTextField(){
     return this.text.getText();
   }
 
-  /**
-   * This is to set the value at a given location in the view.
-   * @param val the given value in string form
-   * @param row the row where it is being set
-   * @param col the column where it is being set
-   */
+  @Override
   public void setCellAt(String val, int row, int col){
     sheet.setValueAt(val,row,col);
   }
 
 
-  /**
-   * This is to display a warning message when there is an error in the file.
-   */
+  @Override
   public void displayFileError() {
     // display a dialog error message because of invalid input
     JOptionPane.showMessageDialog(this,"Invalid file selected.",
             "File Error", JOptionPane.ERROR_MESSAGE);
   }
 
-//  public void highlight(int numClicked) {
-//    if (sheet.getGridColor() == Color.BLACK && numClicked % 4 == 0) {
-//      sheet.setGridColor(Color.PINK);
-//    }
-//
-//    else if (sheet.getGridColor() == Color.PINK && numClicked % 4 == 0) {
-//      sheet.setGridColor(Color.BLACK);
-//    }
-//  }
+  @Override
+  public void highlight(int numClicked) {
+    if (sheet.getGridColor() == Color.BLACK && numClicked % 4 == 0) {
+      sheet.setGridColor(Color.PINK);
+    }
 
-  public void highlight(int numClicked, int row, int col) {
-    DefaultTableCellRenderer origRenderer = (DefaultTableCellRenderer) sheet.getCellRenderer(row, col);
-    DefaultTableCellRenderer newRenderer = new ClickedCellRenderer(row, col-1);
-
-    sheet.getColumnModel().getColumn(col-1).setCellRenderer(newRenderer);
-
-    if (sheet.getCellRenderer(row, col) == newRenderer) {
-      sheet.getColumnModel().getColumn(col-1).setCellRenderer(origRenderer);
+    else if (sheet.getGridColor() == Color.PINK && numClicked % 4 == 0) {
+      sheet.setGridColor(Color.BLACK);
     }
   }
+
+//  @Override
+//  public void highlight(int numClicked, int row, int col) {
+//    DefaultTableCellRenderer origRenderer = (DefaultTableCellRenderer) sheet.getCellRenderer(row, col-1);
+//    DefaultTableCellRenderer newRenderer = new ClickedCellRenderer(row, col-1);
+//
+//    sheet.getColumnModel().getColumn(col).setCellRenderer(newRenderer);
+//
+//    if (sheet.getCellRenderer(row, col) == newRenderer) {
+//      sheet.getColumnModel().getColumn(col).setCellRenderer(origRenderer);
+//    }
+//  }
 
 //  public void highlight(int numClicked, int row, int col) {
 //

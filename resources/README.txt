@@ -2,6 +2,76 @@ Homework 5, Spreadsheet Model
 
 By Victoria Bowen and Hava Kantrowitz
 
+HOMEWORK 7
+
+Our view code is based around a SpreadsheetView interface which was explained in the homework 6
+portion of the read me. In this assignment, we added an additional editable view. With the addition
+of the editable view we also added methods to our interface and additional view classes which are
+explained below.
+
+SpreadsheetEditableView Class: Implements the SV interface for an editable gui view and contains
+                               a NoEditTable (from the SpreadsheetTable Class).
+
+AcceptActionListener Class: The action listener for the accept button of the editable view with the
+                            purpose of alerting the controller when the accept button is pressed.
+
+CellClickListener Class: The action listener added to the NoEditTable component of the editable view
+                         with the purpose of alerting the controller that a cell has been clicked.
+
+ClickedCellRenderer Class: A class to render the highlighted version of a cell.
+
+DeleteListener Class: The key listener for the delete button of the editable view with the
+                      purpose of alerting the controller when a cell should be deleted.
+
+JHighlightBox Class: A class to render a highlighted version of a cell.
+
+LoadListener Class: The action listener for when the load selection is chosen from the file menu
+                    with the purpose of alerting the controller that a new file should be loaded.
+
+NoEditTable Class: A class to represent a JTable that does not have the ability to edit the cells
+                   by double clicking on them. This is used in the SpreadsheetTable class.
+
+RevertActionListener Class: The action listener for the revert button of the editable view with the
+                            purpose of alerting the controller when the cell should be reverted.
+
+SaveListenerClass: The action listener for when the save selection is chosen from the file menu
+                   with the purpose of alerting the controller that the data should be saved.
+
+
+Our code also contains a controller which is located in the controller package. The controller
+portion of the code is centered around the Features interface to abstract the swing components out
+of the controller and keep them to the view. The way this works is the view has the listeners and
+when a listener that corresponds to a given feature is activated the feature is called in the
+controller.
+
+Features Interface: Contains the functionality that the spreadsheet controller must have.
+
+EditableSheetController: Implements the Features interface and implements the given methods to
+                         control to control the changes to the model and the view.
+
+With the implementation of cells with errors in the view we had to have some way to represent an
+error cell in the model so that the contents would be there but it could not be evaluated.
+Therefore, we added an additional cell type to the model called ErrorCell.
+
+ErrorCell class: Implements the cell interface and contains the feature of throwing an error
+                 when the cell is used in a function call.
+
+
+CHANGES BETWEEN HW6 AND HW7
+
+The only changes we made between homework 6 and homework 7, besides the new editable features,
+are the additions we made to the ViewInterface and the addition of the ErrorCell. We decided to
+add the methods used in the editable view to the view interface so that the view could be used more
+interchangeably. The methods are phrased such that they can be applied to any of the three views.
+However, the only view that they a needed in is the editable view (besides the render method).
+
+
+
+
+
+
+
+
 HOMEWORK 6
 
 Our view code is based around a SpreadsheetView interface, which allows us to implement multiple
