@@ -9,14 +9,20 @@ import edu.cs3500.spreadsheets.controller.EditableSheetController;
 import edu.cs3500.spreadsheets.model.Coord;
 
 /**
- * This is the class to respond to the click of the revert listener
+ * Represents an action listener for the revert button component of the application with the
+ * purpose of alerting the controller that the cell should be reverted.
  */
 public class RevertActionListener implements ActionListener {
 
   private JTable sheet;
   private EditableSheetController controller;
 
-  RevertActionListener(JTable sheet, EditableSheetController controller){
+  /**
+   * This is the constructor for the revert action listener.
+   * @param sheet the JTable for reference to the current cell
+   * @param controller the controller for connection with the model
+   */
+  public RevertActionListener(JTable sheet, EditableSheetController controller){
     this.sheet = sheet;
     this.controller = controller;
   }

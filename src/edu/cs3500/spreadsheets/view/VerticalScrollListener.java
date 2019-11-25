@@ -7,7 +7,8 @@ import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * Models a vertical scroll bar listener for the spreadsheet graphical view.
+ * Models a vertical scroll bar listener for the spreadsheet graphical view with the purpose of
+ * adding data to allow for infinite scrolling.
  */
 public class VerticalScrollListener implements AdjustmentListener {
 

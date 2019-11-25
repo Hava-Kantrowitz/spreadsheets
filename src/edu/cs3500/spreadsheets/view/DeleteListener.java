@@ -6,24 +6,33 @@ import java.awt.event.KeyListener;
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
 import edu.cs3500.spreadsheets.model.Coord;
 
+/**
+ * Represents a key listener for the delete key with the purpose of alerting the controller to
+ * perform the corresponding action.
+ */
 public class DeleteListener implements KeyListener {
 
   private EditableSheetController controller;
   private NoEditTable sheet;
 
-  public DeleteListener( NoEditTable sheet, EditableSheetController controller){
+  /**
+   * This is the constructor for the delete key listener.
+   * @param sheet the JTable for the cell information
+   * @param controller the controller for the view and model of the application
+   */
+  public DeleteListener(NoEditTable sheet, EditableSheetController controller){
     this.controller = controller;
     this.sheet = sheet;
   }
 
   @Override
   public void keyTyped(KeyEvent e) {
-
+    // No functionality needed at this time when key is typed
   }
 
   @Override
   public void keyPressed(KeyEvent e) {
-
+    // No functionality needed at this time when key is pressed
   }
 
   @Override

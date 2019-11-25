@@ -1,6 +1,5 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.*;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -10,17 +9,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class NoEditTable extends JTable {
 
-  private int timesClicked;
-  DefaultTableModel model;
-
-
   /**
    * The constructor for a non editable form of a jtable.
-   * @param model the given model for the JTable
    */
   public NoEditTable(DefaultTableModel model){
     super(model);
-    this.model = model;
   }
 
 
@@ -29,19 +22,4 @@ public class NoEditTable extends JTable {
     return false;
   }
 
-  @Override
-  public void setGridColor(Color color) {
-    if (timesClicked % 3 == 0) {
-      super.setGridColor(color);
-    }
-    else {
-      super.setGridColor(Color.BLACK);
-    }
-    System.out.println(timesClicked);
-  }
-
-
-  public void trackNumClicked(int numClicked) {
-    timesClicked = numClicked;
-  }
 }

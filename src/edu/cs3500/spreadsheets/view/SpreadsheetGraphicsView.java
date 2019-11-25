@@ -14,7 +14,8 @@ import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
 /**
- * Models the GUI view of the spreadsheet.
+ * Models the GUI view of the spreadsheet to allow the user to view the data of a given model
+ * without the ability to edit it.
  */
 public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
 
@@ -82,5 +83,30 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
   public void render() {
     this.setVisible(true);
 
+  }
+
+  @Override
+  public void updateTextField(String newText) {
+    // Nothing should happen here because the text field is always "updated" because there is none
+  }
+
+  @Override
+  public String getTextField() {
+    return "";
+  }
+
+  @Override
+  public void setCellAt(String val, int row, int col) {
+    // Nothing should happen here because this view is not editable
+  }
+
+  @Override
+  public void displayFileError() {
+    // There cannot be a file error so nothing can go wrong
+  }
+
+  @Override
+  public void highlight(int numClicked) {
+    // nothing should happen here because the cells cannot be edited
   }
 }

@@ -40,4 +40,29 @@ public class SpreadsheetTextualView implements SpreadsheetView {
     outputFile.close();  // closes the file once written to
   }
 
+  @Override
+  public void updateTextField(String newText) {
+    // Nothing should happen here because there is no text view to be updated
+  }
+
+  @Override
+  public String getTextField() {
+    return "";
+  }
+
+  @Override
+  public void setCellAt(String val, int row, int col) {
+    // Nothing should happen here because the cells are all already set
+  }
+
+  @Override
+  public void displayFileError() {
+    // nothing should happen here because an error from a file cannot occur
+  }
+
+  @Override
+  public void highlight(int numClicked) {
+    // nothing should happen here because cells cannot be selected
+  }
+
 }

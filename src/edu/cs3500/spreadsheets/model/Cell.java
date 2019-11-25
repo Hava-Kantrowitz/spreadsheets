@@ -19,8 +19,9 @@ public interface Cell {
    * This evaluates the cell for the number used when calculating a sum.
    *
    * @return the number used to calculate the sum
+   * @throws IllegalArgumentException when the cell being evaluated in a sum is an ErrorCell
    */
-  double evaluateCellSum();
+  double evaluateCellSum() throws IllegalArgumentException;
 
   /**
    * This evaluates the cell for the number used when calculating the product.
@@ -50,21 +51,24 @@ public interface Cell {
    * This evaluates the cell for the number used when calculating a comparison.
    *
    * @return the value used when a comparison is taken
+   * @throws IllegalArgumentException when the cell being used in the comparison is an ErrorCell
    */
-  double evaluateCellComparison();
+  double evaluateCellComparison() throws IllegalArgumentException;
 
   /**
    * This evaluates the cell and determines the coordinating Hamilton lyric.
    * @return the value used when a hamilton is performed
+   * @throws IllegalArgumentException if the cell being used in the evaluation is an ErrorCell
    */
-  String evaluateCellHamilton();
+  String evaluateCellHamilton() throws IllegalArgumentException;
 
 
   /**
    * Determines if the cell is a number.
    * @return true if the cell is a number, false otherwise
+   * @throws IllegalArgumentException if the cell being used in the evaluation is an ErrorCell
    */
-  boolean isNum();
+  boolean isNum() throws IllegalArgumentException;
 
   /**
    * Gets the raw contents that were entered into the cell.

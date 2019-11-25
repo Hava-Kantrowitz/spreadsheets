@@ -8,11 +8,20 @@ import javax.swing.*;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
 
+/**
+ * Represents an action listener for the save button on the file menu with the purpose of alerting
+ * the controller that the data should be saved to a file if save is selected.
+ */
 public class SaveListener implements ActionListener {
   private JFrame mainFrame;
   private EditableSheetController controller;
 
-  SaveListener(JFrame mainFrame, EditableSheetController controller){
+  /**
+   * The constructor for the save listener.
+   * @param mainFrame the JFrame for information about the current cell
+   * @param controller the controller for connection with the model
+   */
+  public SaveListener(JFrame mainFrame, EditableSheetController controller){
     this.mainFrame = mainFrame;
     this.controller = controller;
   }

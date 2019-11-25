@@ -7,7 +7,7 @@ import java.util.List;
  * invalid sexp or an invalid argument in a formula. Once the cell has an error a new error cell is
  * created to take its place.
  * Throws IllegalArgumentExceptions in all the methods when the cell is trying to be used in a
- * function to show that the cell is unable to be used
+ * function to show that the cell is unable to be used.
  */
 public class ErrorCell implements Cell {
 
@@ -30,7 +30,7 @@ public class ErrorCell implements Cell {
   }
 
   @Override
-  public double evaluateCellSum() {
+  public double evaluateCellSum() throws IllegalArgumentException{
     throw new IllegalArgumentException("Error in cell.");
   }
 
@@ -50,12 +50,12 @@ public class ErrorCell implements Cell {
   }
 
   @Override
-  public double evaluateCellComparison() {
+  public double evaluateCellComparison() throws IllegalArgumentException {
     throw new IllegalArgumentException("Error in cell.");
   }
 
   @Override
-  public String evaluateCellHamilton() {
+  public String evaluateCellHamilton() throws IllegalArgumentException {
     throw new IllegalArgumentException("Error in cell.");
   }
 

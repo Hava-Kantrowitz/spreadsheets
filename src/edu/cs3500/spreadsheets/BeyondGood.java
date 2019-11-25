@@ -18,20 +18,21 @@ import edu.cs3500.spreadsheets.view.SpreadsheetTextualView;
 import edu.cs3500.spreadsheets.view.SpreadsheetView;
 
 /**
- * The main class for our program.
+ * The main class for our program that enables the creation of a GUI, editable GUI, textual (save)
+ * view, or an evaluated cell view based on the command line arguments.
  */
 public class BeyondGood {
 
   private static BasicSpreadsheet sheet = new BasicSpreadsheet();
 
   /**
-   * The main entry point.
+   * The main entry point of the view creation.
    *
    * @param args any command-line arguments
    */
   public static void main(String[] args) throws FileNotFoundException {
     // checking if it is to run the empty spreadsheet
-    if (args.length == 1 && args[0].equals("-gui")) {
+    if (args.length == 1) {
       // run the gui without a file
       // add in a file for the given output
       File file = new File("spreadsheet.txt");
@@ -43,7 +44,17 @@ public class BeyondGood {
       }
 
       // rendering the gui with the empty file
-      renderGui(new FileReader(file.getAbsolutePath()));
+      if(args[0].equals("-gui")) {
+        renderGui(new FileReader(file.getAbsolutePath()));
+      }
+      // rendering the editable with the empty file
+      else if(args[0].equals("-edit")){
+        renderEditable(new FileReader(file.getAbsolutePath()));
+      }
+      // if invalid one argument command
+      else{
+        throw new IllegalArgumentException("Malformed command line");
+      }
 
     }
     // if there is an input file
@@ -140,16 +151,6 @@ public class BeyondGood {
    */
   private static void renderGui(Reader fileName) {
     sheet.initializeSpreadsheet(fileName);
-
-    try {
-      sheet.evaluateSheet();
-    } catch (IllegalArgumentException e) {
-      for (String i : sheet.getBadReferences()) {
-        System.out.println("Error in cell " + i + " : cell contains self reference.");
-      }
-      System.exit(1);
-    }
-
     SpreadsheetView view = new SpreadsheetGraphicsView(sheet);
     view.render();
   }
@@ -191,16 +192,6 @@ public class BeyondGood {
    */
   private static void renderEditable(Reader fileName) {
     sheet.initializeSpreadsheet(fileName);
-
-    try {
-      sheet.evaluateSheet();
-    } catch (IllegalArgumentException e) {
-      for (String i : sheet.getBadReferences()) {
-        System.out.println("Error in cell " + i + " : cell contains self reference.");
-      }
-      System.exit(1);
-    }
-
     SpreadsheetView view = new SpreadsheetEditableView(sheet);
     view.render();
   }

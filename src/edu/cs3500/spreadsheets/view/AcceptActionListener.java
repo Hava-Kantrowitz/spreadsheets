@@ -10,13 +10,19 @@ import edu.cs3500.spreadsheets.model.Coord;
 
 
 /**
- * This is the class to respond to the click of the accept button.
+ * This is the class of an action listener to alert the controller when the accept button
+ * (accepting the changes in the text field) has been selected.
  */
 public class AcceptActionListener implements ActionListener {
 
   private JTable sheet;
   private EditableSheetController controller;
 
+  /**
+   * This is the constructor for an an action listener for the accept button
+   * @param sheet the JTable for the cell information
+   * @param controller the controller for the view and model
+   */
   AcceptActionListener(JTable sheet, EditableSheetController controller){
     this.sheet = sheet;
     this.controller = controller;

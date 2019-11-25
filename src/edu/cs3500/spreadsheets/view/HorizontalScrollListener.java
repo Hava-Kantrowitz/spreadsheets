@@ -13,7 +13,8 @@ import javax.swing.table.DefaultTableModel;
 import edu.cs3500.spreadsheets.model.Coord;
 
 /**
- * This is the class for a horizontal scroll listener for the spreadsheet.
+ * This is the class for a horizontal scroll listener for the spreadsheet with the purpose of
+ * expanding the data with blank cells when scrolled (infinite scrolling).
  */
 public class HorizontalScrollListener implements AdjustmentListener {
 

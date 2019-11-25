@@ -4,6 +4,10 @@ import java.awt.*;
 
 import javax.swing.*;
 
+/**
+ * This is the the class to represent a highlighted cell. The purpose is for the cell to stay
+ * highlighted when the cell is being edited.
+ */
 public class JHighlightBox extends JPanel {
 
   @Override

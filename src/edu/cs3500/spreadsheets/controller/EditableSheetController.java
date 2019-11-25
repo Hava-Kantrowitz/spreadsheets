@@ -13,12 +13,22 @@ import edu.cs3500.spreadsheets.model.StringValue;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 import edu.cs3500.spreadsheets.view.SpreadsheetTextualView;
 
+
+/**
+ * Represents a controller for the editable version of the spreadsheet views. The purpose is to
+ * enable the connection (when changes are made) between the editable view and a given model.
+ */
 public class EditableSheetController implements Features {
 
   private SpreadsheetEditableView view;
   private Spreadsheet model;
   private int timesClicked;
 
+  /**
+   * This is the constructor for the controller of the editable view.
+   * @param view the given spreadsheet view
+   * @param model the given spreadsheet model
+   */
   public EditableSheetController(SpreadsheetEditableView view, Spreadsheet model){
     this.view = view;
     this.model = model;

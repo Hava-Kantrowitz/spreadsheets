@@ -9,12 +9,21 @@ import javax.swing.*;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
 
+/**
+ * Represents an action listener for the load button in the file menu with the purpose of alerting
+ * the controller to load a new file if the load is selected.
+ */
 public class LoadListener implements ActionListener {
 
   private JFrame mainFrame;
   private EditableSheetController controller;
 
-  LoadListener(JFrame mainFrame, EditableSheetController controller){
+  /**
+   * This is the constructor for the load listener.
+   * @param mainFrame the main JFrame of the application for reference position
+   * @param controller the controller for connection with the model and view changes
+   */
+  public LoadListener(JFrame mainFrame, EditableSheetController controller){
     this.mainFrame = mainFrame;
     this.controller = controller;
   }

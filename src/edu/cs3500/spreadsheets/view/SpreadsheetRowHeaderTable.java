@@ -15,7 +15,7 @@ public class SpreadsheetRowHeaderTable extends JTable {
   private DefaultTableModel model;
 
   /**
-   * Constructs an instance of the table.
+   * Constructs an instance of the row header table.
    *
    * @param spreadsheet the spreadsheet to construct
    */
