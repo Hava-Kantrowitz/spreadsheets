@@ -31,9 +31,8 @@ public class ControllerTests {
 
   private void beginMethod() {
     try {
-      model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
-              "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/" +
-              "src/edu/cs3500/spreadsheets/testingText.txt"));
+      model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry\\" +
+              "src\\edu\\cs3500\\spreadsheets\\testFiles\\testingText.txt"));
     } catch (FileNotFoundException e) {
       System.out.println("Unable to read file in tests");
     }
@@ -491,29 +490,151 @@ public class ControllerTests {
 
   // TESTS USING MOCK TO ENSURE MODEL IS RECEIVING CORRECT VALUES
 
-  //test inputs for initialize spreadsheet
+  //test inputs for single call affirm
   @Test
-  public void testInitializeSheetMock() throws FileNotFoundException {
+  public void testAffirmCallsMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/" +
-            "Desktop/NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/" +
-            "src/edu/cs3500/spreadsheets/testingEmpty"));
+    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
+            "\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingEmpty"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1,5);
     controller.onCellAffirmed(coord);            // calling the method
 
+    //makes sure that get cell at, set cell at are both triggered
+    assertEquals("Coord: A5 Raw contents: Coord: A5", mockSheet.getReceivedVals());  // checking model updated
+  }
+
+  //test inputs for single call delete
+  @Test
+  public void testDeleteCallsMock() throws FileNotFoundException {
+
+    MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
+    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
+            "\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingEmpty"));
+    view = new SpreadsheetEditableView(mockSheet);
+    controller = new EditableSheetController(view, mockSheet);
+    Coord coord = new Coord(1,5);
+    controller.onCellDelete(coord);            // calling the method
+
+    //makes sure that get cell at, set cell at is triggered
+    assertEquals("Coord: A5 Raw contents: Coord: A5", mockSheet.getReceivedVals());  // checking model updated
+  }
+
+  //test inputs for single call select
+  @Test
+  public void testSelectCallsMock() throws FileNotFoundException {
+
+    MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
+    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
+            "\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingEmpty"));
+    view = new SpreadsheetEditableView(mockSheet);
+    controller = new EditableSheetController(view, mockSheet);
+    Coord coord = new Coord(1,5);
+    controller.onCellSelected(coord);            // calling the method
+
+    //makes sure that just get cell at is triggered
     assertEquals("Coord: A5", mockSheet.getReceivedVals());  // checking model updated
   }
 
-  //test inputs for get cell at
+  //test inputs for single call revert
+  @Test
+  public void testRevertCallsMock() throws FileNotFoundException {
 
-  //test inputs for set cell at
+    MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
+    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
+            "\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingEmpty"));
+    view = new SpreadsheetEditableView(mockSheet);
+    controller = new EditableSheetController(view, mockSheet);
+    Coord coord = new Coord(1,5);
+    controller.onCellReverted(coord);            // calling the method
 
-  //test inputs for get cell section
+    //makes sure that just get cell at is triggered
+    assertEquals("Coord: A5", mockSheet.getReceivedVals());  // checking model updated
+  }
 
-  //tests inputs for evaluate cell at
+  //test inputs for multiple calls affirm
+  @Test
+  public void testAffirmCallsMultipleMock() throws FileNotFoundException {
+
+    MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
+    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
+            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    view = new SpreadsheetEditableView(mockSheet);
+    controller = new EditableSheetController(view, mockSheet);
+    Coord coord = new Coord(1,5);
+    controller.onCellAffirmed(coord);            // calling the method
+
+    //makes sure that get cell at, set cell at are both triggered
+    assertEquals("Coord: A1 Raw contents: 3Coord: A2 Raw contents: " +
+            "4Coord: A3 Raw contents: 7Coord: B1 Raw contents: \"Vicky\"Coord: " +
+            "B2 Raw contents: \"Hava\"Coord: B3 Raw contents: \"Ham\"Coord: C8 Raw " +
+            "contents: =(SUM 2 3)Coord: F12 Raw contents: =A3Coord: AB200 Raw contents: " +
+            "50Coord: A5 Raw contents: Coord: A5", mockSheet.getReceivedVals());  // checking model updated
+  }
+
+  //test inputs for multiple calls select
+  @Test
+  public void testSelectCallsMultipleMock() throws FileNotFoundException {
+
+    MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
+    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
+            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    view = new SpreadsheetEditableView(mockSheet);
+    controller = new EditableSheetController(view, mockSheet);
+    Coord coord = new Coord(1,5);
+    controller.onCellSelected(coord);            // calling the method
+
+    //makes sure that get cell at, set cell at are both triggered
+    assertEquals("Coord: A1 Raw contents: 3Coord: A2 Raw contents: " +
+            "4Coord: A3 Raw contents: 7Coord: B1 Raw contents: \"Vicky\"Coord: " +
+            "B2 Raw contents: \"Hava\"Coord: B3 Raw contents: \"Ham\"Coord: C8 " +
+            "Raw contents: =(SUM 2 3)Coord: F12 Raw contents: =A3Coord: AB200 Raw " +
+            "contents: 50Coord: A5", mockSheet.getReceivedVals());  // checking model updated
+  }
+
+  //test inputs for multiple calls revert
+  @Test
+  public void testRevertCallsMultipleMock() throws FileNotFoundException {
+
+    MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
+    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
+            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    view = new SpreadsheetEditableView(mockSheet);
+    controller = new EditableSheetController(view, mockSheet);
+    Coord coord = new Coord(1,5);
+    controller.onCellReverted(coord);            // calling the method
+
+    //makes sure that get cell at, set cell at are both triggered
+    assertEquals("Coord: A1 Raw contents: 3Coord: A2 Raw contents: " +
+            "4Coord: A3 Raw contents: 7Coord: B1 Raw contents: \"Vicky\"Coord: " +
+            "B2 Raw contents: \"Hava\"Coord: B3 Raw contents: \"Ham\"Coord: C8 " +
+            "Raw contents: =(SUM 2 3)Coord: F12 Raw contents: =A3Coord: AB200 Raw " +
+            "contents: 50Coord: A5", mockSheet.getReceivedVals());  // checking model updated
+  }
+
+  //test inputs for multiple calls delete
+  @Test
+  public void testDeleteCallsMultipleMock() throws FileNotFoundException {
+
+    MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
+    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
+            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    view = new SpreadsheetEditableView(mockSheet);
+    controller = new EditableSheetController(view, mockSheet);
+    Coord coord = new Coord(1,5);
+    controller.onCellDelete(coord);            // calling the method
+
+    //makes sure that get cell at, set cell at are both triggered
+    assertEquals("Coord: A1 Raw contents: 3Coord: A2 Raw contents: 4Coord: " +
+            "A3 Raw contents: 7Coord: B1 Raw contents: \"Vicky\"Coord: B2 Raw contents: " +
+            "\"Hava\"Coord: B3 Raw contents: \"Ham\"Coord: C8 Raw contents: =(SUM 2 3)Coord: " +
+            "F12 Raw contents: =A3Coord: AB200 Raw contents: 50Coord: A5 Raw contents: Coord:" +
+            " A5", mockSheet.getReceivedVals());  // checking model updated
+  }
+
+
 
 
 }
