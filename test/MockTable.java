@@ -1,4 +1,3 @@
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import edu.cs3500.spreadsheets.view.NoEditTable;
@@ -11,9 +10,9 @@ public class MockTable extends NoEditTable {
   /**
    * The constructor for a non editable form of a jtable.
    *
-   * @param model
+   * @param model the default table model to create from
    */
-  public MockTable(DefaultTableModel model) {
+  MockTable(DefaultTableModel model) {
     super(model);
   }
 
