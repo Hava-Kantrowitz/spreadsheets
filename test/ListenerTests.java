@@ -15,7 +15,10 @@ import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.view.AcceptActionListener;
 import edu.cs3500.spreadsheets.view.CellClickListener;
 import edu.cs3500.spreadsheets.view.DeleteListener;
+import edu.cs3500.spreadsheets.view.LoadListener;
 import edu.cs3500.spreadsheets.view.NoEditTable;
+import edu.cs3500.spreadsheets.view.RevertActionListener;
+import edu.cs3500.spreadsheets.view.SaveListener;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 
 import static org.junit.Assert.assertEquals;
@@ -49,38 +52,41 @@ public class ListenerTests {
   // these are the tests for the accept action listener
   @Test
   public void acceptActionCallsAffirm() {
-    JTable sheet = new JTable();
-    AcceptActionListener accept = new AcceptActionListener(sheet, controller);
     beginMethod();
+    DefaultTableModel table = new DefaultTableModel();
+    MockTable sheet = new MockTable(table);
+    AcceptActionListener accept = new AcceptActionListener(sheet, controller);
     ActionEvent e = new ActionEvent(controller, 1, "affirm");
     accept.actionPerformed(e);
 
-    assertEquals("hey", controller.getOutputLog());
+    assertEquals("onCellAffirmed called with B2", controller.getOutputLog());
 
   }
 
   //cell click mock triggers on cell selected
   @Test
-  public void cellClick() {
-    JTable sheet = new JTable();
-    CellClickListener click = new CellClickListener(sheet, controller);
+  public void cellClickMock() {
     beginMethod();
+    DefaultTableModel table = new DefaultTableModel();
+    MockTable sheet = new MockTable(table);
+    CellClickListener click = new CellClickListener(sheet, controller);
     ListSelectionEvent e =
             new ListSelectionEvent(controller, 1, 3, false);
     click.valueChanged(e);
 
-    assertEquals("hey", controller.getOutputLog());
+    assertEquals("onCellSelected called with B2", controller.getOutputLog());
 
   }
 
   //delete listener mock triggers on cell delete
   @Test
   public void deleteListenerMock() {
-    DefaultTableModel sheet = new DefaultTableModel();
-    NoEditTable table = new NoEditTable(sheet);
-    DeleteListener delete = new DeleteListener(table, controller);
     beginMethod();
-    KeyEvent e = new KeyEvent(table, 1, 1, 1, KeyEvent.VK_DELETE, ' ');
+    DefaultTableModel table = new DefaultTableModel();
+    MockTable sheet = new MockTable(table);
+    DeleteListener delete = new DeleteListener(sheet, controller);
+    KeyEvent e =
+            new KeyEvent(sheet, 1, 1, 1, KeyEvent.VK_DELETE, ' ');
     delete.keyTyped(e);
 
     assertEquals("hey", controller.getOutputLog());
@@ -102,17 +108,45 @@ public class ListenerTests {
 
   }
 
-  //horizontal scroll listener mock
-
   //load listener mock
+  @Test
+  public void loadListenerMock() {
+    beginMethod();
+    JFrame frame = new JFrame();
+    LoadListener load = new LoadListener(frame, controller);
+    ActionEvent e = new ActionEvent(controller, 1, "load");
+    load.actionPerformed(e);
+
+    assertEquals("onLoadSelect called with ", controller.getOutputLog());
+
+  }
 
   //revert action listener mock
+  @Test
+  public void revertListenerMock() {
+    beginMethod();
+    DefaultTableModel table = new DefaultTableModel();
+    MockTable sheet = new MockTable(table);
+    RevertActionListener revert = new RevertActionListener(sheet, controller);
+    ActionEvent e = new ActionEvent(controller, 1, "revert");
+    revert.actionPerformed(e);
+
+    assertEquals("onCellReverted called with B2", controller.getOutputLog());
+
+  }
 
   //save listener mock
+  @Test
+  public void saveListenerMock() {
+    beginMethod();
+    JFrame frame = new JFrame();
+    SaveListener save = new SaveListener(frame, controller);
+    ActionEvent e = new ActionEvent(controller, 1, "save");
+    save.actionPerformed(e);
 
-  //valid input listener mock
+    assertEquals("onSaveSelect called with ", controller.getOutputLog());
 
-  //vertical scroll listener
+  }
 
 
 }

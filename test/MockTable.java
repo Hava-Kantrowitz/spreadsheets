@@ -1,9 +1,21 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+import edu.cs3500.spreadsheets.view.NoEditTable;
 
 /**
- * Creates a mock table which always selects cell A1.
+ * Creates a mock table which always selects cell B2.
  */
-public class MockTable extends JTable {
+public class MockTable extends NoEditTable {
+
+  /**
+   * The constructor for a non editable form of a jtable.
+   *
+   * @param model
+   */
+  public MockTable(DefaultTableModel model) {
+    super(model);
+  }
 
   @Override
   public int getSelectedRow() {

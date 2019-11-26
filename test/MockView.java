@@ -4,7 +4,7 @@ import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 /**
  * This is the mock of the model to test that the controller is calling the intended method.
  */
-public class MockViewModel extends SpreadsheetEditableView {
+public class MockView extends SpreadsheetEditableView {
 
   private String receivedVals = "";
 
@@ -13,7 +13,7 @@ public class MockViewModel extends SpreadsheetEditableView {
    *
    * @param model the model to render
    */
-  public MockViewModel(Spreadsheet model) {
+  public MockView(Spreadsheet model) {
     super(model);
   }
 
