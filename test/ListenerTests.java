@@ -87,7 +87,8 @@ public class ListenerTests {
     DeleteListener delete = new DeleteListener(sheet, controller);
     KeyEvent e =
             new KeyEvent(sheet, 1, 1, 1, KeyEvent.VK_DELETE, ' ');
-    delete.keyTyped(e);
+
+    delete.keyReleased(e);
 
     assertEquals("hey", controller.getOutputLog());
 
@@ -102,7 +103,7 @@ public class ListenerTests {
     beginMethod();
     KeyEvent e = new KeyEvent(table, 1, 1, 1,
             KeyEvent.VK_BACK_SPACE, ' ');
-    delete.keyTyped(e);
+    delete.keyReleased(e);
 
     assertEquals("hey", controller.getOutputLog());
 
