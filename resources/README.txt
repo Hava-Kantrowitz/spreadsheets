@@ -72,6 +72,9 @@ add the methods used in the editable view to the view interface so that the view
 interchangeably. The methods are phrased such that they can be applied to any of the three views.
 However, the only view that they a needed in is the editable view (besides the render method).
 
+We also updated the testing for the textual view of our model so that we ensure that the functions
+and references are shown with their raw values rather than their evaluated values.
+
 
 
 

@@ -128,7 +128,7 @@ public class SpreadsheetTextViewTests {
 
     PrintWriter outputFile = new PrintWriter("/Users/victoriabowen/Desktop/NEU_1st_year" +
             "/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/outputFileSave.txt");
+            "spreadsheets/outputFileSaveChange.txt");
 
 
     // render the text file from the actual spreadsheet
@@ -139,7 +139,7 @@ public class SpreadsheetTextViewTests {
     // sets up a new speadsheet with the output of render
     FileReader inputFile2 = new FileReader("/Users/victoriabowen/Desktop/NEU_1st_year" +
             "/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
-            "spreadsheets/outputFileSave.txt");
+            "spreadsheets/outputFileSaveChange.txt");
     Spreadsheet sheet2 = new BasicSpreadsheet();
     sheet2.initializeSpreadsheet(inputFile2);
 
