@@ -5,9 +5,8 @@ import java.util.List;
 /**
  * This is the class to represent the cell which has an error. The error could have come from an
  * invalid sexp or an invalid argument in a formula. Once the cell has an error a new error cell is
- * created to take its place.
- * Throws IllegalArgumentExceptions in all the methods when the cell is trying to be used in a
- * function to show that the cell is unable to be used.
+ * created to take its place. Throws IllegalArgumentExceptions in all the methods when the cell is
+ * trying to be used in a function to show that the cell is unable to be used.
  */
 public class ErrorCell implements Cell {
 
@@ -16,10 +15,11 @@ public class ErrorCell implements Cell {
 
   /**
    * This is the constructor for the error cell.
-   * @param error the type of error to evaluate to
+   *
+   * @param error       the type of error to evaluate to
    * @param rawContents the raw contents of the cell
    */
-  public ErrorCell(Value error, String rawContents){
+  public ErrorCell(Value error, String rawContents) {
     this.rawContents = rawContents;
     this.error = error;
   }
@@ -30,7 +30,7 @@ public class ErrorCell implements Cell {
   }
 
   @Override
-  public double evaluateCellSum() throws IllegalArgumentException{
+  public double evaluateCellSum() throws IllegalArgumentException {
     throw new IllegalArgumentException("Error in cell.");
   }
 
@@ -70,20 +70,25 @@ public class ErrorCell implements Cell {
   }
 
   @Override
-  public String toString(){
+  public String toString() {
     return this.evaluateCell().toString();
   }
 
   @Override
-  public boolean equals(Object otherCell){
+  public boolean equals(Object otherCell) {
     boolean isEqual = false;
 
     if (otherCell instanceof ErrorCell && ((ErrorCell) otherCell).error.equals((this.error)) &&
-            ((ErrorCell) otherCell).rawContents.equals(this.rawContents)){
+            ((ErrorCell) otherCell).rawContents.equals(this.rawContents)) {
       isEqual = true;
     }
 
     return isEqual;
+  }
+
+  @Override
+  public int hashCode() {
+    return rawContents.hashCode() + error.hashCode();
   }
 
 }

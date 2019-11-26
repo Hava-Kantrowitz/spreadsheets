@@ -1,19 +1,14 @@
 package edu.cs3500.spreadsheets.view;
 
-
-import java.awt.*;
-
-import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
 /**
- * Models a spreadsheet table (a modified JTable) for the GUI view component and the
- * editable GUI view component.
+ * Models a spreadsheet table (a modified JTable) for the GUI view component and the editable GUI
+ * view component.
  */
 public class SpreadsheetTable extends JTable {
 
@@ -88,8 +83,8 @@ public class SpreadsheetTable extends JTable {
         model.setValueAt(spreadsheet.getCellAt(c).toString(), c.row - 1, c.col - 1);
       }
       // if a cell was invalid due to a reference to an invalid cell within calculation
-      catch(IllegalArgumentException e){
-        model.setValueAt("#VALUE!",c.row - 1, c.col - 1);
+      catch (IllegalArgumentException e) {
+        model.setValueAt("#VALUE!", c.row - 1, c.col - 1);
       }
     }
 

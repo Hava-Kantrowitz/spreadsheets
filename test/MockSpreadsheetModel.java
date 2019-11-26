@@ -6,7 +6,9 @@ import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Coord;
 
 
-
+/**
+ * This is the mock of the model to test that the controller is calling the intended method.
+ */
 public class MockSpreadsheetModel extends BasicSpreadsheet {
 
 
@@ -23,7 +25,8 @@ public class MockSpreadsheetModel extends BasicSpreadsheet {
 
   @Override
   public void setCellAt(Coord coord, String rawContents) {
-    receivedVals = receivedVals.concat("Coord: " + coord.toString() + " Raw contents: " + rawContents);
+    receivedVals = receivedVals.concat("Coord: " + coord.toString()
+            + " Raw contents: " + rawContents);
   }
 
   @Override
@@ -33,7 +36,8 @@ public class MockSpreadsheetModel extends BasicSpreadsheet {
 
   @Override
   public ArrayList getCellSection(Coord upper, Coord lower) {
-    receivedVals = receivedVals.concat("Coord 1: " + upper.toString() + " Coord 2: " + lower.toString());
+    receivedVals = receivedVals.concat("Coord 1: " + upper.toString()
+            + " Coord 2: " + lower.toString());
     return null;
   }
 
@@ -54,7 +58,7 @@ public class MockSpreadsheetModel extends BasicSpreadsheet {
    * This is a method to get the log of received values.
    * @return the log of received values
    */
-  public String getReceivedVals(){
+  public String getReceivedVals() {
     return receivedVals;
   }
 }

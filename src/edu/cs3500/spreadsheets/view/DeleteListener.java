@@ -17,10 +17,11 @@ public class DeleteListener implements KeyListener {
 
   /**
    * This is the constructor for the delete key listener.
-   * @param sheet the JTable for the cell information
+   *
+   * @param sheet      the JTable for the cell information
    * @param controller the controller for the view and model of the application
    */
-  public DeleteListener(NoEditTable sheet, EditableSheetController controller){
+  public DeleteListener(NoEditTable sheet, EditableSheetController controller) {
     this.controller = controller;
     this.sheet = sheet;
   }
@@ -39,12 +40,12 @@ public class DeleteListener implements KeyListener {
   public void keyReleased(KeyEvent e) {
 
     // checking if delete key was pressed (which is backspace on Mac)
-    if(e.getKeyCode() == KeyEvent.VK_DELETE || e.getKeyCode() == KeyEvent.VK_BACK_SPACE){
+    if (e.getKeyCode() == KeyEvent.VK_DELETE || e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
       int modelCol = sheet.getSelectedColumn() + 1;
       int modelRow = sheet.getSelectedRow() + 1;
 
       // checking that the row and column are greater than zero
-      if(modelCol > 0 && modelRow > 0){
+      if (modelCol > 0 && modelRow > 0) {
         Coord selectedCoord = new Coord(modelCol, modelRow);
         controller.onCellDelete(selectedCoord);    // call the delete method
       }

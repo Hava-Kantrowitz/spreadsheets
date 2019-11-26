@@ -25,10 +25,11 @@ public class EditableSheetController implements Features {
 
   /**
    * This is the constructor for the controller of the editable view.
-   * @param view the given spreadsheet view
+   *
+   * @param view  the given spreadsheet view
    * @param model the given spreadsheet model
    */
-  public EditableSheetController(SpreadsheetEditableView view, Spreadsheet model){
+  public EditableSheetController(SpreadsheetEditableView view, Spreadsheet model) {
     this.view = view;
     this.model = model;
   }
@@ -44,11 +45,11 @@ public class EditableSheetController implements Features {
     }
     // checking for error in evaluation of the cell being set
     // error checking for parser is done in the model set cell at
-    catch(IllegalArgumentException e){
-        view.setCellAt("#VALUE!", coord.row - 1, coord.col - 1);
-        // setting the given cell to an error cell (if problem not caused by error cell)
-        // preserves cells that are set with reference to an error
-      if(e.getMessage() != null && !e.getMessage().contains("Error in cell.")) {
+    catch (IllegalArgumentException e) {
+      view.setCellAt("#VALUE!", coord.row - 1, coord.col - 1);
+      // setting the given cell to an error cell (if problem not caused by error cell)
+      // preserves cells that are set with reference to an error
+      if (e.getMessage() != null && !e.getMessage().contains("Error in cell.")) {
         model.setCellAt(coord, new ErrorCell(new StringValue("#VALUE!"), view.getTextField()));
       }
 
@@ -56,13 +57,13 @@ public class EditableSheetController implements Features {
 
 
     for (Coord c : model.getListCoords()) {
-      try{
-        view.setCellAt(model.getCellAt(c).toString(), c.row - 1, c.col - 1);       // THE toString has evaluate within we may want to change this tho so it is more explicit that we evaluate
+      try {
+        view.setCellAt(model.getCellAt(c).toString(), c.row - 1, c.col - 1);
       }
       // catching if there was an error in the evaluation because a cell referred to has an error
       catch (IllegalArgumentException | StackOverflowError e) {
         // not setting this cell to an error in model but showing error caused by previous cell
-          view.setCellAt("#VALUE!", c.row - 1, c.col - 1);
+        view.setCellAt("#VALUE!", c.row - 1, c.col - 1);
       }
 
     }

@@ -56,7 +56,7 @@ public class Reference implements Formula {
         throw new IllegalArgumentException("A section of cells needs an operation to evaluate");
       }
       return output;
-    } catch(StackOverflowError e) {
+    } catch (StackOverflowError e) {
       throw new IllegalArgumentException();
     }
   }
@@ -66,14 +66,15 @@ public class Reference implements Formula {
     try {
       double output;
       if (referredCoords.size() == 1) { // if there is only one reference
-        output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSum();// eval the given cell
+        output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSum();
+        // eval the given cell
       } else if (referredCoords.size() == 2) {  // if there is a range
         output = sum(spreadsheet.getCellSection(referredCoords.get(0), referredCoords.get(1)));
       } else {  // no more than two arguments in sum range
         throw new IllegalArgumentException("Illegal number of arguments");
       }
       return output;
-    } catch(StackOverflowError e) {
+    } catch (StackOverflowError e) {
       throw new IllegalArgumentException();
     }
 
@@ -91,7 +92,7 @@ public class Reference implements Formula {
         throw new IllegalArgumentException("Illegal number of references.");
       }
       return output;
-    } catch(StackOverflowError e) {
+    } catch (StackOverflowError e) {
       throw new IllegalArgumentException();
     }
 
@@ -197,9 +198,7 @@ public class Reference implements Formula {
   public String toString() {
     if (this.evaluateCell() != null) {
       return this.evaluateCell().toString();
-    }
-
-    else {
+    } else {
       return "";
     }
 

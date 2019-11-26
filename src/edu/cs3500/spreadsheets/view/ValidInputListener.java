@@ -3,9 +3,7 @@ package edu.cs3500.spreadsheets.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
-
-import edu.cs3500.spreadsheets.controller.EditableSheetController;
+import javax.swing.JOptionPane;
 
 /**
  * Represents a listener for the valid input selection of the help menu with the purpose

@@ -12,13 +12,13 @@ public class NoEditTable extends JTable {
   /**
    * The constructor for a non editable form of a jtable.
    */
-  public NoEditTable(DefaultTableModel model){
+  public NoEditTable(DefaultTableModel model) {
     super(model);
   }
 
 
   @Override
-  public boolean isCellEditable(int row, int col){
+  public boolean isCellEditable(int row, int col) {
     return false;
   }
 

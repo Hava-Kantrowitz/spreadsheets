@@ -10,8 +10,8 @@ import edu.cs3500.spreadsheets.model.Coord;
 
 
 /**
- * This is the class of an action listener to alert the controller when the accept button
- * (accepting the changes in the text field) has been selected.
+ * This is the class of an action listener to alert the controller when the accept button (accepting
+ * the changes in the text field) has been selected.
  */
 public class AcceptActionListener implements ActionListener {
 
@@ -19,11 +19,12 @@ public class AcceptActionListener implements ActionListener {
   private EditableSheetController controller;
 
   /**
-   * This is the constructor for an an action listener for the accept button
-   * @param sheet the JTable for the cell information
+   * This is the constructor for an an action listener for the accept button.
+   *
+   * @param sheet      the JTable for the cell information
    * @param controller the controller for the view and model
    */
-  public AcceptActionListener(JTable sheet, EditableSheetController controller){
+  public AcceptActionListener(JTable sheet, EditableSheetController controller) {
     this.sheet = sheet;
     this.controller = controller;
   }
@@ -35,7 +36,7 @@ public class AcceptActionListener implements ActionListener {
     int modelRow = sheet.getSelectedRow() + 1;
 
     // checking that the row and column are greater than zero
-    if(modelCol > 0 && modelRow > 0){
+    if (modelCol > 0 && modelRow > 0) {
       Coord selectedCoord = new Coord(modelCol, modelRow);
       controller.onCellAffirmed(selectedCoord);
     }

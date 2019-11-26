@@ -1,10 +1,12 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.*;
+import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
 
@@ -18,10 +20,11 @@ public class SaveListener implements ActionListener {
 
   /**
    * The constructor for the save listener.
-   * @param mainFrame the JFrame for information about the current cell
+   *
+   * @param mainFrame  the JFrame for information about the current cell
    * @param controller the controller for connection with the model
    */
-  public SaveListener(JFrame mainFrame, EditableSheetController controller){
+  public SaveListener(JFrame mainFrame, EditableSheetController controller) {
     this.mainFrame = mainFrame;
     this.controller = controller;
   }
@@ -47,7 +50,7 @@ public class SaveListener implements ActionListener {
 
 
     // once closing dialog if load has been clicked (not on close)
-    if(optionMenu.getValue() != null && optionMenu.getValue().equals("Save")){
+    if (optionMenu.getValue() != null && optionMenu.getValue().equals("Save")) {
       // activating the controller now that the load method has been selected
       controller.onSaveSelect(text.getText());
     }

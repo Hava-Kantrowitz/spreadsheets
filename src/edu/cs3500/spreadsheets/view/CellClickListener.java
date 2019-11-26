@@ -8,8 +8,8 @@ import edu.cs3500.spreadsheets.controller.EditableSheetController;
 import edu.cs3500.spreadsheets.model.Coord;
 
 /**
- * This class models a listener for every time a cell of the JTable is clicked. With the purpose
- * of alerting the controller when to perform the corresponding feature.
+ * This class models a listener for every time a cell of the JTable is clicked. With the purpose of
+ * alerting the controller when to perform the corresponding feature.
  */
 public class CellClickListener implements ListSelectionListener {
 
@@ -18,10 +18,11 @@ public class CellClickListener implements ListSelectionListener {
 
   /**
    * The constructor for the cell click listener.
-   * @param sheet the given JTable being listened to
+   *
+   * @param sheet      the given JTable being listened to
    * @param controller the controller for the view and model
    */
-  CellClickListener(JTable sheet, EditableSheetController controller){
+  public CellClickListener(JTable sheet, EditableSheetController controller) {
 
     this.sheet = sheet;
     this.controller = controller;
@@ -34,7 +35,7 @@ public class CellClickListener implements ListSelectionListener {
     int modelRow = sheet.getSelectedRow() + 1;
 
     // checking for valid coordinates
-    if(modelCol > 0 && modelRow > 0){
+    if (modelCol > 0 && modelRow > 0) {
       Coord selectedCoord = new Coord(modelCol, modelRow);
       this.controller.onCellSelected(selectedCoord);
     }
