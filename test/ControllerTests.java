@@ -655,7 +655,7 @@ public class ControllerTests {
     BasicSpreadsheet model = new BasicSpreadsheet();
     model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
             "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
-    MockViewModel mockView = new MockViewModel(model);
+    MockView mockView = new MockView(model);
     controller = new EditableSheetController(mockView, model);
     Coord coord = new Coord(1, 5);
     controller.onCellAffirmed(coord);            // calling the method
@@ -675,7 +675,7 @@ public class ControllerTests {
     BasicSpreadsheet model = new BasicSpreadsheet();
     model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
             "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
-    MockViewModel mockView = new MockViewModel(model);
+    MockView mockView = new MockView(model);
     controller = new EditableSheetController(mockView, model);
     Coord coord = new Coord(1, 5);
     controller.onCellReverted(coord);            // calling the method
@@ -691,7 +691,7 @@ public class ControllerTests {
     BasicSpreadsheet model = new BasicSpreadsheet();
     model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
             "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
-    MockViewModel mockView = new MockViewModel(model);
+    MockView mockView = new MockView(model);
     controller = new EditableSheetController(mockView, model);
     Coord coord = new Coord(1, 5);
     controller.onCellSelected(coord);            // calling the method
@@ -708,7 +708,7 @@ public class ControllerTests {
     BasicSpreadsheet model = new BasicSpreadsheet();
     model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
             "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
-    MockViewModel mockView = new MockViewModel(model);
+    MockView mockView = new MockView(model);
     controller = new EditableSheetController(mockView, model);
     Coord coord = new Coord(1, 5);
     controller.onCellDelete(coord);            // calling the method
@@ -728,7 +728,7 @@ public class ControllerTests {
     BasicSpreadsheet model = new BasicSpreadsheet();
     model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
             "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
-    MockViewModel mockView = new MockViewModel(model);
+    MockView mockView = new MockView(model);
     controller = new EditableSheetController(mockView, model);
     Coord coord = new Coord(1, 5);
     controller.onLoadSelect("C:\\Users\\havak\\IdeaProjects\\nextTry" +
@@ -746,7 +746,7 @@ public class ControllerTests {
     BasicSpreadsheet model = new BasicSpreadsheet();
     model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
             "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
-    MockViewModel mockView = new MockViewModel(model);
+    MockView mockView = new MockView(model);
     controller = new EditableSheetController(mockView, model);
     controller.onLoadSelect("thisSheetDoesntExist");            // calling the method
 
