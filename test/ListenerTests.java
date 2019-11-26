@@ -44,7 +44,7 @@ public class ListenerTests {
   public void acceptActionCallsAffirm(){
     JTable sheet = new JTable();
     AcceptActionListener accept = new AcceptActionListener(sheet, controller);
-    
+
 
   }
 

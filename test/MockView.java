@@ -2,7 +2,7 @@ import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 
-public class MockViewModel extends SpreadsheetEditableView {
+public class MockView extends SpreadsheetEditableView {
 
   private String receivedVals = "";
 
@@ -11,7 +11,7 @@ public class MockViewModel extends SpreadsheetEditableView {
    *
    * @param model the model to render
    */
-  public MockViewModel(Spreadsheet model) {
+  public MockView(Spreadsheet model) {
     super(model);
   }
 
