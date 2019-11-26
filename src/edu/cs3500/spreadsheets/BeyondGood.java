@@ -44,15 +44,15 @@ public class BeyondGood {
       }
 
       // rendering the gui with the empty file
-      if(args[0].equals("-gui")) {
+      if (args[0].equals("-gui")) {
         renderGui(new FileReader(file.getAbsolutePath()));
       }
       // rendering the editable with the empty file
-      else if(args[0].equals("-edit")){
+      else if (args[0].equals("-edit")) {
         renderEditable(new FileReader(file.getAbsolutePath()));
       }
       // if invalid one argument command
-      else{
+      else {
         throw new IllegalArgumentException("Malformed command line");
       }
 
@@ -74,8 +74,7 @@ public class BeyondGood {
       if (args.length == 3 && args[2].equals("-gui")) {
         // render the view of the file with the gui
         renderGui(inputFile);
-      }
-      else if(args.length == 3 && args[2].equals("-edit")){
+      } else if (args.length == 3 && args[2].equals("-edit")) {
         // render the editable form of the view
         renderEditable(inputFile);
       }
@@ -102,8 +101,7 @@ public class BeyondGood {
       else if (args.length == 4 && args[2].equals("-eval")) {
         // evaluate the given cell
         evaluateCellTextView(inputFile, args[3]);
-      }
-      else {
+      } else {
         throw new IllegalArgumentException("Malformed command line");
 
       }

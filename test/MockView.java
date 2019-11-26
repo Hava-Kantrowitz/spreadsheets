@@ -1,8 +1,10 @@
-import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 
-public class MockView extends SpreadsheetEditableView {
+/**
+ * This is the mock of the model to test that the controller is calling the intended method.
+ */
+public class MockViewModel extends SpreadsheetEditableView {
 
   private String receivedVals = "";
 
@@ -11,14 +13,15 @@ public class MockView extends SpreadsheetEditableView {
    *
    * @param model the model to render
    */
-  public MockView(Spreadsheet model) {
+  public MockViewModel(Spreadsheet model) {
     super(model);
   }
 
   @Override
   public void setCellAt(String val, int row, int col) {
 
-    receivedVals = receivedVals.concat("Value is " + val + " row is " + row + " col is " + col + " ");
+    receivedVals = receivedVals.concat("Value is " + val + " row is " + row
+            + " col is " + col + " ");
 
   }
 

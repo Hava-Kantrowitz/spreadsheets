@@ -1,11 +1,13 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.*;
+import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
 
@@ -20,10 +22,11 @@ public class LoadListener implements ActionListener {
 
   /**
    * This is the constructor for the load listener.
-   * @param mainFrame the main JFrame of the application for reference position
+   *
+   * @param mainFrame  the main JFrame of the application for reference position
    * @param controller the controller for connection with the model and view changes
    */
-  public LoadListener(JFrame mainFrame, EditableSheetController controller){
+  public LoadListener(JFrame mainFrame, EditableSheetController controller) {
     this.mainFrame = mainFrame;
     this.controller = controller;
   }
@@ -49,7 +52,7 @@ public class LoadListener implements ActionListener {
 
 
     // once closing dialog if load has been clicked (not on close)
-    if(optionMenu.getValue() != null && optionMenu.getValue().equals("Load")){
+    if (optionMenu.getValue() != null && optionMenu.getValue().equals("Load")) {
       // activating the controller now that the load method has been selected
       controller.onLoadSelect(text.getText());
     }

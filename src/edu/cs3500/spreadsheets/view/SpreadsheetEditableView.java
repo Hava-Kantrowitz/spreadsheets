@@ -1,21 +1,31 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyListener;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JMenuBar;
+import javax.swing.JLabel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
-import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
-import edu.cs3500.spreadsheets.model.Value;
 
 /**
  * Models the editable GUI view of the spreadsheet.
@@ -24,7 +34,7 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
 
   private JTextField text;
   private NoEditTable sheet;   // the table representation of the spreadsheet
-  private int prevSelectedRow = - 1;
+  private int prevSelectedRow = -1;
   private int prevSelectedCol = -1;
 
   /**
@@ -36,7 +46,7 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
 
     super();
 
-    EditableSheetController controller = new EditableSheetController(this,model);
+    EditableSheetController controller = new EditableSheetController(this, model);
 
     this.setTitle("Spreadsheet");
     this.setSize(1000, 1000);
@@ -133,7 +143,6 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     JMenuBar menuBar = new JMenuBar();  // create the whole menu bar
 
 
-
     JMenu addLoadMenu = new JMenu("File");    // create the individual menu
 
     JMenuItem load = new JMenuItem("Load"); // adding the load option to file menu
@@ -159,7 +168,6 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     menuBar.add(helpMenu);             // add the help menu
 
 
-
     this.setJMenuBar(menuBar);
     this.add(rowScroller, BorderLayout.WEST);
     this.add(scrollPane, BorderLayout.CENTER);
@@ -174,25 +182,25 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
   }
 
   @Override
-  public void updateTextField(String newText){
+  public void updateTextField(String newText) {
     this.text.setText(newText);
   }
 
   @Override
-  public String getTextField(){
+  public String getTextField() {
     return this.text.getText();
   }
 
   @Override
-  public void setCellAt(String val, int row, int col){
-    sheet.setValueAt(val,row,col);
+  public void setCellAt(String val, int row, int col) {
+    sheet.setValueAt(val, row, col);
   }
 
 
   @Override
   public void displayFileError() {
     // display a dialog error message because of invalid input
-    JOptionPane.showMessageDialog(this,"Invalid file selected.",
+    JOptionPane.showMessageDialog(this, "Invalid file selected.",
             "File Error", JOptionPane.ERROR_MESSAGE);
   }
 
@@ -200,7 +208,7 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
   public void highlight() {
 
     // checking if it is a different column
-    if(prevSelectedCol != -1 && prevSelectedCol != sheet.getSelectedColumn()){
+    if (prevSelectedCol != -1 && prevSelectedCol != sheet.getSelectedColumn()) {
       // creates a renderer for no border to be applied to the previous cell
       DefaultTableCellRenderer noBorderRender =
               new NoBorderRenderer(prevSelectedRow, prevSelectedCol);

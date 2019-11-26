@@ -70,12 +70,12 @@ public class BasicSpreadsheet implements Spreadsheet {
       }
       // checking if expected a cell reference error in the sexp
       // so setting an error here
-      catch(IllegalStateException e){
-        addedCell = new ErrorCell(new StringValue("#NAME?"),contentCopy);
+      catch (IllegalStateException e) {
+        addedCell = new ErrorCell(new StringValue("#NAME?"), contentCopy);
       }
       // checking if there is an invalid sexp
-      catch(IllegalArgumentException e){
-        addedCell = new ErrorCell(new StringValue("#NAME?"),contentCopy);
+      catch (IllegalArgumentException e) {
+        addedCell = new ErrorCell(new StringValue("#NAME?"), contentCopy);
       }
       setCellAt(coord, addedCell);  // setting the value of the cell
     }
@@ -124,7 +124,7 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   @Override
   public void evaluateCellAt(Coord coord) throws IllegalArgumentException {
-      getCellAt(coord).evaluateCell();
+    getCellAt(coord).evaluateCell();
   }
 
   @Override
