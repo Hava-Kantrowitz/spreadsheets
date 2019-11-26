@@ -80,7 +80,22 @@ public class ListenerTests {
     NoEditTable table = new NoEditTable(sheet);
     DeleteListener delete = new DeleteListener(table, controller);
     beginMethod();
-    KeyEvent e = new KeyEvent(table, 1, 1, 1, KeyEvent.VK_DELETE);
+    KeyEvent e = new KeyEvent(table, 1, 1, 1, KeyEvent.VK_DELETE, ' ');
+    delete.keyTyped(e);
+
+    assertEquals("hey", controller.getOutputLog());
+
+  }
+
+  // delete listener with backspace key
+  @Test
+  public void deleteBackSpaceListenerMock() {
+    DefaultTableModel sheet = new DefaultTableModel();
+    NoEditTable table = new NoEditTable(sheet);
+    DeleteListener delete = new DeleteListener(table, controller);
+    beginMethod();
+    KeyEvent e = new KeyEvent(table, 1, 1, 1,
+            KeyEvent.VK_BACK_SPACE, ' ');
     delete.keyTyped(e);
 
     assertEquals("hey", controller.getOutputLog());

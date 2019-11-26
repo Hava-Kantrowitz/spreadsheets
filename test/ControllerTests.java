@@ -158,6 +158,7 @@ public class ControllerTests {
 
     assertEquals(new DoubleValue(4.0), model.getCellAt(coord));  // checking model updated with
     assertEquals(new Function("SUM", formulas), model.getCellAt(coord2));
+    assertEquals(new DoubleValue(11.0), model.getCellAt(coord2));  // checks evaluated value is new
 
   }
 
@@ -186,6 +187,7 @@ public class ControllerTests {
     assertEquals(new DoubleValue(4.0), model.getCellAt(coord));  // checking model updated with
     assertEquals(new ErrorCell(new StringValue("#NAME?"), "= SUM A5 7"),
             model.getCellAt(coord2));    // second one should still be error
+
   }
 
 
