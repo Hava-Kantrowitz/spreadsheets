@@ -5,18 +5,15 @@ import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
-import edu.cs3500.spreadsheets.controller.EditableSheetController;
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.view.AcceptActionListener;
 import edu.cs3500.spreadsheets.view.CellClickListener;
 import edu.cs3500.spreadsheets.view.DeleteListener;
 import edu.cs3500.spreadsheets.view.LoadListener;
-import edu.cs3500.spreadsheets.view.NoEditTable;
 import edu.cs3500.spreadsheets.view.RevertActionListener;
 import edu.cs3500.spreadsheets.view.SaveListener;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
@@ -33,6 +30,9 @@ public class ListenerTests {
   private SpreadsheetEditableView view;
   private MockController controller;
 
+  /**
+   * Initializes the testing conditions.
+   */
   private void beginMethod() {
     try {
       model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
@@ -87,24 +87,24 @@ public class ListenerTests {
     DeleteListener delete = new DeleteListener(sheet, controller);
     KeyEvent e =
             new KeyEvent(sheet, 1, 1, 1, KeyEvent.VK_DELETE, ' ');
-    delete.keyTyped(e);
+    delete.keyReleased(e);
 
-    assertEquals("hey", controller.getOutputLog());
+    assertEquals("onCellDelete called with B2", controller.getOutputLog());
 
   }
 
   // delete listener with backspace key
   @Test
   public void deleteBackSpaceListenerMock() {
-    DefaultTableModel sheet = new DefaultTableModel();
-    NoEditTable table = new NoEditTable(sheet);
-    DeleteListener delete = new DeleteListener(table, controller);
     beginMethod();
-    KeyEvent e = new KeyEvent(table, 1, 1, 1,
-            KeyEvent.VK_BACK_SPACE, ' ');
-    delete.keyTyped(e);
+    DefaultTableModel table = new DefaultTableModel();
+    MockTable sheet = new MockTable(table);
+    DeleteListener delete = new DeleteListener(sheet, controller);
+    KeyEvent e =
+            new KeyEvent(sheet, 1, 1, 1, KeyEvent.VK_BACK_SPACE, ' ');
+    delete.keyReleased(e);
 
-    assertEquals("hey", controller.getOutputLog());
+    assertEquals("onCellDelete called with B2", controller.getOutputLog());
 
   }
 
