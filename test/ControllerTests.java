@@ -158,6 +158,7 @@ public class ControllerTests {
 
     assertEquals(new DoubleValue(4.0), model.getCellAt(coord));  // checking model updated with
     assertEquals(new Function("SUM",formulas), model.getCellAt(coord2));
+    assertEquals(new DoubleValue(11.0), model.getCellAt(coord2).evaluateCell());
 
   }
 
