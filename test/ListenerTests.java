@@ -35,8 +35,9 @@ public class ListenerTests {
    */
   private void beginMethod() {
     try {
-      model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-              "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingText.txt"));
+      model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+              "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+              "spreadsheets/testFiles/testingText.txt"));
     } catch (FileNotFoundException e) {
       System.out.println("Unable to read file in tests");
     }

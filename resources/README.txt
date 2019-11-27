@@ -1,4 +1,4 @@
-Homework 5, Spreadsheet Model
+Homework 7, Spreadsheet Controller
 
 By Victoria Bowen and Hava Kantrowitz
 

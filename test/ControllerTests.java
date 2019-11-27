@@ -34,8 +34,9 @@ public class ControllerTests {
 
   private void beginMethod() {
     try {
-      model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects" +
-              "\\nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingText.txt"));
+      model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+              "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/" +
+              "src/edu/cs3500/spreadsheets/testFiles/testingText.txt"));
     } catch (FileNotFoundException e) {
       System.out.println("Unable to read file in tests");
     }
@@ -237,6 +238,120 @@ public class ControllerTests {
 
   }
 
+
+  // this is to check when a cell is set with a direct self reference
+  @Test
+  public void onCellAffirmedDirectReference() {
+    beginMethod();
+
+    Coord coord = new Coord(1, 5);
+    view.updateTextField("= A5");
+    controller.onCellAffirmed(coord);  // setting to an acceptable value
+
+    assertEquals(new ErrorCell(new StringValue("#VALUE!"), "= A5"),
+            model.getCellAt(coord));
+
+  }
+
+  // this is to check when a cell is set with an indirect self reference
+  @Test
+  public void onCellAffirmedIndirectSelfReference() {
+    beginMethod();
+
+    Coord coord = new Coord(1, 5);
+    view.updateTextField("= (SUM A1 5 6)");
+    controller.onCellAffirmed(coord);  // setting to an acceptable value
+
+
+    Coord coord2 = new Coord(1, 1);
+    view.updateTextField("= A5");
+    controller.onCellAffirmed(coord2);
+
+    assertEquals(new ErrorCell(new StringValue("#VALUE!"), "= A5"),
+            model.getCellAt(coord2));
+
+  }
+
+
+  // this is to check when a cell is set with a self reference and then another cell refers to
+  // the cell with the self reference
+  @Test
+  public void onCellAffirmedReferenceToSelfRef() {
+    beginMethod();
+
+    Coord coord = new Coord(1, 5);
+    view.updateTextField("= (SUM A1 5 6)");
+    controller.onCellAffirmed(coord);  // setting to an acceptable value
+
+
+    Coord coord2 = new Coord(1, 1);
+    view.updateTextField("= A5");
+    controller.onCellAffirmed(coord2);
+
+    assertEquals(new ErrorCell(new StringValue("#VALUE!"), "= A5"),
+            model.getCellAt(coord2));
+
+    Coord coord3 = new Coord(1, 8);
+    view.updateTextField("= A1");
+    controller.onCellAffirmed(coord3);
+
+    // the cell itself should remain intact
+    assertEquals(new Reference("A1", model), model.getCellAt(coord3));
+
+  }
+
+
+  // this is to check that the cell that refers to the self ref has VALUE!
+  @Test
+  public void onCellAffirmedReferenceToSelfRefError() {
+    beginMethod();
+
+    Coord coord = new Coord(1, 5);
+    view.updateTextField("= (SUM A1 5 6)");
+    controller.onCellAffirmed(coord);  // setting to an acceptable value
+
+
+    Coord coord2 = new Coord(1, 1);
+    view.updateTextField("= A5");
+    controller.onCellAffirmed(coord2);
+
+
+    Coord coord3 = new Coord(1, 8);
+    view.updateTextField("= A1");
+    controller.onCellAffirmed(coord3);
+
+
+    // should be value when evaluated
+    assertEquals("#VALUE!", model.getCellAt(coord3).evaluateCell().toString());
+
+  }
+
+
+  // this is to check a cell referring to a self reference cell with more than just a reference
+  @Test(expected = IllegalArgumentException.class)
+  public void onCellAffirmedRefToSelfRef() {
+    beginMethod();
+
+    Coord coord = new Coord(1, 5);
+    view.updateTextField("= (SUM A1 5 6)");
+    controller.onCellAffirmed(coord);  // setting to an acceptable value
+
+
+    Coord coord2 = new Coord(1, 1);
+    view.updateTextField("= A5");
+    controller.onCellAffirmed(coord2);
+
+
+    Coord coord3 = new Coord(1, 8);
+    view.updateTextField("= (SUM A1 2)");
+    controller.onCellAffirmed(coord3);
+
+
+    // should be value when evaluated
+    model.getCellAt(coord3).evaluateCell().toString();
+
+  }
+
   //THESE ARE THE TESTS FOR ON CELL SELECTED
 
   // this is to check when there is a double value in the text field
@@ -413,8 +528,9 @@ public class ControllerTests {
   @Test
   public void onCellLoadGood() {
     beginMethod();
-    controller.onLoadSelect("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\cs3500" +
-            "\\spreadsheets\\testFiles\\testingSpecial");
+    controller.onLoadSelect("/Users/victoriabowen/Desktop/NEU_1st_year/" +
+            "ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testFiles/testingSpecial");
 
     //test with string
     Coord coord = new Coord(1, 5);
@@ -445,8 +561,9 @@ public class ControllerTests {
   @Test
   public void testBadFileLoad() {
     beginMethod();
-    controller.onLoadSelect("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\cs3500\\" +
-            "spreadsheets\\testFiles\\testingBad");
+    controller.onLoadSelect("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testFiles/testingBad");
 
     //test with string
     Coord coord = new Coord(1, 5);
@@ -485,8 +602,8 @@ public class ControllerTests {
 
     //The file here is a file that doesn't currently exist
     controller.onSaveSelect("/Users/victoriabowen/Desktop/NEU_1st_year/" +
-            "ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/spreadsheets/" +
-            "testingHamilton.txt");
+            "ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/" +
+            "cs3500/spreadsheets/testingHamilton.txt");
 
     controller.onLoadSelect("/Users/victoriabowen/Desktop/NEU_1st_year/ObjectOriented/" +
             "CS_3500_Projects/spreadsheets/src/edu/cs3500/spreadsheets/testingHamilton.txt");
@@ -502,8 +619,9 @@ public class ControllerTests {
   public void testAffirmCallsMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects" +
-            "\\nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingEmpty"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop" +
+            "/NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/" +
+            "cs3500/spreadsheets/testFiles/testingEmpty"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1, 5);
@@ -519,8 +637,9 @@ public class ControllerTests {
   public void testDeleteCallsMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects" +
-            "\\nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingEmpty"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testFiles/testingEmpty"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1, 5);
@@ -536,8 +655,9 @@ public class ControllerTests {
   public void testSelectCallsMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingEmpty"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testFiles/testingEmpty"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1, 5);
@@ -552,8 +672,9 @@ public class ControllerTests {
   public void testRevertCallsMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingEmpty"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/" +
+            "cs3500/spreadsheets/testFiles/testingEmpty"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1, 5);
@@ -569,8 +690,9 @@ public class ControllerTests {
   public void testAffirmCallsMultipleMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testFiles/testingSpecial"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1, 5);
@@ -590,8 +712,9 @@ public class ControllerTests {
   public void testSelectCallsMultipleMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/" +
+            "cs3500/spreadsheets/testFiles/testingSpecial"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1, 5);
@@ -610,8 +733,9 @@ public class ControllerTests {
   public void testRevertCallsMultipleMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/" +
+            "cs3500/spreadsheets/testFiles/testingSpecial"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1, 5);
@@ -630,8 +754,9 @@ public class ControllerTests {
   public void testDeleteCallsMultipleMock() throws FileNotFoundException {
 
     MockSpreadsheetModel mockSheet = new MockSpreadsheetModel();
-    mockSheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testFiles/testingSpecial"));
     view = new SpreadsheetEditableView(mockSheet);
     controller = new EditableSheetController(view, mockSheet);
     Coord coord = new Coord(1, 5);
@@ -652,8 +777,9 @@ public class ControllerTests {
   public void testAffirmViewMock() throws FileNotFoundException {
 
     BasicSpreadsheet model = new BasicSpreadsheet();
-    model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/NEU_1st_year" +
+            "/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/s" +
+            "preadsheets/testFiles/testingSpecial"));
     MockView mockView = new MockView(model);
     controller = new EditableSheetController(mockView, model);
     Coord coord = new Coord(1, 5);
@@ -672,8 +798,9 @@ public class ControllerTests {
   public void testRevertViewMock() throws FileNotFoundException {
 
     BasicSpreadsheet model = new BasicSpreadsheet();
-    model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/s" +
+            "preadsheets/testFiles/testingSpecial"));
     MockView mockView = new MockView(model);
     controller = new EditableSheetController(mockView, model);
     Coord coord = new Coord(1, 5);
@@ -688,8 +815,9 @@ public class ControllerTests {
   public void testSelectViewMock() throws FileNotFoundException {
 
     BasicSpreadsheet model = new BasicSpreadsheet();
-    model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/" +
+            "cs3500/spreadsheets/testFiles/testingSpecial"));
     MockView mockView = new MockView(model);
     controller = new EditableSheetController(mockView, model);
     Coord coord = new Coord(1, 5);
@@ -705,8 +833,9 @@ public class ControllerTests {
   public void testDeleteViewMock() throws FileNotFoundException {
 
     BasicSpreadsheet model = new BasicSpreadsheet();
-    model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/NEU_1st_year/" +
+            "ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/spreadsheets/" +
+            "testFiles/testingSpecial"));
     MockView mockView = new MockView(model);
     controller = new EditableSheetController(mockView, model);
     Coord coord = new Coord(1, 5);
@@ -725,13 +854,15 @@ public class ControllerTests {
   public void testLoadGoodSheetViewMock() throws FileNotFoundException {
 
     BasicSpreadsheet model = new BasicSpreadsheet();
-    model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/NEU_1st_year/" +
+            "ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testFiles/testingSpecial"));
     MockView mockView = new MockView(model);
     controller = new EditableSheetController(mockView, model);
     Coord coord = new Coord(1, 5);
-    controller.onLoadSelect("C:\\Users\\havak\\IdeaProjects\\nextTry" +
-            "\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingText.txt");
+    controller.onLoadSelect("/Users/victoriabowen/Desktop/NEU_1st_year/" +
+            "ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testFiles/testingText.txt");
     // calling the method
 
     //makes sure that get cell at, set cell at are both triggered
@@ -743,8 +874,9 @@ public class ControllerTests {
   public void testLoadNonexistentSheetViewMock() throws FileNotFoundException {
 
     BasicSpreadsheet model = new BasicSpreadsheet();
-    model.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\" +
-            "nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testFiles/testingSpecial"));
     MockView mockView = new MockView(model);
     controller = new EditableSheetController(mockView, model);
     controller.onLoadSelect("thisSheetDoesntExist");            // calling the method
