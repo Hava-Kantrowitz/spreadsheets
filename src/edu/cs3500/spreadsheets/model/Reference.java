@@ -57,7 +57,7 @@ public class Reference implements Formula {
       }
       return output;
     } catch (StackOverflowError e) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Self reference error.");
     }
   }
 
@@ -75,7 +75,7 @@ public class Reference implements Formula {
       }
       return output;
     } catch (StackOverflowError e) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Self reference error.");
     }
 
   }
@@ -93,7 +93,7 @@ public class Reference implements Formula {
       }
       return output;
     } catch (StackOverflowError e) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Self reference error.");
     }
 
   }
@@ -109,7 +109,7 @@ public class Reference implements Formula {
       }
       return output;
     } catch (StackOverflowError e) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Self reference error.");
     }
 
   }
@@ -125,7 +125,7 @@ public class Reference implements Formula {
       }
       return output;
     } catch (StackOverflowError e) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Self reference error.");
     }
 
   }
@@ -141,7 +141,7 @@ public class Reference implements Formula {
       }
       return output;
     } catch (StackOverflowError e) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Self reference error.");
     }
 
   }
@@ -157,7 +157,7 @@ public class Reference implements Formula {
       }
       return output;
     } catch (StackOverflowError e) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Self reference error.");
     }
 
   }

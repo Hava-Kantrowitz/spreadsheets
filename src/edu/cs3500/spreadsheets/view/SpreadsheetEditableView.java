@@ -28,7 +28,7 @@ import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
 /**
- * Models the editable GUI view of the spreadsheet.
+ * Models the editable GUI view of the spreadsheet which a user is able to interact with.
  */
 public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
 
@@ -38,7 +38,7 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
   private int prevSelectedCol = -1;
 
   /**
-   * Constructs an instance of the GUI spreadsheet view.
+   * Constructs an instance of the editable GUI spreadsheet view.
    *
    * @param model the model to render
    */
