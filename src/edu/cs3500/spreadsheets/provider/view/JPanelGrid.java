@@ -73,4 +73,5 @@ public class JPanelGrid extends JPanel {
       c.addActionListener(actionListener);
     }
   }
+
 }

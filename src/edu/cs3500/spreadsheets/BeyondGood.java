@@ -12,6 +12,10 @@ import java.util.regex.Pattern;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.ProviderAdapter;
+import edu.cs3500.spreadsheets.provider.model.IViewWorksheet;
+import edu.cs3500.spreadsheets.view.ProviderViewExtender;
+import edu.cs3500.spreadsheets.view.ProviderViewRenderer;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 import edu.cs3500.spreadsheets.view.SpreadsheetGraphicsView;
 import edu.cs3500.spreadsheets.view.SpreadsheetTextualView;
@@ -51,6 +55,9 @@ public class BeyondGood {
       else if (args[0].equals("-edit")) {
         renderEditable(new FileReader(file.getAbsolutePath()));
       }
+      else if (args[0].equals("-provider")) {
+        renderProvider(new FileReader(file.getAbsolutePath()));
+      }
       // if invalid one argument command
       else {
         throw new IllegalArgumentException("Malformed command line");
@@ -77,6 +84,9 @@ public class BeyondGood {
       } else if (args.length == 3 && args[2].equals("-edit")) {
         // render the editable form of the view
         renderEditable(inputFile);
+      }
+      else if (args.length == 3 && args[2].equals("-provider")) {
+        renderProvider(inputFile);
       }
       // check if it is length 4
       else if (args.length == 4 && args[2].equals("-save")) {
@@ -110,6 +120,14 @@ public class BeyondGood {
       throw new IllegalArgumentException("Malformed command line");
     }
 
+  }
+
+  private static void renderProvider(Reader fileName) {
+    sheet.initializeSpreadsheet(fileName);
+    IViewWorksheet worker = new ProviderAdapter(sheet);
+    ProviderViewExtender view = new ProviderViewExtender(worker);
+    ProviderViewRenderer render = new ProviderViewRenderer(view);
+    render.render();
   }
 
 
