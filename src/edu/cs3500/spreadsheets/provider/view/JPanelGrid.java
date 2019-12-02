@@ -64,7 +64,7 @@ public class JPanelGrid extends JPanel {
       g.drawString("" + i, 0, i);
     }
     // paints every cell in the grid
-    g.setColor(Color.BLACK);
+    g.setColor(Color.black);
     if (grid != null) {
       for (JPanelCell c : grid.values()) {
         c.paintComponent(g);

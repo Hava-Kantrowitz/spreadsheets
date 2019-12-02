@@ -1,6 +1,25 @@
-Homework 7, Spreadsheet Controller
+Homework 8, Code Review
 
 By Victoria Bowen and Hava Kantrowitz
+
+HOMEWORK 8
+
+When our provider's gave us their code, they informed us that they had never gotten their views to render.
+They also did not provide us with a controller interface. We asked them to send their controller interface
+and to give us an estimate as to when their view would be working. They replied that they did not have a
+controller interface and were dropping the class and therefore unable to create and provide one. In order
+to work around their broken view and get it to render, we created several decorators that added the basic
+functionality needed for rendering. The code we added, and the reasoning behind each, is documented
+and described in our Code Critique.
+
+ProviderAdapter: Placed within our model code, this class adapts our model into the model interface
+the provider's view is expecting to work with.
+
+ProviderViewExtender: Placed within our view code, this class enables the provider's concrete view classes
+to implement their own view interface in order to allow us to interact with it.
+
+ProviderViewRenderer: Placed within our view code, this class enhances the provider's view in order
+to allow it to render.
 
 HOMEWORK 7
 

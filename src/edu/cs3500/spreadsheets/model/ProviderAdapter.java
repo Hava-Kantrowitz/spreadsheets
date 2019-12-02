@@ -6,10 +6,17 @@ import java.util.List;
 import edu.cs3500.spreadsheets.provider.model.IViewWorksheet;
 import edu.cs3500.spreadsheets.sexp.Sexp;
 
+/**
+ * Adapter to allow our model to be used with the provider's view.
+ */
 public class ProviderAdapter extends BasicSpreadsheet implements IViewWorksheet {
 
   private BasicSpreadsheet sheet;
 
+  /**
+   * Constructs an instance of the adapter.
+   * @param sheet our model to be adapted
+   */
   public ProviderAdapter(BasicSpreadsheet sheet) {
     this.sheet = sheet;
   }
