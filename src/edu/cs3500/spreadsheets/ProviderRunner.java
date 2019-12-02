@@ -20,8 +20,9 @@ public class ProviderRunner {
    */
   public static void main(String[] args) throws FileNotFoundException {
     BasicSpreadsheet sheet = new BasicSpreadsheet();
-    sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
-            "\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
+    sheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/" +
+            "edu/cs3500/spreadsheets/testFiles/testingSpecial"));
     IViewWorksheet worker = new ProviderAdapter(sheet);
     ProviderViewExtender view = new ProviderViewExtender(worker);
     ProviderViewRenderer render = new ProviderViewRenderer(view);

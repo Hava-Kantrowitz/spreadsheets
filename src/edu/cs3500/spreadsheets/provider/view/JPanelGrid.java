@@ -28,6 +28,9 @@ public class JPanelGrid extends JPanel {
         grid.put(c,cell);
       }
     }
+
+
+
   }
 
   public HashMap<Coord, JPanelCell> getGrid() {
@@ -39,6 +42,7 @@ public class JPanelGrid extends JPanel {
    */
   @Override
   protected void paintComponent(Graphics g) {
+
     for (int i = 0; i < 100; i++) {
       for (int j = 0; j < 100; j++) {
         // sets the color to cyan if this is a row/column header
