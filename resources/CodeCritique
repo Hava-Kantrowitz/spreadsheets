@@ -1,0 +1,49 @@
+Design Critique
+
+The IViewWorksheet interface was flexible and easy to wire into our model, necessitating the use
+of only a single thin adapter. The IWorksheet interface, which we believe is modeling an editable spreadsheet,
+is not used in any of their classes, and therefore is rendered quite unneccessary. None of the provider's
+concrete view classes implement their IView interface, which provided a challenge when we needed to use our
+adapter model in place of their concrete model. In order to solve this, we created a decorator class,
+ProviderViewExtender, that allowed their main concrete view class to extend their interface, and we worked
+with the ProviderViewExtender decorator. Overall, the design had good elements in it, and for the most part
+it was loosely coupled with any specific implementation of the model that made the wiring simple and easy.
+However, several aspects of it, including the IWorksheet interface and JScrollPane, were unused and therefore
+appear unneeded, and by not implementing their IView interface it was more difficult to wire that
+aspect of the model to view. We suggest taking a second look at the design of the view, and making
+sure the methods promised by the interface are actually delivered upon.
+
+Implementation Critique
+
+The biggest flaw in implementation was that the concrete view classes never implemented the IView interface,
+therefore breaking multiple promises, but this is discussed in the "Design Critique" section above.
+When the code was given to us, our provider's let us know they never got their view to appear. We quickly
+realized that this was because they only created a JPanel, and never created a JFrame which they could
+add it to and set it visible. We created a JFrame and added their JPanel to it so we could render
+what their view actually looked like. The provider's sheet was hardcoded to a cell size of 10x20 and a grid
+size of 100x100, which takes up about an 1x1 inch square on the screen. We believe that our provider's never saw
+this view, and therefore did not realize how small they were actually implementing their sheet. Cells with
+evaluations all render properly, but due to the small scope of the sheet itself, are written all over each
+other. The grid is also drawn in the same color as the cells, and therefore the grid cannot be seen and
+the whole sheet appears to be a white square with words drawn on it. The implementation has a lot of good starts
+and good ideas, and has all the desired elements in some form--the grid, the toolbar, the scrolling,
+the cells themselves. However, none of these ideas are fully fleshed out and completely implemented. It
+would be helpful for the provider's to go back through and edit and debug their code with the rendered
+JFrame, so they would be able to see what their code was actually doing. The toolbar is mentioned in
+the interface but never implemented, and the ScrollPane has at least the start of an implementation
+but is never linked with the main view classes.
+
+Documentation Critique
+
+The code we were given lacked documentation in many areas. Three of the four methods in IViewWorksheet had
+well-written Javadoc that helped in interpreting the purpose of the code, but all the methods in IWorksheet, as
+well as two of the methods in IView, lacked any Javadoc at all. The documentation on methods within JPanelGrid,
+JPanelCell, and JPanelScroll were inconsistent; methods such as constructors, getters, and setters lacked
+Javadoc, and several overriden methods had empty Javadoc frameworks above them. When the Javadoc was
+written it was written well and helpful in implementation, if the provider's finished documenting their
+code it would be helpful. The README was also nonexistent, even after repeated attempts to ask the provider's
+for a README.
+
+Design/Code Limitations
+
+Suggestions for Improvement
