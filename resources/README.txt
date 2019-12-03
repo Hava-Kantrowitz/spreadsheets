@@ -4,24 +4,23 @@ By Victoria Bowen and Hava Kantrowitz
 
 HOMEWORK 8
 
-When our provider's gave us their code, they informed us that they had never gotten their views to render.
-They also did not provide us with a controller interface. We asked them to send their controller interface
-and to give us an estimate as to when their view would be working. They replied that they did not have a
-controller interface and were dropping the class and therefore unable to create and provide one.
-The lack of a controller interface or any connection to the model in the view classes that we were
-provided meant we were unable to connect the given view to our controller, and therefore it wasn't possible
-to implement any features. In order to work around their broken view and get it to render, we created
-several decorators that added the basic functionality needed for rendering. The code we added, and the
-reasoning behind each, is documented and described in our Code Critique.
+When our provider's gave us their code, they informed us that they had never gotten their views to
+render. They also did not provide us with a controller interface. We asked them to send their
+controller interface and to give us an estimate as to when their view would be working. They replied
+that they did not have a controller interface and were dropping the class and therefore unable to
+create and provide one. The lack of a controller interface or any connection to the model in the
+view classes that we were provided meant we were unable to connect the given view to our controller,
+and therefore it wasn't possible to implement any features. In order to work around their broken
+view and get it to render, we created several decorators that added the basic functionality needed
+for rendering. The code we added, and the reasoning behind each, is documented and described in our
+Code Critique.
 
-Professor Lerner said the lack of the controller interface in the provider's code was okay, provided
-we document it.
 
 ProviderAdapter: Placed within our model code, this class adapts our model into the model interface
 the provider's view is expecting to work with.
 
-ProviderViewExtender: Placed within our view code, this class enables the provider's concrete view classes
-to implement their own view interface in order to allow us to interact with it.
+ProviderViewExtender: Placed within our view code, this class enables the provider's concrete view
+classes to implement their own view interface in order to allow us to interact with it.
 
 ProviderViewRenderer: Placed within our view code, this class enhances the provider's view in order
 to allow it to render.
@@ -131,15 +130,16 @@ CHANGES BETWEEN HOMEWORKS 5 AND 6
 
 The largest change we made between these homeworks was changing our spreadsheet model from a 2D
 array to a HashMap mapping coordinates to cell values. In class discussions and in reviewing prior
-feedback, we realized both that a full 2D array was unnecessary considering how many spaces in the spreadsheet
-were blank, and that having and needing to handle all those extra cells was incredibly wasteful. We
-reconfigured our model to use a hashmap as its base, and this actually made the view considerably
-easier.
+feedback, we realized both that a full 2D array was unnecessary considering how many spaces in the
+spreadsheet were blank, and that having and needing to handle all those extra cells was incredibly
+wasteful. We reconfigured our model to use a hashmap as its base, and this actually made the view
+considerably easier.
 
 HOMEWORK 5
 
-Our code is based around a Spreadsheet, which contains Cells. Cells can be Values, Formulas, or Blank. Formulas 
-can be Values, Functions, or References. Values can be Doubles, Strings, or Booleans. 
+Our code is based around a Spreadsheet, which contains Cells. Cells can be Values, Formulas, or
+Blank. Formulas can be Values, Functions, or References. Values can be Doubles, Strings, or
+Booleans.
 
 Spreadsheet Interface: Contains functionality that all spreadsheets must have. 
 

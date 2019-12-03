@@ -13,14 +13,17 @@ With the lack of a controller interface or any connection with a controller in o
 we were unable to concretely determine if we separated our implementations of our model and view
 sufficiently. However, we feel that the separation was sufficient because our controller did not
 have any knowledge of the specific actions in our view. Instead, the actions in our view trigger
-the corresponding feature within our controller. One implementation detail that we did notice as we
-were reviewing the code for our view was that we used the direct class name for our controller
-within our editable view. It may have been better to have the view take in a controller (of the
-interface type) so that our customers would have been able to create an adapter for the controller
-more easily and connect it to our view. However, this would create a problem with the construction
-of the controller and view because the controller would take in a view and the view would also take
-in a controller. This is why we still have it set up with constructing the controller within the
-editable view class.
+the corresponding feature within our controller.
+
+One implementation detail that we did notice as we were reviewing the code for our view was that
+we used the direct class name for our controller within our editable view. This came to our
+attention when our providers requested our SpreadsheetReadOnlyAdapter. We reformatted our so that
+our providers would not need access to this provider or the controller class. The editable view now
+takes in a generic Spreadsheet (which is a SpreadsheetReadOnlyAdapter in our main) and a generic
+object which implements the features interface. From the need to change this design aspect of our
+code, we learned that we should have been using the interfaces for the model and the controller
+throughout the view classes so that the view would not have to have any knowledge of the concrete
+classes within the controller and model packages.
 
 Through this process we also learned about the importance of code documentation. At times it seems
 tedious to document all of our code. However, upon reading our providers' code the lack of Javadoc
