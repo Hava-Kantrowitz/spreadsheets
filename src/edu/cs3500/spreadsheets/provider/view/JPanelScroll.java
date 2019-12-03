@@ -1,15 +1,24 @@
 package edu.cs3500.spreadsheets.provider.view;
 
-import java.awt.*;
+import java.awt.Adjustable;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 
+/**
+ * NOTE: This Javadoc was not written by the providers, placed by us for the style.
+ */
 public class JPanelScroll extends JPanel {
   JPanelGrid grid;
   JScrollBar vertical;
   JScrollBar horizontal;
 
 
+  /**
+   * NOTE: This Javadoc was not written by the providers, placed by us for the style.
+   */
   public JPanelScroll(JPanelGrid grid) {
     this.vertical = new JScrollBar(Adjustable.VERTICAL);
     this.horizontal = new JScrollBar(Adjustable.HORIZONTAL);

@@ -7,12 +7,15 @@ HOMEWORK 8
 When our provider's gave us their code, they informed us that they had never gotten their views to render.
 They also did not provide us with a controller interface. We asked them to send their controller interface
 and to give us an estimate as to when their view would be working. They replied that they did not have a
-controller interface and were dropping the class and therefore unable to create and provide one. We had
+controller interface and were dropping the class and therefore unable to create and provide one.
 The lack of a controller interface or any connection to the model in the view classes that we were
 provided meant we were unable to connect the given view to our controller, and therefore it wasn't possible
 to implement any features. In order to work around their broken view and get it to render, we created
 several decorators that added the basic functionality needed for rendering. The code we added, and the
 reasoning behind each, is documented and described in our Code Critique.
+
+Professor Lerner said the lack of the controller interface in the provider's code was okay, provided
+we document it.
 
 ProviderAdapter: Placed within our model code, this class adapts our model into the model interface
 the provider's view is expecting to work with.

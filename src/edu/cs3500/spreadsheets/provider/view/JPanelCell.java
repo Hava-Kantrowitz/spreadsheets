@@ -1,11 +1,15 @@
 package edu.cs3500.spreadsheets.provider.view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 
-import javax.swing.*;
+import javax.swing.JButton;
 
 import edu.cs3500.spreadsheets.model.Coord;
 
+/**
+ * NOTE: This Javadoc was not written by the providers, placed by us for the style.
+ */
 public class JPanelCell extends JButton {
   Coord c;
   String value;
@@ -14,6 +18,9 @@ public class JPanelCell extends JButton {
   public final int CELL_WIDTH = 20;
   public final int CELL_HEIGHT = 10;
 
+  /**
+   * NOTE: This Javadoc was not written by the providers, placed by us for the style.
+   */
   public JPanelCell(Coord c, String value) {
     this.value = value;
     this.c = c;
@@ -24,6 +31,9 @@ public class JPanelCell extends JButton {
     }
   }
 
+  /**
+   * NOTE: This Javadoc was not written by the providers, placed by us for the style.
+   */
   public void setColor(Color color) {
     this.color = color;
   }

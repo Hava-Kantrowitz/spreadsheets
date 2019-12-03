@@ -1,11 +1,11 @@
 package edu.cs3500.spreadsheets.provider.view;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Color;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.provider.model.IViewWorksheet;
@@ -19,27 +19,29 @@ public class JPanelGrid extends JPanel {
   public final int CELL_WIDTH = 20;
   public final int CELL_HEIGHT = 10;
 
+  /**
+   * NOTE: This Javadoc was not written by the providers, placed by us for the style.
+   */
   public JPanelGrid(IViewWorksheet model) {
     if (model != null) {
       // for each cell, add a corresponding JPanelCell to grid.
       for (Coord c : model.allCells()) {
         JPanelCell cell = new JPanelCell(c, model.getStringCell((c)));
         cell.setActionCommand(c.col + "," + c.row);
-        grid.put(c,cell);
+        grid.put(c, cell);
       }
     }
 
 
-
   }
 
+  /**
+   * NOTE: This Javadoc was not written by the providers, placed by us for the style.
+   */
   public HashMap<Coord, JPanelCell> getGrid() {
     return this.grid;
   }
 
-  /**
-   *
-   */
   @Override
   protected void paintComponent(Graphics g) {
 
@@ -72,8 +74,11 @@ public class JPanelGrid extends JPanel {
     }
   }
 
+  /**
+   * NOTE: This Javadoc was not written by the providers, placed by us for the style.
+   */
   public void addActionListener(ActionListener actionListener) {
-    for(JPanelCell c : grid.values()) {
+    for (JPanelCell c : grid.values()) {
       c.addActionListener(actionListener);
     }
   }

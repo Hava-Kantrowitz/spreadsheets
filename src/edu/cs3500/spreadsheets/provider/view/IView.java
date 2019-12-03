@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.provider.model.IViewWorksheet;
 
+/**
+ * NOTE: This Javadoc was not written by the providers, placed by us for the style.
+ */
 public interface IView {
 
   /**
@@ -15,7 +18,7 @@ public interface IView {
   void setLabel(String s);
 
   /**
-   * Initializes the view with a model and window dimensions
+   * Initializes the view with a model and window dimensions.
    *
    * @param model  The WorksheetModel storing the cell information.
    * @param width  The width of the View window.
