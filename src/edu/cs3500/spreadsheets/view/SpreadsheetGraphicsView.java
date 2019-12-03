@@ -11,7 +11,6 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 import edu.cs3500.spreadsheets.model.Spreadsheet;
-import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
 /**
  * Models the GUI view of the spreadsheet to allow the user to view the data of a given model

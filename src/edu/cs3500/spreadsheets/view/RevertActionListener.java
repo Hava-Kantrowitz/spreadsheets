@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTable;
 
-import edu.cs3500.spreadsheets.controller.EditableSheetController;
 import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.Coord;
 

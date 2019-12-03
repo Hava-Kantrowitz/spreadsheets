@@ -3,7 +3,6 @@ package edu.cs3500.spreadsheets.view;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import edu.cs3500.spreadsheets.controller.EditableSheetController;
 import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.Coord;
 

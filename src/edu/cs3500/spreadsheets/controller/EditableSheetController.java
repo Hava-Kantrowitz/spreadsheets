@@ -99,7 +99,7 @@ public class EditableSheetController implements Features {
     try {
       newSheet.initializeSpreadsheet(new FileReader(filePath));
       this.view.setVisible(false); // close the current view
-      EditableSheetController newController  = new EditableSheetController(null, newSheet);
+      EditableSheetController newController = new EditableSheetController(null, newSheet);
       SpreadsheetEditableView newView =
               new SpreadsheetEditableView(newSheet, newController); // setting up the view
       newController.setView(newView);
@@ -127,7 +127,7 @@ public class EditableSheetController implements Features {
   }
 
   @Override
-  public void setView(SpreadsheetEditableView view){
-      this.view = view;
+  public void setView(SpreadsheetEditableView view) {
+    this.view = view;
   }
 }

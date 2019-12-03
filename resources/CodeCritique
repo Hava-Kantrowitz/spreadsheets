@@ -87,11 +87,11 @@ Along the lines of the grid itself, we recommend that they change the initial si
 the initial sizes of the cells so that they can accommodate the contents.
 
 Once they have the construction of the view complete, we would recommend that they add in a place
-for people to change the contents of a cell as well a listeners for each of the cells (if they
+for people to change the contents of a cell as well as listeners for each of the cells (if they
 decide to continue with the button approach). This way they will be able to tell which button is
 being clicked and send the correct information to a controller.
 
-Once these features are added, that will enable information to be sent to a controller, we recommend
+Once these features are added, that will enable information to be sent to a controller; we recommend
 that they create a controller interface and an implementation of a controller with methods
 that will be called in reaction to the added listeners in the view classes. This will enable the
 edibility between the view and the model.

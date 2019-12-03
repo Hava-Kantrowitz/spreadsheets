@@ -6,7 +6,6 @@ import java.util.Set;
 
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
-import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
 /**
  * This is the class for the textual representation of a spreadsheet. The purpose of this view is to

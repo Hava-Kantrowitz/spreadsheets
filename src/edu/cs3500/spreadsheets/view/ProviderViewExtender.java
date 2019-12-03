@@ -14,6 +14,7 @@ public class ProviderViewExtender extends JPanelGrid implements IView {
 
   /**
    * Sends the model to the provider's grid class in order to construct the view.
+   *
    * @param model the model of the sheet
    */
   public ProviderViewExtender(IViewWorksheet model) {
@@ -22,17 +23,17 @@ public class ProviderViewExtender extends JPanelGrid implements IView {
 
   @Override
   public void setLabel(String s) {
-
+    //stub implementation for provider, interface never used
   }
 
   @Override
   public void initialize(IViewWorksheet model, int width, int height) {
-
+    //stub implementation for provider, interface never used
   }
 
   @Override
   public void display() {
-
+    //stub implementation for provider, interface never used
   }
 
   @Override
@@ -42,6 +43,6 @@ public class ProviderViewExtender extends JPanelGrid implements IView {
 
   @Override
   public void setToolbar(String s) {
-
+    //stub implementation for provider, interface never used
   }
 }

@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 
-import edu.cs3500.spreadsheets.controller.EditableSheetController;
 import edu.cs3500.spreadsheets.controller.Features;
 
 /**

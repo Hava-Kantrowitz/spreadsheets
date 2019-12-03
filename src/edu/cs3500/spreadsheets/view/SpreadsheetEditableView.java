@@ -23,10 +23,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import edu.cs3500.spreadsheets.controller.EditableSheetController;
 import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
-import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
 /**
  * Models the editable GUI view of the spreadsheet which a user is able to interact with.

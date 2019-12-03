@@ -27,7 +27,6 @@ import static org.junit.Assert.assertEquals;
 public class ListenerTests {
 
   private BasicSpreadsheet model = new BasicSpreadsheet();
-  private SpreadsheetEditableView view;
   private MockController controller;
 
   /**
@@ -42,7 +41,7 @@ public class ListenerTests {
       System.out.println("Unable to read file in tests");
     }
     controller = new MockController(null, model);
-    view = new SpreadsheetEditableView(model, controller);
+    SpreadsheetEditableView view = new SpreadsheetEditableView(model, controller);
     controller.setView(view);
 
     view.render();
