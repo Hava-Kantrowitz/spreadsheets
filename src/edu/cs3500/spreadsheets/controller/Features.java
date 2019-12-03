@@ -1,6 +1,7 @@
 package edu.cs3500.spreadsheets.controller;
 
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 
 /**
  * This is the interface for the features supported by the controller of an editable spreadsheet
@@ -52,4 +53,12 @@ public interface Features {
    * @param filePath the given file path to save the file to
    */
   void onSaveSelect(String filePath);
+
+
+  /**
+   * Sets the view of the controller so that the controller and view can be constructed because the
+   * controller takes in a view and the editable view takes in a controller.
+   * @param view the new view to be set
+   */
+  void setView(SpreadsheetEditableView view);
 }

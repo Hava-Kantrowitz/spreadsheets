@@ -2,13 +2,37 @@ Review of Our Experience
 
 What do you wish you had done differently in design and implementation?
 
-YO VICKY WANNA TAKE THIS IM BLANKING
+From this experience, we believe that we successfully separated the implementation of our model,
+views, and controller. The separation between our model and our view made it quite simple to
+connect our model to our provider's view. We had a very similar implementation to our providers with
+respect to our method of getting the data from our model. Therefore, to use our model the creation
+of the adapter was relatively simple because we simply used composition to use the functionality
+of our model within the methods of their model interface.
+
+With the lack of a controller interface or any connection with a controller in our providers code,
+we were unable to concretely determine if we separated our implementations of our model and view
+sufficiently. However, we feel that the separation was sufficient because our controller did not
+have any knowledge of the specific actions in our view. Instead, the actions in our view trigger
+the corresponding feature within our controller. One implementation detail that we did notice as we
+were reviewing the code for our view was that we used the direct class name for our controller
+within our editable view. It may have been better to have the view take in a controller (of the
+interface type) so that our customers would have been able to create an adapter for the controller
+more easily and connect it to our view. However, this would create a problem with the construction
+of the controller and view because the controller would take in a view and the view would also take
+in a controller. This is why we still have it set up with constructing the controller within the
+editable view class.
+
+Through this process we also learned about the importance of code documentation. At times it seems
+tedious to document all of our code. However, upon reading our providers' code the lack of Javadoc
+commenting made it difficult to interpret the purpose of the methods in some cases.
+
 
 What was your experience like with your providers?
 
-Our providers gave us code they admitted wasn't working and took multiple days to respond to questions,
-ultimately telling us they had decided to drop the class. Despite this, they were professional, courteous,
-and apologetic that they had given their code to us in such a state. It definitely wasn't a great experience,
-but we believe it was a good experience to have in recognizing and understanding that clients/providers
-are not always going to be easy to deal with and that meeting and handling the expectations of various
-stakeholders is a large part of software development.
+Our providers gave us code they admitted wasn't working and took multiple days to respond to
+questions, ultimately telling us they had decided to drop the class. Despite this, they were
+professional, courteous, and apologetic that they had given their code to us in such a state. It
+definitely wasn't a great experience, but we believe it was a good experience to have in recognizing
+and understanding that clients/providers are not always going to be easy to deal with and that
+meeting and handling the expectations of various stakeholders is a large part of software
+development.

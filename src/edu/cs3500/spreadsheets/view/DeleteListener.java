@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
+import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.Coord;
 
 /**
@@ -12,7 +13,7 @@ import edu.cs3500.spreadsheets.model.Coord;
  */
 public class DeleteListener implements KeyListener {
 
-  private EditableSheetController controller;
+  private Features controller;
   private NoEditTable sheet;
 
   /**
@@ -21,7 +22,7 @@ public class DeleteListener implements KeyListener {
    * @param sheet      the JTable for the cell information
    * @param controller the controller for the view and model of the application
    */
-  public DeleteListener(NoEditTable sheet, EditableSheetController controller) {
+  public DeleteListener(NoEditTable sheet, Features controller) {
     this.controller = controller;
     this.sheet = sheet;
   }

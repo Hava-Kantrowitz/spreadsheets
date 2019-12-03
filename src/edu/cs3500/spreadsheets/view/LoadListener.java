@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
+import edu.cs3500.spreadsheets.controller.Features;
 
 /**
  * Represents an action listener for the load button in the file menu with the purpose of alerting
@@ -18,7 +19,7 @@ import edu.cs3500.spreadsheets.controller.EditableSheetController;
 public class LoadListener implements ActionListener {
 
   private JFrame mainFrame;
-  private EditableSheetController controller;
+  private Features controller;
 
   /**
    * This is the constructor for the load listener.
@@ -26,7 +27,7 @@ public class LoadListener implements ActionListener {
    * @param mainFrame  the main JFrame of the application for reference position
    * @param controller the controller for connection with the model and view changes
    */
-  public LoadListener(JFrame mainFrame, EditableSheetController controller) {
+  public LoadListener(JFrame mainFrame, Features controller) {
     this.mainFrame = mainFrame;
     this.controller = controller;
   }

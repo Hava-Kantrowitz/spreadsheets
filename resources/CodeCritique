@@ -1,49 +1,103 @@
 Design Critique
 
 The IViewWorksheet interface was flexible and easy to wire into our model, necessitating the use
-of only a single thin adapter. The IWorksheet interface, which we believe is modeling an editable spreadsheet,
-is not used in any of their classes, and therefore is rendered quite unneccessary. None of the provider's
-concrete view classes implement their IView interface, which provided a challenge when we needed to use our
-adapter model in place of their concrete model. In order to solve this, we created a decorator class,
-ProviderViewExtender, that allowed their main concrete view class to extend their interface, and we worked
-with the ProviderViewExtender decorator. Overall, the design had good elements in it, and for the most part
-it was loosely coupled with any specific implementation of the model that made the wiring simple and easy.
-However, several aspects of it, including the IWorksheet interface and JScrollPane, were unused and therefore
-appear unneeded, and by not implementing their IView interface it was more difficult to wire that
-aspect of the model to view. We suggest taking a second look at the design of the view, and making
-sure the methods promised by the interface are actually delivered upon.
+of only a single thin adapter. The IWorksheet interface, which we believe is modeling an editable
+spreadsheet, is not used in any of their classes, and therefore is rendered quite unneccessary. None
+of the provider's concrete view classes implement their IView interface, which provided a challenge
+when we needed to use our adapter model in place of their concrete model. In order to solve this, we
+created a decorator class, ProviderViewExtender, that allowed their main concrete view class to
+extend their interface, and we worked with the ProviderViewExtender decorator. Overall, the design
+had good elements in it, and for the most part it was loosely coupled with any specific
+implementation of the model that made the wiring simple and easy. However, several aspects of it,
+including the IWorksheet interface and JScrollPane, were unused and therefore appear unneeded, and
+by not implementing their IView interface it was more difficult to wire that aspect of the model to
+view. We suggest taking a second look at the design of the view, and making sure the methods
+promised by the interface are actually delivered upon.
 
 Implementation Critique
 
-The biggest flaw in implementation was that the concrete view classes never implemented the IView interface,
-therefore breaking multiple promises, but this is discussed in the "Design Critique" section above.
-When the code was given to us, our provider's let us know they never got their view to appear. We quickly
-realized that this was because they only created a JPanel, and never created a JFrame which they could
-add it to and set it visible. We created a JFrame and added their JPanel to it so we could render
-what their view actually looked like. The provider's sheet was hardcoded to a cell size of 10x20 and a grid
-size of 100x100, which takes up about an 1x1 inch square on the screen. We believe that our provider's never saw
-this view, and therefore did not realize how small they were actually implementing their sheet. Cells with
-evaluations all render properly, but due to the small scope of the sheet itself, are written all over each
-other. The grid is also drawn in the same color as the cells, and therefore the grid cannot be seen and
-the whole sheet appears to be a white square with words drawn on it. The implementation has a lot of good starts
-and good ideas, and has all the desired elements in some form--the grid, the toolbar, the scrolling,
-the cells themselves. However, none of these ideas are fully fleshed out and completely implemented. It
-would be helpful for the provider's to go back through and edit and debug their code with the rendered
+The biggest flaw in implementation was that the concrete view classes never implemented the IView
+interface, therefore breaking multiple promises, but this is discussed in the "Design Critique"
+section above. When the code was given to us, our provider's let us know they never got their view
+to appear. We quickly realized that this was because they only created a JPanel, and never created a
+JFrame which they could add it to and set it visible. We created a JFrame and added their JPanel to
+it so we could render what their view actually looked like. The provider's sheet was hardcoded to a
+cell size of 10x20 and a grid size of 100x100, which takes up about an 1x1 inch square on the
+screen. We believe that our provider's never saw this view, and therefore did not realize how small
+they were actually implementing their sheet. Cells with evaluations all render properly, but due to
+the small scope of the sheet itself, are written all over each other. The grid is also drawn in the
+same color as the cells, and therefore the grid cannot be seen and the whole sheet appears to be a
+white square with words drawn on it. The implementation has a lot of good starts and good ideas, and
+has all the desired elements in some form--the grid, the toolbar, the scrolling, the cells
+themselves. However, none of these ideas are fully fleshed out and completely implemented. It would
+be helpful for the provider's to go back through and edit and debug their code with the rendered
 JFrame, so they would be able to see what their code was actually doing. The toolbar is mentioned in
 the interface but never implemented, and the ScrollPane has at least the start of an implementation
 but is never linked with the main view classes.
 
 Documentation Critique
 
-The code we were given lacked documentation in many areas. Three of the four methods in IViewWorksheet had
-well-written Javadoc that helped in interpreting the purpose of the code, but all the methods in IWorksheet, as
-well as two of the methods in IView, lacked any Javadoc at all. The documentation on methods within JPanelGrid,
-JPanelCell, and JPanelScroll were inconsistent; methods such as constructors, getters, and setters lacked
-Javadoc, and several overriden methods had empty Javadoc frameworks above them. When the Javadoc was
-written it was written well and helpful in implementation, if the provider's finished documenting their
-code it would be helpful. The README was also nonexistent, even after repeated attempts to ask the provider's
-for a README.
+The code we were given lacked documentation in many areas. Three of the four methods in
+IViewWorksheet had well-written Javadoc that helped in interpreting the purpose of the code, but all
+the methods in IWorksheet, as well as two of the methods in IView, lacked any Javadoc at all. The
+documentation on methods within JPanelGrid, JPanelCell, and JPanelScroll were inconsistent; methods
+such as constructors, getters, and setters lacked Javadoc, and several overriden methods had empty
+Javadoc frameworks above them. When the Javadoc was written it was written well and helpful in
+implementation, if the provider's finished documenting their code it would be helpful. The README
+was also nonexistent, even after repeated attempts to ask the provider's for a README.
 
 Design/Code Limitations
 
+The structural design of the code we were given made it difficult to follow because of the lack of
+connection between the classes. For example, there seemed to be very little connection between the
+view classes themselves and the view interface. This lack of connection made it more difficult to
+connect the provided view with our model. Furthermore, the purposes of the classes within the view
+package were also somewhat difficult to decipher. Some of the classes, such as JPanelScroll, seemed
+to never be used within what seems to be the main view class, JPanelGrid.
+
+With our inability to modify the given code, the hard coded values for the size of the grid and the
+size of the individual cells also proved to be quite limiting. The sizes that were given for both of
+these values were too small to fit the contents of any of the cells so that when the view is
+displayed most of the contents end up overlapping.
+
+The code was also limiting due to the lack of a controller, or any connection with the model. The
+lack of a controller interface or any connection to the model in the view classes that we were
+provided, meant we were unable to connect the given view to our controller. This is because there
+was no way to make changes to our model through our controller with the provide view without the
+wiring needed in the view itself. Once the view renders, the user is unable to make any changes to
+the cells or select a cell. Therefore, there is nothing in the view that could be used to trigger
+our controller.
+
+The functionality of the individual cells was also limiting because the intention of each cell being
+a button is not displayed in the view. The grid portion of the view contains a HashMap of buttons;
+however, the buttons are never actually rendered on the JPanel. This means that the user input will
+never actually trigger an event. Furthermore, there do not seem to be any corresponding methods to
+send any information to a controller/model if a button had been clicked.
+
+
 Suggestions for Improvement
+
+In order to improve the design of the view, we would recommend that the providers start with the
+implementation of the uneditable. All of the ideas that were started with the implementation of the
+view seem to be on the right track. We assume that it was difficult to debug these issues, however,
+because they were not able to get the view to render. Therefore, we would recommend to have the
+existing JPanelGrid be a component of the view class that will implement their IView interface.
+The grid can then be constructed in the same basic manner that they are constructing it currently.
+Along the lines of the grid itself, we recommend that they change the initial size of the grid and
+the initial sizes of the cells so that they can accommodate the contents.
+
+Once they have the construction of the view complete, we would recommend that they add in a place
+for people to change the contents of a cell as well a listeners for each of the cells (if they
+decide to continue with the button approach). This way they will be able to tell which button is
+being clicked and send the correct information to a controller.
+
+Once these features are added, that will enable information to be sent to a controller, we recommend
+that they create a controller interface and an implementation of a controller with methods
+that will be called in reaction to the added listeners in the view classes. This will enable the
+edibility between the view and the model.
+
+Overall, we recommend that they walk through the way in which they are initializing their grid. The
+correct steps seem to be included; however, there are some little bugs in each part of the process.
+If they go through and determine want they want to be happening in each step and figure out what is
+actually happening, we believe it will be easier for them to correct these issues.
+

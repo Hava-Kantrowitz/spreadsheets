@@ -4,13 +4,14 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import edu.cs3500.spreadsheets.model.Coord;
-import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
+import edu.cs3500.spreadsheets.model.Spreadsheet;
+
 
 /**
  * This class represents the table which holds the row headers (a table with one column).
  */
 public class SpreadsheetRowHeaderTable extends JTable {
-  private SpreadsheetReadOnlyAdapter spreadsheet;
+  private Spreadsheet spreadsheet;
 
   private DefaultTableModel model;
 
@@ -19,7 +20,7 @@ public class SpreadsheetRowHeaderTable extends JTable {
    *
    * @param spreadsheet the spreadsheet to construct
    */
-  public SpreadsheetRowHeaderTable(SpreadsheetReadOnlyAdapter spreadsheet) {
+  public SpreadsheetRowHeaderTable(Spreadsheet spreadsheet) {
     this.spreadsheet = spreadsheet;
   }
 

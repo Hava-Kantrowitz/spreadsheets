@@ -5,6 +5,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
+import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.Coord;
 
 /**
@@ -14,7 +15,7 @@ import edu.cs3500.spreadsheets.model.Coord;
 public class CellClickListener implements ListSelectionListener {
 
   private JTable sheet;
-  private EditableSheetController controller;
+  private Features controller;
 
   /**
    * The constructor for the cell click listener.
@@ -22,7 +23,7 @@ public class CellClickListener implements ListSelectionListener {
    * @param sheet      the given JTable being listened to
    * @param controller the controller for the view and model
    */
-  public CellClickListener(JTable sheet, EditableSheetController controller) {
+  public CellClickListener(JTable sheet, Features controller) {
 
     this.sheet = sheet;
     this.controller = controller;

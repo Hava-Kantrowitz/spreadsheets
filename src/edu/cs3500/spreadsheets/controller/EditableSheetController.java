@@ -99,9 +99,11 @@ public class EditableSheetController implements Features {
     try {
       newSheet.initializeSpreadsheet(new FileReader(filePath));
       this.view.setVisible(false); // close the current view
-      this.model = newSheet;  // setting up the model
-      this.view = new SpreadsheetEditableView(this.model); // setting up the view
-      this.view.render(); // display the new view
+      EditableSheetController newController  = new EditableSheetController(null, newSheet);
+      SpreadsheetEditableView newView =
+              new SpreadsheetEditableView(newSheet, newController); // setting up the view
+      newController.setView(newView);
+      newView.render(); // display the new view
     } catch (FileNotFoundException e) {
       // show error if unable to load
       this.view.displayFileError();
@@ -122,5 +124,10 @@ public class EditableSheetController implements Features {
       // show error if unable to save
       view.displayFileError();
     }
+  }
+
+  @Override
+  public void setView(SpreadsheetEditableView view){
+      this.view = view;
   }
 }

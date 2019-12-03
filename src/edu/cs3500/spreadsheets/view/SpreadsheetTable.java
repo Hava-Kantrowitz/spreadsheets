@@ -4,7 +4,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import edu.cs3500.spreadsheets.model.Coord;
-import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
+import edu.cs3500.spreadsheets.model.Spreadsheet;
+
 
 /**
  * Models a spreadsheet table (a modified JTable) for the GUI view component and the editable GUI
@@ -12,7 +13,7 @@ import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
  */
 public class SpreadsheetTable extends JTable {
 
-  private SpreadsheetReadOnlyAdapter spreadsheet;
+  private Spreadsheet spreadsheet;
   private int initNumCells = 300;
 
   private DefaultTableModel model;
@@ -22,7 +23,7 @@ public class SpreadsheetTable extends JTable {
    *
    * @param spreadsheet the spreadsheet to construct
    */
-  SpreadsheetTable(SpreadsheetReadOnlyAdapter spreadsheet) {
+  SpreadsheetTable(Spreadsheet spreadsheet) {
     this.spreadsheet = spreadsheet;
 
   }

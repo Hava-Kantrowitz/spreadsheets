@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
+import edu.cs3500.spreadsheets.controller.Features;
 
 /**
  * Represents an action listener for the save button on the file menu with the purpose of alerting
@@ -16,7 +17,7 @@ import edu.cs3500.spreadsheets.controller.EditableSheetController;
  */
 public class SaveListener implements ActionListener {
   private JFrame mainFrame;
-  private EditableSheetController controller;
+  private Features controller;
 
   /**
    * The constructor for the save listener.
@@ -24,7 +25,7 @@ public class SaveListener implements ActionListener {
    * @param mainFrame  the JFrame for information about the current cell
    * @param controller the controller for connection with the model
    */
-  public SaveListener(JFrame mainFrame, EditableSheetController controller) {
+  public SaveListener(JFrame mainFrame, Features controller) {
     this.mainFrame = mainFrame;
     this.controller = controller;
   }

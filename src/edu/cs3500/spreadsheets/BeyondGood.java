@@ -10,9 +10,11 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import edu.cs3500.spreadsheets.controller.EditableSheetController;
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.ProviderAdapter;
+import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 import edu.cs3500.spreadsheets.provider.model.IViewWorksheet;
 import edu.cs3500.spreadsheets.view.ProviderViewExtender;
 import edu.cs3500.spreadsheets.view.ProviderViewRenderer;
@@ -103,7 +105,8 @@ public class BeyondGood {
           System.out.println("File not found");
           System.exit(1);
         }
-        SpreadsheetTextualView view = new SpreadsheetTextualView(sheet, outputFile);
+        SpreadsheetReadOnlyAdapter readOnlySheet = new SpreadsheetReadOnlyAdapter(sheet);
+        SpreadsheetTextualView view = new SpreadsheetTextualView(readOnlySheet, outputFile);
         view.render();
 
       }
@@ -167,7 +170,8 @@ public class BeyondGood {
    */
   private static void renderGui(Reader fileName) {
     sheet.initializeSpreadsheet(fileName);
-    SpreadsheetView view = new SpreadsheetGraphicsView(sheet);
+    SpreadsheetReadOnlyAdapter readOnlySheet = new SpreadsheetReadOnlyAdapter(sheet);
+    SpreadsheetView view = new SpreadsheetGraphicsView(readOnlySheet);
     view.render();
   }
 
@@ -208,7 +212,10 @@ public class BeyondGood {
    */
   private static void renderEditable(Reader fileName) {
     sheet.initializeSpreadsheet(fileName);
-    SpreadsheetView view = new SpreadsheetEditableView(sheet);
+    EditableSheetController controller = new EditableSheetController(null, sheet);
+    SpreadsheetReadOnlyAdapter readOnlySheet = new SpreadsheetReadOnlyAdapter(sheet);
+    SpreadsheetEditableView view = new SpreadsheetEditableView(readOnlySheet, controller);
+    controller.setView(view);
     view.render();
   }
 

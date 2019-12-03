@@ -1,6 +1,7 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+import edu.cs3500.spreadsheets.controller.EditableSheetController;
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 import edu.cs3500.spreadsheets.view.SpreadsheetView;
@@ -18,7 +19,9 @@ public class SpreadsheetRunner {
   public static void main(String[] args) throws FileNotFoundException {
     BasicSpreadsheet sheet = new BasicSpreadsheet();
     sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry\\src\\edu\\cs3500\\spreadsheets\\testFiles\\testingSpecial"));
-    SpreadsheetView view = new SpreadsheetEditableView(sheet);
+    EditableSheetController controller = new EditableSheetController(null, sheet);
+    SpreadsheetEditableView view = new SpreadsheetEditableView(sheet, controller);
+    controller.setView(view);
     view.render();
   }
 

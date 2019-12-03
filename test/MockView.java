@@ -1,3 +1,4 @@
+import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
 
@@ -13,8 +14,8 @@ public class MockView extends SpreadsheetEditableView {
    *
    * @param model the model to render
    */
-  public MockView(Spreadsheet model) {
-    super(model);
+  public MockView(Spreadsheet model, Features controller) {
+    super(model, controller);
   }
 
   @Override

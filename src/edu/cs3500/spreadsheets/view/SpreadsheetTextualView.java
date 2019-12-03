@@ -13,7 +13,7 @@ import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
  * take a model and render a text file for it to be saved as.
  */
 public class SpreadsheetTextualView implements SpreadsheetView {
-  private SpreadsheetReadOnlyAdapter sheet;
+  private Spreadsheet sheet;
   private PrintWriter outputFile;
 
   /**
@@ -23,7 +23,7 @@ public class SpreadsheetTextualView implements SpreadsheetView {
    * @param outputFile the file in which the view will be saved as
    */
   public SpreadsheetTextualView(Spreadsheet sheet, PrintWriter outputFile) {
-    this.sheet = new SpreadsheetReadOnlyAdapter(sheet);
+    this.sheet = sheet;
     this.outputFile = outputFile;
   }
 

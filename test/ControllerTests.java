@@ -40,9 +40,11 @@ public class ControllerTests {
     } catch (FileNotFoundException e) {
       System.out.println("Unable to read file in tests");
     }
-    view = new SpreadsheetEditableView(model);
+    controller = new EditableSheetController(null, model);
+    view = new SpreadsheetEditableView(model, controller);
+    controller.setView(view);
     view.render();
-    controller = new EditableSheetController(view, model);
+
   }
 
 
@@ -537,7 +539,7 @@ public class ControllerTests {
     view.updateTextField("\"hello\"");  // this is the user input
     controller.onCellAffirmed(coord);            // calling the method
 
-    assertNotEquals(new StringValue("hello"), model.getCellAt(coord));
+    assertEquals(new StringValue("hello"), model.getCellAt(coord));
     // checking model itself not updated
 
     //test with double
@@ -545,7 +547,7 @@ public class ControllerTests {
     view.updateTextField("3.0");  // this is the user input
     controller.onCellAffirmed(coord);            // calling the method
 
-    assertNotEquals(new DoubleValue(3.0), model.getCellAt(doubleCoord));
+    assertEquals(new DoubleValue(3.0), model.getCellAt(doubleCoord));
     // checking model itself not updated
 
     //test with boolean
@@ -553,7 +555,7 @@ public class ControllerTests {
     view.updateTextField("true");  // this is the user input
     controller.onCellAffirmed(coord);            // calling the method
 
-    assertNotEquals(new BooleanValue(true), model.getCellAt(boolCoord));
+    assertEquals(new BooleanValue(true), model.getCellAt(boolCoord));
     // checking model itself not updated
   }
 
@@ -570,24 +572,24 @@ public class ControllerTests {
     view.updateTextField("\"hello\"");  // this is the user input
     controller.onCellAffirmed(coord);            // calling the method
 
-    assertNotEquals(new StringValue("hello"), model.getCellAt(coord));
-    // checking model itself not updated
+    assertEquals(new StringValue("hello"), model.getCellAt(coord));
+    // checking old model is updated using the old controller
 
     //test with double
     Coord doubleCoord = new Coord(1, 5);
     view.updateTextField("3.0");  // this is the user input
     controller.onCellAffirmed(coord);            // calling the method
 
-    assertNotEquals(new DoubleValue(3.0), model.getCellAt(doubleCoord));
-    // checking model itself not updated
+    assertEquals(new DoubleValue(3.0), model.getCellAt(doubleCoord));
+    // checking old model is updated with old controller
 
     //test with boolean
     Coord boolCoord = new Coord(1, 5);
     view.updateTextField("true");  // this is the user input
     controller.onCellAffirmed(coord);            // calling the method
 
-    assertNotEquals(new BooleanValue(true), model.getCellAt(boolCoord));
-    // checking model itself not updated
+    assertEquals(new BooleanValue(true), model.getCellAt(boolCoord));
+    // checking the old model is updated with old controller
   }
 
   //TESTS FOR ON FILE SAVE
@@ -622,8 +624,10 @@ public class ControllerTests {
     mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop" +
             "/NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/" +
             "cs3500/spreadsheets/testFiles/testingEmpty"));
-    view = new SpreadsheetEditableView(mockSheet);
-    controller = new EditableSheetController(view, mockSheet);
+    controller = new EditableSheetController(null, mockSheet);
+    view = new SpreadsheetEditableView(mockSheet, controller);
+    controller.setView(view);
+
     Coord coord = new Coord(1, 5);
     controller.onCellAffirmed(coord);            // calling the method
 
@@ -640,8 +644,10 @@ public class ControllerTests {
     mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
             "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
             "spreadsheets/testFiles/testingEmpty"));
-    view = new SpreadsheetEditableView(mockSheet);
-    controller = new EditableSheetController(view, mockSheet);
+    controller = new EditableSheetController(null, mockSheet);
+    view = new SpreadsheetEditableView(mockSheet, controller);
+    controller.setView(view);
+
     Coord coord = new Coord(1, 5);
     controller.onCellDelete(coord);            // calling the method
 
@@ -658,8 +664,10 @@ public class ControllerTests {
     mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
             "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
             "spreadsheets/testFiles/testingEmpty"));
-    view = new SpreadsheetEditableView(mockSheet);
-    controller = new EditableSheetController(view, mockSheet);
+    controller = new EditableSheetController(null, mockSheet);
+    view = new SpreadsheetEditableView(mockSheet, controller);
+    controller.setView(view);
+
     Coord coord = new Coord(1, 5);
     controller.onCellSelected(coord);            // calling the method
 
@@ -675,8 +683,10 @@ public class ControllerTests {
     mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
             "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/" +
             "cs3500/spreadsheets/testFiles/testingEmpty"));
-    view = new SpreadsheetEditableView(mockSheet);
-    controller = new EditableSheetController(view, mockSheet);
+    controller = new EditableSheetController(null, mockSheet);
+    view = new SpreadsheetEditableView(mockSheet, controller);
+    controller.setView(view);
+
     Coord coord = new Coord(1, 5);
     controller.onCellReverted(coord);            // calling the method
 
@@ -693,8 +703,10 @@ public class ControllerTests {
     mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
             "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
             "spreadsheets/testFiles/testingSpecial"));
-    view = new SpreadsheetEditableView(mockSheet);
-    controller = new EditableSheetController(view, mockSheet);
+    controller = new EditableSheetController(null, mockSheet);
+    view = new SpreadsheetEditableView(mockSheet, controller);
+    controller.setView(view);
+
     Coord coord = new Coord(1, 5);
     controller.onCellAffirmed(coord);            // calling the method
 
@@ -715,8 +727,10 @@ public class ControllerTests {
     mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
             "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/" +
             "cs3500/spreadsheets/testFiles/testingSpecial"));
-    view = new SpreadsheetEditableView(mockSheet);
-    controller = new EditableSheetController(view, mockSheet);
+    controller = new EditableSheetController(null, mockSheet);
+    view = new SpreadsheetEditableView(mockSheet, controller);
+    controller.setView(view);
+
     Coord coord = new Coord(1, 5);
     controller.onCellSelected(coord);            // calling the method
 
@@ -736,8 +750,10 @@ public class ControllerTests {
     mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
             "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/" +
             "cs3500/spreadsheets/testFiles/testingSpecial"));
-    view = new SpreadsheetEditableView(mockSheet);
-    controller = new EditableSheetController(view, mockSheet);
+    controller = new EditableSheetController(null, mockSheet);
+    view = new SpreadsheetEditableView(mockSheet, controller);
+    controller.setView(view);
+
     Coord coord = new Coord(1, 5);
     controller.onCellReverted(coord);            // calling the method
 
@@ -757,8 +773,10 @@ public class ControllerTests {
     mockSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
             "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
             "spreadsheets/testFiles/testingSpecial"));
-    view = new SpreadsheetEditableView(mockSheet);
-    controller = new EditableSheetController(view, mockSheet);
+    controller = new EditableSheetController(null, mockSheet);
+    view = new SpreadsheetEditableView(mockSheet, controller);
+    controller.setView(view);
+
     Coord coord = new Coord(1, 5);
     controller.onCellDelete(coord);            // calling the method
 
@@ -780,8 +798,10 @@ public class ControllerTests {
     model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/NEU_1st_year" +
             "/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/s" +
             "preadsheets/testFiles/testingSpecial"));
-    MockView mockView = new MockView(model);
-    controller = new EditableSheetController(mockView, model);
+    controller = new EditableSheetController(null, model);
+    MockView mockView = new MockView(model, controller);
+    controller.setView(mockView);
+
     Coord coord = new Coord(1, 5);
     controller.onCellAffirmed(coord);            // calling the method
 
@@ -801,8 +821,10 @@ public class ControllerTests {
     model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
             "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/s" +
             "preadsheets/testFiles/testingSpecial"));
-    MockView mockView = new MockView(model);
-    controller = new EditableSheetController(mockView, model);
+    controller = new EditableSheetController(null, model);
+    MockView mockView = new MockView(model, controller);
+    controller.setView(mockView);
+
     Coord coord = new Coord(1, 5);
     controller.onCellReverted(coord);            // calling the method
 
@@ -818,8 +840,10 @@ public class ControllerTests {
     model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
             "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/" +
             "cs3500/spreadsheets/testFiles/testingSpecial"));
-    MockView mockView = new MockView(model);
-    controller = new EditableSheetController(mockView, model);
+    controller = new EditableSheetController(null, model);
+    MockView mockView = new MockView(model, controller);
+    controller.setView(mockView);
+
     Coord coord = new Coord(1, 5);
     controller.onCellSelected(coord);            // calling the method
 
@@ -836,8 +860,10 @@ public class ControllerTests {
     model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/NEU_1st_year/" +
             "ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/spreadsheets/" +
             "testFiles/testingSpecial"));
-    MockView mockView = new MockView(model);
-    controller = new EditableSheetController(mockView, model);
+    controller = new EditableSheetController(null, model);
+    MockView mockView = new MockView(model, controller);
+    controller.setView(mockView);
+
     Coord coord = new Coord(1, 5);
     controller.onCellDelete(coord);            // calling the method
 
@@ -857,8 +883,10 @@ public class ControllerTests {
     model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/NEU_1st_year/" +
             "ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
             "spreadsheets/testFiles/testingSpecial"));
-    MockView mockView = new MockView(model);
-    controller = new EditableSheetController(mockView, model);
+    controller = new EditableSheetController(null, model);
+    MockView mockView = new MockView(model, controller);
+    controller.setView(mockView);
+
     Coord coord = new Coord(1, 5);
     controller.onLoadSelect("/Users/victoriabowen/Desktop/NEU_1st_year/" +
             "ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
@@ -877,8 +905,10 @@ public class ControllerTests {
     model.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
             "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
             "spreadsheets/testFiles/testingSpecial"));
-    MockView mockView = new MockView(model);
-    controller = new EditableSheetController(mockView, model);
+    controller = new EditableSheetController(null, model);
+    MockView mockView = new MockView(model, controller);
+    controller.setView(mockView);
+
     controller.onLoadSelect("thisSheetDoesntExist");            // calling the method
 
     //makes sure that get cell at, set cell at are both triggered

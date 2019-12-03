@@ -41,9 +41,11 @@ public class ListenerTests {
     } catch (FileNotFoundException e) {
       System.out.println("Unable to read file in tests");
     }
-    view = new SpreadsheetEditableView(model);
+    controller = new MockController(null, model);
+    view = new SpreadsheetEditableView(model, controller);
+    controller.setView(view);
+
     view.render();
-    controller = new MockController(view, model);
   }
   // these are the tests to make sure that the events are calling the correct features
   // we are assuming that the swing events correctly activate the listeners and are

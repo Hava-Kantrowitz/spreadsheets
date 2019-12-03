@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JTable;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
+import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.Coord;
 
 
@@ -16,7 +17,7 @@ import edu.cs3500.spreadsheets.model.Coord;
 public class AcceptActionListener implements ActionListener {
 
   private JTable sheet;
-  private EditableSheetController controller;
+  private Features controller;
 
   /**
    * This is the constructor for an an action listener for the accept button.
@@ -24,7 +25,7 @@ public class AcceptActionListener implements ActionListener {
    * @param sheet      the JTable for the cell information
    * @param controller the controller for the view and model
    */
-  public AcceptActionListener(JTable sheet, EditableSheetController controller) {
+  public AcceptActionListener(JTable sheet, Features controller) {
     this.sheet = sheet;
     this.controller = controller;
   }

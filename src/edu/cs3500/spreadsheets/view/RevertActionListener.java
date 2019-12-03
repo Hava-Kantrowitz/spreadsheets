@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JTable;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
+import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.Coord;
 
 /**
@@ -15,7 +16,7 @@ import edu.cs3500.spreadsheets.model.Coord;
 public class RevertActionListener implements ActionListener {
 
   private JTable sheet;
-  private EditableSheetController controller;
+  private Features controller;
 
   /**
    * This is the constructor for the revert action listener.
@@ -23,7 +24,7 @@ public class RevertActionListener implements ActionListener {
    * @param sheet      the JTable for reference to the current cell
    * @param controller the controller for connection with the model
    */
-  public RevertActionListener(JTable sheet, EditableSheetController controller) {
+  public RevertActionListener(JTable sheet, Features controller) {
     this.sheet = sheet;
     this.controller = controller;
   }

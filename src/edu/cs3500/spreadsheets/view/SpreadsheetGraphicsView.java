@@ -31,8 +31,7 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     this.setTitle("Spreadsheet");
     this.setSize(1000, 1000);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    SpreadsheetReadOnlyAdapter modelRead = new SpreadsheetReadOnlyAdapter(model);
-    SpreadsheetTable table = new SpreadsheetTable(modelRead);
+    SpreadsheetTable table = new SpreadsheetTable(model);
 
     //use a borderlayout with drawing panel in center and button panel in south
     this.setLayout(new BorderLayout());
@@ -47,7 +46,7 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
     sheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
     JScrollPane scrollPane = new JScrollPane();
-    SpreadsheetRowHeaderTable rows = new SpreadsheetRowHeaderTable(modelRead);
+    SpreadsheetRowHeaderTable rows = new SpreadsheetRowHeaderTable(model);
     JTable myRows = rows.getTable();
     myRows.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 

@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
+import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.model.SpreadsheetReadOnlyAdapter;
 
@@ -42,17 +43,16 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
    *
    * @param model the model to render
    */
-  public SpreadsheetEditableView(Spreadsheet model) {
+  public SpreadsheetEditableView(Spreadsheet model, Features controller) {
 
     super();
 
-    EditableSheetController controller = new EditableSheetController(this, model);
 
     this.setTitle("Spreadsheet");
     this.setSize(1000, 1000);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    SpreadsheetReadOnlyAdapter modelRead = new SpreadsheetReadOnlyAdapter(model);
-    SpreadsheetTable table = new SpreadsheetTable(modelRead);
+
+    SpreadsheetTable table = new SpreadsheetTable(model);
 
     //use a borderlayout with drawing panel in center and button panel in south
     this.setLayout(new BorderLayout());
@@ -65,7 +65,7 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     sheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
     JScrollPane scrollPane = new JScrollPane();
-    SpreadsheetRowHeaderTable rows = new SpreadsheetRowHeaderTable(modelRead);
+    SpreadsheetRowHeaderTable rows = new SpreadsheetRowHeaderTable(model);
     JTable myRows = rows.getTable();
     myRows.setEnabled(false);
 
