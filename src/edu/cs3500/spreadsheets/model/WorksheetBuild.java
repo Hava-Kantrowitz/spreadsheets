@@ -30,4 +30,23 @@ public class WorksheetBuild implements WorksheetReader.WorksheetBuilder<BasicSpr
   public BasicSpreadsheet createWorksheet() {
     return sheet;
   }
+
+  @Override
+  public WorksheetReader.WorksheetBuilder<BasicSpreadsheet>
+  addRowColSize(String rowOrCol, int index, String changedSize) {
+    try {
+      if (rowOrCol.equals("R")) {
+        sheet.addChangedRow(index, Integer.parseInt(changedSize));
+      } else if (rowOrCol.equals("C")) {
+        sheet.addChangedCol(index, Integer.parseInt(changedSize));
+      } else {
+        throw new IllegalStateException("Invalid row/column specification.");
+      }
+    }
+    catch(NumberFormatException e){
+      throw new IllegalStateException("Invalid row/column index");
+    }
+    return this;
+
+  }
 }

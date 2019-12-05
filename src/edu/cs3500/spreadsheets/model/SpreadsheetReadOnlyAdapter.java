@@ -2,6 +2,7 @@ package edu.cs3500.spreadsheets.model;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 
 /**
@@ -69,5 +70,25 @@ public class SpreadsheetReadOnlyAdapter implements Spreadsheet {
   @Override
   public Set<Coord> getListCoords() {
     return sheet.getListCoords();
+  }
+
+  @Override
+  public void addChangedRow(int rowToChange, int newHeight) {
+    // should do nothing here because this modifies the model
+  }
+
+  @Override
+  public void addChangedCol(int colToChange, int newWidth) {
+    // should do nothing here because this modifies the model
+  }
+
+  @Override
+  public HashMap<Integer, Integer> getChangedCols() {
+    return sheet.getChangedCols();
+  }
+
+  @Override
+  public HashMap<Integer, Integer> getChangedRows() {
+    return sheet.getChangedRows();
   }
 }

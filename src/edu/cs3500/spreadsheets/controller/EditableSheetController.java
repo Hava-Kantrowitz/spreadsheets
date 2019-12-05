@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
 import edu.cs3500.spreadsheets.model.Coord;
@@ -103,6 +104,7 @@ public class EditableSheetController implements Features {
       SpreadsheetEditableView newView =
               new SpreadsheetEditableView(newSheet, newController); // setting up the view
       newController.setView(newView);
+
       newView.render(); // display the new view
     } catch (FileNotFoundException e) {
       // show error if unable to load
@@ -129,5 +131,38 @@ public class EditableSheetController implements Features {
   @Override
   public void setView(SpreadsheetEditableView view) {
     this.view = view;
+  }
+
+  @Override
+  public void onRowResized(int changedRow, int newHeight) {
+    // update the row size in the model (adding 1 so it is in terms of the model)
+    model.addChangedRow(changedRow + 1,newHeight);
+  }
+
+  @Override
+  public void onScroll() {
+    // setting the correct row sizes
+    // get the rows that are changed
+    HashMap<Integer, Integer> changedRows = model.getChangedRows();
+    // going through the rows and setting the sizes in the view
+    for(Integer row: changedRows.keySet()){
+      // updating appearance in the view (with negative 1 adjustment to view parameters)
+      view.changeRowSize(row - 1, changedRows.get(row));
+    }
+
+    // get the columns that are changed
+    HashMap<Integer, Integer> changedCols =  model.getChangedCols();
+    // going through the rows and setting the sizes in the view
+    for(Integer col: changedCols.keySet()){
+      // updating appearance in the view (with negative 1 adjustment to view parameters)
+      view.changeColSize(col - 1, changedCols.get(col));
+    }
+
+  }
+
+  @Override
+  public void onColumnResized(int changedCol, int newWidth) {
+    // adds the changed column with the adjustment for the model representation
+    model.addChangedCol(changedCol + 1, newWidth);
   }
 }

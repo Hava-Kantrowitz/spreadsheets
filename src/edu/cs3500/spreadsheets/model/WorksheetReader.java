@@ -35,6 +35,15 @@ public final class WorksheetReader {
      * @return the fully-filled-in worksheet
      */
     T createWorksheet();
+
+    /**
+     * Adds a row or column size to the hashmap of given row or column sizes.
+     * @param rowOrCol
+     * @param index
+     * @param changedSize the contents to change the row or column size to
+     * @return
+     */
+    WorksheetBuilder<T> addRowColSize(String rowOrCol, int index, String changedSize);
   }
 
   /**
@@ -62,6 +71,7 @@ public final class WorksheetReader {
   public static <T> T read(WorksheetBuilder<T> builder, Readable readable) {
     Scanner scan = new Scanner(readable);
     final Pattern cellRef = Pattern.compile("([A-Za-z]+)([1-9][0-9]*)");
+    final Pattern colRowSize = Pattern.compile("([1-9][0-9]*)([A-Za-z]+)");
     scan.useDelimiter("\\s+");
     while (scan.hasNext()) {
       int col;
@@ -72,19 +82,35 @@ public final class WorksheetReader {
       }
       String cell = scan.next();
       Matcher m = cellRef.matcher(cell);
+      Matcher colRow = colRowSize.matcher(cell);
       if (m.matches()) {
         col = Coord.colNameToIndex(m.group(1));
         row = Integer.parseInt(m.group(2));
-      } else {
-        throw new IllegalStateException("Expected cell ref");
-      }
-      scan.skip("\\s*");
-      while (scan.hasNext("#.*")) {
-        scan.nextLine();
+
         scan.skip("\\s*");
+        while (scan.hasNext("#.*")) {
+          scan.nextLine();
+          scan.skip("\\s*");
+        }
+        String contents = scan.nextLine();
+        builder = builder.createCell(col, row, contents);
       }
-      String contents = scan.nextLine();
-      builder = builder.createCell(col, row, contents);
+      else if(colRow.matches()){
+        System.out.println("In here");
+        int index = Integer.parseInt(colRow.group(1));
+        String rowOrCol = colRow.group(2);
+
+        scan.skip("\\s*");
+        while (scan.hasNext("#.*")) {
+          scan.nextLine();
+          scan.skip("\\s*");
+        }
+        String contents = scan.nextLine();
+        builder = builder.addRowColSize(rowOrCol, index, contents);
+      }
+      else {
+        throw new IllegalStateException("Expected cell ref or column/row reference");
+      }
     }
 
     return builder.createWorksheet();

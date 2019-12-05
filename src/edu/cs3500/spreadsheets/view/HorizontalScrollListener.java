@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import edu.cs3500.spreadsheets.controller.Features;
 import edu.cs3500.spreadsheets.model.Coord;
 
 /**
@@ -22,9 +23,10 @@ public class HorizontalScrollListener implements AdjustmentListener {
   private int scrollMaxCount;
   private JTable sheet;
   private JTable rows;
+  private Features controller;
 
   /**
-   * This constructs a new spreadsheet scroll listener.
+   * This constructs a new spreadsheet scroll listener without a controller.
    *
    * @param sheet the JTable component of the panel
    * @param table the data represented as a table
@@ -38,6 +40,25 @@ public class HorizontalScrollListener implements AdjustmentListener {
     this.rows = rows;
   }
 
+  /**
+   * This constructs a new spreadsheet scroll listener with the controller.
+   *
+   * @param sheet the JTable component of the panel
+   * @param table the data represented as a table
+   * @param rows the row headers from the table
+   * @param controller the controller for the editable version
+   */
+  HorizontalScrollListener(JTable sheet, DefaultTableModel table, JTable rows,
+                           Features controller) {
+    super();
+    this.sheet = sheet;
+    this.table = table;
+    this.scrollMaxCount = 50;
+    this.rows = rows;
+    this.controller = controller;
+  }
+
+
 
   @Override
   public void adjustmentValueChanged(AdjustmentEvent e) {
@@ -50,8 +71,11 @@ public class HorizontalScrollListener implements AdjustmentListener {
 
       table.addColumn(colName);  // adds the column to default table
 
+
       scrollMaxCount = e.getValue(); // set new max
     }
+
+
 
     DefaultTableCellRenderer rowRenderer = new DefaultTableCellRenderer();
 
@@ -65,5 +89,10 @@ public class HorizontalScrollListener implements AdjustmentListener {
     rowRenderer.setBackground(Color.LIGHT_GRAY);
     rowRenderer.setHorizontalAlignment(JLabel.CENTER);
     rows.getColumnModel().getColumn(0).setCellRenderer(rowRenderer);
+
+    // making sure it is the editable version
+    if(controller != null) {
+      controller.onScroll();
+    }
   }
 }

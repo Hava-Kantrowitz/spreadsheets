@@ -54,7 +54,7 @@ public class SpreadsheetRowHeaderTable extends JTable {
    *
    * @return the table
    */
-  JTable getTable() {
+  NoEditTable getTable() {
 
     model = new DefaultTableModel(getRows(), 1);
 
@@ -68,7 +68,7 @@ public class SpreadsheetRowHeaderTable extends JTable {
     for (int i = 1; i < getRows(); i++) {
       model.setValueAt(i, i, 0);
     }
-    return new JTable(model);
+    return new NoEditTable(model);
   }
 
   /**

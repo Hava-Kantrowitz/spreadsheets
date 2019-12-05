@@ -3,6 +3,7 @@ package edu.cs3500.spreadsheets.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.Set;
 
 import edu.cs3500.spreadsheets.sexp.CreatorVisitor;
@@ -19,6 +20,9 @@ public class BasicSpreadsheet implements Spreadsheet {
   private int numCols;
   private ArrayList<String> badReferences = new ArrayList<>();
 
+  private HashMap<Integer, Integer> changedRows = new HashMap<>();
+  private HashMap<Integer, Integer> changedCols = new HashMap<>();
+
   /**
    * The empty constructor for a basic spreadsheet.
    */
@@ -32,8 +36,21 @@ public class BasicSpreadsheet implements Spreadsheet {
     numRows = 0;
     numCols = 0;
     // calling the builder to actually initialize
+
+
     WorksheetBuild builder = new WorksheetBuild(this);
-    WorksheetReader.read(builder, fileName);  // reading from the file and passing it in
+   // try {
+      WorksheetReader.read(builder, fileName);  // reading from the file and passing it in
+ //   }
+//    catch(IllegalStateException e){
+//      // checking if there is a cell reference that has not been checked
+//      if(e.getMessage() != null && e.getMessage().contains("Expected cell ref")){
+//        Scanner scan = new Scanner(fileName);
+//        System.out.println(scan.next());
+//      }
+//    }
+
+
   }
 
 
@@ -199,6 +216,39 @@ public class BasicSpreadsheet implements Spreadsheet {
     }
     Collections.copy(outputList, this.badReferences);
     return outputList;
+  }
+
+
+  @Override
+  public void addChangedRow(int rowToChange, int newHeight){
+    // if the default size then remove
+    if(newHeight == 16) {
+      this.changedRows.remove(rowToChange);
+    }
+    // this sets the row to the changed value
+    else{
+      this.changedRows.put(rowToChange, newHeight);
+    }
+
+  }
+
+  @Override
+  public void addChangedCol(int colToChange, int newWidth){
+    this.changedCols.put(colToChange, newWidth);
+  }
+
+  @Override
+  public HashMap<Integer, Integer> getChangedRows(){
+    HashMap<Integer, Integer> copyMap = new HashMap<>();
+    copyMap.putAll(this.changedRows);
+    return copyMap;
+  }
+
+  @Override
+  public HashMap<Integer, Integer> getChangedCols(){
+    HashMap<Integer, Integer> copyMap = new HashMap<>();
+    copyMap.putAll(this.changedCols);
+    return copyMap;
   }
 
 

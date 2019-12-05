@@ -7,6 +7,9 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -20,6 +23,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import javax.swing.JLabel;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -58,6 +62,7 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     sheet.setGridColor(Color.black);
     sheet.getTableHeader().setReorderingAllowed(false);
 
+
     sheet.setGridColor(Color.BLACK);
 
     sheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -65,7 +70,16 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     JScrollPane scrollPane = new JScrollPane();
     SpreadsheetRowHeaderTable rows = new SpreadsheetRowHeaderTable(model);
     JTable myRows = rows.getTable();
-    myRows.setEnabled(false);
+
+    myRows.setRowSelectionAllowed(false);  // this makes it so you cannot select a whole row
+    // myRows.setEnabled(false);
+
+
+    // ENABLING LISTENER FOR ROW SIZE CHANGING
+    MouseListener rowChangeListener = new RowSizeListener(myRows, sheet, controller);
+    myRows.addMouseListener(rowChangeListener);
+
+
 
     JScrollPane rowScroller = new JScrollPane();
     scrollPane.getViewport().add(sheet);
@@ -78,15 +92,15 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     // listener takes in the scroll bar and the default table
     // so that it will change what is displayed
     AdjustmentListener scrollListener = new HorizontalScrollListener(sheet, table.getModel(),
-            myRows);
+            myRows, controller);
     AdjustmentListener vertScrollListener
             = new VerticalScrollListener(table.getModel(), (DefaultTableModel) myRows.getModel(),
-            rowScroller.getVerticalScrollBar());
+            rowScroller.getVerticalScrollBar(), controller);
 
 
     scrollPane.getHorizontalScrollBar().addAdjustmentListener(scrollListener);
     scrollPane.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
-    rowScroller.getVerticalScrollBar().addAdjustmentListener(vertScrollListener);
+
 
     // BUTTONS
     // the button to accept the input to the cell
@@ -166,6 +180,29 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     menuBar.add(helpMenu);             // add the help menu
 
 
+    // setting the correct row sizes
+    // get the rows that are changed
+    HashMap<Integer, Integer> changedRows = model.getChangedRows();
+    // going through the rows and setting the sizes in the view
+    for(Integer row: changedRows.keySet()){
+      // updating appearance in the view (with negative 1 adjustment to view parameters)
+      this.changeRowSize(row - 1, changedRows.get(row));
+      myRows.setRowHeight(row - 1, changedRows.get(row)); // updating the header as well
+    }
+
+    // get the columns that are changed
+    HashMap<Integer, Integer> changedCols =  model.getChangedCols();
+    // going through the rows and setting the sizes in the view
+    for(Integer col: changedCols.keySet()){
+      // updating appearance in the view (with negative 1 adjustment to view parameters)
+      this.changeColSize(col - 1, changedCols.get(col));
+    }
+
+
+    // setting up the listener for the change in column size
+    TableColumnModelListener colSizeListener = new ColSizeListener(sheet, controller);
+    sheet.getColumnModel().addColumnModelListener(colSizeListener);
+
     this.setJMenuBar(menuBar);
     this.add(rowScroller, BorderLayout.WEST);
     this.add(scrollPane, BorderLayout.CENTER);
@@ -229,6 +266,16 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
       prevSelectedRow = sheet.getSelectedRow();
       prevSelectedCol = sheet.getSelectedColumn();
     }
+  }
+
+  @Override
+  public void changeRowSize(int row, Integer newSize) {
+    sheet.setRowHeight(row, newSize);
+  }
+
+  @Override
+  public void changeColSize(int col, Integer newSize) {
+    sheet.getColumnModel().getColumn(col).setWidth(newSize);
   }
 
 }

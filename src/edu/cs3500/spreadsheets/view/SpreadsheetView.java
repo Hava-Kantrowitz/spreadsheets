@@ -42,4 +42,17 @@ public interface SpreadsheetView {
    */
   void highlight();
 
+  /**
+   * This is a method to ensure that the size of the row is accurate with the model representation.
+   * @param row the index of the given row that should be changed
+   * @param newSize the updated size for the row
+   */
+  void changeRowSize(int row, Integer newSize);
+
+  /**
+   * This is a method to ensure that the size of a given column is accurate with the model.
+   * @param col the given column
+   * @param newSize the size that the column should be
+   */
+  void changeColSize(int col, Integer newSize);
 }

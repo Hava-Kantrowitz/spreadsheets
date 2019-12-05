@@ -107,4 +107,14 @@ public class SpreadsheetGraphicsView extends JFrame implements SpreadsheetView {
   public void highlight() {
     // nothing should happen here because the cells cannot be edited
   }
+
+  @Override
+  public void changeRowSize(int row, Integer newSize) {
+    // nothing should happen here because the cells height cannot be changed
+  }
+
+  @Override
+  public void changeColSize(int col, Integer newSize) {
+    // nothing should happen here because the cell width changing should not be stored
+  }
 }

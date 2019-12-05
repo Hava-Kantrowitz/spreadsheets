@@ -1,6 +1,7 @@
 package edu.cs3500.spreadsheets.view;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Set;
 
 
@@ -36,6 +37,18 @@ public class SpreadsheetTextualView implements SpreadsheetView {
       outputFile.append(sheet.getCellAt(c).getRawContents() + "\n");
     }
 
+    // go through the list of rows that have changed
+    HashMap<Integer, Integer> rowsChanged = sheet.getChangedRows();
+    for(Integer row: rowsChanged.keySet()){
+      outputFile.append(row + "R " + rowsChanged.get(row) + "\n");
+    }
+
+    // go through the list of cols that have changed
+    HashMap<Integer, Integer> colsChanged = sheet.getChangedCols();
+    for(Integer col: colsChanged.keySet()){
+      outputFile.append(col + "C " + colsChanged.get(col) + "\n");
+    }
+
     outputFile.close();  // closes the file once written to
   }
 
@@ -62,6 +75,16 @@ public class SpreadsheetTextualView implements SpreadsheetView {
   @Override
   public void highlight() {
     // nothing should happen here because cells cannot be selected
+  }
+
+  @Override
+  public void changeRowSize(int row, Integer newSize) {
+    // nothing should happen here because the rows will always have an accurate size
+  }
+
+  @Override
+  public void changeColSize(int col, Integer newSize) {
+    // nothing should happen here because the columns will always have an accurate size
   }
 
 }

@@ -1,6 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 
 /**
@@ -77,6 +78,34 @@ public interface Spreadsheet {
    * @return the set of occupied coordinates
    */
   Set<Coord> getListCoords();
+
+  /**
+   * This is to add a change in the height of a row to the model.
+   * @param rowToChange the row that has changed height
+   * @param newHeight the new height of the row
+   */
+  void addChangedRow(int rowToChange, int newHeight);
+
+
+  /**
+   * This is to add a change in the width of a column to the model.
+   * @param colToChange the column that has changed
+   * @param newWidth the new width of the column
+   */
+  void addChangedCol(int colToChange, int newWidth);
+
+
+  /**
+   * This is a getter for the column sizes that have changed from the default.
+   * @return the HashMap of the columns and corresponding new sizes if they have changed
+   */
+  HashMap<Integer, Integer> getChangedCols();
+
+  /**
+   * This is a getter for the row sizes that have changed from the default.
+   * @return the HashMap of the rows and corresponding new sizes if they have changed
+   */
+  HashMap<Integer, Integer> getChangedRows();
 
 
 }

@@ -61,4 +61,28 @@ public interface Features {
    * @param view the new view to be set
    */
   void setView(SpreadsheetEditableView view);
+
+  /**
+   * Updates the model to reflect the resizing that has occurred with the row changing size.
+   * @param changedRow the row that has changed in height
+   * @param newHeight the height of the changed row
+   */
+  void onRowResized(int changedRow, int newHeight);
+
+
+  /**
+   * Refreshes the size of the rows and columns when scrolling so that the sizes remain.
+   */
+  void onScroll();
+
+  /**
+   * Updates the model to reflect the resizing that has occurred with column changing size.
+   * @param changedCol the column which has changed size (view coords)
+   * @param newWidth the new width of the column
+   */
+  void onColumnResized(int changedCol, int newWidth);
+
+
+
 }
+
