@@ -91,4 +91,14 @@ public class SpreadsheetReadOnlyAdapter implements Spreadsheet {
   public HashMap<Integer, Integer> getChangedRows() {
     return sheet.getChangedRows();
   }
+
+  @Override
+  public ArrayList getCellColumn(int column) {
+    return sheet.getCellColumn(column);
+  }
+
+  @Override
+  public ArrayList<Cell> getMultipleColumns(int rightBound, int leftBound) {
+    return sheet.getMultipleColumns(rightBound, leftBound);
+  }
 }

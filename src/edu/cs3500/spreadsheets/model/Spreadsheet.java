@@ -2,6 +2,7 @@ package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -107,5 +108,11 @@ public interface Spreadsheet {
    */
   HashMap<Integer, Integer> getChangedRows();
 
+  /**
+   * This gets a column of the spreadsheet.
+   */
+  ArrayList getCellColumn(int column);
 
+
+  ArrayList<Cell> getMultipleColumns(int rightBound, int leftBound);
 }

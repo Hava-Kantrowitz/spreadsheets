@@ -3,7 +3,7 @@ package edu.cs3500.spreadsheets.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Scanner;
+import java.util.List;
 import java.util.Set;
 
 import edu.cs3500.spreadsheets.sexp.CreatorVisitor;
@@ -234,6 +234,33 @@ public class BasicSpreadsheet implements Spreadsheet {
     HashMap<Integer, Integer> copyMap = new HashMap<>();
     copyMap.putAll(this.changedRows);
     return copyMap;
+  }
+
+  @Override
+  public ArrayList<Cell> getCellColumn(int column) {
+    ArrayList<Cell> coordsInCol = new ArrayList<>();
+    for (Coord c : sheet.keySet()) {
+      if (c.col == column) {
+        coordsInCol.add(sheet.get(c));
+      }
+    }
+
+    return coordsInCol;
+
+  }
+
+  @Override
+  public ArrayList<Cell> getMultipleColumns(int rightBound, int leftBound) {
+    ArrayList<Cell> coordsInCols = new ArrayList<>();
+    for (int i = rightBound; i <= leftBound; i++) {
+      for (Coord c : sheet.keySet()) {
+        if (c.col == i) {
+          coordsInCols.add(sheet.get(c));
+        }
+      }
+    }
+
+    return coordsInCols;
   }
 
   @Override
