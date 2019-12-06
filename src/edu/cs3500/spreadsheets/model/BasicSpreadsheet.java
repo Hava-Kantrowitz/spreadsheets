@@ -39,16 +39,8 @@ public class BasicSpreadsheet implements Spreadsheet {
 
 
     WorksheetBuild builder = new WorksheetBuild(this);
-   // try {
-      WorksheetReader.read(builder, fileName);  // reading from the file and passing it in
- //   }
-//    catch(IllegalStateException e){
-//      // checking if there is a cell reference that has not been checked
-//      if(e.getMessage() != null && e.getMessage().contains("Expected cell ref")){
-//        Scanner scan = new Scanner(fileName);
-//        System.out.println(scan.next());
-//      }
-//    }
+    WorksheetReader.read(builder, fileName);  // reading from the file and passing it in
+
 
 
   }
