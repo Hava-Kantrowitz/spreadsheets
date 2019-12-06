@@ -16,6 +16,7 @@ public class Reference implements Formula {
   private String rawContents;
 
   private ArrayList<Coord> referredCoords = new ArrayList<>();
+  private ArrayList<Integer> referredCols = new ArrayList<>();
 
 
   /**
@@ -50,6 +51,9 @@ public class Reference implements Formula {
   public Value evaluateCell() {
     try {
       Value output;
+      if (referredCoords == null) {
+        throw new IllegalArgumentException("A column of cells needs an operation to evaluate");
+      }
       if (referredCoords.size() == 1) { // if there is only one reference
         output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCell();// eval the given cell
       } else { // multiple references cannot be evaluated alone
@@ -65,15 +69,27 @@ public class Reference implements Formula {
   public double evaluateCellSum() throws IllegalArgumentException {
     try {
       double output;
-      if (referredCoords.size() == 1) { // if there is only one reference
-        output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSum();
-        // eval the given cell
-      } else if (referredCoords.size() == 2) {  // if there is a range
-        output = sum(spreadsheet.getCellSection(referredCoords.get(0), referredCoords.get(1)));
-      } else {  // no more than two arguments in sum range
-        throw new IllegalArgumentException("Illegal number of arguments");
+      if (referredCoords == null) {
+        if (referredCols.size() == 1) {
+          output = sum(spreadsheet.getCellColumn(referredCols.get((0))));
+        } else if (referredCols.size() == 2) {
+          output = sum(spreadsheet.getMultipleColumns(referredCols.get(0), referredCols.get(1)));
+        } else {
+          throw new IllegalArgumentException("Illegal number of arguments");
+        }
+        return output;
       }
-      return output;
+      else {
+        if (referredCoords.size() == 1) { // if there is only one reference
+          output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSum();
+          // eval the given cell
+        } else if (referredCoords.size() == 2) {  // if there is a range
+          output = sum(spreadsheet.getCellSection(referredCoords.get(0), referredCoords.get(1)));
+        } else {  // no more than two arguments in sum range
+          throw new IllegalArgumentException("Illegal number of arguments");
+        }
+        return output;
+      }
     } catch (StackOverflowError e) {
       throw new IllegalArgumentException("Self reference error.");
     }
@@ -102,6 +118,9 @@ public class Reference implements Formula {
   public double evaluateCellSqrt() throws IllegalArgumentException {
     try {
       double output;
+      if (referredCoords == null) {
+        throw new IllegalArgumentException("A column of cells cannot find the square root.");
+      }
       if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
         output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSqrt();
       } else { // no more than one argument for sqrt
@@ -118,6 +137,9 @@ public class Reference implements Formula {
   public double evaluateCellDifference() throws IllegalArgumentException {
     try {
       double output;
+      if (referredCoords == null) {
+        throw new IllegalArgumentException("A column of cells cannot find the difference");
+      }
       if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
         output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellDifference();
       } else { // no more than one argument for difference
@@ -134,6 +156,9 @@ public class Reference implements Formula {
   public double evaluateCellComparison() {
     try {
       double output;
+      if (referredCoords == null) {
+        throw new IllegalArgumentException("A column of cells cannot be compared");
+      }
       if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
         output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellComparison();
       } else { // no more than one argument for comparison
@@ -150,6 +175,9 @@ public class Reference implements Formula {
   public String evaluateCellHamilton() {
     try {
       String output;
+      if (referredCoords == null) {
+        throw new IllegalArgumentException("A column of cells cannot perform a hamilton");
+      }
       if (referredCoords.size() == 1) { // if there is only one reference, eval the given cell
         output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellHamilton();
       } else { // no more than one argument for Hamilton
@@ -167,9 +195,30 @@ public class Reference implements Formula {
   public boolean isNum() {
     boolean output = false;
 
-    if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
+    if (referredCoords == null) {
+      if (referredCols.size() == 1) {
+        ArrayList<Cell> colList = spreadsheet.getCellColumn(referredCols.get(0));
+        for (Cell c : colList) {
+          if (c.isNum()) {
+            output = true;
+          }
+        }
+      }
+
+      else {
+        ArrayList<Cell> multColList = spreadsheet.getMultipleColumns(referredCols.get(0), referredCols.get(1));
+        for (Cell list : multColList) {
+          if (list.isNum()) {
+            output = true;
+          }
+        }
+      }
+
+    }
+
+    else if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
       output = spreadsheet.getCellAt(referredCoords.get(0)).isNum();
-    } else { // no more than one argument for Hamilton
+    } else {
       ArrayList<Cell> cells
               = spreadsheet.getCellSection(referredCoords.get(0), referredCoords.get(1));
       // going through to see if each is a number
@@ -234,7 +283,7 @@ public class Reference implements Formula {
       Scanner scan = new Scanner(s);
       final Pattern cellRef = Pattern.compile("([A-Za-z]+)([1-9][0-9]*)");
       scan.useDelimiter("\\s+");
-      int col;
+      int col = 0;
       int row;
       Coord coord1 = null;
       while (scan.hasNext()) {
@@ -242,14 +291,21 @@ public class Reference implements Formula {
         Matcher m = cellRef.matcher(cell);
         if (m.matches()) {
           col = Coord.colNameToIndex(m.group(1));
-          row = Integer.parseInt(m.group(2));
-          coord1 = new Coord(col, row);
+          if (m.group(2) != null) {
+            row = Integer.parseInt(m.group(2));
+            coord1 = new Coord(col, row);
+          }
+
         } else {
           throw new IllegalStateException("Expected cell ref");
         }
       }
-      assert coord1 != null;
-      referredCoords.add(coord1);
+      if (coord1 != null) {
+        referredCoords.add(coord1);
+      }
+      else {
+        referredCols.add(col);
+      }
     }
   }
 

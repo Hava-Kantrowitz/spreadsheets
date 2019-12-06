@@ -15,7 +15,6 @@ view and get it to render, we created several decorators that added the basic fu
 for rendering. The code we added, and the reasoning behind each, is documented and described in our
 Code Critique.
 
-
 ProviderAdapter: Placed within our model code, this class adapts our model into the model interface
 the provider's view is expecting to work with.
 
