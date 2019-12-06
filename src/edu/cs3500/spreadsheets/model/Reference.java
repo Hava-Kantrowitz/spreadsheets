@@ -69,18 +69,11 @@ public class Reference implements Formula {
   public double evaluateCellSum() throws IllegalArgumentException {
     try {
       double output;
-      if (referredCoords == null) {
-        if (referredCols.size() == 1) {
-          output = sum(spreadsheet.getCellColumn(referredCols.get((0))));
-        } else if (referredCols.size() == 2) {
+
+        if (referredCols.size() == 2) {
           output = sum(spreadsheet.getMultipleColumns(referredCols.get(0), referredCols.get(1)));
-        } else {
-          throw new IllegalArgumentException("Illegal number of arguments");
         }
-        return output;
-      }
-      else {
-        if (referredCoords.size() == 1) { // if there is only one reference
+        else if (referredCoords.size() == 1) { // if there is only one reference
           output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSum();
           // eval the given cell
         } else if (referredCoords.size() == 2) {  // if there is a range
@@ -89,7 +82,7 @@ public class Reference implements Formula {
           throw new IllegalArgumentException("Illegal number of arguments");
         }
         return output;
-      }
+
     } catch (StackOverflowError e) {
       throw new IllegalArgumentException("Self reference error.");
     }
@@ -282,13 +275,16 @@ public class Reference implements Formula {
     for (String s : symbolsEntered) {
       Scanner scan = new Scanner(s);
       final Pattern cellRef = Pattern.compile("([A-Za-z]+)([1-9][0-9]*)");
+      final Pattern colRef = Pattern.compile("([A-Za-z]+)");
       scan.useDelimiter("\\s+");
       int col = 0;
       int row;
       Coord coord1 = null;
+      Integer column = null;
       while (scan.hasNext()) {
         String cell = scan.next();
         Matcher m = cellRef.matcher(cell);
+        Matcher colMatch = colRef.matcher(cell);
         if (m.matches()) {
           col = Coord.colNameToIndex(m.group(1));
           if (m.group(2) != null) {
@@ -296,17 +292,25 @@ public class Reference implements Formula {
             coord1 = new Coord(col, row);
           }
 
-        } else {
+        }
+        // checking if it is a cell reference
+        else if(colMatch.matches()){
+          column = Coord.colNameToIndex(colMatch.group(1));
+        }
+        else {
           throw new IllegalStateException("Expected cell ref");
         }
       }
+      // adding the coord to the list of referred coords
       if (coord1 != null) {
         referredCoords.add(coord1);
       }
-      else {
-        referredCols.add(col);
+      // adding the column to the list of referred columns
+      if(column != null){
+        referredCols.add(column);
       }
     }
+
   }
 
   /**
