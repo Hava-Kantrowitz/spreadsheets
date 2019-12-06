@@ -93,14 +93,26 @@ public class Reference implements Formula {
   public double evaluateCellProduct(List<Formula> formulas) throws IllegalArgumentException {
     try {
       double output;
-      if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
-        output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellProduct(formulas);
-      } else if (referredCoords.size() == 2) { // if there is a range
-        output = product(getListFormula());
-      } else { // no more than two arguments in sum range
-        throw new IllegalArgumentException("Illegal number of references.");
+      if (referredCoords == null) {
+        if (referredCols.size() == 1) {
+          output = sum(spreadsheet.getCellColumn(referredCols.get((0))));
+        } else if (referredCols.size() == 2) {
+          output = sum(spreadsheet.getMultipleColumns(referredCols.get(0), referredCols.get(1)));
+        } else {
+          throw new IllegalArgumentException("Illegal number of arguments");
+        }
+        return output;
       }
-      return output;
+      else {
+        if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
+          output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellProduct(formulas);
+        } else if (referredCoords.size() == 2) { // if there is a range
+          output = product(getListFormula());
+        } else { // no more than two arguments in sum range
+          throw new IllegalArgumentException("Illegal number of references.");
+        }
+        return output;
+      }
     } catch (StackOverflowError e) {
       throw new IllegalArgumentException("Self reference error.");
     }
