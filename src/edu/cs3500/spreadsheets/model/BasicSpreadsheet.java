@@ -226,7 +226,14 @@ public class BasicSpreadsheet implements Spreadsheet {
 
   @Override
   public void addChangedCol(int colToChange, int newWidth){
-    this.changedCols.put(colToChange, newWidth);
+    // if the column is the default width then remove
+    if(newWidth == 75){
+      this.changedCols.remove(colToChange);
+    }
+    // otherwise set the column to the changed value
+    else {
+      this.changedCols.put(colToChange, newWidth);
+    }
   }
 
   @Override

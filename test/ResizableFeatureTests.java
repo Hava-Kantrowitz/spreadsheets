@@ -116,7 +116,51 @@ public class ResizableFeatureTests {
 
   }
 
-  // this is testing when the column is set to the default size so that
+  // this is testing when the column is set to the default size so that it is removed       // THIS MAY BE MOVED TO A REMOVED METHOD
+  // from the list of changed columns
+  @Test
+  public void changedColsDefault(){
+    BasicSpreadsheet model = new BasicSpreadsheet();
+
+    // making sure the changed column size is zero upon constructing
+    assertEquals(0, model.getChangedCols().size());
+
+    model.addChangedCol(5, 100); // changing from the default
+
+    // making sure that the changing from the default went through
+    assertEquals(1, model.getChangedCols().size());
+
+    // setting it back to the default
+    model.addChangedCol(5, 75);
+
+    // making sure that the changed element was removed now that it is default
+    assertEquals(0, model.getChangedCols().size());
+  }
+
+
+  // THESE ARE THE TESTS FOR THE CONTROLLER PORTION
+
+
+  // these tests are to check that the controller is working properly (with error checking)
+  // onColumnResized() onRowResized() onScroll()
+
+
+  // these tests are to check that the controller passes the correct values to the model
+  // onColumnResized() onRowResized() onScroll()
+
+  // these tests are to check that the controller passes the correct values to the view
+  // onScroll()
+
+  // test onLoadSelect() and onSaveSelect() as well for added functionality with saving and loading
+  // column and row sizes
+
+  // also test the initializing spreadsheet
+
+
+  // THESE ARE THE TESTS TO CHECK THE UPDATED TEXTUAL VIEW FOR SAVING THE FILE
+
+
+
 
 
 }
