@@ -277,9 +277,9 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
 
   @Override
   public void changeColSize(int col, Integer newSize) {
-    // setting to a new min width every time so it does not default back when scrolling
+    // setting to a new preferred width every time so it does not default back when scrolling
     // when scroll sets it the value stays
-    sheet.getColumnModel().getColumn(col).setMinWidth(newSize);
+    sheet.getColumnModel().getColumn(col).setPreferredWidth(newSize);
   }
 
 }
