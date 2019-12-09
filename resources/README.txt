@@ -28,6 +28,17 @@ Feature 1: Allowing resizing
     - Updated the controller to contain an onScroll method that is called with the vertical and
       horizontal scroll methods so that when scrolling the new columns remain the same
 
+Feature 2: Supporting column references
+
+    Changes made:
+
+    - Modified parser to allow for inputs of columns
+    - Modified reference class to allow for column references
+    - Modified each type of cell function's evaluate method in order to allow for column references
+    in reference class
+    - Added method to Spreadsheet interface that gets all cells in a given column or multiple given
+    columns
+
 HOMEWORK 8
 
 When our provider's gave us their code, they informed us that they had never gotten their views to

@@ -188,6 +188,9 @@ public class BeyondGood {
     try {
       sheet.evaluateSheet();
     } catch (IllegalArgumentException e) {
+      if (e.getMessage().equals("Cannot evaluate")) {
+        System.out.println(e.getMessage());
+      }
       for (String i : sheet.getBadReferences()) {
         System.out.println("Error in cell " + i + " : cell contains self reference.");
       }

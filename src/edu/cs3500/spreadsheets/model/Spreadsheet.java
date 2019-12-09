@@ -109,10 +109,18 @@ public interface Spreadsheet {
   HashMap<Integer, Integer> getChangedRows();
 
   /**
-   * This gets a column of the spreadsheet.
+   * This gets all the cells in a column.
+   * @param column the column to get cells in
+   * @return list of all cells in the column
    */
   ArrayList getCellColumn(int column);
 
 
+  /**
+   * This gets multiple columns of the spreadsheet.
+   * @param rightBound the rightmost column to get
+   * @param leftBound the leftmost column to get
+   * @return the list of cells in the columns
+   */
   ArrayList<Cell> getMultipleColumns(int rightBound, int leftBound);
 }
