@@ -48,6 +48,21 @@ public class MockView extends SpreadsheetEditableView {
     receivedVals = receivedVals.concat("We are rendering now ");
   }
 
+  @Override
+  public void changeRowSize(int rowToChange, Integer newHeight){
+    receivedVals = receivedVals.concat("Row: " + rowToChange + " Height: " + newHeight);
+  }
+
+  @Override
+  public void changeColSize(int colToChange, Integer newWidth){
+    receivedVals = receivedVals.concat("Col: " + colToChange + " Width: " + newWidth);
+  }
+
+
+  /**
+   * This is a method to get the values that have been received.
+   * @return the values received through the mock view
+   */
   public String getReceivedVals() {
     return receivedVals;
   }

@@ -49,9 +49,15 @@ public class MockSpreadsheetModel extends BasicSpreadsheet {
   }
 
 
+  @Override
+  public void addChangedRow(int rowToChange, int newHeight){
+    receivedVals = receivedVals.concat("Row: " + rowToChange + " Height: " + newHeight);
+  }
 
-
-
+  @Override
+  public void addChangedCol(int colToChange, int newWidth){
+    receivedVals = receivedVals.concat("Col: " + colToChange + " Width: " + newWidth);
+  }
 
 
   /**
