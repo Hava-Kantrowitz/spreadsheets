@@ -53,8 +53,7 @@ public class Reference implements Formula {
       Value output;
       if (referredCols.size() == 2) {
         throw new IllegalArgumentException("A column of cells needs an operation to evaluate");
-      }
-      else if (referredCoords.size() == 1) { // if there is only one reference
+      } else if (referredCoords.size() == 1) { // if there is only one reference
         output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCell();// eval the given cell
       } else { // multiple references cannot be evaluated alone
         throw new IllegalArgumentException("A section of cells needs an operation to evaluate");
@@ -70,18 +69,17 @@ public class Reference implements Formula {
     try {
       double output;
 
-        if (referredCols.size() == 2) {
-          output = sum(spreadsheet.getMultipleColumns(referredCols.get(0), referredCols.get(1)));
-        }
-        else if (referredCoords.size() == 1) { // if there is only one reference
-          output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSum();
-          // eval the given cell
-        } else if (referredCoords.size() == 2) {  // if there is a range
-          output = sum(spreadsheet.getCellSection(referredCoords.get(0), referredCoords.get(1)));
-        } else {  // no more than two arguments in sum range
-          throw new IllegalArgumentException("Illegal number of arguments");
-        }
-        return output;
+      if (referredCols.size() == 2) {
+        output = sum(spreadsheet.getMultipleColumns(referredCols.get(0), referredCols.get(1)));
+      } else if (referredCoords.size() == 1) { // if there is only one reference
+        output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSum();
+        // eval the given cell
+      } else if (referredCoords.size() == 2) {  // if there is a range
+        output = sum(spreadsheet.getCellSection(referredCoords.get(0), referredCoords.get(1)));
+      } else {  // no more than two arguments in sum range
+        throw new IllegalArgumentException("Illegal number of arguments");
+      }
+      return output;
 
     } catch (StackOverflowError e) {
       throw new IllegalArgumentException("Self reference error.");
@@ -93,14 +91,18 @@ public class Reference implements Formula {
   public double evaluateCellProduct(List<Formula> formulas) throws IllegalArgumentException {
     try {
       double output;
-        if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
-          output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellProduct(formulas);
-        } else if (referredCoords.size() == 2) { // if there is a range
-          output = product(getListFormula());
-        } else { // no more than two arguments in sum range
-          throw new IllegalArgumentException("Illegal number of references.");
-        }
-        return output;
+      if (referredCols.size() == 2) {
+        output = sum(spreadsheet.getMultipleColumns(referredCols.get(0), referredCols.get(1)));
+        output = colProduct(spreadsheet.getMultipleColumns(referredCols.get(0),
+                referredCols.get(1)));
+      } else if (referredCoords.size() == 1) { // if there is only one reference
+        output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellProduct(formulas);
+      } else if (referredCoords.size() == 2) { // if there is a range
+        output = product(getListFormula());
+      } else { // no more than two arguments in sum range
+        throw new IllegalArgumentException("Illegal number of references.");
+      }
+      return output;
     } catch (StackOverflowError e) {
       throw new IllegalArgumentException("Self reference error.");
     }
@@ -113,8 +115,7 @@ public class Reference implements Formula {
       double output;
       if (referredCols.size() == 2) {
         throw new IllegalArgumentException("Cannot evaluate");
-      }
-      else if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
+      } else if (referredCoords.size() == 1) { // if there is only one reference
         output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellSqrt();
       } else { // no more than one argument for sqrt
         throw new IllegalArgumentException("Illegal number of references.");
@@ -132,8 +133,7 @@ public class Reference implements Formula {
       double output;
       if (referredCols.size() == 2) {
         throw new IllegalArgumentException("Cannot evaluate");
-      }
-      else if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
+      } else if (referredCoords.size() == 1) { // if there is only one reference
         output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellDifference();
       } else { // no more than one argument for difference
         throw new IllegalArgumentException("Illegal number of references.");
@@ -151,8 +151,7 @@ public class Reference implements Formula {
       double output;
       if (referredCols.size() == 2) {
         throw new IllegalArgumentException("Cannot evaluate");
-      }
-      else if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
+      } else if (referredCoords.size() == 1) { // if there is only one reference
         output = spreadsheet.getCellAt(referredCoords.get(0)).evaluateCellComparison();
       } else { // no more than one argument for comparison
         throw new IllegalArgumentException("Illegal number of references.");
@@ -185,28 +184,8 @@ public class Reference implements Formula {
   public boolean isNum() {
     boolean output = false;
 
-    if (referredCoords == null) {
-      if (referredCols.size() == 1) {
-        ArrayList<Cell> colList = spreadsheet.getCellColumn(referredCols.get(0));
-        for (Cell c : colList) {
-          if (c.isNum()) {
-            output = true;
-          }
-        }
-      }
 
-      else {
-        ArrayList<Cell> multColList = spreadsheet.getMultipleColumns(referredCols.get(0), referredCols.get(1));
-        for (Cell list : multColList) {
-          if (list.isNum()) {
-            output = true;
-          }
-        }
-      }
-
-    }
-
-    else if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
+    if (referredCoords.size() == 1) { // if there is only one reference  // eval the given cell
       output = spreadsheet.getCellAt(referredCoords.get(0)).isNum();
     } else {
       ArrayList<Cell> cells
@@ -291,10 +270,9 @@ public class Reference implements Formula {
 
         }
         // checking if it is a cell reference
-        else if(colMatch.matches()){
+        else if (colMatch.matches()) {
           column = Coord.colNameToIndex(colMatch.group(1));
-        }
-        else {
+        } else {
           throw new IllegalStateException("Expected cell ref");
         }
       }
@@ -303,7 +281,7 @@ public class Reference implements Formula {
         referredCoords.add(coord1);
       }
       // adding the column to the list of referred columns
-      if(column != null){
+      if (column != null) {
         referredCols.add(column);
       }
     }
@@ -335,6 +313,23 @@ public class Reference implements Formula {
     double product = 1;
     for (Formula f : formulas) {
       product = product * f.evaluateCellProduct(formulas);
+    }
+    return product;
+  }
+
+  /**
+   * Calculates the product of all items in a range of columns.
+   *
+   * @param multipleColumns the columns to calculate the product of
+   * @return the product value
+   */
+  private double colProduct(ArrayList<Cell> multipleColumns) {
+    double product = 1;
+    for (Cell c : multipleColumns) {
+      if (c.isNum()) {
+        product = product * c.evaluateCellSum();
+      }
+
     }
     return product;
   }

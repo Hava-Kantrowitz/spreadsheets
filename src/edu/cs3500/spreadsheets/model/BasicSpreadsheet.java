@@ -41,7 +41,6 @@ public class BasicSpreadsheet implements Spreadsheet {
     WorksheetReader.read(builder, fileName);  // reading from the file and passing it in
 
 
-
   }
 
 
@@ -211,25 +210,25 @@ public class BasicSpreadsheet implements Spreadsheet {
 
 
   @Override
-  public void addChangedRow(int rowToChange, int newHeight){
+  public void addChangedRow(int rowToChange, int newHeight) {
     // if the default size then remove
-    if(newHeight == 16) {
+    if (newHeight == 16) {
       this.changedRows.remove(rowToChange);
     }
     // this sets the row to the changed value
-    else{
+    else {
       this.changedRows.put(rowToChange, newHeight);
     }
 
   }
 
   @Override
-  public void addChangedCol(int colToChange, int newWidth){
+  public void addChangedCol(int colToChange, int newWidth) {
     this.changedCols.put(colToChange, newWidth);
   }
 
   @Override
-  public HashMap<Integer, Integer> getChangedRows(){
+  public HashMap<Integer, Integer> getChangedRows() {
     HashMap<Integer, Integer> copyMap = new HashMap<>();
     copyMap.putAll(this.changedRows);
     return copyMap;
@@ -262,7 +261,7 @@ public class BasicSpreadsheet implements Spreadsheet {
   }
 
   @Override
-  public HashMap<Integer, Integer> getChangedCols(){
+  public HashMap<Integer, Integer> getChangedCols() {
     HashMap<Integer, Integer> copyMap = new HashMap<>();
     copyMap.putAll(this.changedCols);
     return copyMap;

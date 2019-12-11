@@ -39,13 +39,13 @@ public class SpreadsheetTextualView implements SpreadsheetView {
 
     // go through the list of rows that have changed
     HashMap<Integer, Integer> rowsChanged = sheet.getChangedRows();
-    for(Integer row: rowsChanged.keySet()){
+    for (Integer row : rowsChanged.keySet()) {
       outputFile.append(row + "R " + rowsChanged.get(row) + "\n");
     }
 
     // go through the list of cols that have changed
     HashMap<Integer, Integer> colsChanged = sheet.getChangedCols();
-    for(Integer col: colsChanged.keySet()){
+    for (Integer col : colsChanged.keySet()) {
       outputFile.append(col + "C " + colsChanged.get(col) + "\n");
     }
 

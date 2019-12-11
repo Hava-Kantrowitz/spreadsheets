@@ -136,7 +136,7 @@ public class EditableSheetController implements Features {
   @Override
   public void onRowResized(int changedRow, int newHeight) {
     // update the row size in the model (adding 1 so it is in terms of the model)
-    model.addChangedRow(changedRow + 1,newHeight);
+    model.addChangedRow(changedRow + 1, newHeight);
   }
 
   @Override
@@ -145,15 +145,15 @@ public class EditableSheetController implements Features {
     // get the rows that are changed
     HashMap<Integer, Integer> changedRows = model.getChangedRows();
     // going through the rows and setting the sizes in the view
-    for(Integer row: changedRows.keySet()){
+    for (Integer row : changedRows.keySet()) {
       // updating appearance in the view (with negative 1 adjustment to view parameters)
       view.changeRowSize(row - 1, changedRows.get(row));
     }
 
     // get the columns that are changed
-    HashMap<Integer, Integer> changedCols =  model.getChangedCols();
+    HashMap<Integer, Integer> changedCols = model.getChangedCols();
     // going through the rows and setting the sizes in the view
-    for(Integer col: changedCols.keySet()){
+    for (Integer col : changedCols.keySet()) {
       // updating appearance in the view (with negative 1 adjustment to view parameters)
       view.changeColSize(col - 1, changedCols.get(col));
     }

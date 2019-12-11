@@ -38,10 +38,11 @@ public final class WorksheetReader {
 
     /**
      * Adds a row or column size to the hashmap of given row or column sizes.
-     * @param rowOrCol
-     * @param index
+     *
+     * @param rowOrCol whether it is a row or column
+     * @param index the index of the row or column
      * @param changedSize the contents to change the row or column size to
-     * @return
+     * @return the worksheet builder with the changed row/col sizes
      */
     WorksheetBuilder<T> addRowColSize(String rowOrCol, int index, String changedSize);
   }
@@ -94,8 +95,7 @@ public final class WorksheetReader {
         }
         String contents = scan.nextLine();
         builder = builder.createCell(col, row, contents);
-      }
-      else if(colRow.matches()){
+      } else if (colRow.matches()) {
         System.out.println("In here");
         int index = Integer.parseInt(colRow.group(1));
         String rowOrCol = colRow.group(2);
@@ -107,8 +107,7 @@ public final class WorksheetReader {
         }
         String contents = scan.nextLine();
         builder = builder.addRowColSize(rowOrCol, index, contents);
-      }
-      else {
+      } else {
         throw new IllegalStateException("Expected cell ref or column/row reference");
       }
     }

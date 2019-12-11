@@ -38,6 +38,7 @@ Feature 2: Supporting column references
     in reference class
     - Added method to Spreadsheet interface that gets all cells in a given column or multiple given
     columns
+    - Added method to Reference class that finds the product value for a column of cells
 
 HOMEWORK 8
 

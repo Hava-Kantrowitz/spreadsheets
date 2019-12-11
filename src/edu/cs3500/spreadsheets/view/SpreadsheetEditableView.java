@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
@@ -78,7 +77,6 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     // ENABLING LISTENER FOR ROW SIZE CHANGING
     MouseListener rowChangeListener = new RowSizeListener(myRows, sheet, controller);
     myRows.addMouseListener(rowChangeListener);
-
 
 
     JScrollPane rowScroller = new JScrollPane();
@@ -184,16 +182,16 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     // get the rows that are changed
     HashMap<Integer, Integer> changedRows = model.getChangedRows();
     // going through the rows and setting the sizes in the view
-    for(Integer row: changedRows.keySet()){
+    for (Integer row : changedRows.keySet()) {
       // updating appearance in the view (with negative 1 adjustment to view parameters)
       this.changeRowSize(row - 1, changedRows.get(row));
       myRows.setRowHeight(row - 1, changedRows.get(row)); // updating the header as well
     }
 
     // get the columns that are changed
-    HashMap<Integer, Integer> changedCols =  model.getChangedCols();
+    HashMap<Integer, Integer> changedCols = model.getChangedCols();
     // going through the rows and setting the sizes in the view
-    for(Integer col: changedCols.keySet()){
+    for (Integer col : changedCols.keySet()) {
       // updating appearance in the view (with negative 1 adjustment to view parameters)
       this.changeColSize(col - 1, changedCols.get(col));
     }

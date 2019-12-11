@@ -67,13 +67,12 @@ public class VerticalScrollListener implements AdjustmentListener {
       }
 
 
-
       scrollMaxCount = e.getValue(); // set new max it has scrolled to current value
 
     }
 
     // if it is the editable version
-    if(controller != null) {
+    if (controller != null) {
       controller.onScroll();
     }
 
