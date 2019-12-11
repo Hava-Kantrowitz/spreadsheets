@@ -32,13 +32,13 @@ public class ResizableFeatureTests {
   // this is a test for the addChanged row method and get changed rows method
   // when the row and the height is valid
   @Test
-  public void changedRowTest(){
+  public void changedRowTest() {
     BasicSpreadsheet model = new BasicSpreadsheet();
 
     // making sure that the changed rows is set to zero when constructing
     assertEquals(0, model.getChangedRows().size());
 
-    model.addChangedRow(2,50);
+    model.addChangedRow(2, 50);
 
     HashMap<Integer, Integer> expectedRows = new HashMap<>();
 
@@ -51,11 +51,11 @@ public class ResizableFeatureTests {
   // this is the test for the addChanged row method when an existing row is changed in size
   // also testing multiple inputs to changed rows
   @Test
-  public void changedRowExistsTest(){
-    BasicSpreadsheet model= new BasicSpreadsheet();
+  public void changedRowExistsTest() {
+    BasicSpreadsheet model = new BasicSpreadsheet();
 
     // making sure that the changed rows is set to zero when constructing
-    assertEquals(0,model.getChangedRows().size());
+    assertEquals(0, model.getChangedRows().size());
 
     model.addChangedRow(5, 50);
     model.addChangedRow(5, 70); // changing a current value
@@ -71,16 +71,17 @@ public class ResizableFeatureTests {
 
   }
 
-  // this is the test to check when a row is set to the default row size                      // THIS MAY CHANGE TO A REMOVE METHOD IN THE MODEL IF
-  @Test                                                                                       // WE CHECK FOR DEFAULT IN CONTROLLER INSTEAD
-  public void changedRowDefault(){
+  // this is the test to check when a row is set to the default row size
+  @Test
+  // WE CHECK FOR DEFAULT IN CONTROLLER INSTEAD
+  public void changedRowDefault() {
     BasicSpreadsheet model = new BasicSpreadsheet();
 
     // making sure the changed rows is set to zero when constructing
     assertEquals(0, model.getChangedRows().size());
 
     model.addChangedRow(7, 290); // change it to not default
-    model.addChangedRow(7,16);  // change it back to default
+    model.addChangedRow(7, 16);  // change it back to default
 
     // the size of the returned HashMap should still be zero because of the
     assertEquals(0, model.getChangedRows().size());
@@ -89,17 +90,17 @@ public class ResizableFeatureTests {
 
   // this is testing the changing of a column size with everything valid
   @Test
-  public void changedColTest(){
+  public void changedColTest() {
     BasicSpreadsheet model = new BasicSpreadsheet();
 
     // making sure the changed columns is set to zero when constructing
     assertEquals(0, model.getChangedCols().size());
 
-    model.addChangedCol(9,50);
+    model.addChangedCol(9, 50);
 
     HashMap<Integer, Integer> expectedCols = new HashMap<>();
 
-    expectedCols.put(9,50);
+    expectedCols.put(9, 50);
 
     // check that the column that has changed size has been updated
     assertEquals(expectedCols, model.getChangedCols());
@@ -108,7 +109,7 @@ public class ResizableFeatureTests {
   // this is testing the changing of a column when the size of the same column is changed
   // multiple times (also checking multiple entries)
   @Test
-  public void changedColExistsTest(){
+  public void changedColExistsTest() {
     BasicSpreadsheet model = new BasicSpreadsheet();
 
     // making sure the changed columns size is zero upon constructing
@@ -121,7 +122,7 @@ public class ResizableFeatureTests {
     HashMap<Integer, Integer> expectedCols = new HashMap<>();
 
     expectedCols.put(10, 50);
-    expectedCols.put(50,100);
+    expectedCols.put(50, 100);
 
     // checking that the value of the width of the 10th column has changed
     assertEquals(expectedCols, model.getChangedCols());

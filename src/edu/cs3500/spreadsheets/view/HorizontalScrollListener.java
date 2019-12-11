@@ -30,7 +30,7 @@ public class HorizontalScrollListener implements AdjustmentListener {
    *
    * @param sheet the JTable component of the panel
    * @param table the data represented as a table
-   * @param rows the row headers from the table
+   * @param rows  the row headers from the table
    */
   HorizontalScrollListener(JTable sheet, DefaultTableModel table, JTable rows) {
     super();
@@ -43,9 +43,9 @@ public class HorizontalScrollListener implements AdjustmentListener {
   /**
    * This constructs a new spreadsheet scroll listener with the controller.
    *
-   * @param sheet the JTable component of the panel
-   * @param table the data represented as a table
-   * @param rows the row headers from the table
+   * @param sheet      the JTable component of the panel
+   * @param table      the data represented as a table
+   * @param rows       the row headers from the table
    * @param controller the controller for the editable version
    */
   HorizontalScrollListener(JTable sheet, DefaultTableModel table, JTable rows,
@@ -57,7 +57,6 @@ public class HorizontalScrollListener implements AdjustmentListener {
     this.rows = rows;
     this.controller = controller;
   }
-
 
 
   @Override
@@ -76,7 +75,6 @@ public class HorizontalScrollListener implements AdjustmentListener {
     }
 
 
-
     DefaultTableCellRenderer rowRenderer = new DefaultTableCellRenderer();
 
     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -91,7 +89,7 @@ public class HorizontalScrollListener implements AdjustmentListener {
     rows.getColumnModel().getColumn(0).setCellRenderer(rowRenderer);
 
     // making sure it is the editable version
-    if(controller != null) {
+    if (controller != null) {
       controller.onScroll();
     }
   }

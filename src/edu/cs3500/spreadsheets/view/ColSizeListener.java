@@ -22,10 +22,11 @@ public class ColSizeListener implements TableColumnModelListener {
 
   /**
    * This is the constructor for the column resizing listener.
-   * @param viewGrid the grid (JTable) component of the view
+   *
+   * @param viewGrid   the grid (JTable) component of the view
    * @param controller the controller for the program
    */
-  public ColSizeListener(NoEditTable viewGrid, Features controller){
+  public ColSizeListener(NoEditTable viewGrid, Features controller) {
     this.viewGrid = viewGrid;
     this.controller = controller;
   }
@@ -50,7 +51,7 @@ public class ColSizeListener implements TableColumnModelListener {
     // get the column that is being changed
     TableColumn changedCol = viewGrid.getTableHeader().getResizingColumn();
     // check to make sure it is not null
-    if(changedCol != null){
+    if (changedCol != null) {
       // get the index
       int colIndex = changedCol.getModelIndex();
       int newSize = viewGrid.getColumnModel().getColumn(colIndex).getWidth();
