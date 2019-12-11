@@ -58,18 +58,12 @@ public class RowSizeListener implements MouseListener {
       int newRowHeight = fullSheet.getRowHeight(currCellRow) + changeY;
 
       // making sure we have a valid row height (stops at default starting size)
-      if (newRowHeight > 16) {
-        fullSheet.setRowHeight(currCellRow, newRowHeight); // set in the full sheet
-        rowHeaderTable.setRowHeight(currCellRow, newRowHeight); // set in the row headers
+      if (newRowHeight < 16) {
+        newRowHeight = 16;
       }
-      // if it is less than 16 default to 16
-      else {
-        fullSheet.setRowHeight(currCellRow, 16); // set in the full sheet
-        rowHeaderTable.setRowHeight(currCellRow, 16); // set in the row headers
-      }
-
-      // updating the model through the controller
-      controller.onRowResized(currCellRow, newRowHeight);
+      fullSheet.setRowHeight(currCellRow, newRowHeight); // set in the full sheet
+      rowHeaderTable.setRowHeight(currCellRow, newRowHeight); // set in the row headers
+      controller.onRowResized(currCellRow, newRowHeight); // setting with controller
 
     }
 

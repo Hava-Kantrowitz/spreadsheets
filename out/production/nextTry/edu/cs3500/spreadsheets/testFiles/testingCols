@@ -2,12 +2,4 @@ A1 4
 A2 4
 B3 5
 B7 6
-C1 =(SUM A:B)
-AB1 7
-A3 =AB1
-CC4 false
-A200 "hello"
-A20 =(SUM 2 3)
-A5 =(SUM (PRODUCT 2 3) (PRODUCT 2 3))
-B4 10
-B2 =(HAM 7)
+D1 =(PRODUCT A1 A2)

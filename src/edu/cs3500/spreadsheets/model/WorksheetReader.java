@@ -96,7 +96,6 @@ public final class WorksheetReader {
         String contents = scan.nextLine();
         builder = builder.createCell(col, row, contents);
       } else if (colRow.matches()) {
-        System.out.println("In here");
         int index = Integer.parseInt(colRow.group(1));
         String rowOrCol = colRow.group(2);
 

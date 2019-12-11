@@ -24,8 +24,9 @@ public class ColumnTests {
    */
   private static void initializeTestSheet(Spreadsheet sheet) {
     try {
-      sheet.initializeSpreadsheet(new FileReader("C:\\Users\\havak\\IdeaProjects\\nextTry" +
-              "\\src\\edu\\cs3500\\spreadsheets\\testingBlankTenByTen.txt"));
+      sheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+              "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/" +
+              "src/edu/cs3500/spreadsheets/testingBlankTenByTen.txt"));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }

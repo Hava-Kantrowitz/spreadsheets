@@ -54,7 +54,7 @@ public class SpreadsheetRowHeaderTable extends JTable {
    *
    * @return the table
    */
-  NoEditTable getTable() {
+  public NoEditTable getTable() {
 
     model = new DefaultTableModel(getRows(), 1);
 
@@ -83,6 +83,13 @@ public class SpreadsheetRowHeaderTable extends JTable {
       int checkRow = coord.row;
       if (checkRow > highestRow) {
         highestRow = checkRow;
+      }
+    }
+
+    // going through rows in case higher row with changed size
+    for (Integer row : spreadsheet.getChangedRows().keySet()) {
+      if (row > highestRow) {
+        highestRow = row;
       }
     }
 

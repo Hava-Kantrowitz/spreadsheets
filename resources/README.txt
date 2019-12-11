@@ -7,17 +7,19 @@ HOMEWORK 9
 
 Feature 1: Allowing resizing
 
-	Changes made for resizing
+	Changes made:
 
     - Reading the file: WorksheetBuilder added the method addRowColSize to add a specified size of a
                         row or a column when the worksheet is being built also modified the read
-                        method within worksheet builder to allow for the row and column sizes to be
+                        method within worksheet reader to allow for the row and column sizes to be
                         in the form [index][R/C] followed by a space and a number (the size)
-                        ** the changes are also in the file reader method to support this **
     - Storing in the model: added two HashMaps to the model so that changes in row size and column
                             size can be stored
-    - Resizing in the view: added a mouse listener for the RowHeaderTable so that the user can
-                            select a row to resize and drag to resize accordingly
+    - Resizing in the view: added a mouse listener (RowSizeListener) for the RowHeaderTable so that
+                            the user can select a row to resize and drag to resize accordingly
+                            as well as passing the information to the controller
+                            added a table column model listener (ColSizeListener) to detect the
+                            changes in the columns and pass the information to the controller
     - Controller: adding a method to the controller onRowResize and onColumnResize so that the
                   changes will be reflected in the model
     - Saving a file: Adding the contents of the changed row size HashMap and the changed column size
@@ -26,8 +28,13 @@ Feature 1: Allowing resizing
                       model for the changed row and column sizes —> this is changed where the
                       file is first read into the sheet in the view class (SpreadsheetEditableView)
                       changes made within the constructor of the SpreadsheetEditableView
+                      (the updating of the model occurs within initializeSpreadsheet() from the
+                      new file reading as explained above)
     - Updated the controller to contain an onScroll method that is called with the vertical and
       horizontal scroll methods so that when scrolling the new columns remain the same
+    - Modified SpreadSheetTable getMaxCols and getMaxRows to account for columns and rows that
+      had been resized
+      ** the same change was made to the SpreadsheetRowHeaderTable **
 
 Feature 2: Supporting column references
 

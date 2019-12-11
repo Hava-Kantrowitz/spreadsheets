@@ -1,22 +1,37 @@
+
+
 import org.junit.Test;
 
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
+import edu.cs3500.spreadsheets.model.BooleanValue;
+import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.DoubleValue;
+import edu.cs3500.spreadsheets.model.Formula;
+import edu.cs3500.spreadsheets.model.Function;
 import edu.cs3500.spreadsheets.model.Spreadsheet;
+import edu.cs3500.spreadsheets.model.StringValue;
+import edu.cs3500.spreadsheets.view.RowSizeListener;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
+import edu.cs3500.spreadsheets.view.SpreadsheetRowHeaderTable;
 import edu.cs3500.spreadsheets.view.SpreadsheetTextualView;
 import edu.cs3500.spreadsheets.view.SpreadsheetView;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 /**
  * This is the test class for the added resizable feature (testing for the changes to the model,
@@ -73,7 +88,6 @@ public class ResizableFeatureTests {
 
   // this is the test to check when a row is set to the default row size
   @Test
-  // WE CHECK FOR DEFAULT IN CONTROLLER INSTEAD
   public void changedRowDefault() {
     BasicSpreadsheet model = new BasicSpreadsheet();
 
@@ -129,10 +143,10 @@ public class ResizableFeatureTests {
 
   }
 
-  // this is testing when the column is set to the default size so that it is removed       // THIS MAY BE MOVED TO A REMOVED METHOD
+  // this is testing when the column is set to the default size so that it is removed
   // from the list of changed columns
   @Test
-  public void changedColsDefault(){
+  public void changedColsDefault() {
     BasicSpreadsheet model = new BasicSpreadsheet();
 
     // making sure the changed column size is zero upon constructing
@@ -155,11 +169,13 @@ public class ResizableFeatureTests {
   BasicSpreadsheet model;
   EditableSheetController controller;
   SpreadsheetEditableView view;
+
   /**
    * This is a method to set up the controller testing.
+   *
    * @throws IOException if unable to create a blank file
    */
-  private void setUpControllerTests(){
+  private void setUpControllerTests() {
     model = new BasicSpreadsheet();
     File file = new File("spreadsheet.txt");
     try {
@@ -169,8 +185,7 @@ public class ResizableFeatureTests {
       controller = new EditableSheetController(null, model);
       view = new SpreadsheetEditableView(model, controller);
       controller.setView(view);
-    }
-    catch(IOException e){
+    } catch (IOException e) {
       System.out.println("Unable to initialize file in cell resize testing");
     }
   }
@@ -188,7 +203,7 @@ public class ResizableFeatureTests {
   // this is to check that when the row is resized through the controller this is reflected in the
   // model
   @Test
-  public void rowResizedControllerTest(){
+  public void rowResizedControllerTest() {
     setUpControllerTests();
     controller.onRowResized(10, 50);
 
@@ -201,7 +216,7 @@ public class ResizableFeatureTests {
   // this is to check that when the row is resized through the controller that multiple go through
   // and changes can be made to existing
   @Test
-  public void rowResizedMultipleController(){
+  public void rowResizedMultipleController() {
     setUpControllerTests();
     controller.onRowResized(10, 50);
     controller.onRowResized(12, 30);
@@ -217,7 +232,7 @@ public class ResizableFeatureTests {
   // this is to check that when the column is resized through the controller it goes through to
   // to the model and has the correct result
   @Test
-  public void colResizedControllerTest(){
+  public void colResizedControllerTest() {
     setUpControllerTests();
     controller.onColumnResized(10, 50);
 
@@ -230,7 +245,7 @@ public class ResizableFeatureTests {
   // this is to check that when the column is resized through the controller it goes through to the
   // model with multiple inputs and same column inputs
   @Test
-  public void colResizedMultipleController(){
+  public void colResizedMultipleController() {
     setUpControllerTests();
     controller.onColumnResized(10, 50);
     controller.onColumnResized(50, 300);
@@ -254,7 +269,7 @@ public class ResizableFeatureTests {
   /**
    * This is a setup method for checking a mock model.
    */
-  private void mockModelTestingSetUp(){
+  private void mockModelTestingSetUp() {
     mockModel = new MockSpreadsheetModel();
     File file = new File("spreadsheet.txt");
     try {
@@ -264,8 +279,7 @@ public class ResizableFeatureTests {
       controller = new EditableSheetController(null, mockModel);
       view = new SpreadsheetEditableView(mockModel, controller);
       controller.setView(view);
-    }
-    catch(IOException e){
+    } catch (IOException e) {
       System.out.println("Unable to initialize file in cell resize testing");
     }
   }
@@ -274,7 +288,7 @@ public class ResizableFeatureTests {
   // results
 
   @Test
-  public void mockModelRowResized(){
+  public void mockModelRowResized() {
     mockModelTestingSetUp();
     controller.onRowResized(5, 30);
 
@@ -284,7 +298,7 @@ public class ResizableFeatureTests {
 
   // this is to check when the onColResized() is called the mock model receives the correct inputs
   @Test
-  public void mockModelColResized(){
+  public void mockModelColResized() {
     mockModelTestingSetUp();
     controller.onColumnResized(20, 50);
 
@@ -299,7 +313,7 @@ public class ResizableFeatureTests {
   /**
    * This is a set up method for testing the functionality with the mock view.
    */
-  private void mockViewTestingSetUp(){
+  private void mockViewTestingSetUp() {
     model = new BasicSpreadsheet();
     File file = new File("spreadsheet.txt");
     try {
@@ -309,8 +323,7 @@ public class ResizableFeatureTests {
       controller = new EditableSheetController(null, model);
       mockView = new MockView(model, controller);
       controller.setView(mockView);
-    }
-    catch(IOException e){
+    } catch (IOException e) {
       System.out.println("Unable to initialize file in cell resize testing");
     }
   }
@@ -321,7 +334,7 @@ public class ResizableFeatureTests {
   // this is to check that when onScroll is called the row and column sizes change to the correct
   // values from the model (with a changed row)
   @Test
-  public void mockViewOnScrollRow(){
+  public void mockViewOnScrollRow() {
     mockViewTestingSetUp();
     controller.onRowResized(5, 30);
     controller.onScroll();
@@ -332,15 +345,13 @@ public class ResizableFeatureTests {
   // this is to check that when onScroll is called the row and column sizes change to the correct
   // values from the model (with a changed column)
   @Test
-  public void mockViewOnScrollCol(){
+  public void mockViewOnScrollCol() {
     mockViewTestingSetUp();
     controller.onColumnResized(10, 50);
     controller.onScroll();
     assertEquals("Col: 10 Width: 50", mockView.getReceivedVals());
 
   }
-
-
 
 
   // LOAD AND SAVE TESTING
@@ -354,7 +365,7 @@ public class ResizableFeatureTests {
     setUpControllerTests(); // set up a controller and a view
 
     controller.onRowResized(2, 11);
-    controller.onColumnResized(5,20);
+    controller.onColumnResized(5, 20);
 
     controller.onSaveSelect("/Users/victoriabowen/Desktop/" +
             "NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
@@ -379,9 +390,9 @@ public class ResizableFeatureTests {
     setUpControllerTests(); // set up a controller and a view
 
     controller.onRowResized(2, 11);
-    controller.onColumnResized(5,20);
+    controller.onColumnResized(5, 20);
     controller.onRowResized(2, 50);
-    controller.onColumnResized(5,40);
+    controller.onColumnResized(5, 40);
 
     controller.onSaveSelect("/Users/victoriabowen/Desktop/" +
             "NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
@@ -400,7 +411,7 @@ public class ResizableFeatureTests {
 
   // this is a test for loading a file with columns and rows having been resized
   @Test
-  public void testRowColumnResizedLoad(){
+  public void testRowColumnResizedLoad() {
     setUpControllerTests();
     controller.onLoadSelect("/Users/victoriabowen/Desktop/NEU_1st_year/" +
             "ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
@@ -428,7 +439,7 @@ public class ResizableFeatureTests {
 
 
     // render the text file from the actual spreadsheet
-    SpreadsheetView view = new SpreadsheetTextualView(sheet1,outputFile);
+    SpreadsheetView view = new SpreadsheetTextualView(sheet1, outputFile);
     view.render();
 
 
@@ -446,17 +457,91 @@ public class ResizableFeatureTests {
   }
 
 
-  // also test the initializing spreadsheet
+  // also test the initializing spreadsheet with row and column values
+  // including testing that row and column sizes over the default 300 of the view
+  // still render correctly
+  @Test
+  public void initializeTesting() throws FileNotFoundException {
+    BasicSpreadsheet testSheet = new BasicSpreadsheet();
+    testSheet.initializeSpreadsheet(new FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500" +
+            "/spreadsheets/testFiles/testingRowSizeInit.txt"));
+
+    assertEquals(new DoubleValue(3.0), testSheet.getCellAt(new Coord(1, 1)));
+    assertEquals(new DoubleValue(7.0), testSheet.getCellAt(new Coord(28, 1)));
+    assertEquals(new BooleanValue(false), testSheet.getCellAt(new Coord(81, 4)));
+    assertEquals(new StringValue("hello"), testSheet.getCellAt(new Coord(1, 200)));
+
+    Formula f = new DoubleValue(2.0);
+    Formula f2 = new DoubleValue(3.0);
+
+    List<Formula> formList = new ArrayList<Formula>();
+    formList.add(f);
+    formList.add(f2);
+
+    assertEquals(new Function("SUM", formList),
+            testSheet.getCellAt(new Coord(1, 20)));
 
 
-  // THESE ARE THE TESTS TO CHECK THE UPDATED TEXTUAL VIEW FOR SAVING THE FILE (LISTENER TESTING)
+    Function f1 = new Function("PRODUCT", formList);
+    Function f3 = new Function("PRODUCT", formList);
+
+    List<Formula> overallList = new ArrayList<Formula>();
+    overallList.add(f1);
+    overallList.add(f3);
 
 
+    Function overAllf = new Function("SUM", overallList);
+
+    assertEquals(overAllf, testSheet.getCellAt(new Coord(1, 5)));
+
+    assertEquals(new DoubleValue(12.0),
+            testSheet.getCellAt(new Coord(1, 5)).evaluateCell());
 
 
+    // the above is making sure that the old functionality is still working
+    // now for the additional functionality with the row and column sizes
+
+    EditableSheetController testController = new EditableSheetController(null, testSheet);
+    SpreadsheetEditableView testView = new SpreadsheetEditableView(testSheet, testController);
+    testController.setView(testView);
 
 
+    HashMap<Integer, Integer> expectedRows = new HashMap<>();
+    expectedRows.put(3, 100);
+    expectedRows.put(500, 20);
+
+    HashMap<Integer, Integer> expectedCols = new HashMap<>();
+    expectedCols.put(5, 300);
+    expectedCols.put(500, 200);
+
+    // this is checking the model side of initializing
+    assertEquals(expectedRows, testSheet.getChangedRows());
+    assertEquals(expectedCols, testSheet.getChangedCols());
 
 
+  }
+
+
+  // THESE ARE THE LISTENER TESTS FROM THE VIEW TO THE MOCK CONTROLLER
+  MockController mockController;
+
+  /**
+   * This is a set up method for testing the functionality with the mock controller.
+   */
+  private void mockControllerTestingSetUp() {
+    model = new BasicSpreadsheet();
+    File file = new File("spreadsheet.txt");
+    try {
+      file.createNewFile();
+      model.initializeSpreadsheet(new FileReader(file.getAbsolutePath()));
+
+      mockController = new MockController(null, model);
+      view = new MockView(model, mockController);
+      mockController.setView(view);
+    } catch (IOException e) {
+      System.out.println("Unable to initialize file in cell resize testing");
+    }
+  }
 
 }

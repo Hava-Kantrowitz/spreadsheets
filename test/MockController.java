@@ -51,6 +51,16 @@ public class MockController extends EditableSheetController {
     outputLog = outputLog.concat("onSaveSelect called with " + filePath);
   }
 
+  @Override
+  public void onColumnResized(int changedCol, int newWidth){
+    outputLog = outputLog.concat("Col: " + changedCol + " Width: " + newWidth);
+  }
+
+  @Override
+  public void onRowResized(int changedRow, int newHeight){
+    outputLog = outputLog.concat("Row: " + changedRow + " Height:" + newHeight);
+  }
+
   /**
    * This is the method to get the output log of the program.
    *

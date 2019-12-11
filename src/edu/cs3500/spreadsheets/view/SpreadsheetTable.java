@@ -110,6 +110,14 @@ public class SpreadsheetTable extends JTable {
       }
     }
 
+    // going through rows in case higher row with changed size
+    for (Integer row : spreadsheet.getChangedRows().keySet()) {
+      if (row > highestRow) {
+        highestRow = row;
+      }
+    }
+
+
     return highestRow;
   }
 
@@ -125,6 +133,12 @@ public class SpreadsheetTable extends JTable {
       int checkCol = coord.col;
       if (checkCol > highestCol) {
         highestCol = checkCol;
+      }
+    }
+    // going through the changed cols in case higher column
+    for(Integer col: spreadsheet.getChangedCols().keySet()){
+      if(col > highestCol){
+        highestCol = col;
       }
     }
 
