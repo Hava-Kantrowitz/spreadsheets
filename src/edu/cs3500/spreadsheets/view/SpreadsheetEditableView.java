@@ -201,10 +201,10 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
     TableColumnModelListener colSizeListener = new ColSizeListener(sheet, controller);
     sheet.getColumnModel().addColumnModelListener(colSizeListener);
 
+
     this.setJMenuBar(menuBar);
     this.add(rowScroller, BorderLayout.WEST);
     this.add(scrollPane, BorderLayout.CENTER);
-
 
   }
 
@@ -268,12 +268,17 @@ public class SpreadsheetEditableView extends JFrame implements SpreadsheetView {
 
   @Override
   public void changeRowSize(int row, Integer newSize) {
-    sheet.setRowHeight(row, newSize);
+    // making sure that it is greater than or equal to 16 (default)
+    if(newSize >= 16) {
+      sheet.setRowHeight(row, newSize);
+    }
   }
 
   @Override
   public void changeColSize(int col, Integer newSize) {
-    sheet.getColumnModel().getColumn(col).setWidth(newSize);
+    // setting to a new preferred width every time so it does not default back when scrolling
+    // when scroll sets it the value stays
+    sheet.getColumnModel().getColumn(col).setPreferredWidth(newSize);
   }
 
 }

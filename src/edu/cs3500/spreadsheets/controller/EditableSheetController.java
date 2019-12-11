@@ -144,6 +144,8 @@ public class EditableSheetController implements Features {
     // setting the correct row sizes
     // get the rows that are changed
     HashMap<Integer, Integer> changedRows = model.getChangedRows();
+
+
     // going through the rows and setting the sizes in the view
     for (Integer row : changedRows.keySet()) {
       // updating appearance in the view (with negative 1 adjustment to view parameters)
