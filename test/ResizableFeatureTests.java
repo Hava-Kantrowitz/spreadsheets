@@ -1,15 +1,22 @@
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import edu.cs3500.spreadsheets.controller.EditableSheetController;
 import edu.cs3500.spreadsheets.model.BasicSpreadsheet;
+import edu.cs3500.spreadsheets.model.Spreadsheet;
 import edu.cs3500.spreadsheets.view.SpreadsheetEditableView;
+import edu.cs3500.spreadsheets.view.SpreadsheetTextualView;
+import edu.cs3500.spreadsheets.view.SpreadsheetView;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * This is the test class for the added resizable feature (testing for the changes to the model,
@@ -243,6 +250,9 @@ public class ResizableFeatureTests {
   MockSpreadsheetModel mockModel;
 
 
+  /**
+   * This is a setup method for checking a mock model.
+   */
   private void mockModelTestingSetUp(){
     mockModel = new MockSpreadsheetModel();
     File file = new File("spreadsheet.txt");
@@ -285,6 +295,9 @@ public class ResizableFeatureTests {
   // MOCK VIEW TESTING
   MockView mockView;
 
+  /**
+   * This is a set up method for testing the functionality with the mock view.
+   */
   private void mockViewTestingSetUp(){
     model = new BasicSpreadsheet();
     File file = new File("spreadsheet.txt");
@@ -332,6 +345,104 @@ public class ResizableFeatureTests {
   // LOAD AND SAVE TESTING
   // test onLoadSelect() and onSaveSelect() as well for added functionality with saving and loading
   // column and row sizes
+
+  // this is to check that when a row is resized within the model the saved file has the changed
+  // value
+  @Test
+  public void testRowColResizedSaved() throws FileNotFoundException {
+    setUpControllerTests(); // set up a controller and a view
+
+    controller.onRowResized(2, 11);
+    controller.onColumnResized(5,20);
+
+    controller.onSaveSelect("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
+            "spreadsheets/src/edu/cs3500/spreadsheets/testFiles/saveRowColSizeTest");
+
+    Scanner scan = new Scanner(new
+            FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
+            "spreadsheets/src/edu/cs3500/spreadsheets/testFiles/saveRowColSizeTest"));
+
+
+    assertEquals(scan.nextLine(), "3R 11");
+    assertEquals(scan.nextLine(), "6C 20");
+
+
+  }
+
+  // this is to check when the row and the column are resized multiple times (same index changes
+  // size
+  @Test
+  public void testSameRowAndColResized() throws FileNotFoundException {
+    setUpControllerTests(); // set up a controller and a view
+
+    controller.onRowResized(2, 11);
+    controller.onColumnResized(5,20);
+    controller.onRowResized(2, 50);
+    controller.onColumnResized(5,40);
+
+    controller.onSaveSelect("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
+            "spreadsheets/src/edu/cs3500/spreadsheets/testFiles/saveRowColSizeTest2");
+
+    Scanner scan = new Scanner(new
+            FileReader("/Users/victoriabowen/Desktop/" +
+            "NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
+            "spreadsheets/src/edu/cs3500/spreadsheets/testFiles/saveRowColSizeTest2"));
+
+
+    assertEquals(scan.nextLine(), "3R 50");
+    assertEquals(scan.nextLine(), "6C 40");
+
+  }
+
+  // this is a test for loading a file with columns and rows having been resized
+  @Test
+  public void testRowColumnResizedLoad(){
+    setUpControllerTests();
+    controller.onLoadSelect("/Users/victoriabowen/Desktop/NEU_1st_year/" +
+            "ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testFiles/loadRowColumnTest");
+    assertEquals(0, model.getChangedRows().size()); // making sure the old view has not
+    assertEquals(0, model.getChangedCols().size()); // changed
+  }
+
+  // testing the saving by doing a full loop
+  @Test
+  public void testSaveFullLoop() throws FileNotFoundException {
+    BasicSpreadsheet sheet1 = new BasicSpreadsheet();
+
+    // setting up the first spreadsheet with the file
+    FileReader inputFile1 = new FileReader("/Users/victoriabowen/Desktop" +
+            "/NEU_1st_year/ObjectOriented/CS_3500_Projects/" +
+            "spreadsheets/src/edu/cs3500/spreadsheets/testFiles/loadRowColumnTest");
+
+
+    sheet1.initializeSpreadsheet(inputFile1);
+
+    PrintWriter outputFile = new PrintWriter("/Users/victoriabowen/Desktop/NEU_1st_year" +
+            "/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testFiles/outputFileLoadRowColumnTest.txt");
+
+
+    // render the text file from the actual spreadsheet
+    SpreadsheetView view = new SpreadsheetTextualView(sheet1,outputFile);
+    view.render();
+
+
+    // sets up a new speadsheet with the output of render
+    FileReader inputFile2 = new FileReader("/Users/victoriabowen/Desktop/NEU_1st_year" +
+            "/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
+            "spreadsheets/testFiles/outputFileLoadRowColumnTest.txt");
+    Spreadsheet sheet2 = new BasicSpreadsheet();
+    sheet2.initializeSpreadsheet(inputFile2);
+
+
+    // now sheet one should be equal to sheet two
+    assertEquals(sheet1, sheet2);
+
+  }
 
 
   // also test the initializing spreadsheet

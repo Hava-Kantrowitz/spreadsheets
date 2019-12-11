@@ -181,6 +181,39 @@ public class BasicSpreadsheet implements Spreadsheet {
       }
     }
 
+    // checking for the same number of changed rows
+    if(changedRows.size() != otherS.changedRows.size()){
+      isEqual = false;
+    }
+
+    // checking that the changed rows are equal
+    if(isEqual){
+      // going through the rows to make sure they are all equal
+      for(Integer row: changedRows.keySet()){
+
+        if(changedRows.get(row) != otherS.getChangedRows().get(row)){
+          isEqual = false;
+        }
+      }
+    }
+
+    // checking for the same number of changed rows
+    if(changedCols.size() != otherS.changedCols.size()){
+      isEqual = false;
+    }
+
+    // checking that the changed rows are equal
+    if(isEqual){
+      // going through the rows to make sure they are all equal
+      for(Integer row: changedCols.keySet()){
+
+        if(changedCols.get(row) != otherS.getChangedCols().get(row)){
+          isEqual = false;
+        }
+      }
+    }
+
+
     return isEqual;
   }
 

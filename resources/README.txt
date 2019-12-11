@@ -13,6 +13,7 @@ Feature 1: Allowing resizing
                         row or a column when the worksheet is being built also modified the read
                         method within worksheet builder to allow for the row and column sizes to be
                         in the form [index][R/C] followed by a space and a number (the size)
+                        ** the changes are also in the file reader method to support this **
     - Storing in the model: added two HashMaps to the model so that changes in row size and column
                             size can be stored
     - Resizing in the view: added a mouse listener for the RowHeaderTable so that the user can

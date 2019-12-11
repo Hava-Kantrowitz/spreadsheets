@@ -124,7 +124,6 @@ public class SpreadsheetTextViewTests {
     sheet1.setCellAt(new Coord(1,1), "");  // setting a cell to blank
     sheet1.setCellAt(new Coord(200, 300), ""); // setting the max to blank
 
-    // NEED TO FIGURE OUT WHEN THE SETTING IS BEING DONE TO THE MAX (HOW TO DECREASE ROW SIZE)
 
     PrintWriter outputFile = new PrintWriter("/Users/victoriabowen/Desktop/NEU_1st_year" +
             "/ObjectOriented/CS_3500_Projects/spreadsheets/src/edu/cs3500/" +
